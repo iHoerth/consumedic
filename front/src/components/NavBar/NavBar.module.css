@@ -47,7 +47,7 @@
   font-size: 32px ;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   .NavBar{
     justify-content: space-between;
   }
