@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+import { Route, Routes } from 'react-router-dom';
+import { Home, Landing } from './views';
+import "./App.css";
+
+function App() {
+  return ( <Routes>
+    <Route path="/" element={<Landing/>} />
+    <Route
+      path="/home"
+      element={<Home/>}
+      
+    />
+    
+  </Routes>)
+=======
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from './views/Home/Home';
@@ -20,6 +36,7 @@ function App() {
       </BrowserRouter>
     </div>
   );
+>>>>>>> c43855b5f8b04016e699f584f7d0e6bea699c158
 }
 
 export default App;
