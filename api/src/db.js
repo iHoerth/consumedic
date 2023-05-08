@@ -37,6 +37,51 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // Definir los modelos y sus realaciones
 
+const {Cita, DoctorType, Especialidad, HistorialMedico, ObraSocial, Opinion, PacienteType, Pago} = sequelize.models
+
+
+// 1:1
+// Organization.belongsTo(User, { foreignKey: 'owner_id' });
+// User.hasOne(Organization, { foreignKey: 'owner_id' });
+
+// 1:M
+// Project.hasMany(Task, { foreignKey: 'tasks_pk' });
+// Task.belongsTo(Project, { foreignKey: 'tasks_pk' });
+
+// N:M
+// User.belongsToMany(Role, { through: 'user_has_roles', foreignKey: 'user_role_user_id' });
+// Role.belongsToMany(User, { through: 'user_has_roles', foreignKey: 'roles_identifier' });
+
+DoctorType.hasMany(Cita);
+Cita.belongsTo(DoctorType);
+
+DoctorType.belongsToMany(ObraSocial, {through: 'doctor_opinions'});
+ObraSocial.belongsToMany(DoctorType, {through: 'doctor_opinions'});
+
+DoctorType.belongsToMany(Especialidad, {through: 'doctor_especialidades'});
+Especialidad.belongsToMany(DoctorType, {through: 'doctor_especialidades'});
+
+DoctorType.hasMany(Opinion);
+Opinion.belongsTo(DoctorType);
+
+DoctorType.hasMany(Opinion);
+Opinion.belongsTo(DoctorType);
+
+Pago.belongsTo(Cita);
+Cita.hasOne(Pago);
+
+HistorialMedico.hasMany(Cita);
+Cita.belongsTo(HistorialMedico);
+
+ObraSocial.hasMany(PacienteType);  // a verificar si puede ser muchos a muchos
+PacienteType.belongsTo(ObraSocial);
+
+PacienteType.belongsTo(HistorialMedico);
+HistorialMedico.hasOne(PacienteType);
+
+PacienteType.hasMany(Opinion);
+Opinion.belongsTo(PacienteType);
+
 
 
 

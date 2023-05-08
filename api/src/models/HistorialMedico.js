@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
 
-  sequelize.define("HistorialMedicoType",{
+  sequelize.define("HistorialMedico",{
     id:{
        type:DataTypes.UUID,  // alfanumerico 
        defaultValue: DataTypes.UUIDV4, // este crea un numero aleatorio
