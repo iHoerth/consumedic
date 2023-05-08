@@ -1,6 +1,0 @@
-const holas =()=>{
-    return(
-        <>
-        </>
-    )
-}
