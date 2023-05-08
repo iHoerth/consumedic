@@ -1,0 +1,8 @@
+:root {
+  --medicGreen: #31d4a0;
+  --medicGreenDark: #20be8c;
+
+  --breakPointLarge: 1200px;
+  --breakPointMedium: 768px;
+  --breakPointSmall: 600px;
+}
