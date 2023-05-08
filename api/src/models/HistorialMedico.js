@@ -17,9 +17,8 @@ module.exports = (sequelize) => {
        unique: true,
     },
     fecha:{
-        type:DataTypes.DATE,
+        type:DataTypes.DATEONLY,
         allowNull:false,
-        unique: true,
      },
     estudio:{
        type:DataTypes.STRING,
