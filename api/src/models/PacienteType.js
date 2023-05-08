@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
 
   sequelize.define("PacienteType",{
     dni:{
-       type:DataTypes.UUID,  // alfanumerico 
+       type:DataTypes.INTEGER,  // alfanumerico 
        defaultValue: DataTypes.UUIDV4, // este crea un numero aleatorio
        primaryKey: true,
        
@@ -19,7 +19,6 @@ module.exports = (sequelize) => {
     password:{
         type:DataTypes.STRING,
         allowNull:false,
-        unique: true,
      },
     telefono:{
         type:DataTypes.INTEGER,
