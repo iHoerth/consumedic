@@ -37,6 +37,11 @@ module.exports = (sequelize) => {
         type:DataTypes.STRING,
         allowNull:false,
      },
+     isDoctor : {
+      type:  DataTypes.BOOLEAN,
+      allowNull : false,
+      defaultValue : false
+     }
  },{
     timestamps:false // tercert algumento de difene, la fecha de creacion ñe
  } )
