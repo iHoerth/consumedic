@@ -1,0 +1,55 @@
+@import "../../helpers/variables.css";
+
+.NavBar {
+  font-family: 'Poppins';
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100%;
+  height: 100px;
+  background-color: var(--medicGreen);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+  z-index: 3;
+}
+
+.navActive{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--medicGreenDark);
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.navInactive{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.header-logo > h1 {
+  font-size: 32px ;
+}
+
+@media (max-width: 940px) {
+  .NavBar{
+    justify-content: space-between;
+  }
+  .navActive {
+    display: none;
+  }
+  .navInactive{
+    display: none;
+  }
+}
