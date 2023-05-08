@@ -6,18 +6,16 @@ module.exports = (sequelize) => {
 
   sequelize.define("DoctorType",{
     dni:{
-        type:DataTypes.UUID,  // alfanumerico 
-        defaultValue: DataTypes.UUIDV4, // este crea un numero aleatorio
-        primaryKey: true,
+        type:DataTypes.INTEGER, 
+        allowNull:false,
         
     },
     
     NumMatricula:{
-        type:DataTypes.UUID,  
-        defaultValue: DataTypes.UUIDV4, 
-        primaryKey: true,
-        
+        type:DataTypes.INTEGER  ,
+         allowNull:false,
     },
+
     nombre:{
         type:DataTypes.STRING,
         allowNull:false,
@@ -63,7 +61,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       opinion: {
-        type:DataTypes.UUID,  
+        type:DataTypes.STRING,  
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
