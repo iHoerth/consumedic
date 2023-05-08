@@ -14,6 +14,12 @@
   z-index: 3;
 }
 
+.navButtonsContainer{
+  display: flex;
+  padding: 6px;
+  gap: 40px;
+}
+
 .navActive{
   display: flex;
   align-items: center;
@@ -33,16 +39,15 @@
   text-align: center;
   color: white;
   text-decoration: none;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 400;
 }
 
 .header-logo > h1 {
   font-size: 32px ;
 }
 
-@media (max-width: 940px) {
+@media (max-width: 800px) {
   .NavBar{
     justify-content: space-between;
   }

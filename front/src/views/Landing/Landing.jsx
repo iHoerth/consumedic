@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import NavBar from '../../components/NavBar/NavBar';
 
 const Landing = () => {
   return (
-    <div>LANDING</div>
-  )
-}
+    <div>
+      <NavBar />
+    </div>
+  );
+};
 
-export default Landing
+export default Landing;
