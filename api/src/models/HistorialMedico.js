@@ -4,41 +4,32 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
 
-  sequelize.define("PacienteType",{
-    dni:{
+  sequelize.define("HistorialMedicoType",{
+    id:{
        type:DataTypes.UUID,  // alfanumerico 
        defaultValue: DataTypes.UUIDV4, // este crea un numero aleatorio
        primaryKey: true,
        
     },
-    email:{
+    descripcion:{
        type:DataTypes.STRING,
        allowNull:false,
        unique: true,
     },
-    password:{
-        type:DataTypes.STRING,
+    fecha:{
+        type:DataTypes.DATE,
         allowNull:false,
         unique: true,
      },
-    telefono:{
-        type:DataTypes.INTEGER,
-        allowNull:false,
-        unique: true,
-     },
-    nombre:{
+    estudio:{
        type:DataTypes.STRING,
        allowNull:false,
     },
-    apellido:{
-       type:DataTypes.STRING,
-       allowNull:false,
-    },
-    opinion:{
+    documentos:{
         type:DataTypes.STRING,
         allowNull:false,
      },
- },{
+    },{
     timestamps:false // tercert algumento de difene, la fecha de creacion ñe
  } )
 };
