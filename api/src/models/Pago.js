@@ -7,7 +7,6 @@ module.exports = (sequelize) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true
-
     },
     precio:{
       type: DataTypes.FLOAT,
