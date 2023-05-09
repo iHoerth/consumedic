@@ -2,6 +2,7 @@ const { Router } = require('express');
 const {ObraSocial} = require('../db');
 require('dotenv').config();
 
+
 // const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env;
 // const cloudinary = require("cloudinary").v2;
 
@@ -14,6 +15,7 @@ require('dotenv').config();
 //   });
 
 const router = Router();
+
 
 router.get("/doctors", async ( req, res ) => {  // Facu
   try {
