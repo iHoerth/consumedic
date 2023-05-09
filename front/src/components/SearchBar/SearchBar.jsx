@@ -11,6 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { NavLink } from 'react-router-dom';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -58,9 +59,11 @@ export default function ProminentAppBar() {
               <MenuItem value={3}>Córdoba</MenuItem>
             </Select>
           </FormControl>
-          <IconButton size="large" aria-label="search" color="inherit">
-            <SearchIcon />
-          </IconButton>
+          <NavLink to="/all" activeClassName="active">
+      <   IconButton size="large" aria-label="search" color="inherit">
+        <SearchIcon />
+         </IconButton>
+       </NavLink>
         </StyledToolbar>
       </AppHeader>
     </Box>
