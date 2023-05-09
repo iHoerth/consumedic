@@ -1,5 +1,4 @@
 import React from 'react';
-// import NavBarMui from '../../components/NavBar/NavBarMUI';
 import NavBar from '../../components/NavBar/NavBar';
 import { Button } from '@mui/material';
 
