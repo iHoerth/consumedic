@@ -1,6 +1,5 @@
 const { User } = require('../db');
-
-                                                                           // Controlador para crear un nuevo usuario
+// Controlador para crear un nuevo usuario
 const createUser = async (req, res) => {
   try {
     const { email, password, nombre, apellido, telefono } = req.body;
