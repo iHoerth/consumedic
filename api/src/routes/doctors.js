@@ -4,5 +4,7 @@ const doctorController = require('../controllers/doctorController.js');
 
 // Ruta para traer todos los doctores
 router.get('/', doctorController.getAllDoctors);
+router.get('/:dni', doctorController.getDoctorsById )
+
 
 module.exports = router;
