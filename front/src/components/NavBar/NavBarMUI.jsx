@@ -18,13 +18,13 @@ export default function ButtonAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            CONSUMEDIC
+          </Typography>
           {isMatch ? (
             <DrawerComponent />
           ) : (
             <>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                CONSUMEDIC
-              </Typography>
               <Button color="inherit">Home</Button>
               <Button color="inherit">Login</Button>
               <Button color="inherit">Eres un medico?</Button>
