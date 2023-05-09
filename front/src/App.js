@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { SpecialistsFound, Landing, Home } from './views';
 import UserLogin from './views/UserLogin/UserLogin'
+import { ThemeProvider } from '@mui/material';
 
 import './App.css';
 import '@fontsource/roboto/300.css';

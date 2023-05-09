@@ -10,7 +10,7 @@ import style from './Landing.module.css';
 const Landing = () => {
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <NavBarMui />
       <div className={style.container}>
         <div>BANNER CON IMAGEN DE MEDICO</div>
