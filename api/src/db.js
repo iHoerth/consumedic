@@ -82,9 +82,6 @@ HistorialMedico.hasOne(PacienteType);
 PacienteType.hasMany(Opinion);
 Opinion.belongsTo(PacienteType);
 
-
-
-
 module.exports = {
    ...sequelize.models,
    conn: sequelize,
