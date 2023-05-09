@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
     dni:{
         type:DataTypes.INTEGER, 
         allowNull:false,
+        primaryKey: true
         
     },
     
@@ -63,7 +64,6 @@ module.exports = (sequelize) => {
       opinion: {
         type:DataTypes.STRING,  
         defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
       },
      obraSocial: {
         type: DataTypes.STRING,
