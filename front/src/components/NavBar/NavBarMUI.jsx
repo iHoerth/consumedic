@@ -5,6 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useMediaQuery, useTheme } from '@mui/material';
+
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -12,6 +13,7 @@ import DrawerComponent from './DrawerComponent';
 
 export default function ButtonAppBar() {
   const theme = useTheme();
+  // console.log(theme)
   const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
