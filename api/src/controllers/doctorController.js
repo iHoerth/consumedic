@@ -44,13 +44,7 @@ const getinfodoctor = async (dni) => {
   doctorObject.imagen = doctorinfo.imagen;
   doctorObject.password = doctorinfo.password;
   doctorObject.titulo = doctorinfo.titulo;
-  doctorObject.Descripcion = doctorinfo.Descripcion;
-  doctorObject.especialidad = doctorinfo.especialidad.dataValues;
-  doctorObject.opinion = doctorinfo.opinions.map((opinion) => opinion.dataValues);
-  doctorObject.obraSocial = doctorinfo.obra_socials.map((obra_social) =>
-    obra_social.dataValues
-  );
-  
+  doctorObject.Descripcion = doctorinfo.Descripcion;  
 
   return doctorObject;
 };

@@ -2,6 +2,9 @@ const { Router } = require('express');
 const {ObraSocial} = require('../db');
 require('dotenv').config();
 
+const { getObrasSociales } = require("../controllers/getObrasSociales")
+const {getinfodoctor}=require("../controllers/getInfoDoctor")
+
 
 // const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env;
 // const cloudinary = require("cloudinary").v2;
@@ -16,7 +19,25 @@ require('dotenv').config();
 
 const router = Router();
 
+router.get("/obrasSociales", async ( req, res ) => { // Bruno
+    try {
+      const obras = await getObrasSociales();
+        return res.status(200).send(obras);      
+    } catch (error) {
+        return res.status(404).send(error.message);
+    }
+  })
 
+  router.get("/doctors/:dni", async ( req, res ) => { //brunio
+    try {
+      const {dni} = req.params;
+      const doctorinfo = await getinfodoctor(dni);
+        return res.status(200).json(doctorinfo);      
+    } catch (error) {
+        return res.status(404).send(error.message);
+    }
+  })
+//! ****************************************
 router.get("/doctors", async ( req, res ) => {  // Facu
   try {
       return res.status(200).json();      

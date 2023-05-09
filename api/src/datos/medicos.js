@@ -25,8 +25,6 @@ const generateGenericDoctors = async () => {
         password: 'contraseña',
         titulo: 'Título genérico',
         Descripcion: 'Descripción genérica',
-        especialidad: 'Especialidad genérica',
-        obraSocial: 'Obra Social genérica'
       });
 
       genericDoctors.push(doctor);

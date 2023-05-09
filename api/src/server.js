@@ -12,7 +12,7 @@ const pagoRouter = require('./routes/pago'); //mauro
 const opinionRouter = require('./routes/opinions.js'); //mauro
 const newUserRouter = require('./routes/newUser.js'); //mauro
 
-const doctorsRouter = require('./routes/doctors.js') //facu
+const doctorsRouter = require('./routes/doctors.js') 
 
 
 const port = PORT || 3001;
