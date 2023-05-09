@@ -1,8 +1,14 @@
 import React from 'react'
+import CardsSpecialistsContainer from '../../components/CardsSpecialistsContainer/CardsSpecialistsContainer'
+import SearchBar from "../../components/SearchBar/SearchBar"
 
 const SpecialistsFound = () => {
   return (
-    <div>Se mostrara el listado de todos los especialistas buscados</div>
+    <div>
+      <SearchBar/>
+      Se mostrara el listado de todos los especialistas buscados
+      <CardsSpecialistsContainer/>
+    </div>
   )
 }
 
