@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { SpecialistsFound, Landing ,Home } from './views';
+import { SpecialistsFound, Landing, Home } from './views';
+import UserLogin from './views/UserLogin/UserLogin'
 
 import './App.css';
 import '@fontsource/roboto/300.css';
@@ -10,13 +11,12 @@ import '@fontsource/roboto/700.css';
 function App() {
   return (
     <div className="App">
-      
-        <Routes>
-          <Route path='/' element={<Home />}/>
-          <Route path='/landing' element={<Landing />}/>
-          <Route path='/all' element={<SpecialistsFound/>}/>
-        </Routes>
-     
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/landing" element={<Landing />} />
+        <Route path="/login" element={<UserLogin />} />
+        <Route path="/all" element={<SpecialistsFound />} />
+      </Routes>
     </div>
   );
 }
