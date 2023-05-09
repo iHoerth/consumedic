@@ -1,0 +1,7 @@
+.divSpecialists{
+    background-color: #b2dfdb;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
