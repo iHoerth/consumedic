@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import Home from './views/Home/Home';
-import Landing from './views/Landing/Landing';
+import { SpecialistsFound, Landing ,Home } from './views';
 
 import './App.css';
 import '@fontsource/roboto/300.css';
@@ -16,6 +14,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />}/>
           <Route path='/landing' element={<Landing />}/>
+          <Route path='/all' element={<SpecialistsFound/>}/>
         </Routes>
      
     </div>
