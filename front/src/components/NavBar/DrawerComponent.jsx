@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Drawer,
-  Icon,
   IconButton,
   List,
   ListItemButton,
@@ -11,24 +10,22 @@ import {
 
 import MenuIcon from '@mui/icons-material/Menu';
 
-const DrawerComponent = () => {
+const DrawerComponent = ({ navLinksArray }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <>
       <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
         <List>
-          <ListItemButton>
-            <ListItemIcon>
-              <ListItemText>Home (buscar medicos)</ListItemText>
-            </ListItemIcon>
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <ListItemText>Panel de Usuario(if logged)</ListItemText>
-            </ListItemIcon>
-          </ListItemButton>
+          {navLinksArray.map((link) => (
+            <ListItemButton href={link.path}>
+              <ListItemIcon>
+                <ListItemText>{link.title}</ListItemText>
+              </ListItemIcon>
+            </ListItemButton>
+          ))}
         </List>
       </Drawer>
+
       <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
         <MenuIcon></MenuIcon>
       </IconButton>

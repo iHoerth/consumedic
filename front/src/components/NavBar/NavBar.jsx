@@ -5,39 +5,54 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useMediaQuery, useTheme } from '@mui/material';
-
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 import DrawerComponent from './DrawerComponent';
 
 const NavBar = () => {
   const theme = useTheme();
-  // console.log(theme)
-  const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+  const screenSizeSmall = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const navLinksArray = [
+    {
+      title: 'Home',
+      path: '/',
+    },
+    {
+      title: 'Login',
+      path: '/login',
+    },
+    {
+      title: 'Eres un medico?',
+      path: '/login',
+    },
+  ];
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            CONSUMEDIC
-          </Typography>
-          {isMatch ? (
-            <DrawerComponent />
+      <AppBar position="static" sx={{ height: '100px', justifyContent: 'center' }}>
+        <Toolbar color="white">
+          <Box display="flex" alignItems="center" gap="4px" color="white" sx={{ flexGrow: 1 }}>
+            <LocalHospitalIcon color="inherit"></LocalHospitalIcon>
+            <Typography variant="h5" component="div" color="white">
+              CONSUMEDIC
+            </Typography>
+          </Box>
+          {screenSizeSmall ? (
+            <DrawerComponent navLinksArray={navLinksArray} />
           ) : (
-            <>
-              <Button color="inherit">Home</Button>
-              <Button color="inherit">Login</Button>
-              <Button color="inherit">Eres un medico?</Button>
-            </>
+            <nav style={{ color: 'white' }}>
+              {navLinksArray.map((link) => (
+                <Button color="inherit" href={link.path}>
+                  {link.title}
+                </Button>
+              ))}
+            </nav>
           )}
         </Toolbar>
       </AppBar>
     </Box>
   );
-}
+};
 
 export default NavBar;
-
-

@@ -1,9 +1,12 @@
-import React from 'react'
+import NavBar from '../../components/NavBar/NavBar';
 
 const UserLogin = () => {
   return (
-    <div>UserLogin</div>
-  )
-}
+    <>
+      <NavBar></NavBar>
+      <div>UserLogin</div>
+    </>
+  );
+};
 
-export default UserLogin
+export default UserLogin;
