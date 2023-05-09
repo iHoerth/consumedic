@@ -22,7 +22,7 @@ const NavBar = () => {
           <>
             <NavLink
               className={({ isActive }) => (isActive ? style.navActive : style.navInactive)}
-              to="/home"
+              to="/"
             >
               Home
             </NavLink>
