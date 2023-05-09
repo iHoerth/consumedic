@@ -1,13 +1,12 @@
 import React from 'react'
-import NavBar from '../../components/NavBar/NavBar'
-import NavBarMui from '../../components/NavBar/NavBarMUI';
+// import NavBarMui from '../../components/NavBar/NavBar';
+import NavBar from '../../components/NavBar/NavBar';
 import SearchBar from "../../components/SearchBar/SearchBar"
 
 const Home = () => {
   return (
     <div>
-      <NavBarMui />
-      {/* <NavBar /> */}
+      <NavBar />
       <SearchBar />
     </div>
   )
