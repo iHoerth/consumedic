@@ -33,10 +33,6 @@ module.exports = (sequelize) => {
        type:DataTypes.STRING,
        allowNull:false,
     },
-    opinion:{
-        type:DataTypes.STRING,
-        allowNull:false,
-     },
      isDoctor : {
       type:  DataTypes.BOOLEAN,
       allowNull : false,

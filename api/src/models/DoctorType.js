@@ -8,14 +8,13 @@ module.exports = (sequelize) => {
     dni:{
         type:DataTypes.INTEGER, 
         allowNull:false,
+        primaryKey: true
         
     },
-    
     NumMatricula:{
         type:DataTypes.INTEGER  ,
          allowNull:false,
     },
-
     nombre:{
         type:DataTypes.STRING,
         allowNull:false,
@@ -29,7 +28,6 @@ module.exports = (sequelize) => {
         allowNull:false,
         unique: true,
     },
-    
     telefono:{
         type:DataTypes.INTEGER,
         allowNull:false,
@@ -43,7 +41,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      //preguntar si esta bien model pass
       password: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -53,19 +50,6 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       Descripcion: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-     especialidad: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      opinion: {
-        type:DataTypes.STRING,  
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-      },
-     obraSocial: {
         type: DataTypes.STRING,
         allowNull: false,
       },
