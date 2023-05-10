@@ -19,9 +19,9 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 const AppHeader = styled(AppBar)(({ theme }) => ({
-  background: "#90a4ae",
+  // background: "#90a4ae",
   boxShadow: "none",
-  borderBottom: `2px solid ${theme.palette.divider}`,
+  // borderBottom: `2px solid ${theme.palette.divider}`,
 }));
 
 export default function ProminentAppBar() {

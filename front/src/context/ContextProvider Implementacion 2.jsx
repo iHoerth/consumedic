@@ -8,7 +8,7 @@ export const UserContext = createContext();
 export const DoctorContext = createContext();
 
 const ContextProvider = ({ children }) => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);  
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   const getUsers = async () => {
@@ -39,7 +39,7 @@ const ContextProvider = ({ children }) => {
     setFilteredDoctors(data);
   };
 
-  const getDoctorById = async () => {
+  const getDoctorById = async (id) => {
     const response = await axios(`${URL_POSTS}/${id}`);
     const data = await response.data;
     setDoctors(data); // ----> tal vez definir otro estado doctorDetail...
