@@ -89,11 +89,17 @@ const createFakeData = async () => {
 
   // Crear 10 Opinion
   for(let i = 0; i < 10; i++) {
+    const idMedico = Math.ceil(Math.random()*docsAndPatients)
+    const idPaciente = Math.ceil(Math.random()*docsAndPatients)
+    const newPacient = await db.PacienteType.findByPk(idPaciente);
+    const newDoctor = await db.DoctorType.findByPk(idMedico);
+
     const opinion = await db.Opinion.create({
-      fecha: faker.date.past(),
       ubicacion: faker.address.city(),
       puntaje: faker.datatype.number(),
-      mensaje: faker.lorem.paragraphs().substring(0, 150)
+      mensaje: faker.lorem.paragraphs().substring(0, 150), 
+      DoctorTypeId: newDoctor.dataValues.id,
+      PacienteTypeId: newPacient.dataValues.id
     });
   }
 
