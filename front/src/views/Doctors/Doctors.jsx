@@ -3,11 +3,11 @@ import { Pagination } from '@mui/material';
 import { Context } from '../../context/ContextProvider';
 
 import PaginationContainer from '../../components/Pagination/PaginationContainer';
-import CardsSpecialistsContainer from '../../components/CardsSpecialistsContainer/CardsSpecialistsContainer';
+import CardsSpecialistsContainer from '../../components/CardContainer/CardContainer';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import style from './SpecialistsFound.module.css';
+import style from './Doctors.module.css';
 
-const SpecialistsFound = () => {
+const Doctors = () => {
   const { usersData } = useContext(Context);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -26,4 +26,4 @@ const SpecialistsFound = () => {
   );
 };
 
-export default SpecialistsFound;
+export default Doctors;

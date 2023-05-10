@@ -1,8 +1,8 @@
 import React from "react";
-import CardSpecialists from "../CardSpecialists/CardSpecialists";
-import style from "./CardsSpecialistsContainer.module.css";
+import Card from "../Card/Card";
+import style from "./CardContainer.module.css";
 
-const CardsSpecialistsContainer = () => {
+const CardContainer = () => {
   const message = "no hay medicos";
   const medicos = [
     {
@@ -100,7 +100,7 @@ const CardsSpecialistsContainer = () => {
   const allMedicos = medicos.length ? (
     <div className={style.divCars}>
       {medicos.map((medico) => (
-        <CardSpecialists
+        <Card
           key={medico.id}
           id={medico.id}
           profileImage={medico.profileImage}
@@ -121,4 +121,4 @@ const CardsSpecialistsContainer = () => {
   return <div className={style.divBody}>{allMedicos}</div>;
 };
 
-export default CardsSpecialistsContainer;
+export default CardContainer;
