@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
   sequelize.define(
     "Opinion",
     {
-      id_opinion: {
+      id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -12,6 +12,7 @@ module.exports = (sequelize) => {
       fecha: {
         type: DataTypes.DATEONLY,
         allowNull: false,
+        defaultValue: DataTypes.NOW,
       },
       ubicacion: {
         type: DataTypes.STRING,

@@ -26,9 +26,9 @@ const getPatientsById = async (req, res) => {
 }
 
 const postPatient = async (req, res) => {
-    const { dni, email, password, telefono, nombre, apellido } = req.body;
+    const { dni, email, password, telefono, nombre, apellido, idObraSocial } = req.body;
     try {
-        const result = await createPatient(dni, email, password, telefono, nombre, apellido)
+        const result = await createPatient(dni, email, password, telefono, nombre, apellido, idObraSocial)
         res.status(200).json(result);
     } catch (error) {
         res.status(400).json({message: error.message});

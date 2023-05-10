@@ -26,9 +26,9 @@ const getDoctorsById = async (req, res) => {
 }
 
 const postDoctor = async (req, res) => {
-    const { dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagen, password, titulo, Descripcion } = req.body;
+    const { dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagen, password, titulo, Descripcion, idEspecialidad, idObraSocial } = req.body;
     try {
-        const result = await createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagen, password, titulo, Descripcion)
+        const result = await createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagen, password, titulo, Descripcion, idEspecialidad, idObraSocial)
         res.status(200).json(result);
     } catch (error) {
         res.status(400).json({message: error.message});

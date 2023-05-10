@@ -1,18 +1,16 @@
-const {PacienteType}= require("../../db")
+const {PacienteType, ObraSocial}= require("../../db")
 
-const createPatient = async (dni, email, password, telefono, nombre, apellido) => {
+const createPatient = async (dni, email, password, telefono, nombre, apellido, idObraSocial) => {
+    const newObraSocial = await ObraSocial.findByPk(idObraSocial);
+    
     const newPatient = await PacienteType.create({
         dni, 
-        NumMatricula, 
-        nombre, 
-        apellido, 
-        email, 
-        telefono, 
-        direccion, 
-        imagen, 
-        password, 
-        titulo, 
-        Descripcion
+        email,
+        password,
+        telefono,
+        nombre,
+        apellido,
+        ObraSocialId: newObraSocial.id
     })
     return newPatient
 }
