@@ -3,14 +3,15 @@ import axios from 'axios';
 
 export const Context = createContext([]);
 
-const URL_USERS = `https://jsonplaceholder.typicode.com/users`
-const URL_POSTS = `https://jsonplaceholder.typicode.com/posts`
+const URL_USERS = `https://jsonplaceholder.typicode.com/users`;
+const URL_POSTS = `https://jsonplaceholder.typicode.com/posts`;
 
 const ContextProvider = ({ children }) => {
   //Definimos el estado para los users, con todas sus acciones
   const [usersData, setUsersData] = useState({
     users: [],
     filteredUsers: [],
+    userDetail: {},
     getUsers: async () => {
       const response = await axios(URL_USERS);
       const data = await response.data;
@@ -26,6 +27,7 @@ const ContextProvider = ({ children }) => {
   const [doctorsData, setDoctorsData] = useState({
     doctors: [],
     filteredDoctors: [],
+    doctorDetail: {},
     getDoctors: async () => {
       const response = await axios(URL_POSTS);
       const data = await response.data;
