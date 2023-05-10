@@ -12,17 +12,11 @@ const ContextProvider = ({ children }) => {
     users: [],
     filteredUsers: [],
     userDetail: {},
-    getUsers: async () => {
-      const response = await axios(URL_USERS);
-      const data = await response.data;
-      setUsersData((prevState) => ({
-        ...prevState,
-        users: [...prevState.users, ...data],
-      }));
-    },
     getUserById: async () => {},
     createUser: async () => {},
   });
+
+
   //Definimos el estado para los medicos, con todas sus acciones
   const [doctorsData, setDoctorsData] = useState({
     doctors: [],
@@ -42,7 +36,9 @@ const ContextProvider = ({ children }) => {
 
   return (
     <>
-      <Context.Provider value={{ doctorsData, usersData }}>{children}</Context.Provider>
+      <Context.Provider value={{ doctorsData, usersData }}>
+        {children}
+      </Context.Provider>
     </>
   );
 };
