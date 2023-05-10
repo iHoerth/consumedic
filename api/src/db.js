@@ -64,8 +64,8 @@ Especialidad.belongsToMany(DoctorType, {through: 'doctor_especialidades'});
 DoctorType.hasMany(Opinion);
 Opinion.belongsTo(DoctorType);
 
-DoctorType.hasMany(Opinion);
-Opinion.belongsTo(DoctorType);
+PacienteType.hasMany(Opinion);
+Opinion.belongsTo(PacienteType);
 
 Pago.belongsTo(Cita);
 Cita.hasOne(Pago);
@@ -79,8 +79,6 @@ PacienteType.belongsTo(ObraSocial);
 PacienteType.belongsTo(HistorialMedico);
 HistorialMedico.hasOne(PacienteType);
 
-PacienteType.hasMany(Opinion);
-Opinion.belongsTo(PacienteType);
 
 module.exports = {
    ...sequelize.models,
