@@ -34,7 +34,6 @@ module.exports = (sequelize) => {
     telefono:{
         type:DataTypes.INTEGER,
         allowNull:false,
-        unique: true,
      },
      direccion: {
         type: DataTypes.STRING,
