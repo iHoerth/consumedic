@@ -6,10 +6,9 @@ const getAllOpinions = async (ubicacion, puntaje, mensaje, idMedico, idPaciente)
         puntaje, 
         mensaje, 
     });
-
     newOpinion.addDoctorTypes(idMedico);
     newOpinion.addPacienteTypes(idPaciente);
-    return opinions;
+    return newOpinion;
 }
 
 module.exports = { getAllOpinions };
