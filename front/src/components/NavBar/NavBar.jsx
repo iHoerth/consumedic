@@ -33,6 +33,7 @@ const NavBar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
+        color="secondary"
         position="static"
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
       >
