@@ -1,10 +1,24 @@
-const express = require('express');
-const router = express.Router();
-const doctorController = require('../controllers/doctorController.js');
+const { Router } = require("express");
 
-// Ruta para traer todos los doctores
-router.get('/', doctorController.getAllDoctors);
-router.get('/:dni', doctorController.getDoctorsById )
+const {
+    getDoctors,
+    getDoctorsById,
+    postDoctor,
+    putDoctor
+} =  require ("../handlers/doctors")
+
+const doctorsRouter = Router();
+
+// GET
+doctorsRouter.get("/", getDoctors); // tener en cuenta el query by ?name=....
+doctorsRouter.get("/:id", getDoctorsById);
+
+// POST
+doctorsRouter.post("/", postDoctor);
+
+//PUT
+doctorsRouter.put("/", putDoctor);
 
 
-module.exports = router;
+
+module.exports = doctorsRouter;

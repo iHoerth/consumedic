@@ -1,20 +1,18 @@
 const { DataTypes } = require('sequelize');
-// Exportamos una funcion que define el modelo
-// Luego le injectamos la conexion a sequelize.
+
 module.exports = (sequelize) => {
-  // defino el modelo
+
 
   sequelize.define("HistorialMedico",{
     id:{
-       type:DataTypes.UUID,  // alfanumerico 
-       defaultValue: DataTypes.UUIDV4, // este crea un numero aleatorio
+       type:DataTypes.UUID,
+       defaultValue: DataTypes.UUIDV4,
        primaryKey: true,
        
     },
     descripcion:{
        type:DataTypes.STRING,
        allowNull:false,
-       unique: true,
     },
     fecha:{
         type:DataTypes.DATEONLY,
@@ -29,6 +27,6 @@ module.exports = (sequelize) => {
         allowNull:false,
      },
     },{
-    timestamps:false // tercert algumento de difene, la fecha de creacion ñe
+    timestamps:false
  } )
 };
