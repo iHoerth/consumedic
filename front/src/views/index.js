@@ -1,9 +1,7 @@
 import Home from './Home/Home';
 import Landing from './Landing/Landing';
-import SpecialistsFound from './SpecialistsFound/SpecialistsFound';
-import UserLogin from './UserLogin/UserLogin'
-import MedicalProfileDetail from './MedicalProfileDetail/MedicalProfileDetail';
+import Login from './Login/Login';
+import Doctors from './Doctors/Doctors';
+import DoctorDetail from './DoctorDetail/DoctorDetail';
 
-export { Home, Landing, SpecialistsFound, UserLogin, MedicalProfileDetail};
-
-
+export { Home, Landing, Login, Doctors, DoctorDetail };

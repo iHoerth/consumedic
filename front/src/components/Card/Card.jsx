@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
+import CardMUI from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -29,7 +29,8 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const CardSpecialists = (props) => {
+
+const Card = (props) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -38,7 +39,7 @@ const CardSpecialists = (props) => {
 
   return (
     <div>
-      <Card sx={{ maxWidth: 345 }}>
+      <CardMUI sx={{ maxWidth: 345 }}>
         <Tooltip title="Ver Perfil">
           <IconButton sx={{ p: 0 }}>
             <NavLink to="/medicalDetail" activeClassName="active">
@@ -108,9 +109,9 @@ const CardSpecialists = (props) => {
             </Typography>
           </CardContent>
         </Collapse>
-      </Card>
+      </CardMUI>
     </div>
   );
 };
 
-export default CardSpecialists;
+export default Card;
