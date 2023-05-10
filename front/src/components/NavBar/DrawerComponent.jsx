@@ -12,9 +12,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 const DrawerComponent = ({ navLinksArray }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const DRAWER_ANCHOR = 'right';
+
   return (
     <>
-      <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
+      <Drawer
+        PaperProps={{ sx: { width: '200px' } }}
+        anchor={DRAWER_ANCHOR}
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+      >
         <List>
           {navLinksArray.map((link) => (
             <ListItemButton href={link.path}>
@@ -26,8 +33,8 @@ const DrawerComponent = ({ navLinksArray }) => {
         </List>
       </Drawer>
 
-      <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
-        <MenuIcon></MenuIcon>
+      <IconButton size='large' onClick={() => setOpenDrawer(!openDrawer)}>
+        <MenuIcon sx={{transform:'scale(1.2)', color:'white'}}></MenuIcon>
       </IconButton>
     </>
   );
