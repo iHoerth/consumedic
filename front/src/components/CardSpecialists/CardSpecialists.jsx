@@ -16,6 +16,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import LocationOnSharpIcon from "@mui/icons-material/LocationOnSharp";
+import { NavLink } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -38,9 +39,11 @@ const CardSpecialists = (props) => {
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
-        <Tooltip title="Open settings">
+        <Tooltip title="Ver Perfil">
           <IconButton sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src={props.profileImage} />
+            <NavLink to="/medicalDetail" activeClassName="active">
+              <Avatar alt="Remy Sharp" src={props.profileImage} />
+            </NavLink>
           </IconButton>
         </Tooltip>
         <CardHeader
@@ -49,7 +52,7 @@ const CardSpecialists = (props) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title={props.name}
+          title={<NavLink to="/medicalDetail">{props.name}</NavLink>}
           subheader={props.specialty}
         />
         <CardContent>
@@ -89,7 +92,9 @@ const CardSpecialists = (props) => {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <ExpandMoreIcon />
+            <Tooltip title="Ver Agenda">
+              <ExpandMoreIcon />
+            </Tooltip>
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
