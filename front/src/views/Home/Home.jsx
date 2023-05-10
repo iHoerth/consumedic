@@ -7,10 +7,7 @@ const Home = () => {
   return (
     <Box>
       <NavBar />
-      <Button variant="contained" >dfgdfgfdgfd</Button>
-      <Box>
-        <SearchBar />
-      </Box>
+      <SearchBar />
     </Box>
   );
 };
