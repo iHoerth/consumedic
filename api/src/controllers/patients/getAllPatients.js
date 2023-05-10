@@ -1,11 +1,11 @@
-const {PacienteType}= require("../../db")
+const { PacienteType } = require("../../db");
 
 const getAllPatients = async () => {
-    const pacients = await PacienteType.findAll({
-        where: { status: 'active'},
-        include: {all: true}
-    });
-    return pacients;
-}
+  const patients = await PacienteType.findAll({
+    where: { status: "active" },
+    include: { all: true },
+  });
+  return patients;
+};
 
 module.exports = { getAllPatients };

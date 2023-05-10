@@ -1,24 +1,22 @@
 const { Router } = require("express");
 
 const {
-    getPatients,
-    getPatientsById,
-    postPatient,
-    putPatient
-} =  require ("../handlers/patients")
+  getPatients,
+  getPatientsById,
+  postPatient,
+  putPatient,
+} = require("../handlers/patients");
 
-const pacientsRouter = Router();
+const patientsRouter = Router();
 
 // GET
-pacientsRouter.get("/", getPatients); // tener en cuenta el query by ?name=....
-pacientsRouter.get("/:id", getPatientsById);
+patientsRouter.get("/", getPatients); // tener en cuenta el query by ?name=....
+patientsRouter.get("/:id", getPatientsById);
 
 // POST
-pacientsRouter.post("/", postPatient);
+patientsRouter.post("/", postPatient);
 
 //PUT
-pacientsRouter.put("/", putPatient);
+patientsRouter.put("/", putPatient);
 
-
-
-module.exports = pacientsRouter;
+module.exports = patientsRouter;
