@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material';
-import { cyan, teal, green } from '@mui/material/colors';
+import { cyan, teal, green, blue } from '@mui/material/colors';
 
 import '@fontsource/poppins';
 import '@fontsource/roboto';
@@ -9,6 +9,14 @@ import '@fontsource/roboto';
 // import '@fontsource/roboto/700.css';
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      mobile: 0,
+      tablet: 768,
+      laptop: 1024,
+      desktop: 1200,
+    },
+  },
   palette: {
     primary: {
       //Dejo comentados otros colores como para probar descomentando:
@@ -25,7 +33,7 @@ const theme = createTheme({
     },
 
     secondary: {
-      main: cyan[500],
+      main: blue[500],
     },
   },
   typography: {

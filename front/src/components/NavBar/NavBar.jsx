@@ -11,8 +11,10 @@ import DrawerComponent from './DrawerComponent';
 
 const NavBar = () => {
   const theme = useTheme();
-  const screenSizeSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const screenSizeSmall = useMediaQuery(theme.breakpoints.down('tablet'));
+  const { values } = theme.breakpoints;
 
+  console.log(theme.breakpoints.down('tablet'));
   const navLinksArray = [
     {
       title: 'Home',
@@ -30,10 +32,25 @@ const NavBar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ height: '100px', justifyContent: 'center' }}>
-        <Toolbar color="white">
+      <AppBar
+        position="static"
+        sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
+      >
+        <Toolbar
+          color="white"
+          justifyContent="center"
+          alignContent="center"
+          sx={{
+            width: {
+              mobile: '100vw',
+              tablet: '100vw',
+              laptop: '100vw',
+              desktop: values.desktop,
+            },
+          }}
+        >
           <Box display="flex" alignItems="center" gap="4px" color="white" sx={{ flexGrow: 1 }}>
-            <LocalHospitalIcon color="inherit"></LocalHospitalIcon>
+            <LocalHospitalIcon color="inherit" />
             <Typography variant="h5" component="div" color="white">
               CONSUMEDIC
             </Typography>

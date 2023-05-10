@@ -1,14 +1,17 @@
-import React from 'react'
 import NavBar from '../../components/NavBar/NavBar';
-import SearchBar from "../../components/SearchBar/SearchBar"
+import SearchBar from '../../components/SearchBar/SearchBar';
+
+import { Box } from '@mui/material';
 
 const Home = () => {
   return (
-    <div>
+    <Box>
       <NavBar />
-      <SearchBar />
-    </div>
-  )
-}
+      <Box>
+        <SearchBar />
+      </Box>
+    </Box>
+  );
+};
 
-export default Home
+export default Home;
