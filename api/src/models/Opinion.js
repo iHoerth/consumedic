@@ -5,8 +5,9 @@ module.exports = (sequelize) => {
     "Opinion",
     {
       id_opinion: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true
       },
       fecha: {
         type: DataTypes.DATEONLY,

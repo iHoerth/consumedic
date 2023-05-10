@@ -1,8 +1,12 @@
-const express = require('express');
-const router = express.Router();
-const opinionsController = require('../controllers/opinionsController.js');
+const { Router } = require("express");
 
-// Ruta GET para obtener todas las opiniones
-router.get('/', opinionsController.getAllOpinions);
+const {
+    getOpinions
+} =  require ("../handlers/opinions")
 
-module.exports = router;
+const opinionsRouter = Router();
+
+// GET
+opinionsRouter.get("/", getOpinions); // tener en cuenta el query by ?name=....
+
+module.exports = opinionsRouter;
