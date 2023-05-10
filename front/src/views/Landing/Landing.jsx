@@ -14,7 +14,7 @@ const Landing = () => {
         <div>BANNER CON IMAGEN DE MEDICO</div>
         <div className={style.buttonContainer}>
           <SearchBar></SearchBar>
-          <Button color='secondary' variant="contained" sx={{ width: '200px' }}>
+          <Button variant="contained" sx={{ width: '200px' }}>
             INGRESO COMO MEDICO
           </Button>
         </div>

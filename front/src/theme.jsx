@@ -21,7 +21,7 @@ const theme = createTheme({
     primary: {
       //Dejo comentados otros colores como para probar descomentando:
 
-      main: teal['A400'],
+      // main: teal['A400'],
       // main: teal['A200'],
       // main: teal[200],
 
@@ -30,10 +30,11 @@ const theme = createTheme({
 
       // main: cyan['A200'],
       // main: cyan[500],
+      main: blue[500],
     },
 
     secondary: {
-      main: blue[500],
+      main: teal['A400'],
     },
   },
   typography: {
