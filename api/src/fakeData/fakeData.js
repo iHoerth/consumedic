@@ -3,8 +3,8 @@ const db = require('../db');
 
 const createFakeData = async () => {
 
-  // Crear 10 DoctorType
-  for(let i = 0; i < 10; i++) {
+  // Crear 30 DoctorType
+  for(let i = 0; i < 30; i++) {
     const doctor = await db.DoctorType.create({
       dni:faker.datatype.number(),
       NumMatricula: faker.datatype.number(),
@@ -23,8 +23,8 @@ const createFakeData = async () => {
     });
   }
 
-  // Crear 10 PacienteType
-  for(let i = 0; i < 10; i++) {
+  // Crear 30 PacienteType
+  for(let i = 0; i < 30; i++) {
     const paciente = await db.PacienteType.create({
       dni: faker.datatype.number(),
       email: faker.internet.email(),
@@ -37,8 +37,8 @@ const createFakeData = async () => {
     });
   }
 
-  // Crear 10 Citas
-  for(let i = 0; i < 10; i++) {
+  // Crear 30 Citas
+  for(let i = 0; i < 30; i++) {
     const cita = await db.Cita.create({
       fecha: faker.date.future(),
       hora: faker.date.future(),
@@ -55,8 +55,8 @@ const createFakeData = async () => {
     });
   }
 
-  // Crear 10 HistorialMedico
-  for(let i = 0; i < 10; i++) {
+  // Crear 30 HistorialMedico
+  for(let i = 0; i < 30; i++) {
     const historialMedico = await db.HistorialMedico.create({
       descripcion: faker.lorem.paragraphs().substring(0, 150),
       fecha: faker.date.past(),
@@ -65,8 +65,8 @@ const createFakeData = async () => {
     });
   }
 
-  // Crear 10 Opinion
-  for(let i = 0; i < 10; i++) {
+  // Crear 30 Opinion
+  for(let i = 0; i < 30; i++) {
     const opinion = await db.Opinion.create({
       fecha: faker.date.past(),
       ubicacion: faker.address.city(),
@@ -75,7 +75,7 @@ const createFakeData = async () => {
     });
   }
 
-  // Crear 10 ObraSocial
+  // Crear 30 ObraSocial
   const obrasSociales = [  "ADOS ROSARIO",  "AMPAR",  "APDIS",  "APDJIC",  "APSOT",  "ASE",  "ASSPE",  "CAMPSIC",  "DITEM",  "FAA",  "FEDECAMARAS",  "FRUTOS",  "JOHNSON",  "OPDEA",  "OPZC",  "OS.PE.PRI",  "OSA",  "OSADEF",  "OSADRA",  "OSALARA",  "OSAMMVC",  "OSAPM",  "OSAPMCBA",  "OSAPMER",  "OSARPYH",  "OSBA",  "OSBARA",  "OSCAMGLYP",  "OSCAPBAQFLU",  "OSCE",  "OSCEP",  "OSCHOCA",  "OSCOEMA",  "OSCOMM",  "OSCONARA",  "OSCRAIA",  "OSDE",  "OSDEL",  "OSDEM",  "OSDEPYM",  "OSDIC",  "OSDIPP",  "OSDOP",  "OSFYB",  "OSFYHC",  "OSIAD",  "OSIM",  "OSIPA",  "OSITAC",  "OSJERA",  "OSJOMN",  "OSJONR",  "OSJPVYF",  "OSLERA",  "OSLPASTEUR",  "OSLYF",  "OSLYF PATAGONIA",  "OSMA",  "OSMAD",  "OSMATA",  "OSME",  "OSMEDICA",  "OSMISS",  "OSMITA",  "OSMMEDT",  "OSOC",  "OSOETSYLARA",  "OSOFPP DE ROSARIO",  "OSOSS",  "OSPA",  "OSPACA",  "OSPACP",  "OSPAD",  "OSPADEP",  "OSPAF",  "OSPAGA",  "OSPAIL",  "OSPAÑA",  "OSPAP",  "OSPAT",  "OSPATCA",  "OSPAV",  "OSPA-VIAL",  "OSPCN",  "OSPCRA",  "OSPCSPMYA",  "OSPCYD",  "OSPDESBA",  "OSPE",  "OSPEA",  "OSPEC",  "OSPM",  "OSPOCE",  "OSTEP",  "OSTES",  "OSTIG",  "OSTP",  "OSTPBA",  "OSTPCHPYARA",  "OSTRAC",  "OSTVENDRA",  "OSTVLA",  "OSUCI",  "OSUOMRA",  "OSUTI",  "OSVARA",  "OSYPF",  "SERVESALUD"];
   for(let i = 0; i < obrasSociales.length; i++) {
     const obraSocial = await db.ObraSocial.create({
@@ -83,8 +83,8 @@ const createFakeData = async () => {
     });
   }
 
-  // Crear 10 Pago
-  for(let i = 0; i < 10; i++) {
+  // Crear 30 Pago
+  for(let i = 0; i < 30; i++) {
     const pago = await db.Pago.create({
       precio: faker.datatype.number(),
       medioDeOPago: faker.finance.accountName()
