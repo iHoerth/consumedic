@@ -1,14 +1,17 @@
-const {Opinion}= require("../../db")
+const {Opinion,DoctorType,PacienteType}= require("../../db")
 
-const getAllOpinions = async (ubicacion, puntaje, mensaje, idMedico, idPaciente) => {
+const postOpinions = async (ubicacion, puntaje, mensaje, idMedico, idPaciente) => {
+    const newPacient = await PacienteType.findByPk(idPaciente);
+    const newDoctor = await DoctorType.findByPk(idMedico);
+
     const newOpinion = await Opinion.create({
         ubicacion, 
         puntaje, 
         mensaje, 
+        DoctorTypeId: newDoctor.id,
+        PacienteTypeId: newPacient.id
     });
-    newOpinion.addDoctorTypes(idMedico);
-    newOpinion.addPacienteTypes(idPaciente);
     return newOpinion;
 }
 
-module.exports = { getAllOpinions };
+module.exports = { postOpinions };
