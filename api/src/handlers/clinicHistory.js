@@ -1,5 +1,6 @@
 
-const {getAllClinicsHistories, createHistorialMedic} = require("../controllers/clinicHistory/getAllClinicsHistories")
+const {getAllClinicsHistories} = require("../controllers/clinicHistory/getAllClinicsHistories")
+const {createClinicHistory} = require("../controllers/clinicHistory/createClinicHistory")
 
 const getClinicHistory = async (req, res)=>{
     try {
@@ -13,7 +14,7 @@ const getClinicHistory = async (req, res)=>{
 const postClinicHistory = async(req, res)=>{
     const {descripcion, fecha,estudio,  documentos,idCita,idPaciente} = req.body;
     try {
-        const historial = await createHistorialMedic(descripcion, fecha,estudio,  documentos,idCita,idPaciente)
+        const historial = await createClinicHistory(descripcion, fecha,estudio,  documentos,idCita,idPaciente)
         res.status(200).json(historial)
     } catch (error) {
         res.status(400).json({error: error.message});
