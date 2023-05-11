@@ -5,7 +5,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import axios from 'axios';
 import { Context } from '../../context/ContextProvider';
 
-const PatientNewUser = () => {
+const CreatePatient = () => {
 
     // const patientsData = useContext()
 
@@ -269,4 +269,4 @@ const PatientNewUser = () => {
     );
 };
 
-export default PatientNewUser;
+export default CreatePatient;
