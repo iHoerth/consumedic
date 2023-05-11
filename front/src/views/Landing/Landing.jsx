@@ -1,27 +1,138 @@
-import React from 'react';
-import NavBar from '../../components/NavBar/NavBar';
-import { Button } from '@mui/material';
-import ImageHome from '../../components/ImageHome/ImageHome';
+import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MobileStepper from '@mui/material/MobileStepper';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import SwipeableViews from 'react-swipeable-views';
+import { autoPlay, virtualize } from 'react-swipeable-views-utils';
 
-import SearchBar from '../../components/SearchBar/SearchBar'
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-import style from './Landing.module.css';
+const images = [
+  {
+    label: '',
+    imgPath:
+      '/images/1.jpg',
+  },
+  {
+    label: '',
+    imgPath:
+      '/images/4.jpg',
+  },
+  {
+    label: '',
+    imgPath:
+      '/images/5.jpg',
+  },
+  {
+    label: '',
+    imgPath:
+      '/images/6.jpg',
+  },
+  {
+    label: '',
+    imgPath:
+      '/images/7.jpg',
+  },
+  {
+    label: '',
+    imgPath:
+      '/images/7.jpg',
+  },
+];
 
-const Landing = () => {
+function SwipeableTextMobileStepper() {
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const maxSteps = images?.length ?? 0;
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleStepChange = (step) => {
+    setActiveStep(step);
+  };
+
   return (
-    <>
-      <NavBar />
-      <div className={style.container}>
-        <ImageHome />
-        <div className={style.buttonContainer}>
-          <Button href='/home' variant="contained" sx={{ width: '200px' }}>
-            BUSCAR MEDICOS YA! NO AGUANTO MAS!!!
+    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+      <Paper
+        square
+        elevation={0}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          height: 50,
+          pl: 2,
+          bgcolor: 'background.default',
+        }}
+      >
+        <Typography>{images[activeStep].label}</Typography>
+      </Paper>
+      <AutoPlaySwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={activeStep}
+        onChangeIndex={handleStepChange}
+        enableMouseEvents
+      >
+        {images.map((step, index) => (
+          <div key={step.label}>
+            {Math.abs(activeStep - index) <= 2 ? (
+              <Box
+                component="img"
+                sx={{
+                  height: 'auto',
+                  display: 'block',
+                  maxWidth: 400,
+                  overflow: 'hidden',
+                  width: '100%',
+                }}
+                src={step.imgPath}
+                alt={step.label}
+              />
+            ) : null}
+          </div>
+        ))}
+      </AutoPlaySwipeableViews>
+      <MobileStepper
+        steps={maxSteps}
+        position="static"
+        activeStep={activeStep}
+        nextButton={
+          <Button
+            size="small"
+            onClick={handleNext}
+            disabled={activeStep === maxSteps - 1}
+          >
+            Next
+            {theme.direction === 'rtl' ? (
+              <KeyboardArrowLeft />
+            ) : (
+              <KeyboardArrowRight />
+            )}
           </Button>
-        </div>
-        <div>BANNER CON IMAGEN DE MEDICO</div>
-      </div>
-    </>
+        }
+        backButton={
+          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+            {theme.direction === 'rtl' ? (
+              <KeyboardArrowRight />
+            ) : (
+              <KeyboardArrowLeft />
+            )}
+            Back
+          </Button>
+        }
+      />
+    </Box>
   );
-};
+}
 
-export default Landing;
+export default SwipeableTextMobileStepper;
