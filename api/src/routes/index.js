@@ -31,6 +31,7 @@ router.use("/clinicHistory", clinicHistory);
 router.use("/payments", payments);
 router.use("/citas", createCita); 
 router.use('/citas', citaRoutes);
+//probando el PR
 
 
 module.exports = router;
