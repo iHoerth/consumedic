@@ -1,6 +1,6 @@
 
 const {getAllPayments} = require("../controllers/payments/getAllPayments")
-const {createPayments} = require("../controllers/payments/getAllPayments")
+const {createPayments} = require("../controllers/payments/createPayments")
 
 const getPayments = async (req, res)=>{
     try {
