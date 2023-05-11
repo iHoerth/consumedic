@@ -3,13 +3,12 @@ import { useContext, useState, useEffect } from 'react';
 import Pagination from '../../components/Pagination/Pagination';
 import CardsContainer from '../../components/CardsContainer/CardsContainer';
 import SearchBar from '../../components/SearchBar/SearchBar';
-
+import NavBar from '../../components/NavBar/NavBar';
 import style from './DoctorsList.module.css';
 
 import { Context } from '../../context/ContextProvider';
 
 const Doctors = () => {
-  
   const [doctorsData] = useContext(Context);
   const { doctors, fetchDoctors, fetchDoctorByEmail } = doctorsData;
 
@@ -32,11 +31,14 @@ const Doctors = () => {
   }, []);
 
   return (
-    <div className={style.divSpecialists}>
-      <SearchBar />
-      <CardsContainer doctorsInPage={doctorsInPage} />
-      <Pagination maxPages={maxPages} page={currentPage} handleChange={handleChange} />
-    </div>
+    <>
+      <NavBar />
+      <div className={style.divSpecialists}>
+        <SearchBar />
+        <CardsContainer doctorsInPage={doctorsInPage} />
+        <Pagination maxPages={maxPages} page={currentPage} handleChange={handleChange} />
+      </div>
+    </>
   );
 };
 
