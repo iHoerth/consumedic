@@ -1,10 +1,15 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { TextField, Select, MenuItem, InputLabel, FormControl, Button, Box, Paper, Typography, Checkbox } from '@mui/material';
 import NavBar from '../../components/NavBar/NavBar';
 import axios from 'axios';
+import { Context } from '../../context/ContextProvider';
 
-const NewUserForm = () => {
+const CreatePatient = () => {
+
+    // const patientsData = useContext()
+
+
     const [form, setForm] = useState({
         name: '',
         surname: '',
@@ -119,6 +124,10 @@ const NewUserForm = () => {
         setShowPassword(!showPassword);
     };
 
+    // const verpatients=()=>{
+    //   console.log(patientsData);
+    // }
+
     return (
         <>
             <NavBar></NavBar>
@@ -128,6 +137,7 @@ const NewUserForm = () => {
                     alignItems: 'center',
                     flexDirection: 'column'
                 }} >
+                  {/* <Button onClick={verpatients}>Ver log</Button> */}
                 <form onSubmit={handleSubmit}>
                     <FormControl required>
                         <Typography variant='h6' align='center'>Crear nuevo usuario</Typography>
@@ -189,7 +199,7 @@ const NewUserForm = () => {
                             value={form.insurance}
                             name='insurance'
                             onChange={(event) => handleFormChange(event)}
-                            helperText={error.insurance ? <Typography color="error">{error.insurance}</Typography> : ''}
+                            
                         >
                             <MenuItem value={'OSDE'}>OSDE</MenuItem>
                             <MenuItem value={'Swiss Medical'}>Swiss Medical</MenuItem>
@@ -259,4 +269,4 @@ const NewUserForm = () => {
     );
 };
 
-export default NewUserForm;
+export default CreatePatient;

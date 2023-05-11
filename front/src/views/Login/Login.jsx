@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import NavBar from "../../components/NavBar/NavBar"
 import { Container, Paper, TextField, Box, Button, Typography } from "@mui/material";
 import { Google } from "@mui/icons-material";
-import PatientNewUser from "../PatientNewUser/PatientNewUser";
+import PatientNewUser from "../CreatePatient/PatientNewUser";
 const Userlogin = () => {
 
   //estados de email
