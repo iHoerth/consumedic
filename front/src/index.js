@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme';
 
-import ContextProvider from './context/ContextProvider Implementacion 2';
+import ContextProvider from './context/ContextProvider';
 
 import App from './App';
 
@@ -13,10 +13,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <ThemeProvider theme={theme}>
-      {/* <ContextProvider> */}
+      <ContextProvider>
         <CssBaseline />
         <App />
-      {/* </ContextProvider> */}
+      </ContextProvider>
     </ThemeProvider>
   </BrowserRouter>
 );
