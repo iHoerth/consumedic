@@ -7,6 +7,8 @@ const opinions = require("./opinions");
 const clinicHistory = require("./clinicHistory");
 const payments = require("./payments");
 
+const horarios = require("./horarios");
+
 //!fake data
 const { createFakeData } = require("../fakeData/fakeData");
 
@@ -29,6 +31,6 @@ router.use("/opinions", opinions);
 router.use("/clinicHistory", clinicHistory);
 router.use("/payments", payments);
 
-
+router.use("/horarios", horarios);
 
 module.exports = router;
