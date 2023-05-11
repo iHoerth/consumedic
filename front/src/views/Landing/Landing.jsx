@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
-import { autoPlay, virtualize } from 'react-swipeable-views-utils';
+import { autoPlay } from 'react-swipeable-views-utils';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -16,32 +16,27 @@ const images = [
   {
     label: '',
     imgPath:
-      '/images/1.jpg',
-  },
-  {
-    label: '',
-    imgPath:
-      '/images/4.jpg',
-  },
-  {
-    label: '',
-    imgPath:
-      '/images/5.jpg',
-  },
-  {
-    label: '',
-    imgPath:
-      '/images/6.jpg',
-  },
-  {
-    label: '',
-    imgPath:
       '/images/7.jpg',
   },
   {
     label: '',
     imgPath:
-      '/images/7.jpg',
+      '/images/8.jpg',
+  },
+  {
+    label: '',
+    imgPath:
+      '/images/9.png',
+  },
+  {
+    label: '',
+    imgPath:
+      '/images/10.jpg',
+  },
+  {
+    label: '',
+    imgPath:
+      '/images/11.jpg',
   },
 ];
 
@@ -63,7 +58,7 @@ function SwipeableTextMobileStepper() {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+    <Box sx={{ maxWidth: 'auto', flexGrow: 1 }}>
       <Paper
         square
         elevation={0}
@@ -84,14 +79,14 @@ function SwipeableTextMobileStepper() {
         enableMouseEvents
       >
         {images.map((step, index) => (
-          <div key={step.label}>
+          <div key={step.imgPath}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
                 sx={{
                   height: 'auto',
                   display: 'block',
-                  maxWidth: 400,
+                  maxWidth: 'auto',
                   overflow: 'hidden',
                   width: '100%',
                 }}
