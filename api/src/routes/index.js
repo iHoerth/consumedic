@@ -8,6 +8,7 @@ const clinicHistory = require("./clinicHistory");
 const payments = require("./payments");
 const createCita = require("./createCita");
 const citaRoutes = require('./citaRoutes');
+
 //!fake data
 const { createFakeData } = require("../fakeData/fakeData");
 
