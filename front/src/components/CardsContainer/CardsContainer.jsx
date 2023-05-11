@@ -78,7 +78,6 @@ const CardsContainer = ({ doctorsInPage }) => {
       stars: 4,
     },
   ];
-  console.log(doctorsInPage);
   const allMedicos = doctorsInPage.length ? (
     <div className={style.divCards}>
       {doctorsInPage.map((doctor) => (
