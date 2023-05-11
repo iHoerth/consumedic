@@ -7,7 +7,6 @@ const URL_PATIENTS = `http://localhost:3001/patients`;
 const URL_DOCTORS = `http://localhost:3001/doctors`;
 
 const ContextProvider = ({ children }) => {
-  
   const [doctorsData, setDoctorsData] = useState({
     doctors: [],
     doctorDetail: {},
@@ -25,18 +24,26 @@ const ContextProvider = ({ children }) => {
       const data = await response.data;
       setDoctorsData((prevState) => ({
         ...prevState,
-        doctorDetail: data
-      }))
+        doctorDetail: data,
+      }));
     },
     fetchDoctorByEmail: async (email) => {
       const response = await axios(`${URL_DOCTORS}/${email}`);
       const data = await response.data;
       setDoctorsData((prevState) => ({
         ...prevState,
-        doctorDetail: data
+        doctorDetail: data,
+      }));
+    },
+    createDoctor: async (newDoctor) => {
+      const response = await axios.post(`${URL_DOCTORS}`, newDoctor);
+      const data = await response.data;
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        doctors: [...prevState.doctors, ...data],
+        doctorDetail: { ...data },
       }))
     },
-    createDoctor: async () => {},
   });
 
   const [patientsData, setPatientsData] = useState({
@@ -52,21 +59,27 @@ const ContextProvider = ({ children }) => {
       }));
     },
     fetchPatientByEmail: async (email) => {
-      const response = await axios(`${URL_PATIENTS}?email=${email}`)
+      const response = await axios(`${URL_PATIENTS}?email=${email}`);
       const data = await response.data;
       setPatientsData((prevState) => ({
         ...prevState,
-        patientDetail: {...data}
+        patientDetail: { ...data },
+      }));
+    },
+    createPatient: async (newPatient) => {
+      const response = await axios.post(`${URL_PATIENTS}`, newPatient);
+      const data = await response.data;
+      setPatientsData((prevState) => ({
+        ...prevState,
+        patients: [...prevState.patients, ...data],
+        patientDetail: { ...data },
       }))
     },
-    createUser: async () => {},
   });
 
   return (
     <>
-      <Context.Provider value={[ doctorsData, patientsData ]}>
-        {children}
-      </Context.Provider>
+      <Context.Provider value={[doctorsData, patientsData]}>{children}</Context.Provider>
     </>
   );
 };
