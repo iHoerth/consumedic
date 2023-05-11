@@ -61,7 +61,7 @@ export default function ProminentAppBar() {
               <MenuItem value={3}>Córdoba</MenuItem>
             </Select>
           </FormControl>
-          <NavLink to="/all" activeClassName="active">
+          <NavLink to="/all">
             <IconButton size="large" aria-label="search" color="inherit">
               <SearchIcon />
             </IconButton>

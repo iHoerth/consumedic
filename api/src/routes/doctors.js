@@ -1,11 +1,12 @@
 const { Router } = require("express");
+const { loginDoctor } = require("../handlers/auth");
 
 const {
-    getDoctors,
-    getDoctorsById,
-    postDoctor,
-    putDoctor
-} =  require ("../handlers/doctors")
+  getDoctors,
+  getDoctorsById,
+  postDoctor,
+  putDoctor,
+} = require("../handlers/doctors");
 
 const doctorsRouter = Router();
 
@@ -15,10 +16,8 @@ doctorsRouter.get("/:id", getDoctorsById);
 
 // POST
 doctorsRouter.post("/", postDoctor);
-
+doctorsRouter.post("/login", loginDoctor);
 //PUT
 doctorsRouter.put("/", putDoctor);
-
-
 
 module.exports = doctorsRouter;
