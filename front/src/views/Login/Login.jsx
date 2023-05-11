@@ -10,16 +10,6 @@ const Userlogin = () => {
   const [emailError, setEmailError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState('');
 
-
-
-  //funcion para cambiar el estado del input
-  function inputHandleChange(event) {
-
-    const { name, value } = event.target;
-
-    setEmail({ ...email, [name]: value });
-    setPassword({ ...password, [name]: value });
-  }
   //expresion regular para mails
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -64,7 +54,7 @@ const Userlogin = () => {
       <NavBar></NavBar>
       <Container component={Paper} elevation={5}
         sx={{ width: '300px' }} >
-        <Typography variant='h6' m={2} align='center'>Crear nuevo usuario</Typography>
+        <Typography variant='h6' m={2} align='center'>Ingresa tu cuenta</Typography>
 
         <Box component='form' className="login"
           sx={{
@@ -140,12 +130,9 @@ const Userlogin = () => {
             <Google></Google>Ingresar con Google
           </Button>
           <Typography>No tienes una cuenta?</Typography>
-          <Button color="primary" href="/newuser">Crear cuenta</Button>
+          <Button color="primary" href="/create">Crear cuenta</Button>
         </Box>
       </Container>
-
-
-      <PatientNewUser></PatientNewUser>
     </>
 
   )
