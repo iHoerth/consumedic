@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import NavBar from "../../components/NavBar/NavBar"
-import { Container, Paper, TextField, Box, Button } from "@mui/material";
-import { makeStyles } from "@mui/material";
+import { Container, Paper, TextField, Box, Button, Typography } from "@mui/material";
+import { Google } from "@mui/icons-material";
+import PatientNewUser from "../PatientNewUser/PatientNewUser";
 const Userlogin = () => {
 
   //estados de email
@@ -9,7 +10,7 @@ const Userlogin = () => {
   const [emailError, setEmailError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState('');
 
-  
+
 
   //funcion para cambiar el estado del input
   function inputHandleChange(event) {
@@ -47,13 +48,14 @@ const Userlogin = () => {
   // funcion para validar contrasena
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-  if (event.target.value === '') {
-    setPasswordError(true);
-    setPasswordHelperText('ingrese su contrasena.');
-  } else {
-    setPasswordError(false);
-    setPasswordHelperText('');
-  }}
+    if (event.target.value === '') {
+      setPasswordError(true);
+      setPasswordHelperText('ingrese su contrasena.');
+    } else {
+      setPasswordError(false);
+      setPasswordHelperText('');
+    }
+  }
 
   //funcion para corroborar
 
@@ -61,81 +63,89 @@ const Userlogin = () => {
     <>
       <NavBar></NavBar>
       <Container component={Paper} elevation={5}
-        sx={{ width: '300px'}} >
-        <div className="login_image">
-          <h1 className="login_title">CONSUMEDIC</h1>
-        </div>
+        sx={{ width: '300px' }} >
+        <Typography variant='h6' m={2} align='center'>Crear nuevo usuario</Typography>
 
         <Box component='form' className="login"
-        sx={{display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: 'column',}}>
-          <h2>LOG IN</h2>
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}>
 
           <TextField required id="fieldset"
             defaultValue="Email"
-            color="secondary" 
-            type="email" 
-            name="mail" 
-            value={email} placeholder="Enter your mail" 
+            color="secondary"
+            type="email"
+            name="mail"
+            value={email} placeholder="Enter your mail"
             onChange={(event) => handleEmailChange(event)}
             helperText={emailError ? <p>{emailHelperText}</p> : ''}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: emailError ? 'red' : 'green',
+                  borderColor: emailError ? 'red' : 'secondary',
                 },
                 '&:hover fieldset': {
-                  borderColor: emailError ? 'red' : 'green',
+                  borderColor: emailError ? 'red' : 'secondary',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: emailError ? 'red' : 'green',
+                  borderColor: emailError ? 'red' : 'secondary',
                   borderWidth: '2px',
                 },
               },
               '& .MuiFormHelperText-root': {
-                color: emailError ? 'red' : 'green',
+                color: emailError ? 'red' : 'secondary',
               },
             }}
-            >
+          >
 
-            </TextField>
+          </TextField>
 
 
-            <TextField required id="outlined-required"
+          <TextField required id="outlined-required"
             defaultValue="Password"
-            color="secondary" type="password" 
-            name="password" value={password} 
-            placeholder="Enter your password" 
+            color="secondary" type="password"
+            name="password" value={password}
+            placeholder="Enter your password"
             onChange={(event) => handlePasswordChange(event)}
             helperText={passwordError ? <p>{passwordHelperText}</p> : ''}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: passwordError ? 'red' : 'green',
+                  borderColor: passwordError ? 'red' : 'secondary',
                 },
                 '&:hover fieldset': {
-                  borderColor: passwordError ? 'red' : 'green',
+                  borderColor: passwordError ? 'red' : 'secondary',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: passwordError ? 'red' : 'green',
+                  borderColor: passwordError ? 'red' : 'secondary',
                   borderWidth: '2px',
                 },
               },
               '& .MuiFormHelperText-root': {
-                color: passwordError ? 'red' : 'green',
+                color: passwordError ? 'red' : 'secondary',
               },
             }}
-            ></TextField>
+          ></TextField>
 
 
-            <Button variant="contained" color="success" sx={{margin:'10px'}}
+          <Button variant="contained" color="secondary" sx={{ margin: '10px' }}
             href="/patientpanel" >
-              Ingresar
-            </Button>
+            Ingresar
+          </Button>
+          <Button variant="contained" color="secondary" sx={{ margin: '10px' }}
+            href="#" >
+            <Google></Google>Ingresar con Google
+          </Button>
+          <Typography>No tienes una cuenta?</Typography>
+          <Button color="primary" href="/newuser">Crear cuenta</Button>
         </Box>
       </Container>
+
+
+      <PatientNewUser></PatientNewUser>
     </>
 
   )
