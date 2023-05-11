@@ -40,7 +40,6 @@ const ContextProvider = ({ children }) => {
       const data = await response.data;
       setDoctorsData((prevState) => ({
         ...prevState,
-        doctors: [...prevState.doctors, ...data],
         doctorDetail: { ...data },
       }))
     },
@@ -71,7 +70,6 @@ const ContextProvider = ({ children }) => {
       const data = await response.data;
       setPatientsData((prevState) => ({
         ...prevState,
-        patients: [...prevState.patients, ...data],
         patientDetail: { ...data },
       }))
     },
