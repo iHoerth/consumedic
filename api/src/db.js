@@ -37,7 +37,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // Definir los modelos y sus realaciones
 
-const {Cita, DoctorType, Especialidad, HistorialMedico, ObraSocial, Opinion, PacienteType, Pago} = sequelize.models
+const {Cita, DoctorType, Especialidad, HistorialMedico, ObraSocial, Opinion, PacienteType, Pago, Horario} = sequelize.models
 
 
 // 1:1
@@ -73,12 +73,17 @@ Cita.hasOne(Pago);
 HistorialMedico.hasMany(Cita);
 Cita.belongsTo(HistorialMedico);
 
+PacienteType.hasMany(Cita);
+Cita.belongsTo(PacienteType);
+
 ObraSocial.hasMany(PacienteType);  // a verificar si puede ser muchos a muchos
 PacienteType.belongsTo(ObraSocial);
 
 PacienteType.belongsTo(HistorialMedico);
 HistorialMedico.hasOne(PacienteType);
 
+Horario.belongsTo(DoctorType);
+DoctorType.hasOne(Horario);
 
 module.exports = {
    ...sequelize.models,
