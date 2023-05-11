@@ -40,7 +40,7 @@ const Card = (props) => {
       <CardMUI>
         <Tooltip title="Ver Perfil">
           <IconButton sx={{ p: 0 }}>
-            <NavLink to="/medicalDetail" activeClassName="active">
+            <NavLink to="/medicalDetail">
               <Avatar alt="Remy Sharp" src={props.profileImage} />
             </NavLink>
           </IconButton>
