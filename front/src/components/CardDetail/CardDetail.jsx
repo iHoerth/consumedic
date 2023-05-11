@@ -36,7 +36,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const CardDetail = () => {
+const CardDetail = ({doctorData}) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
