@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Home, Landing, Login, Doctors, DoctorDetail } from './views';
+import { Home, Landing, Login, Doctors, DoctorDetail, PatientPanel , PatientNewUser , DoctorsList } from './views';
 
 import './App.css';
 
