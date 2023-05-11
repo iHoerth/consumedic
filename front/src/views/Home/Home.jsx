@@ -24,7 +24,7 @@ const Home = () => {
           height: "70vh",
         }}
       >
-        <ImageHome />
+        {/* <ImageHome /> */}
         <SearchBar />
       </Box>
     </Box>

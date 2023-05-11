@@ -7,6 +7,7 @@ const URL_PATIENTS = `http://localhost:3001/patients`;
 const URL_DOCTORS = `http://localhost:3001/doctors`;
 
 const ContextProvider = ({ children }) => {
+  
   const [doctorsData, setDoctorsData] = useState({
     doctors: [],
     doctorDetail: {},
@@ -18,6 +19,14 @@ const ContextProvider = ({ children }) => {
         ...prevState,
         doctors: [...prevState.doctors, ...data],
       }));
+    },
+    fetchDoctorById: async (id) => {
+      const response = await axios(`${URL_DOCTORS}/${id}`);
+      const data = await response.data;
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        doctorDetail: data
+      }))
     },
     fetchDoctorByEmail: async (email) => {
       const response = await axios(`${URL_DOCTORS}/${email}`);
