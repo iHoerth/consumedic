@@ -26,7 +26,7 @@ const AppHeader = styled(AppBar)(({ theme }) => ({
 
 export default function ProminentAppBar() {
   return (
-    <Box sx={{ flexGrow: 1, width: "600px" }}>
+    <Box sx={{ flexGrow: 1, width: "50%" }}>
       <AppHeader position="static">
         <StyledToolbar>
           <FormControl sx={{ minWidth: 135, color: "white" }}>
@@ -61,7 +61,7 @@ export default function ProminentAppBar() {
               <MenuItem value={3}>Córdoba</MenuItem>
             </Select>
           </FormControl>
-          <NavLink to="/all">
+          <NavLink to="/search">
             <IconButton size="large" aria-label="search" color="inherit">
               <SearchIcon />
             </IconButton>

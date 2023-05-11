@@ -64,6 +64,10 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM,
         values: ["active", "deleted"],
         defaultValue: "active",
+       },
+       precio: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
        }
       
  },{

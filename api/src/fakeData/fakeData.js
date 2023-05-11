@@ -38,6 +38,7 @@ const createFakeData = async () => {
       titulo:faker.music.genre(),
       Descripcion: faker.hacker.phrase(),
       rating: faker.datatype.number(),
+      precio: Math.floor(Math.random()*5000)+5000,
       isDoctor: true,
       status: 'active'
     });
