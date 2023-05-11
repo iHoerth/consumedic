@@ -7,4 +7,6 @@ const getAllClinicsHistories = async () => {
     return clinicHistories;
 }
 
-module.exports = { getAllClinicsHistories };
+module.exports = { 
+    getAllClinicsHistories
+};
