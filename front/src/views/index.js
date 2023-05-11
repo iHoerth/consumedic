@@ -3,5 +3,6 @@ import Landing from './Landing/Landing';
 import Login from './Login/Login';
 import DoctorsList from './DoctorsList/DoctorsList';
 import DoctorDetail from './DoctorDetail/DoctorDetail';
-
-export { Home, Landing, Login, DoctorsList, DoctorDetail };
+import PatientNewUser from './PatientNewUser/PatientNewUser';
+import PatientPanel from './PatientPanel/PatientPanel';
+export { Home, Landing, Login, DoctorsList, DoctorDetail, PatientNewUser, PatientPanel };

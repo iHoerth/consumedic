@@ -4,7 +4,7 @@ import { TextField, Select, MenuItem, InputLabel, FormControl, Button, Box, Pape
 import NavBar from '../../components/NavBar/NavBar';
 import axios from 'axios';
 
-const NewUserForm = () => {
+const PatientNewUser = () => {
     const [form, setForm] = useState({
         name: '',
         surname: '',
@@ -259,4 +259,4 @@ const NewUserForm = () => {
     );
 };
 
-export default NewUserForm;
+export default PatientNewUser;
