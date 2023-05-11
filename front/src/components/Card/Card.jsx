@@ -29,7 +29,6 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-
 const Card = (props) => {
   const [expanded, setExpanded] = React.useState(false);
 
@@ -42,7 +41,7 @@ const Card = (props) => {
       <CardMUI sx={{ maxWidth: 345 }}>
         <Tooltip title="Ver Perfil">
           <IconButton sx={{ p: 0 }}>
-            <NavLink to="/medicalDetail" activeClassName="active">
+            <NavLink to="/detail" activeClassName="active">
               <Avatar alt="Remy Sharp" src={props.profileImage} />
             </NavLink>
           </IconButton>
@@ -53,7 +52,7 @@ const Card = (props) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title={<NavLink to="/medicalDetail">{props.name}</NavLink>}
+          title={<NavLink to="/detail">{props.name}</NavLink>}
           subheader={props.specialty}
         />
         <CardContent>
