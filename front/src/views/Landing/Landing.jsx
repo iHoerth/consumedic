@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -10,12 +9,6 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay, virtualize } from 'react-swipeable-views-utils';
-=======
-import React from 'react';
-import NavBar from '../../components/NavBar/NavBar';
-import { Button } from '@mui/material';
-import ImageHome from '../../components/ImageHome/ImageHome';
->>>>>>> origin/main
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -55,7 +48,7 @@ const images = [
 function SwipeableTextMobileStepper() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
+  const maxSteps = images?.length ?? 0;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -70,7 +63,6 @@ function SwipeableTextMobileStepper() {
   };
 
   return (
-<<<<<<< HEAD
     <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
       <Paper
         square
@@ -86,29 +78,30 @@ function SwipeableTextMobileStepper() {
         <Typography>{images[activeStep].label}</Typography>
       </Paper>
       <AutoPlaySwipeableViews
-        axis='x'
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
-      
-        {...virtualize ({ slideRenderer: ({index}) => {
-            return (
+      >
+        {images.map((step, index) => (
+          <div key={step.label}>
+            {Math.abs(activeStep - index) <= 2 ? (
               <Box
-                key={images[index].label}
                 component="img"
                 sx={{
-                  height: 255,
+                  height: 'auto',
                   display: 'block',
                   maxWidth: 400,
                   overflow: 'hidden',
                   width: '100%',
                 }}
-                src={images[index].imgPath}
-                alt={images[index].label}
+                src={step.imgPath}
+                alt={step.label}
               />
-            );
-          }})}
-      />
+            ) : null}
+          </div>
+        ))}
+      </AutoPlaySwipeableViews>
       <MobileStepper
         steps={maxSteps}
         position="static"
@@ -125,15 +118,6 @@ function SwipeableTextMobileStepper() {
             ) : (
               <KeyboardArrowRight />
             )}
-=======
-    <>
-      <NavBar />
-      <div className={style.container}>
-        <ImageHome />
-        <div className={style.buttonContainer}>
-          <Button href='/home' variant="contained" sx={{ width: '200px' }}>
-            BUSCAR MEDICOS YA! NO AGUANTO MAS!!!
->>>>>>> origin/main
           </Button>
         }
         backButton={
@@ -152,5 +136,3 @@ function SwipeableTextMobileStepper() {
 }
 
 export default SwipeableTextMobileStepper;
-
-
