@@ -82,6 +82,8 @@ PacienteType.belongsTo(ObraSocial);
 PacienteType.belongsTo(HistorialMedico);
 HistorialMedico.hasOne(PacienteType);
 
+Horario.belongsTo(DoctorType);
+DoctorType.hasOne(Horario);
 
 module.exports = {
    ...sequelize.models,
