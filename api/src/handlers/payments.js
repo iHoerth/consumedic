@@ -1,5 +1,6 @@
 
 const {getAllPayments} = require("../controllers/payments/getAllPayments")
+const {createPayments} = require("../controllers/payments/getAllPayments")
 
 const getPayments = async (req, res)=>{
     try {
@@ -10,6 +11,17 @@ const getPayments = async (req, res)=>{
     }
 }
 
+const postPayments = async ( req,res)=>{
+    const {precio, medioDeOPago, idCita} = req.body;
+    try {
+        const pago = await createPayments(precio,medioDeOPago,idCita)
+        res.status(200).json(pago)
+    } catch (error) {
+        res.status(400).json({message: error.message});
+    }
+}
+
 module.exports = {
     getPayments,
+    postPayments
 }

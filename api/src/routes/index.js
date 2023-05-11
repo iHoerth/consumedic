@@ -29,4 +29,6 @@ router.use("/opinions", opinions);
 router.use("/clinicHistory", clinicHistory);
 router.use("/payments", payments);
 
+
+
 module.exports = router;

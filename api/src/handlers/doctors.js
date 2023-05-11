@@ -6,9 +6,9 @@ const {modifyDoctor} = require("../controllers/doctors/modifyDoctor")
 
 
 const getDoctors = async (req, res)=>{
-    const {name} = req.query;
+    const {email} = req.query;
     try {
-        const result = name ? await getDoctor(name) : await getAllDoctors();
+        const result = email ? await getDoctor(email) : await getAllDoctors();
         res.status(200).json(result);
     } catch (error) {
         res.status(400).json({error: error.message})

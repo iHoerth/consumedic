@@ -37,79 +37,78 @@ const Card = (props) => {
   };
 
   return (
-    <div>
-      <CardMUI sx={{ maxWidth: 345 }}>
-        <Tooltip title="Ver Perfil">
-          <IconButton sx={{ p: 0 }}>
-            <NavLink to="/detail" activeClassName="active">
-              <Avatar alt="Remy Sharp" src={props.profileImage} />
-            </NavLink>
+    <CardMUI>
+      <Tooltip title="Ver Perfil">
+        <IconButton sx={{ p: 0 }}>
+          <NavLink to="/detail" activeClassName="active">
+            <Avatar alt="Remy Sharp" src={props.profileImage} />
+          </NavLink>
+        </IconButton>
+      </Tooltip>
+      <CardHeader
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
           </IconButton>
-        </Tooltip>
-        <CardHeader
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
-          title={<NavLink to="/detail">{props.name}</NavLink>}
-          subheader={props.specialty}
-        />
-        <CardContent>
-          <Stack spacing={1}>
-            <Rating
-              name="half-rating-read"
-              defaultValue={props.stars}
-              precision={0.5}
-              readOnly
-            />
-          </Stack>
-          <Typography variant="body2" color="text.secondary" sx={{ pb: 3 }}>
-            {props.opinions}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-            {props.infoStudies}
-          </Typography>
+        }
+        title={<NavLink to="/detail">{props.name}</NavLink>}
+        subheader={props.specialty}
+      />
+      <CardContent>
+        <Stack spacing={1}>
+          <Rating
+            name="half-rating-read"
+            defaultValue={props.stars}
+            precision={0.5}
+            readOnly
+          />
+        </Stack>
+        <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+          Especialidades: {props.specialty}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ pb: 3 }}>
+          {props.opinions}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+          {props.infoStudies}
+        </Typography>
 
-          <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-            <LocationOnSharpIcon />
-            {props.location}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-            Consulta ${props.price}
+        <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+          <LocationOnSharpIcon />
+          {props.location}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+          Consulta ${props.price}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
+        </IconButton>
+        <IconButton aria-label="share">
+          <ShareIcon />
+        </IconButton>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <Tooltip title="Ver Agenda">
+            <ExpandMoreIcon />
+          </Tooltip>
+        </ExpandMore>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography paragraph>Agenda Disponible:</Typography>
+          <Typography paragraph>
+            {props.agenda &&
+              props.agenda.map((item, index) => <div key={index}>{item}</div>)}
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <Tooltip title="Ver Agenda">
-              <ExpandMoreIcon />
-            </Tooltip>
-          </ExpandMore>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>Agenda Disponible:</Typography>
-            <Typography paragraph>
-              {props.agenda &&
-                props.agenda.map((item, index) => (
-                  <div key={index}>{item}</div>
-                ))}
-            </Typography>
-          </CardContent>
-        </Collapse>
-      </CardMUI>
-    </div>
+      </Collapse>
+    </CardMUI>
   );
 };
 
