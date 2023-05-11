@@ -81,20 +81,20 @@ const CardsContainer = ({ doctorsInPage }) => {
   console.log(doctorsInPage);
   const allMedicos = doctorsInPage.length ? (
     <div className={style.divCards}>
-      {doctorsInPage.map((medico) => (
+      {doctorsInPage.map((doctor) => (
         <Card
-          key={medico.id}
-          id={medico.id}
-          profileImage={medico.imagen}
-          name={medico.nombre + ' ' + medico.apellido}
-          lastName={medico.apellido}
-          specialty={medico.Especialidads.reduce((acc, ele) => acc + ele + ' ', '')}
-          infoStudies={medico.infoStudies}
-          opinions={medico.opinions}
-          location={medico.location}
-          price={medico.price}
-          agenda={medico.agenda}
-          stars={medico.stars}
+          key={doctor.id}
+          id={doctor.id}
+          profileImage={doctor.imagen}
+          name={doctor.nombre + ' ' + doctor.apellido}
+          lastName={doctor.apellido}
+          specialty={doctor.Especialidads.reduce((acc, ele) => acc + ele + ' ', '')}
+          infoStudies={doctor.infoStudies}
+          opinions={doctor.opinions}
+          location={doctor.location}
+          price={doctor.price}
+          agenda={doctor.agenda}
+          stars={doctor.stars}
         />
       ))}
     </div>

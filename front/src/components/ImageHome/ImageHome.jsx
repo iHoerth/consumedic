@@ -24,7 +24,7 @@ const itemData = [
 ];
 const ImageHome = () => {
   return (
-    <div>
+    <div style={{border:'1px solid black'}}>
       <ImageList
         sx={{
           display: "flex",
