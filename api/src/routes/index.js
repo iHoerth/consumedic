@@ -8,9 +8,9 @@ const specialties = require("./specialties");
 const opinions = require("./opinions");
 const clinicHistory = require("./clinicHistory");
 const payments = require("./payments");
-const horarios = require("./horarios")
 const createCita = require("./createCita");
 const citaRoutes = require('./citaRoutes');
+const horarios = require("./horarios")
 
 //!fake data
 const { createFakeData } = require("../fakeData/fakeData");
@@ -24,12 +24,18 @@ app.post("/fake", async (req, res) => {
   }
 });
 
-
-router.use("/clinicHistory", clinicHistory);
-router.use("/payments", payments);
+app.use("/doctors", doctors);
+app.use("/patients", patients);
+app.use("/socialSecurity", socialSecurity);
+app.use("/specialties", specialties);
+app.use("/opinions", opinions);
+app.use("/clinicHistory", clinicHistory);
+app.use("/payments", payments);
+app.use("/citas", createCita); 
+app.use('/citas', citaRoutes);
 
 router.use("/horarios", horarios);
 
 
 
-module.exports = app;
+module.exports = router;
