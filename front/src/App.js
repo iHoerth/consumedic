@@ -1,17 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
 import { Home, Landing, Login, Doctors, DoctorDetail } from './views';
-import PatientPanel from './views/PatientPanel/PatientPanel';
-import PatientNewUser from "./views/PatientNewUser/PatientNewUser";
+
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/landing" element={<Landing />} />
-        <Route path="/search" element={<Doctors />} />
-        <Route path="/medicalDetail" element={<DoctorDetail />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/search" element={<DoctorsList />} />
+        <Route path="/detail/:id" element={<DoctorDetail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<PatientNewUser />} />
         <Route path='/patientpanel' element={<PatientPanel/>}/>

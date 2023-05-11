@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { loginPatient } = require("../handlers/auth");
 
 const {
   getPatients,
@@ -15,6 +16,7 @@ patientsRouter.get("/:id", getPatientsById);
 
 // POST
 patientsRouter.post("/", postPatient);
+patientsRouter.post("/login", loginPatient);
 
 //PUT
 patientsRouter.put("/", putPatient);
