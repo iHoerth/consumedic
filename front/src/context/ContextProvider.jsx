@@ -56,6 +56,12 @@ const ContextProvider = ({ children }) => {
         doctorDetail: { ...data },
       }));
     },
+    filterDoctors: (newFilter) => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        filteredDoctors: [...newFilter]
+      }))
+    }
   });
 
   const [patientsData, setPatientsData] = useState({
