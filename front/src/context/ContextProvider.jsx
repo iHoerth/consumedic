@@ -59,9 +59,9 @@ const ContextProvider = ({ children }) => {
     filterDoctors: (newFilter) => {
       setDoctorsData((prevState) => ({
         ...prevState,
-        filteredDoctors: [...newFilter]
-      }))
-    }
+        filteredDoctors: [...newFilter],
+      }));
+    },
   });
 
   const [patientsData, setPatientsData] = useState({
@@ -104,17 +104,17 @@ const ContextProvider = ({ children }) => {
         ...prevState,
         socialSecurity: [...socialSecurityData],
         specialties: [...specialtiesData],
-      }))
+      }));
     },
   });
 
   return (
     <>
-      <Context.Provider value={[doctorsData, patientsData]}>
-        <UtilitiesContext.Provider value={[utilities, loading, setLoading]}>
-          {children}
+      <LoadingContext.Provider value={[loading, setLoading]}>
+        <UtilitiesContext.Provider value={utilities}>
+          <Context.Provider value={[doctorsData, patientsData]}>{children}</Context.Provider>
         </UtilitiesContext.Provider>
-      </Context.Provider>
+      </LoadingContext.Provider>
     </>
   );
 };

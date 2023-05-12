@@ -12,35 +12,44 @@ import Select from '@mui/material/Select';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { Context } from '../../context/ContextProvider';
+import { Context, UtilitiesContext } from '../../context/ContextProvider';
+import { Autocomplete, TextField } from '@mui/material';
 
 const Filter = () => {
+  const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const [doctorsData] = useContext(Context);
-  const {filteredDoctors, doctors, } = doctorsData;
+  const { filteredDoctors, doctors, filterDoctors } = doctorsData;
 
-  const handleChange = () => {
+  const [selectedFilter, setSelectedFilter] = useState('');
 
-  }
+  const handleFilters = () => {};
 
-
+  const handleSelectChange = (e, value) => {
+    setSelectedFilter(value);
+    console.log(value);
+    const newFilter = doctors.filter((doc) =>
+      doc.Especialidads.some((spec) => spec.id === value.id)
+    );
+    filterDoctors(newFilter)
+  };
   return (
-    <Box sx={{ flexGrow: 1, width: '50%' }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value=''
-          label="Age"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-          
-        </Select>
-      </FormControl>
-    </Box>
+    <Autocomplete
+      disablePortal
+      id="combo-box-demo"
+      options={specialties}
+      getOptionLabel={(option) => {
+        return option.name;
+      }}
+      sx={{ width: 340 }}
+      // getOptionSelected={(option, value) => option.id === value[0].id}
+      renderInput={(params) => <TextField {...params} label="Especialidad" />}
+      renderOption={(props, option) => (
+        <li {...props} key={option.id}>
+          {option.name}
+        </li>
+      )}
+      onChange={handleSelectChange}
+    />
   );
 };
 
