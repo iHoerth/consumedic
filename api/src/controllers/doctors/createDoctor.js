@@ -12,6 +12,7 @@ const createDoctor = async (
   password,
   titulo,
   Descripcion,
+  precio,
   idEspecialidad,
   idObraSocial
 ) => {
@@ -31,6 +32,7 @@ const createDoctor = async (
     password,
     titulo,
     Descripcion,
+    precio,
   });
 
   if (idEspecialidad) {

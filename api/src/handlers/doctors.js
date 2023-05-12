@@ -38,6 +38,7 @@ const postDoctor = async (req, res) => {
     password,
     titulo,
     Descripcion,
+    precio,
     idEspecialidad,
     idObraSocial,
   } = req.body;
@@ -58,6 +59,7 @@ const postDoctor = async (req, res) => {
       hashedPassword,
       titulo,
       Descripcion,
+      precio,
       idEspecialidad,
       idObraSocial
     );
