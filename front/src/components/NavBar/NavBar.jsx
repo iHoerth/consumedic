@@ -16,8 +16,8 @@ const NavBar = () => {
 
   const navLinksArray = [
     {
-      title: 'Home',
-      path: '/',
+      title: "Home",
+      path: "/home",
     },
     {
       title: 'Login',
