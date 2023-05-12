@@ -35,6 +35,12 @@ const ContextProvider = ({ children }) => {
         doctorDetail: data,
       }));
     },
+    cleanDetail: async () => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        doctorDetail: {}
+      }))
+    },
     createDoctor: async (newDoctor) => {
       const response = await axios.post(`${URL_DOCTORS}`, newDoctor);
       const data = await response.data;
