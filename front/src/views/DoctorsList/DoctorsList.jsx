@@ -9,7 +9,7 @@ import style from "./DoctorsList.module.css";
 
 import { Context } from "../../context/ContextProvider";
 
-const Doctors = () => {
+const DoctorsList = () => {
   const [doctorsData] = useContext(Context);
   const { doctors, fetchDoctors, fetchDoctorByEmail } = doctorsData;
 
