@@ -5,8 +5,6 @@ import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-// import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-// import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { Link } from 'react-router-dom';
@@ -47,14 +45,6 @@ function SwipeableTextMobileStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images?.length ?? 0;
 
-  // const handleNext = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  // };
-
-  // const handleBack = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  // };
-
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
@@ -88,7 +78,7 @@ function SwipeableTextMobileStepper() {
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
-        interval={7000} // 7 second delay between each slide
+        interval={6000} 
       >
         {images.map((step, index) => (
           <div key={step.imgPath}>
@@ -143,11 +133,7 @@ function SwipeableTextMobileStepper() {
           borderRadius: '12px',
           cursor: 'pointer',
           transition: 'background-color 0.3s ease', 
-          '&:hover': {
-            backgroundColor: '#212121',
-            color: '#ffff00'
-          },
-          fontSize: '1.2rem',
+          
         }}
       >
         Ingresar 
