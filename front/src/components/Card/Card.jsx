@@ -36,11 +36,15 @@ const Card = (props) => {
     setExpanded(!expanded);
   };
 
+  const handleClick = () => {
+    
+  }
+
   return (
     <CardMUI>
       <Tooltip title="Ver Perfil">
         <IconButton sx={{ p: 0 }}>
-          <NavLink to={`/detail/${props.id}`} activeClassName="active">
+          <NavLink to={`/detail/${props.id}`}>
             <Avatar alt="Remy Sharp" src={props.profileImage} />
           </NavLink>
         </IconButton>
