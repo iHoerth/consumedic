@@ -1,4 +1,5 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from "react";
+import axios from "axios";
 
 import Pagination from '../../components/Pagination/Pagination';
 import CardsContainer from '../../components/CardsContainer/CardsContainer';
@@ -6,11 +7,13 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import NavBar from '../../components/NavBar/NavBar';
 import Filter from '../../components/Filter/Filter'
 
-import { Context } from '../../context/ContextProvider';
+
+import { Context } from "../../context/ContextProvider";
 
 import style from './DoctorsList.module.css';
 
-const Doctors = () => {
+
+const DoctorsList = () => {
   const [doctorsData] = useContext(Context);
   const { doctors, fetchDoctors, fetchDoctorByEmail } = doctorsData;
 
@@ -29,6 +32,11 @@ const Doctors = () => {
   };
 
   useEffect(() => {
+    const data = async () => {
+      await axios.post("http://localhost:3001/fake");
+    };
+    data();
+
     fetchDoctors();
   }, []);
 
@@ -39,10 +47,14 @@ const Doctors = () => {
       <div className={style.divSpecialists}>
         <SearchBar />
         <CardsContainer doctorsInPage={doctorsInPage} />
-        <Pagination maxPages={maxPages} page={currentPage} handleChange={handleChange} />
+        <Pagination
+          maxPages={maxPages}
+          page={currentPage}
+          handleChange={handleChange}
+        />
       </div>
     </>
   );
 };
 
-export default Doctors;
+export default DoctorsList;
