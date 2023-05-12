@@ -1,9 +1,26 @@
 import { Routes, Route } from 'react-router-dom';
-import { Home, Landing, Login, DoctorsList, CreatePatient, PatientPanel, DoctorDetail } from './views';
+import {
+  Home,
+  Landing,
+  Login,
+  DoctorsList,
+  CreatePatient,
+  PatientPanel,
+  DoctorDetail,
+} from './views';
+import { useContext, useEffect } from 'react';
+
+import { Context, UtilitiesContext } from './context/ContextProvider';
 
 import './App.css';
 
-function App() {
+const App = () => {
+  const { utilities, fetchUtilities } = useContext(UtilitiesContext);
+
+  useEffect(() => {
+    fetchUtilities();
+  }, []);
+
   return (
     <div className="App">
       <Routes>
@@ -13,10 +30,10 @@ function App() {
         <Route path="/detail/:id" element={<DoctorDetail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CreatePatient />} />
-        <Route path='/patientpanel/:id' element={<PatientPanel/>}/>
+        <Route path="/patientpanel/:id" element={<PatientPanel />} />
       </Routes>
     </div>
   );
-}
+};
 
 export default App;

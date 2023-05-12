@@ -13,7 +13,7 @@ import style from './DoctorsList.module.css';
 
 const DoctorsList = () => {
   const [doctorsData] = useContext(Context);
-  const { doctors, fetchDoctors, fetchDoctorByEmail } = doctorsData;
+  const { doctors, fetchDoctors, fetchDoctorByEmail, filteredDoctors } = doctorsData;
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -23,7 +23,7 @@ const DoctorsList = () => {
   const lastDoctorIndex = doctorsPerPage * currentPage;
   const firstDoctorIndex = lastDoctorIndex - doctorsPerPage;
 
-  const doctorsInPage = doctors.slice(firstDoctorIndex, lastDoctorIndex);
+  const doctorsInPage = filteredDoctors.slice(firstDoctorIndex, lastDoctorIndex);
 
   const handleChange = (event, p) => {
     setCurrentPage(p);
@@ -33,6 +33,7 @@ const DoctorsList = () => {
     fetchDoctors();
   }, []);
 
+  console.log('* render');
   return (
     <>
       <NavBar />
