@@ -31,6 +31,7 @@ const DoctorsList = () => {
 
   useEffect(() => {
     fetchDoctors();
+    console.log()
   }, []);
 
   console.log('* render');
