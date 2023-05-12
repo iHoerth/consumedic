@@ -259,12 +259,34 @@ const createFakeData = async () => {
   }
 
   // Crear 10 Citas
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 300; i++) {
+    function generarValorHorario() {
+      var horas = Math.floor(Math.random() * 10) + 9; // generar una hora aleatoria entre las 9 y las 18
+      var minutos = Math.random() < 0.5 ? "00" : "30"; // generar aleatoriamente "00" o "30" para los minutos
+      var segundos = "00"; // fijar los segundos en "00"
+      var valorHorario = horas.toString().padStart(2, "0") + ":" + minutos + ":" + segundos; // formatear el valor horario en una cadena con formato HH-MM-SS
+      return valorHorario;
+    }
+    function generarFecha() {
+      var fechaInicio = new Date(); // fecha de inicio a partir de hoy
+      var fechaFin = new Date('2023-12-31'); // fecha de fin
+      var diasSemana = [1, 2, 3, 4, 5]; // lunes a viernes
+      var diaAleatorio = diasSemana[Math.floor(Math.random() * diasSemana.length)]; // elegir un día aleatorio de la semana
+      fechaInicio.setDate(fechaInicio.getDate() + (diaAleatorio - fechaInicio.getDay() + 7) % 7); // establecer la fecha de inicio en el próximo día aleatorio de la semana
+      var fechaAleatoria = new Date(fechaInicio.getTime() + Math.random() * (fechaFin.getTime() - fechaInicio.getTime())); // generar una fecha aleatoria entre la fecha de inicio y la fecha de fin
+      var fecha = fechaAleatoria.toISOString().slice(0,10); // formatear la fecha en una cadena con formato YYYY-MM-DD
+      var diaSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'][fechaAleatoria.getDay()]; // obtener el día de la semana correspondiente a la fecha aleatoria
+      return { fecha, diaSemana };
+    }
+    const fechas = generarFecha();
+    const horas = generarValorHorario();
     const cita = await db.Cita.create({
-      fecha: faker.date.future(),
-      hora: faker.date.future(),
+      fecha: fechas.fecha,
+      hora: horas,
       descripcion: faker.lorem.word(),
       status: 'active',
+      DoctorTypeId:Math.ceil(Math.random()*docsAndPatients),
+      PacienteTypeId:Math.ceil(Math.random()*docsAndPatients)
     });
   }
 

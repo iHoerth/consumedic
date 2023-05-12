@@ -1,14 +1,16 @@
 const { Router } = require("express");
 
-const { createAppointments, getAppointments } = require('../handlers/appointments');
+const { createAppointments, getAppointments, getAppointmentsDoctor, getAppointmentsPatient } = require('../handlers/appointments');
 
 const appointmentsRouter = Router();
 
-// Ruta para crear una cita
+// POST
 appointmentsRouter.post('/', createAppointments);
 
-// Ruta para obtener todas las citas
+// GET
 appointmentsRouter.get('/', getAppointments);
+appointmentsRouter.get('/doctor/:id', getAppointmentsDoctor);
+appointmentsRouter.get('/patient/:id', getAppointmentsPatient);
 
 
 module.exports = appointmentsRouter;
