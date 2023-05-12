@@ -1,8 +1,16 @@
 import { Container, Box, Paper, Button, TableHead, TableRow, TableBody, Table, TableCell } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
+import { Context } from '../../context/ContextProvider'
 
 const PatientPanel = () => {
+
+  const patient = useContext(Context)[1];
+  const {patientDetail} = patient;
+
+  const detailPatient = () => {
+    console.log(patientDetail);
+  }
 
   const turnos = [
     {
@@ -90,6 +98,7 @@ const PatientPanel = () => {
           borderRadius={2}>
           <h2>Mis turnos</h2>
           <Box>
+            <Button onClick={detailPatient}>Log detalle paciente</Button>
             <Table>
               <TableHead>
                 <TableRow>
