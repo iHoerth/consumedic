@@ -29,11 +29,29 @@ const NavBar = () => {
     },
   ];
 
+  /* Estado para ver si se bajo o no */
+  const [scrolled, setScrolled] = React.useState(false);
+
+ /*listener de eventos de scroll a la ventana */
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      if (scrollTop > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar
-        color="secondary"
-        position="static"
+        color={scrolled ? "transparent":"secondary"}
+        position="fixed"
+        
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
       >
         <Toolbar
@@ -47,16 +65,16 @@ const NavBar = () => {
             },
           }}
         >
-          <Box display="flex" alignItems="center" gap="4px" color="white" sx={{ flexGrow: 1 }}>
+          <Box display="flex" alignItems="center" gap="4px" color={!scrolled ? "white":"black"} sx={{ flexGrow: 1 }}>
             <LocalHospitalIcon color="inherit" />
-            <Typography variant="h5" component="div" color="white">
+            <Typography variant="h5" component="div" color={!scrolled ? "white":"black"}>
               CONSUMEDIC
             </Typography>
           </Box>
           {screenSizeSmall ? (
             <DrawerComponent navLinksArray={navLinksArray} />
           ) : (
-            <nav style={{ color: 'white' }}>
+            <nav style={{ color: `${!scrolled ? "white":"black"}` }}>
               {navLinksArray.map((link, index) => (
                 <Button key={index} color="inherit" href={link.path}>
                   {link.title}
@@ -66,6 +84,7 @@ const NavBar = () => {
           )}
         </Toolbar>
       </AppBar>
+
     </Box>
   );
 };

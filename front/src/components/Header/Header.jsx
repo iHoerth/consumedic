@@ -11,10 +11,11 @@ const Header = () => {
   return (
     <Box
       sx={{
+        
         width: "70%",
         backgroundColor: "#b0bec5",
         p: "30px",
-        mt: "40px",
+        mt: "160px",
         mb: "20px",
         borderRadius: "20px",
       }}
