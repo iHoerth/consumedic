@@ -12,8 +12,6 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import { Link } from 'react-router-dom';
 import NavBar from "../../components/NavBar/NavBar";
 
-
-
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
@@ -62,7 +60,15 @@ function SwipeableTextMobileStepper() {
   };
   
   return (
-    <Box sx={{ maxWidth: 'auto', flexGrow: 1, position: 'relative' }}>
+    <Box sx={{ maxWidth: {
+      xs: '100%', 
+      sm: '80%', 
+      md: '60%', 
+      lg: '50%', 
+    }, 
+    flexGrow: 1, 
+    position: 'relative',
+    margin: '0 auto' }}>
       <NavBar />
       <Paper
         square
@@ -107,11 +113,19 @@ function SwipeableTextMobileStepper() {
         steps={maxSteps}
         position="absolute"
         activeStep={activeStep}
-        sx={{ maxWidth: 400, flexGrow: 1, 
+        sx={{ maxWidth: '100%', flexGrow: 1, 
           position: 'absolute', top: '50%',
-          left: '50%',
+          left: '50%', 
           transform: 'translate(-50%, -50%)',
           zIndex: 1,
+          '& .MuiMobileStepper-dotActive': {
+            backgroundColor: theme.palette.primary.main,
+          },
+          '@media (min-width: 600px)': {
+            maxWidth: 400,
+            left: '50%',
+            transform: 'translateX(-50%)',
+          },
       }}
       />
       <Button
