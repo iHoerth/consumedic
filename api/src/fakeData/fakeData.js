@@ -269,7 +269,7 @@ const createFakeData = async () => {
     }
     function generarFecha() {
       var fechaInicio = new Date(); // fecha de inicio a partir de hoy
-      var fechaFin = new Date('2023-12-31'); // fecha de fin
+      var fechaFin = new Date('2023-06-06'); // fecha de fin
       var diasSemana = [1, 2, 3, 4, 5]; // lunes a viernes
       var diaAleatorio = diasSemana[Math.floor(Math.random() * diasSemana.length)]; // elegir un día aleatorio de la semana
       fechaInicio.setDate(fechaInicio.getDate() + (diaAleatorio - fechaInicio.getDay() + 7) % 7); // establecer la fecha de inicio en el próximo día aleatorio de la semana
