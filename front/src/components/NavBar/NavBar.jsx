@@ -16,13 +16,8 @@ const NavBar = () => {
 
   const navLinksArray = [
     {
-<<<<<<< HEAD
       title: "Home",
       path: "/home",
-=======
-      title: 'Home',
-      path: '/',
->>>>>>> 2b47fa2e5857f4e18d13c3e1a6f70b5ad8e402c3
     },
     {
       title: 'Login',

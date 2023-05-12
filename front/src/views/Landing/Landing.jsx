@@ -30,7 +30,7 @@ const images = [
   {
     label: '',
     imgPath:
-      '/images/9.png',
+      '/images/1.jpg',
   },
   {
     label: '',
