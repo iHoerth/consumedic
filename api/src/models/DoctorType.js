@@ -1,53 +1,53 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-
-  sequelize.define("DoctorType",{
-    id:{
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true
-
-    },
-    dni:{
-        type:DataTypes.INTEGER, 
-        allowNull:false,        
-    },
-    NumMatricula:{
-        type:DataTypes.INTEGER  ,
-         allowNull:false,
-    },
-    nombre:{
-        type:DataTypes.STRING,
-        allowNull:false,
-    },
-    apellido:{
-       type:DataTypes.STRING,
-       allowNull:false,
-    },
-    email:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        unique: true,
-    },
-    telefono:{
-        type:DataTypes.INTEGER,
-        allowNull:false,
-     },
-     direccion: {
+  sequelize.define(
+    "DoctorType",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      dni: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+      },
+      NumMatricula: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      nombre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      apellido: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      telefono: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      direccion: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       imagen: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-     titulo: {
+      titulo: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -55,22 +55,23 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      isDoctor : {
-        type:  DataTypes.BOOLEAN,
-        allowNull : false,
-        defaultValue : true
-       },
-       status: {
+      isDoctor: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
+      status: {
         type: DataTypes.ENUM,
         values: ["active", "deleted"],
         defaultValue: "active",
-       },
-       precio: {
+      },
+      precio: {
         type: DataTypes.INTEGER,
         allowNull: false,
-       }
-      
- },{
-    timestamps:false
- } )
+      },
+    },
+    {
+      timestamps: false,
+    }
+  );
 };
