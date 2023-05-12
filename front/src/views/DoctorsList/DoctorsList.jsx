@@ -33,7 +33,7 @@ const DoctorsList = () => {
 
   useEffect(() => {
     const data = async () => {
-      await axios.post("http://localhost:3001/fake");
+      // await axios.post("http://localhost:3001/fake");
     };
     data();
 
