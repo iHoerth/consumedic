@@ -19,8 +19,9 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 const AppHeader = styled(AppBar)(({ theme }) => ({
-  // background: "#90a4ae",
+  background: "#b0bec5",
   boxShadow: "none",
+  borderRadius: "20px",
   // borderBottom: `2px solid ${theme.palette.divider}`,
 }));
 
@@ -29,7 +30,7 @@ export default function ProminentAppBar() {
     <Box sx={{ flexGrow: 1, width: "50%" }}>
       <AppHeader position="static">
         <StyledToolbar>
-          <FormControl sx={{ minWidth: 135, color: "white" }}>
+          <FormControl sx={{ minWidth: 150, color: "white" }}>
             <InputLabel sx={{ color: "white" }} id="especialista-label">
               Especialista
             </InputLabel>
@@ -56,7 +57,7 @@ export default function ProminentAppBar() {
               defaultValue=""
               sx={{ color: "white" }}
             >
-              <MenuItem value={1}>Ciudad Autónoma de Buenos Aires</MenuItem>
+              <MenuItem value={1}>Santa Fe</MenuItem>
               <MenuItem value={2}>Buenos Aires</MenuItem>
               <MenuItem value={3}>Córdoba</MenuItem>
             </Select>
