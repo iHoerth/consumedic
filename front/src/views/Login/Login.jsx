@@ -85,9 +85,8 @@ const Userlogin = () => {
 
   const onSuccess = (response) => {
     console.log(response);
-
     axios
-      .post("http://localhost:3001/doctors", {
+      .post("http://localhost:3001/patients/login", {
         tokenId: response.tokenId,
       })
       .then((res) => {
