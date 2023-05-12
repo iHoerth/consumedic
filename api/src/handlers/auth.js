@@ -81,13 +81,13 @@ async function loginPatient(req, res) {
       if (!patient) {
         return res.status(404).json({ message: "Patient not found" });
       }
-
+      //aca se compara la contraseña, pero si uno inicia sesion con goolge no hace falta enviar la contraseña
       // Verificar la contraseña
-      const isMatch = await bcrypt.compare(password, patient.password);
+      // const isMatch = await bcrypt.compare(password, patient.password);
 
-      if (!isMatch) {
-        return res.status(401).json({ message: "Invalid credentials" });
-      }
+      // if (!isMatch) {
+      //   return res.status(401).json({ message: "Invalid credentials" });
+      // }
 
       // Generar el token JWT y enviarlo en la respuesta
       const token = generateToken(patient);
