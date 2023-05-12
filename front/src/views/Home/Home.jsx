@@ -1,6 +1,6 @@
 import NavBar from "../../components/NavBar/NavBar";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import ImageHome from "../../components/ImageHome/ImageHome";
+import Header from "../../components/Header/Header";
 
 import { Box } from "@mui/material";
 
@@ -16,7 +16,6 @@ const Home = () => {
       <NavBar />
       <Box
         sx={{
-          bgcolor: "#e0e0e0",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -24,7 +23,7 @@ const Home = () => {
           height: "70vh",
         }}
       >
-        {/* <ImageHome /> */}
+        <Header />
         <SearchBar />
       </Box>
     </Box>
