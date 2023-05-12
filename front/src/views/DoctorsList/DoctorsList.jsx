@@ -1,16 +1,15 @@
-import { useContext, useState, useEffect } from "react";
-import axios from "axios";
+import { useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 import Pagination from '../../components/Pagination/Pagination';
 import CardsContainer from '../../components/CardsContainer/CardsContainer';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import NavBar from '../../components/NavBar/NavBar';
-import Filter from '../../components/Filter/Filter'
+import Filter from '../../components/Filter/Filter';
 
-import { Context } from "../../context/ContextProvider";
+import { Context } from '../../context/ContextProvider';
 
 import style from './DoctorsList.module.css';
-
 
 const DoctorsList = () => {
   const [doctorsData] = useContext(Context);
@@ -31,25 +30,16 @@ const DoctorsList = () => {
   };
 
   useEffect(() => {
-    // const data = async () => {
-    //   await axios.post("http://localhost:3001/fake");
-    // };
-    // data();
     fetchDoctors();
   }, []);
 
   return (
     <>
       <NavBar />
-      <Filter />
       <div className={style.divSpecialists}>
-        <SearchBar />
+        <Filter />
         <CardsContainer doctorsInPage={doctorsInPage} />
-        <Pagination
-          maxPages={maxPages}
-          page={currentPage}
-          handleChange={handleChange}
-        />
+        <Pagination maxPages={maxPages} page={currentPage} handleChange={handleChange} />
       </div>
     </>
   );
