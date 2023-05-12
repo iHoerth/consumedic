@@ -49,20 +49,20 @@ function SwipeableTextMobileStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images?.length ?? 0;
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+  // const handleNext = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  // };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  // const handleBack = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  // };
 
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
   
   return (
-    <Box sx={{ maxWidth: 'auto', flexGrow: 1 }}>
+    <Box sx={{ maxWidth: 'auto', flexGrow: 1, position: 'relative' }}>
       <NavBar />
       <Paper
         square
@@ -103,16 +103,41 @@ function SwipeableTextMobileStepper() {
         ))}
       </AutoPlaySwipeableViews>
       <MobileStepper
-        // steps={maxSteps}
-        // position="right"
-        // activeStep={activeStep}
-        // className="mobile-stepper"
         variant="dots"
         steps={maxSteps}
         position="absolute"
         activeStep={activeStep}
-        sx={{ maxWidth: 400, flexGrow: 1 }}
+        sx={{ maxWidth: 400, flexGrow: 1, 
+          position: 'absolute', top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 1,
+      }}
       />
+      <Button
+        component={Link}
+        to="/home"
+        variant="contained"
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 1,
+          width: 200,
+          height: 50,
+          borderRadius: '12px',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s ease', 
+          '&:hover': {
+            backgroundColor: '#212121',
+            color: '#ffff00'
+          },
+          fontSize: '1.2rem',
+        }}
+      >
+        Ingresar 
+      </Button>
     </Box>
   );
 }
