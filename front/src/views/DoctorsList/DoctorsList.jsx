@@ -7,7 +7,6 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import NavBar from '../../components/NavBar/NavBar';
 import Filter from '../../components/Filter/Filter'
 
-
 import { Context } from "../../context/ContextProvider";
 
 import style from './DoctorsList.module.css';
@@ -32,11 +31,10 @@ const DoctorsList = () => {
   };
 
   useEffect(() => {
-    const data = async () => {
-      await axios.post("http://localhost:3001/fake");
-    };
-    data();
-
+    // const data = async () => {
+    //   await axios.post("http://localhost:3001/fake");
+    // };
+    // data();
     fetchDoctors();
   }, []);
 
