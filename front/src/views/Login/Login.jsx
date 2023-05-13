@@ -23,8 +23,8 @@ const Userlogin = () => {
   const patients = useContext(Context)[1];
 
   const clientID =
-    // "508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com";
-    "993436899179-smstjrqb801tebp8l2tpuv9fgadkqoa9.apps.googleusercontent.com";
+    "508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com";
+
   const [user, setUser] = useState({});
 
   const { createPatient, patientDetail } = patients;
