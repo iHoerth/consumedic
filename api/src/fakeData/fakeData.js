@@ -239,7 +239,27 @@ const createFakeData = async () => {
     const newObraSocial = await db.ObraSocial.findAll({ where: { id: idObraSocial } });
     doctor.addEspecialidads(newEspecialidad);
     doctor.addObraSocials(newObraSocial);
+
+    const newDoctor = await db.DoctorType.findByPk(i+1);
+    const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+    const atiende = ["si", "no"]
+    const horarioInAgenda = ["08:00:00","09:00:00","10:00:00","11:00:00"];
+    const horarioFinAgenda = ["15:00:00","16:00:00","17:00:00","18:00:00"];
+    for (let i=0; i<daysOfWeek.length;i++){
+      const atiendeRandom=Math.floor(Math.random()*2);
+      const horarioRandomInAgenda=Math.floor(Math.random()*4);
+      const newHorario = await db.Horario.create({
+        dia_semana: daysOfWeek[i],
+        atiende: atiende[atiendeRandom], 
+        horario_inicio: atiende[atiendeRandom] === "si" ? horarioInAgenda[horarioRandomInAgenda] : null ,
+        horario_fin: atiende[atiendeRandom] === "si" ? horarioFinAgenda[horarioRandomInAgenda] : null ,
+        duracion_turno: "00:30:00",
+        DoctorTypeId: newDoctor.id
+      })
+    }
   }
+
+
 
   // Crear PacienteType
   for (let i = 0; i < docsAndPatients; i++) {
@@ -259,7 +279,7 @@ const createFakeData = async () => {
   }
 
   // Crear 10 Citas
-  for (let i = 0; i < 300; i++) {
+  for (let i = 0; i < 900; i++) {
     function generarValorHorario() {
       var horas = Math.floor(Math.random() * 10) + 9; // generar una hora aleatoria entre las 9 y las 18
       var minutos = Math.random() < 0.5 ? "00" : "30"; // generar aleatoriamente "00" o "30" para los minutos
