@@ -42,7 +42,7 @@ const Footer = () => {
       <NavLink
         to="/login"
         sx={{
-          color: "white",
+          color: "black",
           fontSize: "20px",
           display: "flex",
           alignItems: "center",
