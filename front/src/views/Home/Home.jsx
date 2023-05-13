@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
+import { styled } from '@mui/system';
+
 
 const Home = () => {
   const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -51,7 +53,12 @@ const Home = () => {
       setActiveStep(step);
     };
 
-    
+    const TPWidgetWrapper = styled('div')({
+      maxWidth: 'none',
+      minHeight: '150px',
+      minWidth: '300px',
+      willChange: 'transform',
+    });
     
   return (
     // <div>
@@ -168,7 +175,9 @@ const Home = () => {
         <Typography variant="body1">
           Aquí va el contenido de mi sección
         </Typography>
-        
+        <TPWidgetWrapper>
+          {/* Contenido */}
+        </TPWidgetWrapper>
       </Box>
       <Footer />
     </Box>
