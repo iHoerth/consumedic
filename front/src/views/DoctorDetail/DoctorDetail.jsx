@@ -13,8 +13,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import LocationOnSharpIcon from "@mui/icons-material/LocationOnSharp";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SmsIcon from "@mui/icons-material/Sms";
@@ -27,31 +25,25 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { NavLink } from "react-router-dom";
+import { useMediaQuery, useTheme } from "@mui/material";
+import { Container, Box } from "@mui/material";
+import NavBar from "../../components/NavBar/NavBar";
 
 const DoctorDetail = () => {
-  const [loading, setLoading] = useState(true);
+  const theme = useTheme();
 
+  const [loading, setLoading] = useState(true);
   const [doctorsData] = useContext(Context);
   const { doctorDetail, fetchDoctorById, cleanDetail } = doctorsData;
   const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
-
-    if (!Object.keys(doctorDetail).length) {
-      fetchDoctorById(id).then(() => {
-        setLoading(false);
-      });
-    } else {
-      console.log(doctorDetail);
+    fetchDoctorById(id).then(() => {
       setLoading(false);
-
-      return () => {
-        cleanDetail();
-        console.log(" ***** UNMOUNT + CLEANDETAIL *****");
-      };
-    }
-  }, [id, doctorDetail]);
+    });
+    setLoading(false);
+  }, [id]);
 
   const [expanded, setExpanded] = useState(false);
 
@@ -68,10 +60,25 @@ const DoctorDetail = () => {
   }
 
   return (
-    <div className={style.divBody}>
+    <Container
+      sx={{
+        bgcolor: theme.palette.primary.main,
+        width: "100%",
+        height: "130vh",
+        display: "flex",
+        pb: "23px",
+        flexDirection: "column",
+        alignItems: "center",
+        typography: theme.typography,
+      }}
+    >
+      <NavBar />
+
       <CardMUI
         sx={{
           maxWidth: 500,
+          typography: theme.typography,
+          mt: "10px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -91,12 +98,12 @@ const DoctorDetail = () => {
         <CardHeader
           action={
             <IconButton>
-              <FavoriteIcon />
+              <FavoriteIcon color="primary" />
             </IconButton>
           }
           title={doctorDetail.nombre + " " + doctorDetail.apellido}
           subheader={
-            doctorDetail.Especialidads &&
+            doctorDetail.Especialidads?.length &&
             doctorDetail.Especialidads.map((item, index) => (
               <span key={index}>{item.name}</span>
             ))
@@ -114,21 +121,27 @@ const DoctorDetail = () => {
             <Rating
               name="half-rating-read"
               defaultValue={
-                doctorDetail.Opinions.length &&
+                doctorDetail.Opinions?.length &&
                 doctorDetail.Opinions.reduce((acc, opinion, index) => {
                   return (acc + opinion.puntaje) / (index + 1);
                 }, 0)
               }
               precision={0.5}
               readOnly
+              color="primary"
             />
           </Stack>
+
           <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-            {doctorDetail.Opinions.length &&
+            {doctorDetail.Opinions.length ? (
               doctorDetail.Opinions.map((item, index) => (
                 <span key={index}>{item.mensaje}</span>
-              ))}
+              ))
+            ) : (
+              <span>No hay opiniones disponibles</span>
+            )}
           </Typography>
+
           <Box
             sx={{
               display: "flex",
@@ -149,7 +162,7 @@ const DoctorDetail = () => {
               </Typography>
             </Button>
             <Button color="primary" variant="outlined" size="md">
-              <SmsIcon />
+              <SmsIcon color="primary" />
               <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
                 Enviar mensaje
               </Typography>
@@ -157,32 +170,34 @@ const DoctorDetail = () => {
           </Box>
 
           <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-            <LocationOnSharpIcon sx={{ marginRight: "0.5rem" }} />
+            <LocationOnSharpIcon
+              sx={{ marginRight: "0.5rem" }}
+              color="primary"
+            />
             {doctorDetail.direccion}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-            <VideocamIcon sx={{ marginRight: "0.5rem" }} />
+            <VideocamIcon sx={{ marginRight: "0.5rem" }} color="primary" />
             Consulta en linea: ${doctorDetail.precio}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-            <LocalPhoneIcon sx={{ marginRight: "0.5rem" }} />
+            <LocalPhoneIcon sx={{ marginRight: "0.5rem" }} color="primary" />
             {doctorDetail.telefono}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-            <PeopleAltIcon sx={{ marginRight: "0.5rem" }} />
-
-            {doctorDetail.ObraSocials &&
+            <PeopleAltIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+            {doctorDetail.ObraSocials?.length && //pepe
               doctorDetail.ObraSocials.map((item, index) => (
                 <span key={index}>Obra sociales: {item.nombre}</span>
               ))}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-            <PaymentsIcon sx={{ marginRight: "0.5rem" }} />
+            <PaymentsIcon sx={{ marginRight: "0.5rem" }} color="primary" />
             Pagos: Mercado Pago
           </Typography>
           <NavLink to={doctorDetail.linkedin} target="_blank">
             <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-              <LinkedInIcon sx={{ marginRight: "0.5rem" }} />
+              <LinkedInIcon sx={{ marginRight: "0.5rem" }} color="primary" />
               LinkedIn
             </Typography>
           </NavLink>
@@ -192,7 +207,7 @@ const DoctorDetail = () => {
             onChange={handleChange("panel2")}
           >
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              expandIcon={<ExpandMoreIcon color="primary" />}
               aria-controls="panel2bh-content"
               id="panel2bh-header"
             >
@@ -212,7 +227,7 @@ const DoctorDetail = () => {
           </Accordion>
         </CardContent>
       </CardMUI>
-    </div>
+    </Container>
   );
 };
 
