@@ -52,10 +52,14 @@ const Card = ({
     setExpanded(!expanded);
   };
 
-  const handleClick = () => {};
-
   return (
-    <CardMUI sx={{ pl: "40px", bgcolor: "primary" }}>
+    <CardMUI
+      sx={{
+        pl: "40px",
+        bgcolor: theme.palette.secondary.main,
+        typography: theme.typography,
+      }}
+    >
       <Tooltip title="Ver Perfil">
         <IconButton sx={{ p: 1 }}>
           <NavLink to={`/detail/${id}`}>
@@ -72,7 +76,10 @@ const Card = ({
       </Tooltip>
       <CardHeader
         title={
-          <NavLink to={`/detail/${id}`} color="primary">
+          <NavLink
+            to={`/detail/${id}`}
+            sx={{ color: theme.palette.primary.main, textDecoration: "none" }}
+          >
             {name}
           </NavLink>
         }
