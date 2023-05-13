@@ -1,19 +1,19 @@
-import { useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { useContext, useState, useEffect } from "react";
 
-import Pagination from '../../components/Pagination/Pagination';
-import CardsContainer from '../../components/CardsContainer/CardsContainer';
-import SearchBar from '../../components/SearchBar/SearchBar';
-import NavBar from '../../components/NavBar/NavBar';
-import Filter from '../../components/Filter/Filter';
+import Pagination from "../../components/Pagination/Pagination";
+import CardsContainer from "../../components/CardsContainer/CardsContainer";
 
-import { Context } from '../../context/ContextProvider';
+import NavBar from "../../components/NavBar/NavBar";
+import Filter from "../../components/Filter/Filter";
 
-import style from './DoctorsList.module.css';
+import { Context } from "../../context/ContextProvider";
+
+import style from "./DoctorsList.module.css";
 
 const DoctorsList = () => {
   const [doctorsData] = useContext(Context);
-  const { doctors, fetchDoctors, fetchDoctorByEmail, filteredDoctors } = doctorsData;
+  const { doctors, fetchDoctors, fetchDoctorByEmail, filteredDoctors } =
+    doctorsData;
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -23,7 +23,10 @@ const DoctorsList = () => {
   const lastDoctorIndex = doctorsPerPage * currentPage;
   const firstDoctorIndex = lastDoctorIndex - doctorsPerPage;
 
-  const doctorsInPage = filteredDoctors.slice(firstDoctorIndex, lastDoctorIndex);
+  const doctorsInPage = filteredDoctors.slice(
+    firstDoctorIndex,
+    lastDoctorIndex
+  );
 
   const handleChange = (event, p) => {
     setCurrentPage(p);
@@ -33,14 +36,17 @@ const DoctorsList = () => {
     fetchDoctors();
   }, []);
 
-  console.log('* render');
   return (
     <>
       <NavBar />
       <div className={style.divSpecialists}>
         <Filter />
         <CardsContainer doctorsInPage={doctorsInPage} />
-        <Pagination maxPages={maxPages} page={currentPage} handleChange={handleChange} />
+        <Pagination
+          maxPages={maxPages}
+          page={currentPage}
+          handleChange={handleChange}
+        />
       </div>
     </>
   );
