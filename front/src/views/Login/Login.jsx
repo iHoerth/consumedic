@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   Typography,
+  imageListClasses,
 } from "@mui/material";
 import { Google } from "@mui/icons-material";
 import { GoogleLogin } from "react-google-login";
@@ -24,12 +25,18 @@ const Userlogin = () => {
   const clientID =
     // "508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com";
     "993436899179-smstjrqb801tebp8l2tpuv9fgadkqoa9.apps.googleusercontent.com";
+  const [user, setUser] = useState({});
 
   const { createPatient, patientDetail } = patients;
-  //estados de email
-  const [email, setEmail] = useState("");
+  //estados de email y contraseña
+  const [localEmail, setLocalEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState("");
+
+  //estados de password
+  const [localPassword, setLocalPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordHelperText, setPasswordHelperText] = useState("");
 
   //expresion regular para mails
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,8 +51,8 @@ const Userlogin = () => {
   }, []);
 
   //funcion para validar email
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+  const handleLocalEmailChange = (event) => {
+    setLocalEmail(event.target.value);
 
     // Validar el correo electrónico
     if (event.target.value === "") {
@@ -60,14 +67,9 @@ const Userlogin = () => {
     }
   };
 
-  //estados de password
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordHelperText, setPasswordHelperText] = useState("");
-
   // funcion para validar contrasena
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+  const handleLocalPasswordChange = (event) => {
+    setLocalPassword(event.target.value);
     if (event.target.value === "") {
       setPasswordError(true);
       setPasswordHelperText("ingrese su contrasena.");
@@ -78,13 +80,27 @@ const Userlogin = () => {
   };
 
   //submit
-  function handleSubmit(event) {
+  function handleLocalSubmit(event) {
     event.preventDefault();
-    navigate(`/patientpanel/${patientDetail.id}`);
+
+    axios
+      .post("http://localhost:3001/patients/login", {
+        email: localEmail,
+        password: localPassword,
+      })
+      .then((res) => {
+        //autenticacion exitosa, redirige al panel del paciente
+        navigate(`/patientpanel/${patientDetail.id}`);
+      })
+      .catch((err) => {
+        //error de autenticacion
+        console.error(err);
+      });
   }
 
   const onSuccess = (response) => {
     console.log(response);
+    setUser(response.profileObj);
     axios
       .post("http://localhost:3001/patients/login", {
         tokenId: response.tokenId,
@@ -97,9 +113,11 @@ const Userlogin = () => {
         console.error(err);
       });
   };
+
   const onFailure = () => {
     console.log("something went wrong");
   };
+
   return (
     <>
       <NavBar></NavBar>
@@ -125,9 +143,9 @@ const Userlogin = () => {
             color="secondary"
             type="email"
             name="mail"
-            value={email}
+            value={localEmail}
             placeholder="Enter your mail"
-            onChange={(event) => handleEmailChange(event)}
+            onChange={(event) => handleLocalEmailChange(event)}
             helperText={emailError ? <p>{emailHelperText}</p> : ""}
             sx={{
               "& .MuiOutlinedInput-root": {
@@ -155,9 +173,9 @@ const Userlogin = () => {
             color="secondary"
             type="password"
             name="password"
-            value={password}
+            value={localPassword}
             placeholder="Enter your password"
-            onChange={(event) => handlePasswordChange(event)}
+            onChange={(event) => handleLocalPasswordChange(event)}
             helperText={passwordError ? <p>{passwordHelperText}</p> : ""}
             sx={{
               "& .MuiOutlinedInput-root": {
@@ -182,7 +200,7 @@ const Userlogin = () => {
             variant="contained"
             color="secondary"
             sx={{ margin: "10px" }}
-            onClick={handleSubmit}
+            onClick={handleLocalSubmit}
           >
             Ingresar
           </Button>
@@ -194,6 +212,10 @@ const Userlogin = () => {
             onFailure={onFailure}
             cookiePolicy={"single_host_origin"}
           />
+          <div className={user ? "profile" : "hidden"}>
+            <img src={user.imageUrl} alt="" />
+            <h3>{user.name}</h3>
+          </div>
           <Typography>No tienes una cuenta?</Typography>
           <Button color="primary" href="/create">
             Crear cuenta
