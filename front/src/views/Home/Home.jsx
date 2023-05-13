@@ -3,27 +3,13 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { Box } from "@mui/material";
-import * as React from 'react';
+import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-// 
-
-//agr Appbar al Box importado 
-// function ElevationScroll(props) {
-//   const { children } = props;
-//   const trigger = useScrollTrigger({
-//     disableHysteresis: true,
-//     threshold: 0,
-//   });
-
-//   return React.cloneElement(children, {
-//     elevation: trigger ? 4 : 0,
-//   });
-// }
 
 
 const Home = () => {
@@ -58,20 +44,17 @@ const Home = () => {
   ];
 
     const theme = useTheme();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = images?.length ?? 0;
+    const [activeStep, setActiveStep] = useState(0);
+    const maxSteps = 5;
   
     const handleStepChange = (step) => {
       setActiveStep(step);
     };
 
-    const transition = {
-      duration: 0.6,
-      ease: [0.6, 0.05, -0.01, 0.9],
-    };
+    
     
   return (
-    <div>
+    // <div>
       <Box sx={{ maxWidth: {
       xs: '100%', 
       sm: '80%', 
@@ -101,6 +84,17 @@ const Home = () => {
         onChangeIndex={handleStepChange}
         enableMouseEvents
         interval={6000}
+        sx={{
+          maxWidth: '100%',
+          margin: '0 auto',
+          position: 'relative',
+          height: {
+            xs: '50vh',
+            sm: '60vh',
+            md: '70vh',
+            lg: '80vh',
+          },
+        }}
       >
         {images.map((step, index) => (
           <div key={step.imgPath}>
@@ -113,7 +107,6 @@ const Home = () => {
                   margin: '0 auto',
                   position: 'relative',
                   opacity: activeStep === index ? 1 : 0,
-                  transition: `opacity ${transition.duration}s ${transition.ease}, transform ${transition.duration}s ${transition.ease}`,
                 }}
                 src={step.imgPath}
                 alt={step.label}
@@ -125,50 +118,61 @@ const Home = () => {
       <MobileStepper
         variant="dots"
         steps={maxSteps}
-        position="auto"
+        position="static"
         activeStep={activeStep}
         sx={{
-          maxWidth: '100%',
+          maxWidth: 75,
           flexGrow: 1, 
           position: 'relative', 
-          left: '62%', 
+          left: '50%', 
           transform: 'translateX(-50%)',
           zIndex: 1,
-          top: 20, 
-          '& .MuiMobileStepper-dotActive': {
-            backgroundColor: theme.palette.primary.main,
-          },
-          '@media (min-width: 600px)': {
-            maxWidth: 400,
-            transform: 'translate(-50%, -50%)',
+          mt: 2,
+          mb: {
+            xs: 2,
+            sm: 4,
           },
         }}
       />
 
-    </Box>
+      <Box
+      sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mt: {
+              xs: 4,
+              sm: 8,
+              md: 12,
+              lg: 16,
+            },
+          }}
+      >
+        <Header />
+        <SearchBar />
+      </Box>
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '80px 0', 
+          backgroundColor: '#f5f5f5', 
+          height: '500px',
         }}
       >
-        {/* <NavBar /> */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "70vh",
-          }}
-        >
-          <Header />
-          <SearchBar />
-        </Box>
+        <Typography variant="h4" sx={{ marginBottom: '40px' }}>
+          Mi Sección
+        </Typography>
+        <Typography variant="body1">
+          Aquí va el contenido de mi sección
+        </Typography>
+        
       </Box>
       <Footer />
-    </div>
+    </Box>
+    // </div>
   );
 };
 
