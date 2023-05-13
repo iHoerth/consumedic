@@ -11,9 +11,6 @@ import Typography from '@mui/material/Typography';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
-// import Card from '@mui/joy/Card';
-// import CardCover from '@mui/joy/CardCover';
-// import CardContent from '@mui/joy/CardContent';
 
 const Home = () => {
   const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -160,8 +157,9 @@ const Home = () => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '80px 0', //Establece el padding de la sección
-          backgroundColor: '#f5f5f5', //Establece el color de fondo de la sección
+          padding: '80px 0', 
+          backgroundColor: '#f5f5f5', 
+          height: '500px',
         }}
       >
         <Typography variant="h4" sx={{ marginBottom: '40px' }}>
@@ -170,56 +168,7 @@ const Home = () => {
         <Typography variant="body1">
           Aquí va el contenido de mi sección
         </Typography>
-        <Box
-        component="ul"
-      sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', p: 0, m: 0 }}
-    >
-      {/* <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
-        <CardCover>
-          <img
-            src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800"
-            srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800&dpr=2 2x"
-            loading="lazy"
-            alt=""
-          />
-        </CardCover>
-        <CardContent>
-          <Typography
-            level="h6"
-            fontWeight="lg"
-            textColor="#fff"
-            mt={{ xs: 12, sm: 18 }}
-          >
-            Image
-          </Typography>
-        </CardContent>
-      </Card>
-      <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
-        <CardCover>
-          <video
-            autoPlay
-            loop
-            muted
-            poster="https://assets.codepen.io/6093409/river.jpg"
-          >
-            <source
-              src="https://assets.codepen.io/6093409/river.mp4"
-              type="video/mp4"
-            />
-          </video>
-        </CardCover>
-        <CardContent>
-          <Typography
-            level="h6"
-            fontWeight="lg"
-            textColor="#fff"
-            mt={{ xs: 12, sm: 18 }}
-          >
-            Video
-          </Typography>
-        </CardContent>
-      </Card> */}
-      </Box>
+        
       </Box>
       <Footer />
     </Box>
