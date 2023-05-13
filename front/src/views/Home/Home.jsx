@@ -65,10 +65,7 @@ const Home = () => {
       setActiveStep(step);
     };
 
-    const transition = {
-      duration: 0.6,
-      ease: [0.6, 0.05, -0.01, 0.9],
-    };
+    
     
   return (
     <div>
@@ -113,7 +110,6 @@ const Home = () => {
                   margin: '0 auto',
                   position: 'relative',
                   opacity: activeStep === index ? 1 : 0,
-                  transition: `opacity ${transition.duration}s ${transition.ease}, transform ${transition.duration}s ${transition.ease}`,
                 }}
                 src={step.imgPath}
                 alt={step.label}
@@ -125,7 +121,7 @@ const Home = () => {
       <MobileStepper
         variant="dots"
         steps={maxSteps}
-        position="auto"
+        position="static"
         activeStep={activeStep}
         sx={{
           maxWidth: '100%',
@@ -135,9 +131,9 @@ const Home = () => {
           transform: 'translateX(-50%)',
           zIndex: 1,
           top: 20, 
-          '& .MuiMobileStepper-dotActive': {
-            backgroundColor: theme.palette.primary.main,
-          },
+          // '& .MuiMobileStepper-dotActive': {
+          //   backgroundColor: theme.palette.primary.main,
+          // },
           '@media (min-width: 600px)': {
             maxWidth: 400,
             transform: 'translate(-50%, -50%)',
