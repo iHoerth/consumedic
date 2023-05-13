@@ -245,6 +245,7 @@ const createFakeData = async () => {
     const atiende = ["si", "no"]
     const horarioInAgenda = ["08:00:00","09:00:00","10:00:00","11:00:00"];
     const horarioFinAgenda = ["15:00:00","16:00:00","17:00:00","18:00:00"];
+  
     for (let i=0; i<daysOfWeek.length;i++){
       const atiendeRandom=Math.floor(Math.random()*2);
       const horarioRandomInAgenda=Math.floor(Math.random()*4);
@@ -253,7 +254,7 @@ const createFakeData = async () => {
         atiende: atiende[atiendeRandom], 
         horario_inicio: atiende[atiendeRandom] === "si" ? horarioInAgenda[horarioRandomInAgenda] : null ,
         horario_fin: atiende[atiendeRandom] === "si" ? horarioFinAgenda[horarioRandomInAgenda] : null ,
-        duracion_turno: "00:30:00",
+        duracion_turno: atiende[atiendeRandom] === "si" ? "00:30:00" : null,
         DoctorTypeId: newDoctor.id
       })
     }
