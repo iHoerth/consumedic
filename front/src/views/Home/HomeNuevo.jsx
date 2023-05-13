@@ -14,16 +14,16 @@ const HomeNuevo = () => {
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = bannerImages?.length ?? 0;
+  // const maxSteps = bannerImages?.length ?? 0;
 
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
 
-  const transition = {
-    duration: 0.6,
-    ease: [0.6, 0.05, -0.01, 0.9],
-  };
+  // const transition = {
+  //   duration: 0.6,
+  //   ease: [0.6, 0.05, -0.01, 0.9],
+  // };
 
   return (
     <>
