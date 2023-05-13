@@ -1,6 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { NavLink } from "react-router-dom";
+import { AppBar } from "@mui/material";
 
 const preventDefault = (event) => event.preventDefault();
 
@@ -8,9 +9,9 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        flexGrow: 1,
+        // flexGrow: 1,
         width: "100%",
-        height: "155px",
+        height: "100px",
         backgroundColor: "#bdbdbd",
         typography: "body1",
         display: "flex",
