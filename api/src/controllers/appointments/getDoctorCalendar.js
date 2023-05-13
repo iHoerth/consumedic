@@ -46,6 +46,15 @@ const getDoctorCalendar = async (idDoctor)=>{
                 horaActual = new Date(horaActual.getTime() + duracionTurno.getTime());
               }
             }
+            if(agenda[i].atiende==="no")
+            {
+              let turno ={
+                fecha: `${yy}-${mm}-${dd}`,
+                dia_semana: dayOfWeek,
+                estado: "no atiende"
+              }
+              turnos.push(turno)
+            }
           }
         return turnos
     }
@@ -55,6 +64,33 @@ const getDoctorCalendar = async (idDoctor)=>{
         return turnosReservados
     }
 
+    const filtrarTurnos = (turno)=>{
+        if(turno.estado !== "no atiende"){
+          let horario = turno.hora.split(":")
+          let dia = turno.fecha.split("-")
+          
+          if(dia[0]<diaHoy[0]) return false;
+          if(dia[0]===diaHoy[0]&&dia[1]<diaHoy[1])return false
+          if(dia[0]===diaHoy[0]&&dia[1]===diaHoy[1]&&dia[2]<diaHoy[2])return false
+          if(dia[0]===diaHoy[0]&&dia[1]===diaHoy[1]&&dia[2]===diaHoy[2]){
+            if(Number(horario[0])<Number(horaHoy[0])) return false;
+            if(Number(horario[0])===Number(horaHoy[0])&&Number(horario[1])<=Number(horaHoy[1])){
+                return false;
+            }
+          }
+          return true;
+        }
+        if(turno.estado === "no atiende"){
+          let dia = turno.fecha.split("-")
+          
+          if(dia[0]<diaHoy[0]) return false;
+          if(dia[0]===diaHoy[0]&&dia[1]<diaHoy[1])return false
+          if(dia[0]===diaHoy[0]&&dia[1]===diaHoy[1]&&dia[2]<diaHoy[2])return false
+          
+          return true;
+        }
+    }
+
     let turnosMedico = await generarTurnos(idDoctor); 
     let turnosOcupados = await traerTurnos(idDoctor);
     let horaHoy = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}).replace(/:\d+ /, ':00 ');
@@ -62,29 +98,78 @@ const getDoctorCalendar = async (idDoctor)=>{
     diaHoy = diaHoy.split("/").reverse()
     horaHoy = horaHoy.split(":")
 
-    //Filter turnos menores a la fecha actual
-    const filtrarTurnos = (turno)=>{
-        let horario = turno.hora.split(":")
-        let dia = turno.fecha.split("-")
-        
-        if(dia[0]<diaHoy[0]) return false;
-        if(dia[0]===diaHoy[0]&&dia[1]<diaHoy[1])return false
-        if(dia[0]===diaHoy[0]&&dia[1]===diaHoy[1]&&dia[2]<diaHoy[2])return false
-        if(dia[0]===diaHoy[0]&&dia[1]===diaHoy[1]&&dia[2]===diaHoy[2]){
-        if(Number(horario[0])<Number(horaHoy[0])) return false;
-        if(Number(horario[0])===Number(horaHoy[0])&&Number(horario[1])<=Number(horaHoy[1])){
-            return false;
-        }
-        }
-        return true;
-    }
-    let turnosFiltrados = turnosMedico.filter(filtrarTurnos) 
+    
+    let turnosFiltrados = turnosMedico.filter(filtrarTurnos) //Filter turnos menores a la fecha actual
 
+    // buscar turnos que ya estan agendados en Citas para cambiar a estado ocupado
     for (let i=0; i<turnosOcupados.length;i++){
         const found = turnosFiltrados.findIndex(turno=>turno.fecha===turnosOcupados[i].fecha && turno.hora===turnosOcupados[i].hora)
         if(found>=0) turnosFiltrados[found].estado="ocupado";
     }
-    return turnosFiltrados;
+
+    
+    const timeTable = []
+    
+    let today = new Date();
+    let dd = today.getDate();
+    let yy = today.getFullYear();
+    let mm = today.getMonth() + 1;
+    if(mm<10) mm=`0${mm}`
+    today = `${yy}-${mm}-${dd}`
+    let manana = new Date(); 
+    manana.setDate(manana.getDate() + 1);
+    let dd2 = manana.getDate();
+    let yy2 = manana.getFullYear();
+    let mm2 = manana.getMonth() + 1;
+    if(mm2<10) mm2=`0${mm2}`
+    manana = `${yy2}-${mm2}-${dd2}`
+
+    console.log(today, manana);
+
+    for(let i = 0; i<turnosFiltrados.length;){
+        let turnosDia = [];
+        let dia = turnosFiltrados[i].dia_semana;
+        let fecha = turnosFiltrados[i].fecha;
+        let atiende = turnosFiltrados[i].estado === "libre" || turnosFiltrados[i].estado ==="ocupado" ? "si" : "no";
+        if(atiende === "si"){
+            while(i<turnosFiltrados.length && turnosFiltrados[i].dia_semana===dia){
+              let newTurno ={
+                hora: turnosFiltrados[i].hora,
+                estado: turnosFiltrados[i].estado
+              }
+              turnosDia.push(newTurno)
+              i++
+            }
+            if (fecha===today){
+              dia = "Hoy"
+            }
+            if (fecha===manana){
+              dia = "Mañana"
+            }
+            let newDay = {
+              dia: dia,
+              fecha: fecha,
+              atiende: atiende,
+              turnos: turnosDia
+            }
+            timeTable.push(newDay)
+        } else {
+            if (fecha===today){
+                dia = "Hoy"
+                }
+            if (fecha===manana){
+                dia = "Mañana"
+                }  
+          let newDay = {
+              dia: dia,
+              fecha: fecha,
+              atiende: atiende,
+          }
+          timeTable.push(newDay)
+          i++
+        }
+      }
+      return timeTable;
 }
 module.exports = { 
     getDoctorCalendar
