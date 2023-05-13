@@ -133,7 +133,7 @@ const DoctorDetail = () => {
           </Stack>
 
           <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-            {doctorDetail.Opinions.length ? (
+            {doctorDetail.Opinions?.length ? (
               doctorDetail.Opinions.map((item, index) => (
                 <span key={index}>{item.mensaje}</span>
               ))
