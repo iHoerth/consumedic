@@ -23,13 +23,13 @@ function generateToken(user) {
 // Controlador para el login de doctor
 async function loginDoctor(req, res) {
   const { email, password, token } = req.body; // email, password, token
-
+  console.log("loginDoctor");
   try {
     if (token) {
       // Verificar el token de Google
       const ticket = await client.verifyIdToken({
         idToken: token,
-        audience: "GOOGLE_CLIENT_ID", // Reemplaza con tu ID de cliente de Google
+        audience: GOOGLE_CLIENT_ID, // Reemplaza con tu ID de cliente de Google
       });
 
       const payload = ticket.getPayload();
@@ -61,9 +61,10 @@ async function loginDoctor(req, res) {
 async function loginPatient(req, res) {
   //aca recibis como token
   const { email, password, tokenId } = req.body; // email, password, token
-  console.log(tokenId, req.body);
+  console.log(tokenId, " - ", req.body);
   try {
     if (tokenId) {
+      console.log("acaaaaaa");
       // Verificar el token de Google
       const ticket = await client.verifyIdToken({
         idToken: tokenId,
@@ -94,7 +95,27 @@ async function loginPatient(req, res) {
       res.json({ token });
     } else {
       //mientras le podes poner asi para que responda si o si algo
-      res.status(500).json({ message: "Server error" });
+      console.log("aqqqqquuuiiiii");
+
+      // Buscar al paciente por su email en la base de datos
+      const patient = await PacienteType.findOne({
+        where: { email: email },
+      }); // googleEmail
+
+      if (!patient) {
+        return res.status(404).json({ message: "Patient not found" });
+      }
+      //aca se compara la contraseña, pero si uno inicia sesion con goolge no hace falta enviar la contraseña
+      // Verificar la contraseña
+      const isMatch = await bcrypt.compare(password, patient.password);
+
+      if (!isMatch) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+
+      // Generar el token JWT y enviarlo en la respuesta
+      const token = generateToken(patient);
+      res.json({ token });
     }
   } catch (error) {
     console.error(error);
