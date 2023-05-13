@@ -1,34 +1,24 @@
 import React from "react";
-import { useEffect } from "react";
-
-import axios from "axios"
-
 import { useTheme } from "@mui/material";
 
 
-
-const Calendar = ({id}) => {
-
-    const [calendar, setCalendar] = React.useState([]);
-    const theme = useTheme();
+const Calendar = ({id, calendar}) => {
     
-    useEffect(()=>{
-        const bringCalendar = async(id)=>{
-            console.log(id);
-            const data = await axios.get(`http://localhost:3001/appointments/calendar/${id}`)
-            return data.data;
-        }
-        const data = bringCalendar(id)
-        setCalendar(data)
-        console.log(calendar);
-    }, [] );
+    
 
-    console.log(calendar);
     return (
       <>
-        {calendar.length ? calendar.map(turno=>{
-            return <div>{turno.fecha}</div>
-        }) : null}
+        {calendar.map(dia=>(
+          <div>
+            <div>
+              <h3>{dia.dia}</h3>
+              <h5>{dia.fecha}</h5>
+              <ul>
+                {dia.atiende === "no" ? <p>No atiende este día</p> : dia.turnos.map(turno=><button>{turno.hora}</button>)}
+              </ul>
+            </div>
+          </div>
+        ))}
       </>
     );
   };

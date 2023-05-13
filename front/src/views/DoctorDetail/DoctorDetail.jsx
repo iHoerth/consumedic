@@ -84,6 +84,7 @@ const DoctorDetail = () => {
           alignItems: "center",
         }}
       >
+        {/* <Calendar id={id} calendar={doctorDetail.calendar} /> */}
         <IconButton sx={{ p: 2 }}>
           <Avatar
             alt="img"
