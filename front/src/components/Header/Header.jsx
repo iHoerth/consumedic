@@ -4,25 +4,26 @@ import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 
 const Header = () => {
   return (
     <Box
+    color='secondary'
       sx={{
+        
         width: "70%",
-        backgroundColor: "#b0bec5",
         p: "30px",
-        mt: "40px",
-        mb: "20px",
+        // mt: "160px",
+        // mb: "20px",
         borderRadius: "20px",
       }}
     >
       <Typography
         variant="h6"
         sx={{
-          mb: "20px",
           fontSize: "15px",
         }}
       >
