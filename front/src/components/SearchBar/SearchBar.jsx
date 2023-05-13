@@ -12,19 +12,17 @@ import Select from '@mui/material/Select';
 import { NavLink } from 'react-router-dom';
 import { useMediaQuery, useTheme } from '@mui/material';
 
-
-
 const ProminentAppBar = () => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ flexGrow: 1, width: '50%' }}>
+    <Box sx={{  width: '70%' }}>
       <AppBar position="static">
         <Toolbar color="secondary">
-          <FormControl color="secondary" sx={{ minWidth: 150, color: 'white' }}>
+          <FormControl sx={{ minWidth: 150, color: 'white' }}>
             <InputLabel id="especialista-label">Especialista</InputLabel>
             <Select
-              color="secondary"
+              
               labelId="especialista-label"
               id="especialista-select"
               label="Especialista"
