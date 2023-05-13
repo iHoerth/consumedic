@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useMediaQuery, useTheme } from '@mui/material';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import { useState, useEffect } from 'react';
 
 import DrawerComponent from './DrawerComponent';
 
@@ -16,8 +17,8 @@ const NavBar = () => {
 
   const navLinksArray = [
     {
-      title: "Home",
-      path: "/",
+      title: 'Home',
+      path: '/',
     },
     {
       title: 'Login',
@@ -30,10 +31,10 @@ const NavBar = () => {
   ];
 
   /* Estado para ver si se bajo o no */
-  const [scrolled, setScrolled] = React.useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
- /*listener de eventos de scroll a la ventana */
-  React.useEffect(() => {
+  /*listener de eventos de scroll a la ventana */
+  useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
       if (scrollTop > 50) {
@@ -49,9 +50,8 @@ const NavBar = () => {
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar
-        color={scrolled ? "transparent":"secondary"}
+        color={scrolled ? 'secondary' : 'transparent'}
         position="fixed"
-        
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
       >
         <Toolbar
@@ -65,16 +65,22 @@ const NavBar = () => {
             },
           }}
         >
-          <Box display="flex" alignItems="center" gap="4px" color={!scrolled ? "white":"black"} sx={{ flexGrow: 1 }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            gap="4px"
+            color={!scrolled ? 'black' : 'white'}
+            sx={{ flexGrow: 1 }}
+          >
             <LocalHospitalIcon color="inherit" />
-            <Typography variant="h5" component="div" color={!scrolled ? "white":"black"}>
+            <Typography variant="h5" component="div" color={!scrolled ? 'black' : 'white'}>
               CONSUMEDIC
             </Typography>
           </Box>
           {screenSizeSmall ? (
             <DrawerComponent navLinksArray={navLinksArray} />
           ) : (
-            <nav style={{ color: `${!scrolled ? "white":"black"}` }}>
+            <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
               {navLinksArray.map((link, index) => (
                 <Button key={index} color="inherit" href={link.path}>
                   {link.title}
@@ -84,7 +90,6 @@ const NavBar = () => {
           )}
         </Toolbar>
       </AppBar>
-
     </Box>
   );
 };
