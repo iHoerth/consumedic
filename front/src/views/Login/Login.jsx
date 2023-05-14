@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/ContextProvider";
 import { useContext } from "react";
 
-
+import login21 from './login21.jpg'
 
 
 const Userlogin = () => {
@@ -126,27 +126,39 @@ const Userlogin = () => {
     <>
       <NavBar></NavBar>
       <Box
-      sx={{
-        backgroundImage: `url("https://clinicadoshopping.com.br/uploads/557b45753b84e18acd87861f5e7c169f.png")`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-      }}
+        sx={{
+          backgroundImage: `url('${login21}')`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          display: 'flex',
+          alignItems: 'center',
+          '@media (max-width: 600px)': {
+            height: {
+              xs: '50vh',
+              sm: '60vh',
+              md: '70vh',
+              lg: '80vh',
+            }
+          }, 
+        }}
     >
       <Container 
         component={Paper} 
         elevation={5} 
         sx={{ 
+          // width: "400px", 
+          minWidth: "300px", 
           width: "400px", 
-          
+          padding: "5px",
         }}
       >
-        <Typography variant="h6" align="center" sx={{ marginTop: "180px" }}>
+        <Typography variant="h6" align="center" sx={{ marginTop: "50px" , marginBottom: "20px"}}>
           Ingresa tu cuenta
         </Typography>
 
@@ -188,6 +200,8 @@ const Userlogin = () => {
               "& .MuiFormHelperText-root": {
                 color: emailError ? "red" : "secondary",
               },
+              height: "80px",
+              width: "320px",
             }}
           ></TextField>
 
@@ -218,6 +232,8 @@ const Userlogin = () => {
               "& .MuiFormHelperText-root": {
                 color: passwordError ? "red" : "secondary",
               },
+              height: "80px",
+              width: "320px",
             }}
           ></TextField>
 
