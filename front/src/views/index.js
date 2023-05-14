@@ -1,4 +1,4 @@
-import Home from './Home/Home';
+import Home from './Home/OldHome';
 import HomeNuevo from './Home/HomeNuevo';
 import Landing from './Landing/Landing';
 import Login from './Login/Login';

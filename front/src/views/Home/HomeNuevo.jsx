@@ -9,6 +9,7 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import { bannerImages } from '../../helpers/helpers';
 import { useState } from 'react';
 
+
 const HomeNuevo = () => {
   const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -20,10 +21,6 @@ const HomeNuevo = () => {
     setActiveStep(step);
   };
 
-  // const transition = {
-  //   duration: 0.6,
-  //   ease: [0.6, 0.05, -0.01, 0.9],
-  // };
 
   return (
     <>
@@ -33,9 +30,22 @@ const HomeNuevo = () => {
         onChangeIndex={handleStepChange}
         enableMouseEvents
         interval={6000}
+        style={{
+          maxWidth: '100%',
+          maxHeight: '100%',
+          width: '100%',
+          margin: '0 auto',
+        }}
       >
         {bannerImages.map((step, index) => (
-          <div style={{overflow:'hidden'}} key={step.imgPath}>
+          <div style={{
+            overflow:'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            height: '100%',
+            }} 
+            key={step.imgPath}
+          >
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
@@ -74,9 +84,9 @@ const HomeNuevo = () => {
             height: '72.5vh',
           }}
         >
-          <SearchBar />
-          <Header />
         </Box>
+        <Header />
+        <SearchBar />
         <Box
           sx={{
             border: '1px solid blue',
