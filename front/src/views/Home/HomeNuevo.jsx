@@ -7,25 +7,27 @@ import { useTheme } from '@mui/material/styles';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { bannerImages } from '../../helpers/helpers';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import box1 from '../Img/box1.jpg';
 import box2 from '../Img/box2.jpg';
 import box3 from '../Img/box3.jpg';
 import box4 from '../Img/box4.jpg';
 
+
+
+
 const HomeNuevo = () => {
   const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  // const maxSteps = bannerImages?.length ?? 0;
 
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
 
-
+  
   return (
     <>
       <AutoPlaySwipeableViews
@@ -95,7 +97,6 @@ const HomeNuevo = () => {
         <SearchBar />
         <Box
           sx={{
-            backgroundImage: `url("https://drive.google.com/file/d/1s-aD7RuNq836MQzje3sPq0UijxUw2vFw/view?usp=sharing")`,
             border: '1px solid blue',
             width: '100%',
             display: 'flex',
