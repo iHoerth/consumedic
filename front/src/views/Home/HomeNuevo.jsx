@@ -7,7 +7,14 @@ import { useTheme } from '@mui/material/styles';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { bannerImages } from '../../helpers/helpers';
-import { useState } from 'react';
+import React, { useState } from 'react';
+
+import box1 from '../Img/box1.jpg';
+import box2 from '../Img/box2.jpg';
+import box3 from '../Img/box3.jpg';
+import box4 from '../Img/box4.jpg';
+
+
 
 
 const HomeNuevo = () => {
@@ -15,13 +22,12 @@ const HomeNuevo = () => {
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  // const maxSteps = bannerImages?.length ?? 0;
 
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
 
-
+  
   return (
     <>
       <AutoPlaySwipeableViews
@@ -102,6 +108,10 @@ const HomeNuevo = () => {
         >
           <Box
             sx={{
+              backgroundImage: `url('${box1}')`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              position: "relative",
               width: '300px',
               height: '300px',
               border: '1px solid red',
@@ -114,6 +124,11 @@ const HomeNuevo = () => {
           </Box>
           <Box
             sx={{
+              backgroundImage: `url('${box2}')`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              position: "relative",
               width: '300px',
               height: '300px',
               border: '1px solid red',
@@ -126,6 +141,11 @@ const HomeNuevo = () => {
           </Box>
           <Box
             sx={{
+              backgroundImage: `url('${box3}')`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              position: "relative",
               width: '300px',
               height: '300px',
               border: '1px solid red',
@@ -138,6 +158,11 @@ const HomeNuevo = () => {
           </Box>
           <Box
             sx={{
+              backgroundImage: `url('${box4}')`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              position: "relative",
               width: '300px',
               height: '300px',
               border: '1px solid red',

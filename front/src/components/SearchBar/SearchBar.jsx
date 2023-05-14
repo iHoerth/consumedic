@@ -13,10 +13,18 @@ import { NavLink } from 'react-router-dom';
 
 const ProminentAppBar = () => {
   return (
-    <Box sx={{ flexGrow: 1, width: '65%', borderRadius: '8px' }}>
+    <Box sx={{ flexGrow: 1, width: '68%', borderRadius: '8px' }}>
       <AppBar position="static" style={{ background: '#00B5F9', borderRadius: '10px' }}>
         <Toolbar>
-          <FormControl variant="outlined" sx={{ minWidth: 200, marginRight: '3rem' }}>
+          <FormControl 
+            variant="outlined" 
+            sx={{ 
+              minWidth: 250, 
+              marginLeft: '7rem',
+              marginTop: '1rem',
+              marginBottom: '1rem',
+              }}
+          >
             <InputLabel id="especialista-label" style={{ color: 'width' }}>
               Especialista
             </InputLabel>
@@ -32,7 +40,16 @@ const ProminentAppBar = () => {
               <MenuItem value={30}>Odontólogo</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="outlined" sx={{ minWidth: 200 }}>
+          <FormControl 
+            variant="outlined" 
+            sx={{ 
+              minWidth: 250, 
+              marginLeft: '7rem',
+              marginTop: '1rem',
+              marginBottom: '1rem',
+
+            }}
+          >
             <InputLabel id="ubicacion-label" style={{ color: 'width' }}>Ubicación</InputLabel>
             <Select
               labelId="ubicacion-label"
@@ -47,7 +64,7 @@ const ProminentAppBar = () => {
             </Select>
           </FormControl>
           <NavLink to="/search">
-            <IconButton size="large" aria-label="search" color="blue" sx={{ marginLeft: '1rem', backgroundColor: '#00D3A4', borderRadius: '50%' }}>
+            <IconButton size="large" aria-label="search" color="blue" sx={{ marginLeft: '5rem', backgroundColor: '#00D3A4', borderRadius: '50%' }}>
               <SearchIcon />
             </IconButton>
           </NavLink>
