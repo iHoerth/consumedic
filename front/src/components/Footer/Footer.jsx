@@ -1,72 +1,148 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import { NavLink } from "react-router-dom";
 import { AppBar } from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Typography,
+  Box,
+} from "@mui/material";
+import {
+  Home,
+  Info,
+  Lock,
+  Facebook,
+  Comment,
+  Twitter,
+  Instagram,
+  People,
+  RateReview,
+} from "@mui/icons-material";
 
 const preventDefault = (event) => event.preventDefault();
 
 const Footer = () => {
+  const [currentPage, setCurrentPage] = React.useState("home");
+  const theme = useTheme();
+
+  const handleNavigation = (event, page) => {
+    setCurrentPage(page);
+  };
   return (
     <Box
       sx={{
-        // flexGrow: 1,
+        bgcolor: theme.palette.secondary.main,
         width: "100%",
-        height: "100px",
-        backgroundColor: "#bdbdbd",
-        typography: "body1",
+        height: "35vh",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        "& > :not(style) + :not(style)": {
-          ml: 2,
-          backgroundColor: "white",
-          padding: "10px",
-        },
+        p: 2,
       }}
-      onClick={preventDefault}
     >
-      <NavLink
-        to="/home"
+      <Box
         sx={{
-          color: "white",
-          fontSize: "20px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexGrow: 1,
-          height: "100%",
+          p: 2,
+          mb: 1,
+          width: "100%",
+          bgcolor: theme.palette.secondary.main,
         }}
       >
-        HOME
-      </NavLink>
-      <NavLink
-        to="/login"
+        <BottomNavigation
+          value={currentPage}
+          onChange={handleNavigation}
+          sx={{
+            bgcolor: theme.palette.secondary.main,
+          }}
+        >
+          <BottomNavigationAction
+            label="Home"
+            icon={<Home />}
+            value="home"
+            showLabel
+          />
+          <BottomNavigationAction
+            label="About"
+            icon={<Info />}
+            value="about"
+            showLabel
+          />
+          <BottomNavigationAction
+            label="Team"
+            icon={<People />}
+            value="team"
+            showLabel
+          />
+          <BottomNavigationAction
+            label="Testimonials"
+            icon={<Comment />}
+            value="testimonials"
+            showLabel
+          />
+          <BottomNavigationAction
+            label="Login"
+            icon={<Lock />}
+            value="login"
+            showLabel
+          />
+        </BottomNavigation>
+      </Box>
+      <Box
         sx={{
-          color: "black",
-          fontSize: "20px",
+          bgcolor: "white",
+          p: 2,
+          mb: 1,
+          width: "100%",
           display: "flex",
-          alignItems: "center",
+          flexDirection: "row",
           justifyContent: "center",
-          flexGrow: 1,
-          height: "100%",
+          bgcolor: theme.palette.secondary.main,
         }}
       >
-        LOGIN
-      </NavLink>
-      <NavLink
-        to="/"
+        <Facebook
+          sx={{
+            mx: 1,
+            color: theme.palette.primary.main,
+            fontSize: "30px",
+            ml: "30px",
+            mr: "30px",
+          }}
+        />
+        <Twitter
+          sx={{
+            mx: 1,
+            color: theme.palette.primary.main,
+            fontSize: "30px",
+            ml: "30px",
+            mr: "30px",
+          }}
+        />
+        <Instagram
+          sx={{
+            mx: 1,
+            color: theme.palette.primary.main,
+            fontSize: "30px",
+            ml: "30px",
+            mr: "30px",
+          }}
+        />
+      </Box>
+      <Box
         sx={{
-          color: "white",
-          fontSize: "20px",
+          p: 2,
+          width: "100%",
           display: "flex",
-          alignItems: "center",
+          flexDirection: "row",
           justifyContent: "center",
-          flexGrow: 1,
-          height: "100%",
         }}
       >
-        LANDING
-      </NavLink>
+        <Typography variant="body2" align="center" sx={{ mt: 1 }}>
+          {`Copyright © ${new Date().getFullYear()}
+          Consumedic. Encontrá tu especialista y pedí turno`}
+        </Typography>
+      </Box>
     </Box>
   );
 };
