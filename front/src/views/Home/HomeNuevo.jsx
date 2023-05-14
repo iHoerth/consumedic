@@ -33,7 +33,7 @@ const HomeNuevo = () => {
         style={{
           maxWidth: '100%',
           maxHeight: '100%',
-          width: '100%',
+          width: '100hv',
           margin: '0 auto',
         }}
       >
