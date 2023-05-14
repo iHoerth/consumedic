@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import style from "./DoctorDetail.module.css";
 import { Context } from "../../context/ContextProvider";
 import { useParams } from "react-router-dom";
 import CardMUI from "@mui/material/Card";
@@ -187,7 +186,7 @@ const DoctorDetail = () => {
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
             <PeopleAltIcon sx={{ marginRight: "0.5rem" }} color="primary" />
-            {doctorDetail.ObraSocials?.length && //pepe
+            {doctorDetail.ObraSocials?.length &&
               doctorDetail.ObraSocials.map((item, index) => (
                 <span key={index}>Obra sociales: {item.nombre}</span>
               ))}
@@ -196,7 +195,7 @@ const DoctorDetail = () => {
             <PaymentsIcon sx={{ marginRight: "0.5rem" }} color="primary" />
             Pagos: Mercado Pago
           </Typography>
-          <NavLink to={doctorDetail.linkedin} target="_blank">
+          <NavLink to="https://www.linkedin.com" target="_blank">
             <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
               <LinkedInIcon sx={{ marginRight: "0.5rem" }} color="primary" />
               LinkedIn
