@@ -1,7 +1,7 @@
 import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -9,16 +9,18 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 
 const Header = () => {
+  const theme = useTheme();
+
   return (
     <Box
-    color='secondary'
+    // color='secondary'
       sx={{
-        
+        bgcolor: theme.palette.secondary.main,
         width: "70%",
         p: "30px",
-        // mt: "160px",
-        // mb: "20px",
-        borderRadius: "20px",
+        mt: "10px",
+        mb: "20px",
+        borderRadius: "10px",
       }}
     >
       <Typography
@@ -31,13 +33,14 @@ const Header = () => {
         turnos al instante de manera simple y rápida. Busca el profesional que
         necesites ahora!
       </Typography>
+
       <Stack spacing={2} direction="row">
         <Button
           variant="outlined"
           sx={{
-            color: "white",
+            color: "secondary",
             fontWeight: 700,
-            borderColor: "white",
+            borderColor: "secondary",
             borderWidth: 2,
           }}
         >
@@ -48,9 +51,9 @@ const Header = () => {
         <Button
           variant="outlined"
           sx={{
-            color: "white",
+            color: "secondary",
             fontWeight: 700,
-            borderColor: "white",
+            borderColor: "secondary",
             borderWidth: 2,
           }}
         >

@@ -40,7 +40,7 @@ const HomeNuevo = () => {
         {bannerImages.map((step, index) => (
           <div style={{
             overflow:'hidden',
-            display: 'flex',
+            display: 'auto',
             alignItems: 'center',
             height: '100%',
             }} 
@@ -54,6 +54,8 @@ const HomeNuevo = () => {
                   display: 'flex',
                   maxWidth: 'auto',
                   width: '1920px',
+                  mt: '0px',
+                  mb: '500px',
                 }}
                 src={step.imgPath}
                 alt={step.label}
@@ -85,7 +87,7 @@ const HomeNuevo = () => {
           }}
         >
         </Box>
-        <Header />
+        <Header style={{ position: 'absolute', top: '50px' }}/>
         <SearchBar />
         <Box
           sx={{
