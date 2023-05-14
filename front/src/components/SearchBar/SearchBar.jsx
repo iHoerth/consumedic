@@ -14,7 +14,7 @@ import { NavLink } from 'react-router-dom';
 const ProminentAppBar = () => {
   return (
     <Box sx={{ flexGrow: 1, width: '68%', borderRadius: '8px' }}>
-      <AppBar position="static" style={{ background: '#00B5F9', borderRadius: '10px' }}>
+      <AppBar position="static" style={{ background: '#00E9BC', borderRadius: '10px' }}>
         <Toolbar>
           <FormControl 
             variant="outlined" 
@@ -64,7 +64,7 @@ const ProminentAppBar = () => {
             </Select>
           </FormControl>
           <NavLink to="/search">
-            <IconButton size="large" aria-label="search" color="blue" sx={{ marginLeft: '5rem', backgroundColor: '#00D3A4', borderRadius: '50%' }}>
+            <IconButton size="large" aria-label="search" color="blue" sx={{ marginLeft: '5rem', backgroundColor: 'white', borderRadius: '50%' }}>
               <SearchIcon />
             </IconButton>
           </NavLink>
