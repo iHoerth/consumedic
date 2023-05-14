@@ -29,6 +29,9 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { Container, Box } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 
+import detail23 from '../Img/detail23.jpg'
+
+
 const DoctorDetail = () => {
   const theme = useTheme();
 
@@ -62,11 +65,16 @@ const DoctorDetail = () => {
   return (
     <Container
       sx={{
-        bgcolor: theme.palette.primary.main,
+        backgroundImage: `url('${detail23}')`,
+        backgroundPosition: "center",
+        backgroundPositionY: "30%", 
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        position: "absolute",
         width: "100%",
-        height: "130vh",
+        height: "115vh",
         display: "flex",
-        pb: "23px",
+        pb: "20px",
         flexDirection: "column",
         alignItems: "center",
         typography: theme.typography,
@@ -79,6 +87,7 @@ const DoctorDetail = () => {
           maxWidth: 500,
           typography: theme.typography,
           mt: "10px",
+          mb: "30px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

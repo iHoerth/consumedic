@@ -20,6 +20,7 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import { NavLink } from "react-router-dom";
 import { useMediaQuery, useTheme } from "@mui/material";
 
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -56,7 +57,7 @@ const Card = ({
     <CardMUI
       sx={{
         pl: "40px",
-        bgcolor: theme.palette.secondary.main,
+        // bgcolor: theme.palette.secondary.main,
         typography: theme.typography,
       }}
     >
