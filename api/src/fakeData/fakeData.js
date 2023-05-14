@@ -260,8 +260,20 @@ const createFakeData = async () => {
     }
   }
 
-
-
+  //hashed password consumedic 1234 "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
+  const idObraSocial = Math.ceil(Math.random() * 82);
+    const newObraSocial = await db.ObraSocial.findByPk(idObraSocial);
+    const paciente = await db.PacienteType.create({
+      dni: faker.datatype.number(),
+      email: "consumedicgeneral@gmail.com",
+      password: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
+      telefono: faker.datatype.number(),
+      nombre: "Consumedic",
+      apellido: "Paciente PF Henry",
+      isDoctor: false,
+      status: 'active',
+      ObraSocialId: newObraSocial.dataValues.id,
+    });
   // Crear PacienteType
   for (let i = 0; i < docsAndPatients; i++) {
     const idObraSocial = Math.ceil(Math.random() * 82);
