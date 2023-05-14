@@ -13,7 +13,7 @@ import { Google } from "@mui/icons-material";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { useEffect } from "react";
-
+import Footer from '../../components/Footer/Footer';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/ContextProvider";
@@ -124,19 +124,19 @@ const Userlogin = () => {
 
   return (
     <>
-      <NavBar></NavBar>
+      <NavBar />
       <Box
         sx={{
           backgroundImage: `url('${login21}')`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          position: "absolute",
-          top: 0,
-          left: 0,
+          backgroundAttachment: "fixed",
+          position: "relative",
           width: "100%",
           height: "100%",
           display: 'flex',
+          flexDirection: "column",
           alignItems: 'center',
           '@media (max-width: 600px)': {
             height: {
@@ -155,6 +155,8 @@ const Userlogin = () => {
           minWidth: "300px", 
           width: "400px", 
           padding: "15px",
+          marginTop: "10%",
+          marginBottom: "3%"
         }}
       >
         <Typography variant="h6" align="center" sx={{ marginTop: "50px" , marginBottom: "20px"}}>
@@ -262,6 +264,7 @@ const Userlogin = () => {
           </Button>
         </Box>
       </Container>
+      <Footer />
       </Box>
     </>
   );

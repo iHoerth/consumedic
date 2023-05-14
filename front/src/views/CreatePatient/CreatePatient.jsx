@@ -17,6 +17,7 @@ import {
 import NavBar from "../../components/NavBar/NavBar";
 import { Context } from "../../context/ContextProvider";
 import axios from "axios";
+import Footer from '../../components/Footer/Footer';
 
 import create31 from '../Img/create31.jpg'
 
@@ -157,13 +158,12 @@ const CreatePatient = () => {
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-          position: "absolute",
+          // backgroundAttachment: "fixed",
+          position: "relative",
           top: 0,
           left: 0,
           width: "100%",
           height: "100%",
-
           display: "flex",
           justifycontent: "space-between",
           alignItems: "center",
@@ -182,7 +182,8 @@ const CreatePatient = () => {
           minWidth: "300px", 
           width: "400px", 
           padding: "50px",
-          mt: '180px',
+          marginTop: "10%",
+          marginBottom: "3%"
         }}
       >
         <form onSubmit={handleSubmit}>
@@ -357,6 +358,7 @@ const CreatePatient = () => {
           </FormControl>
         </form>
         </Container>
+        <Footer />
       </Box>
     </>
   );

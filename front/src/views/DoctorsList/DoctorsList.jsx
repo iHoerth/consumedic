@@ -50,11 +50,13 @@ const DoctorsList = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
-          position: "relative",
+          position: "absolute",
           width: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          marginTop: "15%",
+
           '@media (max-width: 600px)': {
             height: {
               xs: '50vh',
