@@ -81,12 +81,14 @@ const Footer = () => {
             value="testimonials"
             showLabel
           />
-          <BottomNavigationAction
-            label="Login"
-            icon={<Lock />}
-            value="login"
-            showLabel
-          />
+          <a href="/login" target="_blank" rel="noopener noreferrer">
+            <BottomNavigationAction
+              label="Login"
+              icon={<Lock />}
+              value="login"
+              showLabel
+            />
+          </a>
         </BottomNavigation>
       </Box>
       <Box
@@ -101,33 +103,39 @@ const Footer = () => {
           bgcolor: theme.palette.secondary.main,
         }}
       >
-        <Facebook
-          sx={{
-            mx: 1,
-            color: theme.palette.primary.main,
-            fontSize: "30px",
-            ml: "30px",
-            mr: "30px",
-          }}
-        />
-        <Twitter
-          sx={{
-            mx: 1,
-            color: theme.palette.primary.main,
-            fontSize: "30px",
-            ml: "30px",
-            mr: "30px",
-          }}
-        />
-        <Instagram
-          sx={{
-            mx: 1,
-            color: theme.palette.primary.main,
-            fontSize: "30px",
-            ml: "30px",
-            mr: "30px",
-          }}
-        />
+        <NavLink to="https://www.facebook.com" target="_blank">
+          <Facebook
+            sx={{
+              mx: 1,
+              color: theme.palette.primary.main,
+              fontSize: "30px",
+              ml: "30px",
+              mr: "30px",
+            }}
+          />
+        </NavLink>
+        <NavLink to="https://www.twitter.com/" target="_blank">
+          <Twitter
+            sx={{
+              mx: 1,
+              color: theme.palette.primary.main,
+              fontSize: "30px",
+              ml: "30px",
+              mr: "30px",
+            }}
+          />
+        </NavLink>
+        <NavLink to="https://www.instagram.com" target="_blank">
+          <Instagram
+            sx={{
+              mx: 1,
+              color: theme.palette.primary.main,
+              fontSize: "30px",
+              ml: "30px",
+              mr: "30px",
+            }}
+          />
+        </NavLink>
       </Box>
       <Box
         sx={{
