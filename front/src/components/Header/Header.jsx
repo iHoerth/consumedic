@@ -17,9 +17,9 @@ const Header = () => {
       sx={{
         bgcolor: theme.palette.secondary.main,
         width: "70%",
-        p: "30px",
-        mt: "10px",
-        mb: "20px",
+        p: "40px",
+        mt: "40px",
+        mb: "30px",
         borderRadius: "10px",
       }}
     >
@@ -27,6 +27,7 @@ const Header = () => {
         variant="h6"
         sx={{
           fontSize: "15px",
+          height: 70,
         }}
       >
         Consumedic es una web para encontrar profesionales de la salud y agendar
@@ -42,6 +43,7 @@ const Header = () => {
             fontWeight: 700,
             borderColor: "secondary",
             borderWidth: 2,
+            height: 40,
           }}
         >
           {" "}
@@ -55,6 +57,7 @@ const Header = () => {
             fontWeight: 700,
             borderColor: "secondary",
             borderWidth: 2,
+            height: 40,
           }}
         >
           <ApartmentIcon />
