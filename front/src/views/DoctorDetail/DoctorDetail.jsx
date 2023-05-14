@@ -27,6 +27,7 @@ import { NavLink } from "react-router-dom";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { Container, Box } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
+import Footer from '../../components/Footer/Footer';
 
 import detail23 from '../Img/detail23.jpg'
 
@@ -65,18 +66,26 @@ const DoctorDetail = () => {
     <Container
       sx={{
         backgroundImage: `url('${detail23}')`,
-        backgroundPosition: "center",
-        backgroundPositionY: "25%", 
+        backgroundPosition: "bottom",
+        backgroundPositionY: "23%", 
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        position: "absolute",
+        backgroundAttachment: "fixed",
+        position: "relative",
         width: "100%",
-        height: "115vh",
+        height: "100%",
         display: "flex",
-        pb: "20px",
         flexDirection: "column",
         alignItems: "center",
-        typography: theme.typography,
+        // typography: theme.typography,
+        '@media (max-width: 600px)': {
+          height: {
+            xs: '50vh',
+            sm: '60vh',
+            md: '70vh',
+            lg: '80vh',
+          }
+        }, 
       }}
     >
       <NavBar />
@@ -85,11 +94,14 @@ const DoctorDetail = () => {
         sx={{
           maxWidth: 500,
           typography: theme.typography,
+          width: "100%",
           mt: "10px",
           mb: "30px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          marginTop: "15%",
+          marginBottom: "10%"
         }}
       >
         {/* <Calendar id={id} calendar={doctorDetail.calendar} /> */}
@@ -236,6 +248,7 @@ const DoctorDetail = () => {
           </Accordion>
         </CardContent>
       </CardMUI>
+      <Footer />
     </Container>
   );
 };
