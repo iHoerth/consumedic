@@ -12,10 +12,14 @@ import {
   Paper,
   Typography,
   Checkbox,
+  Container,
 } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import { Context } from "../../context/ContextProvider";
 import axios from "axios";
+
+import create31 from '../Img/create31.jpg'
+
 
 const CreatePatient = () => {
   const navigate = useNavigate();
@@ -148,14 +152,37 @@ const CreatePatient = () => {
     <>
       <NavBar></NavBar>
       <Box
-        component={Paper}
-        elevation={5}
         sx={{
-          width: "300px",
+          backgroundImage: `url('${create31}')`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+
           display: "flex",
           justifycontent: "space-between",
           alignItems: "center",
           flexDirection: "column",
+        }}
+      >
+      <Container
+        component={Paper}
+        elevation={5}
+        sx={{
+          // width: "300px",
+          display: "flex",
+          justifycontent: "space-between",
+          alignItems: "center",
+          flexDirection: "column",
+          minWidth: "300px", 
+          width: "400px", 
+          padding: "50px",
+          mt: '180px',
         }}
       >
         <form onSubmit={handleSubmit}>
@@ -329,6 +356,7 @@ const CreatePatient = () => {
             </Button>
           </FormControl>
         </form>
+        </Container>
       </Box>
     </>
   );

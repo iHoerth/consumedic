@@ -2,7 +2,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
@@ -27,6 +27,7 @@ const HomeNuevo = () => {
     setActiveStep(step);
   };
 
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
   return (
     <>
@@ -81,6 +82,14 @@ const HomeNuevo = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          '@media (max-width: 600px)': {
+            height: {
+              xs: '50vh',
+              sm: '60vh',
+              md: '70vh',
+              lg: '80vh',
+            }
+          }, 
         }}
       >
         <Box
@@ -90,34 +99,60 @@ const HomeNuevo = () => {
             justifyContent: 'center',
             alignItems: 'center',
             height: '72.5vh',
+            '@media (max-width: 600px)': {
+              height: {
+                xs: '50vh',
+                sm: '60vh',
+                md: '70vh',
+                lg: '80vh',
+              }
+            }, 
           }}
         >
         </Box>
-        <Header style={{ position: 'absolute', top: '50px' }}/>
+        <Header style={{ position: 'absolute', top: '50px',  '@media (max-width: 600px)': {
+            height: {
+              xs: '50vh',
+              sm: '60vh',
+              md: '70vh',
+              lg: '80vh',
+            }
+          },  }}/>
         <SearchBar />
-        <Box
+
+        <Box //cuadro grande
           sx={{
             border: '1px solid blue',
             width: '100%',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '60px',
+            padding:  '60px',
             height: '60vh',
+            // flexDirection: isMobile ? 'column' : 'row',
+            '@media (max-width: 600px)': {
+              height: {
+                xs: '50vh',
+                sm: '60vh',
+                md: '70vh',
+                lg: '80vh',
+              },            }, 
           }}
         >
-          <Box
+          <Box // primer box con texto a la izq.
             sx={{
               backgroundImage: `url('${box1}')`,
               backgroundPosition: "center",
               backgroundSize: "cover",
               position: "relative",
-              width: '300px',
-              height: '300px',
-              border: '1px solid red',
+              width: isMobile ? '100%' : '300px',
+              height: isMobile ? '200px' : '300px',
+              border: '1px solid grey',
+              borderRadius: '20px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              marginBottom: isMobile ? '20px' : 0,
             }}
           >
             aca hay mucha info
@@ -131,7 +166,8 @@ const HomeNuevo = () => {
               position: "relative",
               width: '300px',
               height: '300px',
-              border: '1px solid red',
+              border: '1px solid grey',
+              borderRadius: '20px',              
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -148,7 +184,8 @@ const HomeNuevo = () => {
               position: "relative",
               width: '300px',
               height: '300px',
-              border: '1px solid red',
+              border: '1px solid grey',
+              borderRadius: '20px',              
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -165,7 +202,8 @@ const HomeNuevo = () => {
               position: "relative",
               width: '300px',
               height: '300px',
-              border: '1px solid red',
+              border: '1px solid grey',
+              borderRadius: '20px',              
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -177,7 +215,7 @@ const HomeNuevo = () => {
         <Box
           sx={{
             width: '100%',
-            height: '70vh',
+            height: '80vh',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

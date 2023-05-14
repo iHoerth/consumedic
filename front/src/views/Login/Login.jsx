@@ -152,10 +152,9 @@ const Userlogin = () => {
         component={Paper} 
         elevation={5} 
         sx={{ 
-          // width: "400px", 
           minWidth: "300px", 
           width: "400px", 
-          padding: "5px",
+          padding: "15px",
         }}
       >
         <Typography variant="h6" align="center" sx={{ marginTop: "50px" , marginBottom: "20px"}}>

@@ -5,7 +5,12 @@ const Pagination = ({page, maxPages, handleChange}) => {
 
   return (
     <>
-      <PaginationMUI count={maxPages} onChange={handleChange} color="secondary" />
+      <PaginationMUI 
+        count={maxPages} 
+        onChange={handleChange} 
+        color="primary"
+        sx={{ padding: '10px' }}
+      />
     </>
   );
 };
