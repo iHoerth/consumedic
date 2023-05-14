@@ -50,12 +50,12 @@ const DoctorsList = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
-          position: "absolute",
+          position: "relative",
           width: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: "15%",
+          // marginTop: "15%",
 
           '@media (max-width: 600px)': {
             height: {
@@ -67,11 +67,23 @@ const DoctorsList = () => {
           }, 
         }}
       >
-
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexDirection: "column",
+            height: "200px",
+          }}
+        >
+        </Box>
+        <Filter />
         <CardsContainer 
           doctorsInPage={doctorsInPage}
+          sx={{  
+            width: "400px", 
+          }}
           />
-        <Filter />
         <Pagination
           maxPages={maxPages}
           page={currentPage}

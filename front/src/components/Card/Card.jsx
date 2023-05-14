@@ -18,7 +18,7 @@ import Stack from "@mui/material/Stack";
 import LocationOnSharpIcon from "@mui/icons-material/LocationOnSharp";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import { NavLink } from "react-router-dom";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 
 
 const ExpandMore = styled((props) => {
@@ -54,13 +54,35 @@ const Card = ({
   };
 
   return (
-    <CardMUI
-      sx={{
-        pl: "40px",
-        // bgcolor: theme.palette.secondary.main,
-        typography: theme.typography,
-      }}
-    >
+    // <CardMUI
+    // sx={{
+    //   pl: "40px",
+    //   borderRadius: 4, // agregar borde redondeado
+    //   width: 400, // agregar ancho
+    //   height: 500, // agregar altura
+    //   // bgcolor: theme.palette.secondary.main,
+    //   typography: theme.typography,
+    //   }}
+    // >
+        <Grid container spacing={2}>
+        {[1, 2, 3].map((item) => (
+          <Grid item xs={12} md={6} key={item}>
+            <CardMUI
+              sx={{
+                pl: '40px',
+                borderRadius: 4,
+                width: 370,
+                height: 600,
+                mb: 6,
+                typography: theme.typography,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingRight: 4,
+              }}
+            >
+
       <Tooltip title="Ver Perfil">
         <IconButton sx={{ p: 1 }}>
           <NavLink to={`/detail/${id}`}>
@@ -145,6 +167,9 @@ const Card = ({
         </CardContent>
       </Collapse>
     </CardMUI>
+    </Grid>
+    ))}
+    </Grid>
   );
 };
 
