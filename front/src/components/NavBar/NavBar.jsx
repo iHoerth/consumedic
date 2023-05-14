@@ -68,7 +68,7 @@ const NavBar = () => {
           <Box
             display="flex"
             alignItems="center"
-            gap="4px"
+            gap="10px"
             color={!scrolled ? 'black' : 'white'}
             sx={{ flexGrow: 1 }}
           >
