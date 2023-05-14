@@ -66,7 +66,7 @@ const DoctorDetail = () => {
       sx={{
         backgroundImage: `url('${detail23}')`,
         backgroundPosition: "center",
-        backgroundPositionY: "30%", 
+        backgroundPositionY: "25%", 
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         position: "absolute",
