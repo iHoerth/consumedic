@@ -29,6 +29,8 @@ const HomeNuevo = () => {
 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
+
+  
   return (
     <>
       <AutoPlaySwipeableViews
