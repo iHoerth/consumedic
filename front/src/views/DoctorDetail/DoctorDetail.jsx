@@ -28,6 +28,8 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { Container, Box } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 
+import Calendar from "../../components/Calendar/Calendar";
+
 import detail23 from '../Img/detail23.jpg'
 
 
@@ -45,6 +47,7 @@ const DoctorDetail = () => {
       setLoading(false);
     });
     setLoading(false);
+    
   }, [id]);
 
   const [expanded, setExpanded] = useState(false);
@@ -60,6 +63,8 @@ const DoctorDetail = () => {
   if (loading) {
     return <div>CARGANDO</div>;
   }
+
+  console.log(doctorDetail);
 
   return (
     <Container

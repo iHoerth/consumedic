@@ -28,6 +28,8 @@ const HomeNuevo = () => {
   };
 
   
+
+  
   return (
     <>
       <AutoPlaySwipeableViews

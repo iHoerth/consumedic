@@ -43,7 +43,7 @@ const Userlogin = () => {
   const [passwordHelperText, setPasswordHelperText] = useState("");
 
   //expresion regular para mails
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   useEffect(() => {
     const start = () => {
@@ -62,7 +62,7 @@ const Userlogin = () => {
     if (event.target.value === "") {
       setEmailError(true);
       setEmailHelperText("El correo electrónico es requerido.");
-    } else if (emailRegex.test(event.target.value)) {
+    } else if (!emailRegex.test(event.target.value)) {
       setEmailError(true);
       setEmailHelperText("El correo electrónico no es válido.");
     } else {
