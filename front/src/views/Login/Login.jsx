@@ -18,6 +18,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/ContextProvider";
 import { useContext } from "react";
+
+
+
+
 const Userlogin = () => {
   const navigate = useNavigate();
   const patients = useContext(Context)[1];
@@ -121,8 +125,28 @@ const Userlogin = () => {
   return (
     <>
       <NavBar></NavBar>
-      <Container component={Paper} elevation={5} sx={{ width: "300px" }}>
-        <Typography variant="h6" m={2} align="center">
+      <Box
+      sx={{
+        backgroundImage: `url("https://clinicadoshopping.com.br/uploads/557b45753b84e18acd87861f5e7c169f.png")`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      <Container 
+        component={Paper} 
+        elevation={5} 
+        sx={{ 
+          width: "400px", 
+          
+        }}
+      >
+        <Typography variant="h6" align="center" sx={{ marginTop: "180px" }}>
           Ingresa tu cuenta
         </Typography>
 
@@ -134,6 +158,7 @@ const Userlogin = () => {
             justifyContent: "space-between",
             alignItems: "center",
             flexDirection: "column",
+            height: "450px",
           }}
         >
           <TextField
@@ -222,6 +247,7 @@ const Userlogin = () => {
           </Button>
         </Box>
       </Container>
+      </Box>
     </>
   );
 };
