@@ -24,7 +24,6 @@ const Filter = () => {
 
   const handleSelectChange = (e, value, reason, filterType) => {
     if (reason === 'clear') {
-      setSelectedFilter('');
       setSelectedFilter2((prevState) => ({
         ...prevState,
         [filterType]: false,
@@ -33,7 +32,6 @@ const Filter = () => {
       return;
     }
 
-    setSelectedFilter(value);
     setSelectedFilter2((prevState) => ({
       ...prevState,
       [filterType]: true,
@@ -41,7 +39,7 @@ const Filter = () => {
 
     
     const newFilter = doctors.filter((doc) =>
-      doc.Especialidads.some((spec) => spec.id === value.id)
+      doc[filterType].some((spec) => spec.id === value.id)
     );
     filterDoctors(newFilter);
   };
