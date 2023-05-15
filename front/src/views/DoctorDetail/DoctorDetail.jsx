@@ -109,7 +109,7 @@ const DoctorDetail = () => {
           marginBottom: "10%"
         }}
       >
-        {/* <Calendar id={id} calendar={doctorDetail.calendar} /> */}
+        
         <IconButton sx={{ p: 2 }}>
           <Avatar
             alt="img"
@@ -253,6 +253,7 @@ const DoctorDetail = () => {
           </Accordion>
         </CardContent>
       </CardMUI>
+      {/* <Calendar id={id} calendar={doctorDetail.calendar} /> */}
       <Footer />
     </Container>
   );
