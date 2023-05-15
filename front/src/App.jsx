@@ -17,9 +17,11 @@ import './App.css';
 
 const App = () => {
   const { fetchUtilities } = useContext(UtilitiesContext);
+  const { fetchDoctors } = useContext(Context)[0];
 
   useEffect(() => {
     fetchUtilities();
+    fetchDoctors();
   }, []);
 
   return (

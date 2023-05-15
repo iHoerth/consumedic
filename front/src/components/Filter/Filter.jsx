@@ -3,15 +3,12 @@ import { Context, UtilitiesContext } from '../../context/ContextProvider';
 import { Autocomplete, TextField, Box } from '@mui/material';
 import { FILTER_TYPES } from '../../helpers/helpers';
 
+import { FilterContext } from '../../context/ContextProvider';
+
 const Filter = () => {
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const { filteredDoctors, doctors, filterDoctors } = useContext(Context)[0];
-  const [selectedFilters, setSelectedFilters] = useState({
-    Especialidads: [false, {}],
-    ObraSocials: [false, {}],
-    Cita: [false, {}],
-    location: [false, {}],
-  });
+  const [selectedFilters, setSelectedFilters] = useContext(FilterContext);
 
   const handleSelectChange = (e, value, reason, filterType) => {
     if (reason === 'clear') {
@@ -37,12 +34,12 @@ const Filter = () => {
       const [flag, value] = selectedFilters[FILTER_TYPES[key]];
       if (flag) {
         newDoctors = newDoctors.filter((doc) =>
-        // Aplico un filter + some utlizando justamente el key, que coincide con el nombre del atributo que quiero buscar.
+          // Aplico un filter + some utlizando justamente el key, que coincide con el nombre del atributo que quiero buscar.
           doc[FILTER_TYPES[key]].some((filterCategory) => filterCategory.id === value.id)
         );
       }
     }
-    console.log(`NUEVO FILTRO \n`, newDoctors);
+    console.log(`NEW FILTER \n`, newDoctors);
     // 'despacho' la accion que setea el nuevo filtro de doctores
     filterDoctors(newDoctors);
     // lo retorno por si llegara a ser necesario
@@ -51,19 +48,19 @@ const Filter = () => {
 
   useEffect(() => {
     handleNewFilters();
-    console.log(`*USE EFFECT* \n`);
+    console.log(`*USE EFFECT CALL* \n`);
   }, [selectedFilters]);
 
   return (
     <>
       <Autocomplete
+        sx={{ width: 340 }}
         disablePortal
         id="combo-box-demo"
         options={specialties}
         getOptionLabel={(option) => {
           return option.name;
         }}
-        sx={{ width: 340 }}
         renderInput={(params) => <TextField {...params} label="Especialidad" />}
         renderOption={(props, option) => (
           <li {...props} key={option.id}>
@@ -75,13 +72,13 @@ const Filter = () => {
         }
       />
       <Autocomplete
+        sx={{ width: 340 }}
         disablePortal
         id="combo-box-demo"
         options={socialSecurity}
         getOptionLabel={(option) => {
           return option.nombre;
         }}
-        sx={{ width: 340 }}
         renderInput={(params) => <TextField {...params} label="Obra Social" />}
         renderOption={(props, option) => (
           <li {...props} key={option.id}>

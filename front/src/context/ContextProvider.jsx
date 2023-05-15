@@ -4,6 +4,7 @@ import axios from 'axios';
 export const Context = createContext([]);
 export const UtilitiesContext = createContext([]);
 export const LoadingContext = createContext([]);
+export const FilterContext = createContext([]);
 
 const URL_PATIENTS = `http://localhost:3001/patients`;
 const URL_DOCTORS = `http://localhost:3001/doctors`;
@@ -12,6 +13,13 @@ const URL_SOCIALSECURITY = `http://localhost:3001/socialSecurity`;
 
 const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
+
+  const [selectedFilters, setSelectedFilters] = useState({
+    Especialidads: [false, {}],
+    ObraSocials: [false, {}],
+    Cita: [false, {}],
+    location: [false, {}],
+  });
 
   const [doctorsData, setDoctorsData] = useState({
     doctors: [],
@@ -22,8 +30,8 @@ const ContextProvider = ({ children }) => {
       const data = await response.data;
       setDoctorsData((prevState) => ({
         ...prevState,
-        doctors: [...prevState.doctors, ...data],
-        filteredDoctors: [...prevState.doctors, ...data],
+        doctors: [...data],
+        filteredDoctors: [...data],
       }));
     },
     fetchDoctorById: async (id) => {
@@ -112,7 +120,9 @@ const ContextProvider = ({ children }) => {
     <>
       <LoadingContext.Provider value={[loading, setLoading]}>
         <UtilitiesContext.Provider value={utilities}>
-          <Context.Provider value={[doctorsData, patientsData]}>{children}</Context.Provider>
+          <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
+            <Context.Provider value={[doctorsData, patientsData]}>{children}</Context.Provider>
+          </FilterContext.Provider>
         </UtilitiesContext.Provider>
       </LoadingContext.Provider>
     </>
