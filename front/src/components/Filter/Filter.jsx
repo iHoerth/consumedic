@@ -6,47 +6,47 @@ import { FILTER_TYPES } from '../../helpers/helpers';
 const Filter = () => {
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const { filteredDoctors, doctors, filterDoctors } = useContext(Context)[0];
-  const [selectedFilter, setSelectedFilter] = useState('');
-
-  const [selectedFilter2, setSelectedFilter2] = useState({
-    Especialidads: false,
-    ObraSocials: false,
-    Cita: false,
-    location: false,
+  const [selectedFilters, setSelectedFilters] = useState({
+    Especialidads: [false, {}],
+    ObraSocials: [false, {}],
+    Cita: [false, {}],
+    location: [false, {}],
   });
-
-  const handleFilters = (e, value) => {
-    setSelectedFilter2((prevState) => ({
-      ...prevState,
-      [value]: true,
-    }));
-  };
 
   const handleSelectChange = (e, value, reason, filterType) => {
     if (reason === 'clear') {
-      setSelectedFilter2((prevState) => ({
+      setSelectedFilters((prevState) => ({
         ...prevState,
-        [filterType]: false,
+        [filterType]: [false, {}],
       }));
-      filterDoctors(doctors);
-      return;
+    } else {
+      setSelectedFilters((prevState) => ({
+        ...prevState,
+        [filterType]: [true, value],
+      }));
     }
-
-    setSelectedFilter2((prevState) => ({
-      ...prevState,
-      [filterType]: true,
-    }));
-
-    
-    const newFilter = doctors.filter((doc) =>
-      doc[filterType].some((spec) => spec.id === value.id)
-    );
-    filterDoctors(newFilter);
   };
 
-  const handleSelectClose = () => {
-    filterDoctors([]);
+  const handleNewFilters = async () => {
+    let newDoctors = [...doctors];
+    for (const key in FILTER_TYPES) {
+      console.log(selectedFilters[FILTER_TYPES[key]], `tupla de filtros`);
+      const [flag, value] = selectedFilters[FILTER_TYPES[key]];
+      if (flag) {
+        newDoctors = newDoctors.filter((doc) =>
+          doc[FILTER_TYPES[key]].some((filterCategory) => filterCategory.id === value.id)
+        );
+      }
+    }
+    console.log(`NUEVO FILTRO \n`, newDoctors);
+    filterDoctors(newDoctors);
+    return newDoctors;
   };
+
+  useEffect(() => {
+    handleNewFilters();
+    console.log(`*USE EFFECT* \n`);
+  }, [selectedFilters]);
 
   return (
     <>
@@ -64,7 +64,9 @@ const Filter = () => {
             {option.name}
           </li>
         )}
-        onChange={(e,value,reason) => handleSelectChange(e,value,reason, FILTER_TYPES.SPECIALTIES)}
+        onChange={(e, value, reason) =>
+          handleSelectChange(e, value, reason, FILTER_TYPES.SPECIALTIES)
+        }
       />
       <Autocomplete
         disablePortal
@@ -80,8 +82,9 @@ const Filter = () => {
             {option.nombre}
           </li>
         )}
-        onChange={(e,value,reason) => handleSelectChange(e,value,reason, FILTER_TYPES.SOCIAL_SECURITY)}
-
+        onChange={(e, value, reason) =>
+          handleSelectChange(e, value, reason, FILTER_TYPES.SOCIAL_SECURITY)
+        }
       />
     </>
   );

@@ -56,10 +56,10 @@ const ContextProvider = ({ children }) => {
         doctorDetail: { ...data },
       }));
     },
-    filterDoctors: (newFilter) => {
+    filterDoctors: async (newFilter) => {
       setDoctorsData((prevState) => ({
         ...prevState,
-        filteredDoctors: newFilter,
+        filteredDoctors: [...newFilter],
       }));
     },
   });

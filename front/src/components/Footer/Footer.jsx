@@ -61,32 +61,32 @@ const Footer = () => {
             label="Home"
             icon={<Home />}
             value="home"
-            showLabel
+            
           />
           <BottomNavigationAction
             label="About"
             icon={<Info />}
             value="about"
-            showLabel
+            
           />
           <BottomNavigationAction
             label="Team"
             icon={<People />}
             value="team"
-            showLabel
+            
           />
           <BottomNavigationAction
             label="Testimonials"
             icon={<Comment />}
             value="testimonials"
-            showLabel
+            
           />
           <a href="/login" target="_blank" rel="noopener noreferrer">
             <BottomNavigationAction
               label="Login"
               icon={<Lock />}
               value="login"
-              showLabel
+              
             />
           </a>
         </BottomNavigation>
