@@ -1,20 +1,20 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
-import Pagination from "../../components/Pagination/Pagination";
-import CardsContainer from "../../components/CardsContainer/CardsContainer";
+import Pagination from '../../components/Pagination/Pagination';
+import CardsContainer from '../../components/CardsContainer/CardsContainer';
 
-import NavBar from "../../components/NavBar/NavBar";
-import Filter from "../../components/Filter/Filter";
+import NavBar from '../../components/NavBar/NavBar';
+import Filter from '../../components/Filter/Filter';
 
-import { Context } from "../../context/ContextProvider";
+import { Context } from '../../context/ContextProvider';
 
 // import style from "./DoctorsList.module.css";
-import cards22 from '../Img/cards22.jpg'
-import { Box, Container } from "@mui/material";
-
+import cards22 from '../Img/cards22.jpg';
+import { Box, Container } from '@mui/material';
 
 const DoctorsList = () => {
-  const { doctors, fetchDoctors, filteredDoctors } = useContext(Context)[0]
+  const [loading, setLoading] = useState(true);
+  const { doctors, fetchDoctors, filteredDoctors } = useContext(Context)[0];
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -24,35 +24,39 @@ const DoctorsList = () => {
   const lastDoctorIndex = doctorsPerPage * currentPage;
   const firstDoctorIndex = lastDoctorIndex - doctorsPerPage;
 
-  const doctorsInPage = filteredDoctors.slice(
-    firstDoctorIndex,
-    lastDoctorIndex
-  );
+  const doctorsInPage = filteredDoctors.slice(firstDoctorIndex, lastDoctorIndex);
 
   const handleChange = (event, p) => {
     setCurrentPage(p);
   };
 
   useEffect(() => {
-    fetchDoctors();
-  }, []);
+    // fetchDoctors();
+    if (doctors.length) {
+      setLoading(false);
+    }
+  }, [loading, filteredDoctors]);
+
+  if (loading) {
+    return <div>LOADING</div>;
+  }
 
   return (
     <>
       <NavBar />
       <Box
-        sx={{ 
+        sx={{
           backgroundImage: `url('${cards22}')`,
-          backgroundPosition: "bottom",
-          backgroundPositionY: "70%", 
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-          position: "relative",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          backgroundPosition: 'bottom',
+          backgroundPositionY: '70%',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed',
+          position: 'relative',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
           // marginTop: "15%",
 
           '@media (max-width: 600px)': {
@@ -61,38 +65,31 @@ const DoctorsList = () => {
               sm: '60vh',
               md: '70vh',
               lg: '80vh',
-            }
-          }, 
+            },
+          },
         }}
       >
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexDirection: "column",
-            height: "200px",
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexDirection: 'column',
+            height: '200px',
           }}
-        >
-        </Box>
+        ></Box>
         <Filter />
-        <CardsContainer 
+        <CardsContainer
           doctorsInPage={doctorsInPage}
-          sx={{  
-            width: "400px", 
+          sx={{
+            width: '400px',
           }}
-          />
-        <Pagination
-          maxPages={maxPages}
-          page={currentPage}
-          handleChange={handleChange}
         />
+        <Pagination maxPages={maxPages} page={currentPage} handleChange={handleChange} />
         <Footer />
       </Box>
     </>
   );
-
-
 };
 
 export default DoctorsList;
