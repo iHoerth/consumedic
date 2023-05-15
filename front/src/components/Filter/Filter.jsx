@@ -70,6 +70,11 @@ const Filter = () => {
         onChange={(e, value, reason) =>
           handleSelectChange(e, value, reason, FILTER_TYPES.SPECIALTIES)
         }
+        value={
+          selectedFilters[FILTER_TYPES.SPECIALTIES][0]
+            ? selectedFilters[FILTER_TYPES.SPECIALTIES][1]
+            : null
+        }
       />
       <Autocomplete
         sx={{ width: 340 }}
@@ -87,6 +92,11 @@ const Filter = () => {
         )}
         onChange={(e, value, reason) =>
           handleSelectChange(e, value, reason, FILTER_TYPES.SOCIAL_SECURITY)
+        }
+        value={
+          selectedFilters[FILTER_TYPES.SOCIAL_SECURITY][0]
+            ? selectedFilters[FILTER_TYPES.SOCIAL_SECURITY][1]
+            : null
         }
       />
     </>
