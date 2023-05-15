@@ -30,6 +30,7 @@ const ExpandMore = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
+
 const Card = ({
   id,
   profileImage,
@@ -42,10 +43,9 @@ const Card = ({
   agenda,
   specialty,
 }) => {
-  console.log(id);
   const [expanded, setExpanded] = React.useState(false);
   const theme = useTheme();
-  let averageRating = stars.reduce((acc, cur) => acc + cur.puntaje, 0) / stars.length;
+  let averageRating = stars && stars.reduce((acc, cur) => acc + cur.puntaje, 0) / stars.length;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

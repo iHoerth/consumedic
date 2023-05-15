@@ -16,12 +16,10 @@ import { Context, UtilitiesContext } from './context/ContextProvider';
 import './App.css';
 
 const App = () => {
-  const { utilities, fetchUtilities } = useContext(UtilitiesContext);
-  const { fetchDoctors } = useContext(Context)[0];
+  const { fetchUtilities } = useContext(UtilitiesContext);
 
   useEffect(() => {
     fetchUtilities();
-    // fetchDoctors();
   }, []);
 
   return (

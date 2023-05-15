@@ -35,7 +35,6 @@ const DoctorsList = () => {
 
   useEffect(() => {
     fetchDoctors();
-    console.log(filteredDoctors, doctors)
   }, []);
 
   return (
