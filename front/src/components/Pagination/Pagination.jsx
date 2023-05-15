@@ -1,13 +1,11 @@
-import PaginationMUI from '@mui/material/Pagination'
+import PaginationMUI from '@mui/material/Pagination';
 
-const Pagination = ({page, maxPages, handleChange}) => {
-  
-
+const Pagination = ({ page, maxPages, handleChange }) => {
   return (
     <>
-      <PaginationMUI 
-        count={maxPages} 
-        onChange={handleChange} 
+      <PaginationMUI
+        count={maxPages}
+        onChange={handleChange}
         color="primary"
         sx={{ padding: '10px' }}
       />

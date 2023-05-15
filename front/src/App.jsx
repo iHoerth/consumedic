@@ -17,15 +17,16 @@ import './App.css';
 
 const App = () => {
   const { utilities, fetchUtilities } = useContext(UtilitiesContext);
+  const { fetchDoctors } = useContext(Context)[0];
 
   useEffect(() => {
     fetchUtilities();
+    fetchDoctors();
   }, []);
 
   return (
     <div className="App">
       <Routes>
-
         {/* HOME NUEVO */}
         {/* <Route path="/home" element={<HomeNuevo />} /> */}
         {/* HOME NUEVO */}

@@ -21,7 +21,7 @@ const DoctorsList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const doctorsPerPage = 15;
-  const maxPages = Math.ceil(doctors.length / doctorsPerPage);
+  const maxPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
 
   const lastDoctorIndex = doctorsPerPage * currentPage;
   const firstDoctorIndex = lastDoctorIndex - doctorsPerPage;
