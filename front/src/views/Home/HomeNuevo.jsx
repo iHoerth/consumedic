@@ -14,9 +14,6 @@ import box2 from '../Img/box2.jpg';
 import box3 from '../Img/box3.jpg';
 import box4 from '../Img/box4.jpg';
 
-
-
-
 const HomeNuevo = () => {
   const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -28,11 +25,11 @@ const HomeNuevo = () => {
   };
 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  
 
-  
   return (
     <>
+      <NavBar />
+
       <AutoPlaySwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={activeStep}
@@ -42,17 +39,18 @@ const HomeNuevo = () => {
         style={{
           maxWidth: '100%',
           maxHeight: '100%',
-          width: '100hv',
+          // width: '1920px',
           margin: '0 auto',
         }}
       >
         {bannerImages.map((step, index) => (
-          <div style={{
-            overflow:'hidden',
-            display: 'auto',
-            alignItems: 'center',
-            height: '100%',
-            }} 
+          <div
+            style={{
+              overflow: 'hidden',
+              display: 'auto',
+              alignItems: 'center',
+              height: '100%',
+            }}
             key={step.imgPath}
           >
             {Math.abs(activeStep - index) <= 2 ? (
@@ -74,7 +72,6 @@ const HomeNuevo = () => {
         ))}
       </AutoPlaySwipeableViews>
 
-      <NavBar />
       <Box
         sx={{
           position: 'absolute',
@@ -90,46 +87,32 @@ const HomeNuevo = () => {
               sm: '60vh',
               md: '70vh',
               lg: '80vh',
-            }
-          }, 
+            },
+          },
         }}
       >
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
+            justifyContent: 'end',
             alignItems: 'center',
+            gap:'20px',
             height: '72.5vh',
-            '@media (max-width: 600px)': {
-              height: {
-                xs: '50vh',
-                sm: '60vh',
-                md: '70vh',
-                lg: '80vh',
-              }
-            }, 
+            pb:'120px'
           }}
         >
+          <Header />
+          <SearchBar />
         </Box>
-        <Header style={{ position: 'absolute', top: '50px',  '@media (max-width: 600px)': {
-            height: {
-              xs: '50vh',
-              sm: '60vh',
-              md: '70vh',
-              lg: '80vh',
-            }
-          },  }}/>
-        <SearchBar />
 
         <Box //cuadro grande
           sx={{
-            border: '1px solid blue',
             width: '100%',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding:  '60px',
+            padding: '60px',
             height: '60vh',
             // flexDirection: isMobile ? 'column' : 'row',
             '@media (max-width: 600px)': {
@@ -138,15 +121,16 @@ const HomeNuevo = () => {
                 sm: '60vh',
                 md: '70vh',
                 lg: '80vh',
-              },            }, 
+              },
+            },
           }}
         >
           <Box // primer box con texto a la izq.
             sx={{
               backgroundImage: `url('${box1}')`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              position: "relative",
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              position: 'relative',
               width: isMobile ? '100%' : '300px',
               height: isMobile ? '200px' : '300px',
               border: '1px solid grey',
@@ -162,14 +146,14 @@ const HomeNuevo = () => {
           <Box
             sx={{
               backgroundImage: `url('${box2}')`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              position: "relative",
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              position: 'relative',
               width: '300px',
               height: '300px',
               border: '1px solid grey',
-              borderRadius: '20px',              
+              borderRadius: '20px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -180,14 +164,14 @@ const HomeNuevo = () => {
           <Box
             sx={{
               backgroundImage: `url('${box3}')`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              position: "relative",
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              position: 'relative',
               width: '300px',
               height: '300px',
               border: '1px solid grey',
-              borderRadius: '20px',              
+              borderRadius: '20px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -198,14 +182,14 @@ const HomeNuevo = () => {
           <Box
             sx={{
               backgroundImage: `url('${box4}')`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              position: "relative",
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              position: 'relative',
               width: '300px',
               height: '300px',
               border: '1px solid grey',
-              borderRadius: '20px',              
+              borderRadius: '20px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',

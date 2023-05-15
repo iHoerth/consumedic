@@ -16,7 +16,7 @@ import Filter from '../Filter/Filter';
 
 const ProminentAppBar = () => {
   return (
-    <Box sx={{ flexGrow: 1, width: '68%', borderRadius: '8px' }}>
+    <Box sx={{ width: 'auto', borderRadius: '8px', opacity:'0.92' }}>
       <AppBar position="static" style={{ background: '#00E9BC', borderRadius: '10px', padding:'20px 0 20px 0px'}}>
         <Toolbar sx={{gap:'20px'}}>
           <Filter />
@@ -25,7 +25,7 @@ const ProminentAppBar = () => {
               size="large"
               aria-label="search"
               color="blue"
-              sx={{ marginLeft: '5rem', backgroundColor: 'white', borderRadius: '50%' }}
+              // sx={{ marginLeft: '5rem', backgroundColor: 'white', borderRadius: '50%' }}
             >
               <SearchIcon />
             </IconButton>

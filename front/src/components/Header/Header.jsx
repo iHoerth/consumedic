@@ -15,11 +15,13 @@ const Header = () => {
     <Box
     // color='secondary'
       sx={{
+        zIndex: 0,
         bgcolor: theme.palette.secondary.main,
-        width: "70%",
-        p: "40px",
-        mt: "40px",
-        mb: "30px",
+        opacity: '0.92',
+        width: "40%",
+        p: "30px",
+        // mt: "40px",
+        // mb: "30px",
         borderRadius: "10px",
       }}
     >
@@ -35,7 +37,7 @@ const Header = () => {
         necesites ahora!
       </Typography>
 
-      <Stack spacing={2} direction="row">
+      <Box spacing={2} direction="row">
         <Button
           variant="outlined"
           sx={{
@@ -63,7 +65,7 @@ const Header = () => {
           <ApartmentIcon />
           Presencial
         </Button>
-      </Stack>
+      </Box>
     </Box>
   );
 };
