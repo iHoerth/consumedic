@@ -28,18 +28,24 @@ const Filter = () => {
   };
 
   const handleNewFilters = async () => {
+    //Creo una copia de todos los doctores
     let newDoctors = [...doctors];
     for (const key in FILTER_TYPES) {
+      // Itero en las keys de mi Filter types, para buscar en el estado las tuplas.
+      // Las que tengan el flag en true, entran y comparan su objeto value contra el del current doc
       console.log(selectedFilters[FILTER_TYPES[key]], `tupla de filtros`);
       const [flag, value] = selectedFilters[FILTER_TYPES[key]];
       if (flag) {
         newDoctors = newDoctors.filter((doc) =>
+        // Aplico un filter + some utlizando justamente el key, que coincide con el nombre del atributo que quiero buscar.
           doc[FILTER_TYPES[key]].some((filterCategory) => filterCategory.id === value.id)
         );
       }
     }
     console.log(`NUEVO FILTRO \n`, newDoctors);
+    // 'despacho' la accion que setea el nuevo filtro de doctores
     filterDoctors(newDoctors);
+    // lo retorno por si llegara a ser necesario
     return newDoctors;
   };
 
