@@ -1,21 +1,45 @@
 import { useState, useEffect, useContext } from 'react';
 import { Context, UtilitiesContext } from '../../context/ContextProvider';
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, TextField, Box } from '@mui/material';
+import { FILTER_TYPES } from '../../helpers/helpers';
 
 const Filter = () => {
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const { filteredDoctors, doctors, filterDoctors } = useContext(Context)[0];
-
   const [selectedFilter, setSelectedFilter] = useState('');
 
-  const handleSelectChange = (e, value, reason) => {
+  const [selectedFilter2, setSelectedFilter2] = useState({
+    Especialidads: false,
+    ObraSocials: false,
+    Cita: false,
+    location: false,
+  });
+
+  const handleFilters = (e, value) => {
+    setSelectedFilter2((prevState) => ({
+      ...prevState,
+      [value]: true,
+    }));
+  };
+
+  const handleSelectChange = (e, value, reason, filterType) => {
     if (reason === 'clear') {
       setSelectedFilter('');
+      setSelectedFilter2((prevState) => ({
+        ...prevState,
+        [filterType]: false,
+      }));
       filterDoctors(doctors);
       return;
     }
+
     setSelectedFilter(value);
-    console.log(value);
+    setSelectedFilter2((prevState) => ({
+      ...prevState,
+      [filterType]: true,
+    }));
+
+    
     const newFilter = doctors.filter((doc) =>
       doc.Especialidads.some((spec) => spec.id === value.id)
     );
@@ -42,7 +66,24 @@ const Filter = () => {
             {option.name}
           </li>
         )}
-        onChange={handleSelectChange}
+        onChange={(e,value,reason) => handleSelectChange(e,value,reason, FILTER_TYPES.SPECIALTIES)}
+      />
+      <Autocomplete
+        disablePortal
+        id="combo-box-demo"
+        options={socialSecurity}
+        getOptionLabel={(option) => {
+          return option.nombre;
+        }}
+        sx={{ width: 340 }}
+        renderInput={(params) => <TextField {...params} label="Obra Social" />}
+        renderOption={(props, option) => (
+          <li {...props} key={option.id}>
+            {option.nombre}
+          </li>
+        )}
+        onChange={(e,value,reason) => handleSelectChange(e,value,reason, FILTER_TYPES.SOCIAL_SECURITY)}
+
       />
     </>
   );

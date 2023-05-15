@@ -4,6 +4,12 @@ export const calculateMaxPages = (allDoctors, doctorsPerPage, pages) => {
   }
 };
 
+export const FILTER_TYPES = {
+  SPECIALTIES: "Especialidads",
+  SOCIAL_SECURITY: "ObraSocials",
+  APPOINTMENT: "Cita",
+  LOCATION: "location",
+};
 
 export const bannerImages = [
   {
