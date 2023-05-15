@@ -3,7 +3,7 @@ const db = require('../db');
 
 const createFakeData = async () => {
   //! Modificar Cantidad de Pacientes y Medicos de ser necesarios
-  let docsAndPatients = 50;
+  let docsAndPatients = 31;
   //! *******************
 
   // Crear Especialidades
@@ -233,8 +233,8 @@ const createFakeData = async () => {
       isDoctor: true,
       status: 'active',
     });
-    const idEspecialidad = Math.ceil(Math.random() * 5);
-    const idObraSocial = Math.ceil(Math.random() * 5);
+    const idEspecialidad = Math.ceil(Math.random() * 82);
+    const idObraSocial = Math.ceil(Math.random() * 108);
     const newEspecialidad = await db.Especialidad.findAll({ where: { id: idEspecialidad } });
     const newObraSocial = await db.ObraSocial.findAll({ where: { id: idObraSocial } });
     doctor.addEspecialidads(newEspecialidad);
