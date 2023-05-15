@@ -60,7 +60,7 @@ const HomeNuevo = () => {
                   position: 'relative',
                   display: 'flex',
                   maxWidth: 'auto',
-                  width: '1920px',
+                  width: '100%',
                   mt: '0px',
                   mb: '500px',
                 }}
