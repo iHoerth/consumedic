@@ -4,8 +4,11 @@ import { Autocomplete, TextField, Box } from '@mui/material';
 import { FILTER_TYPES } from '../../helpers/helpers';
 
 import { FilterContext } from '../../context/ContextProvider';
+import { useTheme } from '@mui/material';
+import theme from '../../theme';
 
 const Filter = () => {
+  const theme = useTheme();
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const { filteredDoctors, doctors, filterDoctors } = useContext(Context)[0];
   const [selectedFilters, setSelectedFilters] = useContext(FilterContext);
@@ -52,9 +55,22 @@ const Filter = () => {
   }, [selectedFilters]);
 
   return (
-    <>
+    <Box
+      size="large"
+      component="div"
+      display="flex"
+      flexDirection="row"
+      gap="20px"
+      sx={{
+        width: {
+          desktop: '600px',
+        },
+      }}
+    >
       <Autocomplete
-        sx={{ width: 340 }}
+        sx={{
+          width: 240,
+        }}
         disablePortal
         id="combo-box-demo"
         options={specialties}
@@ -63,7 +79,7 @@ const Filter = () => {
         }}
         renderInput={(params) => <TextField {...params} label="Especialidad" />}
         renderOption={(props, option) => (
-          <li {...props} key={option.id}>
+          <li style={{ fontSize: '14px' }} {...props} key={option.id}>
             {option.name}
           </li>
         )}
@@ -77,7 +93,7 @@ const Filter = () => {
         }
       />
       <Autocomplete
-        sx={{ width: 340 }}
+        sx={{ width: 240 }}
         disablePortal
         id="combo-box-demo"
         options={socialSecurity}
@@ -86,7 +102,7 @@ const Filter = () => {
         }}
         renderInput={(params) => <TextField {...params} label="Obra Social" />}
         renderOption={(props, option) => (
-          <li {...props} key={option.id}>
+          <li style={{ fontSize: '14px' }} {...props} key={option.id}>
             {option.nombre}
           </li>
         )}
@@ -99,7 +115,7 @@ const Filter = () => {
             : null
         }
       />
-    </>
+    </Box>
   );
 };
 

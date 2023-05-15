@@ -54,7 +54,7 @@ import Box from '@mui/material/Box';
 
 
 const CardsContainer = ({ doctorsInPage }) => {
-  const message = "No hay medicos";
+  const message = "No hay medicos con los filtros seleccionados";
 
   const allMedicos = doctorsInPage.length ? (
     <div className={style.divCards}>
