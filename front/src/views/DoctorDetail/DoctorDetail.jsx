@@ -253,7 +253,7 @@ const DoctorDetail = () => {
           </Accordion>
         </CardContent>
       </CardMUI>
-      {/* <Calendar id={id} calendar={doctorDetail.calendar} /> */}
+      <Calendar id={id} calendar={doctorDetail.calendar} />
       <Footer />
     </Container>
   );
