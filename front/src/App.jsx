@@ -21,7 +21,7 @@ const App = () => {
 
   useEffect(() => {
     fetchUtilities();
-    fetchDoctors();
+    // fetchDoctors();
   }, []);
 
   return (

@@ -14,9 +14,7 @@ import { Box, Container } from "@mui/material";
 
 
 const DoctorsList = () => {
-  const [doctorsData] = useContext(Context);
-  const { doctors, fetchDoctors, fetchDoctorByEmail, filteredDoctors } =
-    doctorsData;
+  const { doctors, fetchDoctors, filteredDoctors } = useContext(Context)[0]
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -37,6 +35,7 @@ const DoctorsList = () => {
 
   useEffect(() => {
     fetchDoctors();
+    console.log(filteredDoctors, doctors)
   }, []);
 
   return (

@@ -59,7 +59,7 @@ const ContextProvider = ({ children }) => {
     filterDoctors: (newFilter) => {
       setDoctorsData((prevState) => ({
         ...prevState,
-        filteredDoctors: [...newFilter],
+        filteredDoctors: newFilter,
       }));
     },
   });
