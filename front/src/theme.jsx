@@ -26,11 +26,15 @@ const theme = createTheme({
 
       // main: cyan['A200'],
       //main: cyan[500],
-      //main: blue[600],
+      main: blue[700],
     },
 
     secondary: {
       main: teal['A400'],
+      main: teal[200],
+
+      // main: cyan[600],
+
       //main: blue[600],
       //-- main: lightBlue['500']
     },

@@ -17,7 +17,7 @@ import Filter from '../Filter/Filter';
 const ProminentAppBar = () => {
   return (
     <Box sx={{ width: 'auto', borderRadius: '8px', opacity:'0.92' }}>
-      <AppBar position="static" style={{ background: '#00E9BC', borderRadius: '10px', padding:'20px 0 20px 0px'}}>
+      <AppBar position="static" style={{ borderRadius: '10px', padding:'20px 0 20px 0px'}}>
         <Toolbar sx={{gap:'20px'}}>
           <Filter />
           <NavLink to="/search">

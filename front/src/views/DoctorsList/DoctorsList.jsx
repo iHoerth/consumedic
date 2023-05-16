@@ -25,7 +25,7 @@ const DoctorsList = () => {
 
   const doctorsInPage = filteredDoctors.slice(firstDoctorIndex, lastDoctorIndex);
 
-  const handleChange = (event, p) => {
+  const handlePageChange = (event, p) => {
     setCurrentPage(p);
   };
 
@@ -77,14 +77,14 @@ const DoctorsList = () => {
             height: '200px',
           }}
         ></Box>
-        <Filter handleChange={handleChange} />
+        <Filter handlePageChange={handlePageChange} />
         <CardsContainer
           doctorsInPage={doctorsInPage}
           sx={{
             width: '400px',
           }}
         />
-        <Pagination maxPages={maxPages} page={currentPage} handleChange={handleChange} />
+        <Pagination maxPages={maxPages} page={currentPage} handlePageChange={handlePageChange} />
         <Footer />
       </Box>
     </>

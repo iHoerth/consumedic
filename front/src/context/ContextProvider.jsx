@@ -1,10 +1,12 @@
 import { createContext, useState } from 'react';
 import axios from 'axios';
+import useLocalStorage from '../helpers/useLocalStorage';
 
 export const Context = createContext([]);
 export const UtilitiesContext = createContext([]);
 export const LoadingContext = createContext([]);
 export const FilterContext = createContext([]);
+export const SessionContext = createContext([]);
 
 const URL_PATIENTS = `http://localhost:3001/patients`;
 const URL_DOCTORS = `http://localhost:3001/doctors`;
@@ -13,6 +15,8 @@ const URL_SOCIALSECURITY = `http://localhost:3001/socialSecurity`;
 
 const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
+
+  const [user, setUser] = useLocalStorage('user', {});
 
   const [selectedFilters, setSelectedFilters] = useState({
     Especialidads: [false, {}],
@@ -118,13 +122,15 @@ const ContextProvider = ({ children }) => {
 
   return (
     <>
-      <LoadingContext.Provider value={[loading, setLoading]}>
-        <UtilitiesContext.Provider value={utilities}>
-          <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
-            <Context.Provider value={[doctorsData, patientsData]}>{children}</Context.Provider>
-          </FilterContext.Provider>
-        </UtilitiesContext.Provider>
-      </LoadingContext.Provider>
+      <SessionContext.Provider value={[user, setUser]}>
+        <LoadingContext.Provider value={[loading, setLoading]}>
+          <UtilitiesContext.Provider value={utilities}>
+            <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
+              <Context.Provider value={[doctorsData, patientsData]}>{children}</Context.Provider>
+            </FilterContext.Provider>
+          </UtilitiesContext.Provider>
+        </LoadingContext.Provider>
+      </SessionContext.Provider>
     </>
   );
 };
