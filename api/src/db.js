@@ -3,7 +3,7 @@ const { DB_USER, DB_PASS, DB_HOST, DB_NAME} = process.env;
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-
+const pg=require('pg')
 
 // REQUIRE MODELS "const characterModel = require('./models/Character')"
 
@@ -11,7 +11,17 @@ const path = require('path');
 
 const sequelize = new Sequelize(
    `postgres://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}`,
-   { logging: false, native: false }
+   { logging: false,
+     native: false ,
+    dialectModule: pg,
+    dialectOptions: {
+      ssl:{
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  
+  }
 );
 const basename = path.basename(__filename);
 

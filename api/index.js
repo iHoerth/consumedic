@@ -5,8 +5,8 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const routes = require('./routes/index.js');
-const { conn } = require('./db.js');
+const routes = require('./src/routes/index.js');
+const { conn } = require('./src/db.js');
 
 
 
