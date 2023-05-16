@@ -743,4 +743,3 @@ export default function CustomizedList() {
     </>
   );
 }
-
