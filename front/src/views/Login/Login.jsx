@@ -1,165 +1,273 @@
 import React, { useState } from "react";
-import NavBar from "../../components/NavBar/NavBar"
-import { Container, Paper, TextField, Box, Button, Typography } from "@mui/material";
+import NavBar from "../../components/NavBar/NavBar";
+import {
+  Container,
+  Paper,
+  TextField,
+  Box,
+  Button,
+  Typography,
+  imageListClasses,
+} from "@mui/material";
 import { Google } from "@mui/icons-material";
-import { GoogleLogin } from 'react-google-login';
-import axios from 'axios';
+import { GoogleLogin } from "react-google-login";
+import { gapi } from "gapi-script";
+import { useEffect } from "react";
+import Footer from '../../components/Footer/Footer';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/ContextProvider";
 import { useContext } from "react";
+
+import login21 from '../../assets/Img/login21.jpg'
+
+
 const Userlogin = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const patients = useContext(Context)[1];
+
+  const clientID =
+    "508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com";
+
+  const [user, setUser] = useState({});
+
   const { createPatient, patientDetail } = patients;
-  //estados de email
-  const [email, setEmail] = useState('');
+  //estados de email y contraseña
+  const [localEmail, setLocalEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const [emailHelperText, setEmailHelperText] = useState('');
-
-  //expresion regular para mails
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  //funcion para validar email
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-
-    // Validar el correo electrónico
-    if (event.target.value === '') {
-      setEmailError(true);
-      setEmailHelperText('El correo electrónico es requerido.');
-    } else if (emailRegex.test(event.target.value)) {
-      setEmailError(true);
-      setEmailHelperText('El correo electrónico no es válido.');
-    } else {
-      setEmailError(false);
-      setEmailHelperText('');
-    }
-  }
+  const [emailHelperText, setEmailHelperText] = useState("");
 
   //estados de password
-  const [password, setPassword] = useState('');
+  const [localPassword, setLocalPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [passwordHelperText, setPasswordHelperText] = useState('');
+  const [passwordHelperText, setPasswordHelperText] = useState("");
+
+  //expresion regular para mails
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  useEffect(() => {
+    const start = () => {
+      gapi.auth2.init({
+        clientId: clientID,
+      });
+    };
+    gapi.load("client:auth2", start);
+  }, []);
+
+  //funcion para validar email
+  const handleLocalEmailChange = (event) => {
+    setLocalEmail(event.target.value);
+
+    // Validar el correo electrónico
+    if (event.target.value === "") {
+      setEmailError(true);
+      setEmailHelperText("El correo electrónico es requerido.");
+    } else if (!emailRegex.test(event.target.value)) {
+      setEmailError(true);
+      setEmailHelperText("El correo electrónico no es válido.");
+    } else {
+      setEmailError(false);
+      setEmailHelperText("");
+    }
+  };
 
   // funcion para validar contrasena
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-    if (event.target.value === '') {
+  const handleLocalPasswordChange = (event) => {
+    setLocalPassword(event.target.value);
+    if (event.target.value === "") {
       setPasswordError(true);
-      setPasswordHelperText('ingrese su contrasena.');
+      setPasswordHelperText("ingrese su contrasena.");
     } else {
       setPasswordError(false);
-      setPasswordHelperText('');
+      setPasswordHelperText("");
     }
-  }
+  };
 
   //submit
-  function handleSubmit(event) {
-    event.preventDefault()
-    navigate(`/patientpanel/${patientDetail.id}`);
+  function handleLocalSubmit(event) {
+    event.preventDefault();
+
+    axios
+      .post("http://localhost:3001/patients/login", {
+        email: localEmail,
+        password: localPassword,
+      })
+      .then((res) => {
+        //autenticacion exitosa, redirige al panel del paciente
+        navigate(`/patientpanel/${patientDetail.id}`);
+      })
+      .catch((err) => {
+        //error de autenticacion
+        console.error(err);
+      });
   }
 
-  const responseGoogle = (response) => {
-    axios.post('/api/login/google', { tokenId: response.tokenId })
+  const onSuccess = (response) => {
+    console.log(response);
+    setUser(response.profileObj);
+    axios
+      .post("http://localhost:3001/patients/login", {
+        tokenId: response.tokenId,
+      })
       .then((res) => {
         console.log(res.data);
-        navigate(`/patientpanel/${patientDetail.id}`)
+        navigate(`/patientpanel/${patientDetail.id}`);
       })
       .catch((err) => {
         console.error(err);
       });
-  }
+  };
+
+  const onFailure = () => {
+    console.log("something went wrong");
+  };
+
   return (
     <>
-      <NavBar></NavBar>
-      <Container component={Paper} elevation={5}
-        sx={{ width: '300px' }} >
-        <Typography variant='h6' m={2} align='center'>Ingresa tu cuenta</Typography>
+      <NavBar />
+      <Box
+        sx={{
+          backgroundImage: `url('${login21}')`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          display: 'flex',
+          flexDirection: "column",
+          alignItems: 'center',
+          '@media (max-width: 600px)': {
+            height: {
+              xs: '50vh',
+              sm: '60vh',
+              md: '70vh',
+              lg: '80vh',
+            }
+          }, 
+        }}
+    >
+      <Container 
+        component={Paper} 
+        elevation={5} 
+        sx={{ 
+          minWidth: "300px", 
+          width: "400px", 
+          padding: "15px",
+          marginTop: "10%",
+          marginBottom: "3%"
+        }}
+      >
+        <Typography variant="h6" align="center" sx={{ marginTop: "50px" , marginBottom: "20px"}}>
+          Ingresa tu cuenta
+        </Typography>
 
-        <Box component='form' className="login"
+        <Box
+          component="form"
+          className="login"
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexDirection: 'column',
-          }}>
-
-          <TextField required id="fieldset"
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexDirection: "column",
+            height: "450px",
+          }}
+        >
+          <TextField
+            required
+            id="fieldset"
             defaultValue="Email"
             color="secondary"
             type="email"
             name="mail"
-            value={email} placeholder="Enter your mail"
-            onChange={(event) => handleEmailChange(event)}
-            helperText={emailError ? <p>{emailHelperText}</p> : ''}
+            value={localEmail}
+            placeholder="Enter your mail"
+            onChange={(event) => handleLocalEmailChange(event)}
+            helperText={emailError ? <p>{emailHelperText}</p> : ""}
             sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: emailError ? 'red' : 'secondary',
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: emailError ? "red" : "secondary",
                 },
-                '&:hover fieldset': {
-                  borderColor: emailError ? 'red' : 'secondary',
+                "&:hover fieldset": {
+                  borderColor: emailError ? "red" : "secondary",
                 },
-                '&.Mui-focused fieldset': {
-                  borderColor: emailError ? 'red' : 'secondary',
-                  borderWidth: '2px',
-                },
-              },
-              '& .MuiFormHelperText-root': {
-                color: emailError ? 'red' : 'secondary',
-              },
-            }}
-          >
-
-          </TextField>
-
-
-          <TextField required id="outlined-required"
-            defaultValue="Password"
-            color="secondary" type="password"
-            name="password" value={password}
-            placeholder="Enter your password"
-            onChange={(event) => handlePasswordChange(event)}
-            helperText={passwordError ? <p>{passwordHelperText}</p> : ''}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: passwordError ? 'red' : 'secondary',
-                },
-                '&:hover fieldset': {
-                  borderColor: passwordError ? 'red' : 'secondary',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: passwordError ? 'red' : 'secondary',
-                  borderWidth: '2px',
+                "&.Mui-focused fieldset": {
+                  borderColor: emailError ? "red" : "secondary",
+                  borderWidth: "2px",
                 },
               },
-              '& .MuiFormHelperText-root': {
-                color: passwordError ? 'red' : 'secondary',
+              "& .MuiFormHelperText-root": {
+                color: emailError ? "red" : "secondary",
               },
+              height: "80px",
+              width: "320px",
             }}
           ></TextField>
 
+          <TextField
+            required
+            id="outlined-required"
+            defaultValue="Password"
+            color="secondary"
+            type="password"
+            name="password"
+            value={localPassword}
+            placeholder="Enter your password"
+            onChange={(event) => handleLocalPasswordChange(event)}
+            helperText={passwordError ? <p>{passwordHelperText}</p> : ""}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: passwordError ? "red" : "secondary",
+                },
+                "&:hover fieldset": {
+                  borderColor: passwordError ? "red" : "secondary",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: passwordError ? "red" : "secondary",
+                  borderWidth: "2px",
+                },
+              },
+              "& .MuiFormHelperText-root": {
+                color: passwordError ? "red" : "secondary",
+              },
+              height: "80px",
+              width: "320px",
+            }}
+          ></TextField>
 
-          <Button variant="contained" color="secondary" sx={{ margin: '10px' }}
-            onClick={handleSubmit} >
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ margin: "10px" }}
+            onClick={handleLocalSubmit}
+          >
             Ingresar
           </Button>
           <GoogleLogin
-            clientId="508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com"
+            clientId={clientID}
+            //clientId="508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com"
             buttonText="Iniciar sesión con Google"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy={"single_host_origin"}
           />
+          <div className={user ? "profile" : "hidden"}>
+            <img src={user.imageUrl} alt="" />
+            <h3>{user.name}</h3>
+          </div>
           <Typography>No tienes una cuenta?</Typography>
-          <Button color="primary" href="/create">Crear cuenta</Button>
+          <Button color="primary" href="/create">
+            Crear cuenta
+          </Button>
         </Box>
       </Container>
+      <Footer />
+      </Box>
     </>
-
-  )
-}
+  );
+};
 
 export default Userlogin;
