@@ -73,6 +73,8 @@ const Userlogin = () => {
   return (
     <>
       <NavBar></NavBar>
+      
+
       <Container component={Paper} elevation={5}
         sx={{ width: '300px' }} >
         <Typography variant='h6' m={2} align='center'>Ingresa tu cuenta</Typography>
@@ -146,15 +148,15 @@ const Userlogin = () => {
             onClick={handleSubmit} >
             Ingresar
           </Button>
-          <GoogleLogin
+          {/* <GoogleLogin
             clientId="508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com"
             buttonText="Iniciar sesión con Google"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             cookiePolicy={'single_host_origin'}
-          />
+          /> */}
           <Typography>No tienes una cuenta?</Typography>
-          <Button color="primary" href="/create">Crear cuenta</Button>
+          <Button color="primary" href="/createDoctor">Crear cuenta</Button>
         </Box>
       </Container>
     </>

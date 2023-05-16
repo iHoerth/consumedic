@@ -6,4 +6,5 @@ import DoctorsList from './DoctorsList/DoctorsList';
 import DoctorDetail from './DoctorDetail/DoctorDetail';
 import CreatePatient from './CreatePatient/CreatePatient';
 import PatientPanel from './PatientPanel/PatientPanel';
-export { Home, HomeNuevo, Landing, Login, DoctorsList, DoctorDetail, CreatePatient, PatientPanel };
+import LoginMedico from './Login Medico/LoginMedico';
+export { Home, HomeNuevo, Landing, Login, DoctorsList, DoctorDetail, LoginMedico, CreatePatient, PatientPanel };
