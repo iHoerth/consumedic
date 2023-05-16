@@ -409,7 +409,7 @@ const CreatePatient = () => {
               <br />
               <br />
               <Button
-                sx={{ marginBottom: "20px" }}
+                sx={{ marginBottom: "10px" }}
                 variant="contained"
                 color="primary"
                 type="submit"

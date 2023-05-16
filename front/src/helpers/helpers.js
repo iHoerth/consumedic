@@ -14,24 +14,26 @@ export const FILTER_TYPES = {
 export const bannerImages = [
   {
     label: '',
-    imgPath: '/images/7.jpg',
-  },
-  {
-    label: '',
-    imgPath: '/images/8.jpg',
-  },
-  {
-    label: '',
     imgPath: '/images/1.jpg',
   },
   {
     label: '',
     imgPath: '/images/10.jpg',
   },
-  {
-    label: '',
-    imgPath: '/images/11.jpg',
-  },
+
+  // FEARDAS
+  // {
+  //   label: '',
+  //   imgPath: '/images/7.jpg',
+  // },
+  // {
+  //   label: '',
+  //   imgPath: '/images/8.jpg',
+  // },
+  // {
+  //   label: '',
+  //   imgPath: '/images/11.jpg',
+  // },
 ];
 
 export const homeCards = [
@@ -50,5 +52,80 @@ export const homeCards = [
   {
     title: `Sin costes añadidos`,
     body: `En Consumedic, la reserva de turnos es un servicio completamente gratuito. No tendrás que pagar ningún costo adicional por utilizar nuestra plataforma para agendar tus citas médicas. Nuestro objetivo es facilitar el acceso a la atención médica de calidad sin cargos adicionales para los pacientes.`,
+  },
+];
+
+export const members = [
+  {
+    name: 'Facundo Aragon',
+    role: 'Backend',
+    img: '',
+    description:
+      'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo.',
+    linkedin: 'https://www.linkedin.com',
+    github: 'https://github.com/',
+  },
+  {
+    name: 'Matias Bustamante',
+    role: 'Frontend',
+    img: '',
+    description:
+      'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo.',
+    linkedin: 'https://www.linkedin.com',
+    github: 'https://github.com/',
+  },
+  {
+    name: 'Rolando Egusquiza',
+    role: 'Backend',
+    img: '',
+    description:
+      'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo.',
+    linkedin: 'https://www.linkedin.com',
+    github: 'https://github.com/',
+  },
+  {
+    name: 'Mauro Gatica',
+    role: 'Backend',
+    img: '',
+    description:
+      'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo.',
+    linkedin: 'https://www.linkedin.com',
+    github: 'https://github.com/',
+  },
+  {
+    name: 'Bruno Gonzales',
+    role: 'Frontend',
+    img: '',
+    description:
+      'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo.',
+    linkedin: 'https://www.linkedin.com',
+    github: 'https://github.com/',
+  },
+  {
+    name: 'Ignacio Hoerth',
+    role: 'Frontend',
+    img: '',
+    description:
+      'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo.',
+    linkedin: 'https://www.linkedin.com/in/ignaciohoerth/',
+    github: 'https://github.com/iHoerth/',
+  },
+  {
+    name: 'Noelia Paz',
+    role: 'Frontend',
+    img: '',
+    description:
+      'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo.',
+    linkedin: 'https://www.linkedin.com',
+    github: 'https://github.com/',
+  },
+  {
+    name: 'Gaston Vilte',
+    role: 'Frontend',
+    img: '',
+    description:
+      'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo.',
+    linkedin: 'https://www.linkedin.com',
+    github: 'https://github.com/',
   },
 ];
