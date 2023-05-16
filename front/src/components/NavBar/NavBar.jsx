@@ -26,7 +26,7 @@ const NavBar = ({text}) => {
     },
     {
       title: 'Eres un medico?',
-      path: '/login',
+      path: '/loginDoctor',
     },
   ];
 
