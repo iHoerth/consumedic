@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import {
   Home,
-  HomeNuevo,
   Landing,
   Login,
   DoctorsList,
@@ -10,6 +9,8 @@ import {
   DoctorDetail,
 } from './views';
 import Appointment from './views/Appointment/Appointment';
+import CreateDoctor from './views/CreateDoctor/CreateDoctor';
+import { LoginMedico } from './views';
 
 import { useContext, useEffect } from 'react';
 
@@ -29,15 +30,12 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
-        {/* HOME NUEVO */}
-        {/* <Route path="/home" element={<HomeNuevo />} /> */}
-        {/* HOME NUEVO */}
-
-        <Route path="/landing" element={<Landing />} />
-        <Route path="/" element={<HomeNuevo />} />
+        <Route path="/" element={<Home />} />
         <Route path="/search" element={<DoctorsList />} />
         <Route path="/detail/:id" element={<DoctorDetail />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/loginMedico" element={<LoginMedico />} />
+        <Route path="/createDoctor" element={<CreateDoctor />} />
         <Route path="/create" element={<CreatePatient />} />
         <Route path="/patientpanel/:id" element={<PatientPanel />} />
         <Route path="/turno/:id/:fecha/:hora" element={<Appointment />} />
