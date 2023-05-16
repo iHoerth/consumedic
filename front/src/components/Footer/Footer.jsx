@@ -93,7 +93,7 @@ const Footer = () => {
       </Box>
       <Box
         sx={{
-          bgcolor: "white",
+          bgcolor: "#212121",
           p: 2,
           mb: 1,
           width: "100%",
@@ -107,7 +107,7 @@ const Footer = () => {
           <Facebook
             sx={{
               mx: 1,
-              color: theme.palette.primary.main,
+              color: "#212121",
               fontSize: "30px",
               ml: "30px",
               mr: "30px",
@@ -118,7 +118,7 @@ const Footer = () => {
           <Twitter
             sx={{
               mx: 1,
-              color: theme.palette.primary.main,
+              color: "#212121",
               fontSize: "30px",
               ml: "30px",
               mr: "30px",
@@ -129,7 +129,7 @@ const Footer = () => {
           <Instagram
             sx={{
               mx: 1,
-              color: theme.palette.primary.main,
+              color: "#212121",
               fontSize: "30px",
               ml: "30px",
               mr: "30px",

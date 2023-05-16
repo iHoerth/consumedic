@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/ContextProvider";
 import { useContext } from "react";
 
-import login21 from '../Img/login21.jpg'
+import login21 from '../../assets/Img/login21.jpg'
 
 
 const Userlogin = () => {
@@ -240,7 +240,7 @@ const Userlogin = () => {
 
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             sx={{ margin: "10px" }}
             onClick={handleLocalSubmit}
           >

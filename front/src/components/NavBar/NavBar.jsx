@@ -4,13 +4,13 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Link, useMediaQuery, useTheme } from '@mui/material';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { useState, useEffect } from 'react';
 
 import DrawerComponent from './DrawerComponent';
 
-const NavBar = () => {
+const NavBar = ({text}) => {
   const theme = useTheme();
   const screenSizeSmall = useMediaQuery(theme.breakpoints.down('tablet'));
   const { values } = theme.breakpoints;
@@ -49,9 +49,9 @@ const NavBar = () => {
 
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
-      <AppBar></AppBar>
       <AppBar
-        color={scrolled ? 'secondary' : 'transparent'}
+        color={scrolled ? 'primary' : 'transparent'}
+        elevation={scrolled ? 4 : 0}
         position="fixed"
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
       >
@@ -79,16 +79,23 @@ const NavBar = () => {
             </Typography>
           </Box>
           {screenSizeSmall ? (
-            <DrawerComponent navLinksArray={navLinksArray} />
-          ) : (
-            <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
-              {navLinksArray.map((link, index) => (
-                <Button key={index} color="inherit" href={link.path}>
-                  {link.title}
+              <DrawerComponent navLinksArray={navLinksArray} />
+            ) : (
+              <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
+                <Button color="inherit" href={navLinksArray[0].path}>
+                  {navLinksArray[0].title}
                 </Button>
-              ))}
-            </nav>
-          )}
+                {text ?
+                  null
+                  :
+                  navLinksArray.slice(1).map((link, index) => (
+                    <Button key={index} color="inherit" href={link.path}>
+                      {link.title}
+                    </Button>
+                  ))
+                }
+              </nav>
+            )}
         </Toolbar>
       </AppBar>
     </Box>

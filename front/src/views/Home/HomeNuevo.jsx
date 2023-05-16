@@ -1,18 +1,21 @@
+import { useState } from 'react';
+import { autoPlay } from 'react-swipeable-views-utils';
+import SwipeableViews from 'react-swipeable-views';
+
+import { Box, Card, CardContent, Typography, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 import NavBar from '../../components/NavBar/NavBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { Box, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
-import { bannerImages } from '../../helpers/helpers';
-import React, { useState } from 'react';
+import AboutUs from '../../components/AboutUs/AboutUs';
 
-import box1 from '../Img/box1.jpg';
-import box2 from '../Img/box2.jpg';
-import box3 from '../Img/box3.jpg';
-import box4 from '../Img/box4.jpg';
+import cards22 from '../../assets/Img/cards22.jpg';
+
+import banner from '../../assets/Img/10.jpg'
+import { bannerImages } from '../../helpers/helpers';
+import { homeCards } from '../../helpers/helpers';
 
 const HomeNuevo = () => {
   const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -37,9 +40,9 @@ const HomeNuevo = () => {
         enableMouseEvents
         interval={6000}
         style={{
-          maxWidth: '100%',
-          maxHeight: '100%',
-          // width: '1920px',
+          // maxWidth: '150%',
+          maxHeight: '100vh',
+          width: '1920px',
           margin: '0 auto',
         }}
       >
@@ -49,7 +52,7 @@ const HomeNuevo = () => {
               overflow: 'hidden',
               display: 'auto',
               alignItems: 'center',
-              height: '100%',
+              height: '100vh',
             }}
             key={step.imgPath}
           >
@@ -60,7 +63,7 @@ const HomeNuevo = () => {
                   position: 'relative',
                   display: 'flex',
                   maxWidth: 'auto',
-                  width: '1920px',
+                  width: '100%',
                   mt: '0px',
                   mb: '500px',
                 }}
@@ -71,147 +74,61 @@ const HomeNuevo = () => {
           </div>
         ))}
       </AutoPlaySwipeableViews>
-
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '100px',
-          margin: '0 auto',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          '@media (max-width: 600px)': {
-            height: {
-              xs: '50vh',
-              sm: '60vh',
-              md: '70vh',
-              lg: '80vh',
-            },
-          },
-        }}
-      >
+     
         <Box
           sx={{
+            position: 'absolute',
+            top: '100px',
+            margin: '0 auto',
+            width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'end',
             alignItems: 'center',
-            gap:'20px',
-            height: '72.5vh',
-            pb:'120px'
-          }}
-        >
-          <Header />
-          <SearchBar />
-        </Box>
 
-        <Box //cuadro grande
-          sx={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '60px',
-            height: '60vh',
-            // flexDirection: isMobile ? 'column' : 'row',
-            '@media (max-width: 600px)': {
-              height: {
-                xs: '50vh',
-                sm: '60vh',
-                md: '70vh',
-                lg: '80vh',
-              },
-            },
           }}
         >
-          <Box // primer box con texto a la izq.
-            sx={{
-              backgroundImage: `url('${box1}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              position: 'relative',
-              width: isMobile ? '100%' : '300px',
-              height: isMobile ? '200px' : '300px',
-              border: '1px solid grey',
-              borderRadius: '20px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: isMobile ? '20px' : 0,
-            }}
-          >
-            aca hay mucha info
-          </Box>
           <Box
             sx={{
-              backgroundImage: `url('${box2}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              position: 'relative',
-              width: '300px',
-              height: '300px',
-              border: '1px solid grey',
-              borderRadius: '20px',
               display: 'flex',
+              flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
+              gap: '20px',
+              height: '70vh',
+              // pb: '120px',
             }}
           >
-            aca hay mucha info
+            <Header />
+            <SearchBar />
           </Box>
-          <Box
+
+          <Box //cuadro grande
+            component="span"
             sx={{
-              backgroundImage: `url('${box3}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              position: 'relative',
-              width: '300px',
-              height: '300px',
-              border: '1px solid grey',
-              borderRadius: '20px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              width: '100%',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, minmax(Min(400px), 1fr))',
+              placeItems: 'center',
+              height: '60vh',
+              gap: '40px',
+              padding: '60px',
             }}
           >
-            aca hay mucha info
+            {homeCards.map((text, index) => (
+              <Card sx={{width:400}} key={`homeCards${index}`}>
+                <CardContent>
+                  <Typography sx={{ fontSize: 16 }} gutterBottom>
+                    {text.title}
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, wordSpacing: '0.2rem' }}>{text.body}</Typography>
+                </CardContent>
+              </Card>
+            ))}
           </Box>
-          <Box
-            sx={{
-              backgroundImage: `url('${box4}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              position: 'relative',
-              width: '300px',
-              height: '300px',
-              border: '1px solid grey',
-              borderRadius: '20px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            aca hay mucha info
-          </Box>
+
+          <AboutUs />
+          <Footer />
         </Box>
-        <Box
-          sx={{
-            width: '100%',
-            height: '80vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {' '}
-          ACA VA EL ABOUT US
-        </Box>
-        <Footer />
-      </Box>
     </>
   );
 };

@@ -7,13 +7,14 @@ import { FilterContext } from '../../context/ContextProvider';
 import { useTheme } from '@mui/material';
 import theme from '../../theme';
 
-const Filter = () => {
+const Filter = ({ handlePageChange }) => {
   const theme = useTheme();
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const { filteredDoctors, doctors, filterDoctors } = useContext(Context)[0];
   const [selectedFilters, setSelectedFilters] = useContext(FilterContext);
 
   const handleSelectChange = (e, value, reason, filterType) => {
+    handlePageChange && handlePageChange(e, 1);
     if (reason === 'clear') {
       setSelectedFilters((prevState) => ({
         ...prevState,
@@ -56,6 +57,7 @@ const Filter = () => {
 
   return (
     <Box
+      color="inherit"
       size="large"
       component="div"
       display="flex"
@@ -77,7 +79,13 @@ const Filter = () => {
         getOptionLabel={(option) => {
           return option.name;
         }}
-        renderInput={(params) => <TextField {...params} label="Especialidad" />}
+        renderInput={(params) => (
+          <TextField
+            sx={{ bgcolor: 'white', borderRadius: '4px' }}
+            {...params}
+            label="Especialidad"
+          />
+        )}
         renderOption={(props, option) => (
           <li style={{ fontSize: '14px' }} {...props} key={option.id}>
             {option.name}
@@ -100,7 +108,13 @@ const Filter = () => {
         getOptionLabel={(option) => {
           return option.nombre;
         }}
-        renderInput={(params) => <TextField {...params} label="Obra Social" />}
+        renderInput={(params) => (
+          <TextField
+            sx={{ bgcolor: 'white', borderRadius: '4px' }}
+            {...params}
+            label="Obra Social"
+          />
+        )}
         renderOption={(props, option) => (
           <li style={{ fontSize: '14px' }} {...props} key={option.id}>
             {option.nombre}

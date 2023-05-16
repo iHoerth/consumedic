@@ -8,8 +8,7 @@ import Filter from '../../components/Filter/Filter';
 
 import { Context } from '../../context/ContextProvider';
 
-// import style from "./DoctorsList.module.css";
-import cards22 from '../Img/cards22.jpg';
+import cards22 from '../../assets/Img/cards22.jpg';
 import { Box, Container } from '@mui/material';
 
 const DoctorsList = () => {
@@ -26,7 +25,7 @@ const DoctorsList = () => {
 
   const doctorsInPage = filteredDoctors.slice(firstDoctorIndex, lastDoctorIndex);
 
-  const handleChange = (event, p) => {
+  const handlePageChange = (event, p) => {
     setCurrentPage(p);
   };
 
@@ -78,14 +77,14 @@ const DoctorsList = () => {
             height: '200px',
           }}
         ></Box>
-        <Filter />
+        <Filter handlePageChange={handlePageChange} />
         <CardsContainer
           doctorsInPage={doctorsInPage}
           sx={{
             width: '400px',
           }}
         />
-        <Pagination maxPages={maxPages} page={currentPage} handleChange={handleChange} />
+        <Pagination maxPages={maxPages} page={currentPage} handlePageChange={handlePageChange} />
         <Footer />
       </Box>
     </>
