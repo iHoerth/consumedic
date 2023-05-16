@@ -19,7 +19,7 @@ import { Context } from "../../context/ContextProvider";
 import axios from "axios";
 import Footer from "../../components/Footer/Footer";
 
-import create31 from "../Img/create31.jpg";
+import create31 from "../../assets/Img/create31.jpg";
 
 const CreatePatient = () => {
   const navigate = useNavigate();

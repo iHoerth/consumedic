@@ -31,7 +31,7 @@ import Footer from '../../components/Footer/Footer';
 
 import Calendar from "../../components/Calendar/Calendar";
 
-import detail23 from '../Img/detail23.jpg'
+import detail23 from '../../assets/Img/detail23.jpg'
 
 
 const DoctorDetail = () => {
