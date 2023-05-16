@@ -50,8 +50,6 @@ const Calendar = ({id, calendar}) => {
     
     if(calendar){
       return (
-        <Box>
-
           <Box 
             sx={{
               display: 'flex',
@@ -152,8 +150,6 @@ const Calendar = ({id, calendar}) => {
               <Button disabled={pagina === cantHojas} onClick={handleClick} name="mas"> ᐅ </Button>
             </Box>
           </Box>
-          <Button>Mostrar Mas</Button>
-        </Box>
       );
     } else {
       return (
