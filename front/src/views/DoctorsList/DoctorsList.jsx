@@ -1,58 +1,92 @@
-import { useContext, useState, useEffect } from "react";
-import axios from "axios";
-
+import { useContext, useState, useEffect } from 'react';
+import Footer from '../../components/Footer/Footer';
 import Pagination from '../../components/Pagination/Pagination';
 import CardsContainer from '../../components/CardsContainer/CardsContainer';
-import SearchBar from '../../components/SearchBar/SearchBar';
+
 import NavBar from '../../components/NavBar/NavBar';
-import Filter from '../../components/Filter/Filter'
+import Filter from '../../components/Filter/Filter';
 
+import { Context } from '../../context/ContextProvider';
 
-import { Context } from "../../context/ContextProvider";
-
-import style from './DoctorsList.module.css';
-
+import cards22 from '../../assets/Img/cards22.jpg';
+import { Box, Container } from '@mui/material';
 
 const DoctorsList = () => {
-  const [doctorsData] = useContext(Context);
-  const { doctors, fetchDoctors, fetchDoctorByEmail } = doctorsData;
+  const [loading, setLoading] = useState(true);
+  const { doctors, fetchDoctors, filteredDoctors } = useContext(Context)[0];
 
   const [currentPage, setCurrentPage] = useState(1);
 
   const doctorsPerPage = 15;
-  const maxPages = Math.ceil(doctors.length / doctorsPerPage);
+  const maxPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
 
   const lastDoctorIndex = doctorsPerPage * currentPage;
   const firstDoctorIndex = lastDoctorIndex - doctorsPerPage;
 
-  const doctorsInPage = doctors.slice(firstDoctorIndex, lastDoctorIndex);
+  const doctorsInPage = filteredDoctors.slice(firstDoctorIndex, lastDoctorIndex);
 
-  const handleChange = (event, p) => {
+  const handlePageChange = (event, p) => {
     setCurrentPage(p);
   };
 
   useEffect(() => {
-    const data = async () => {
-      // await axios.post("http://localhost:3001/fake");
-    };
-    data();
+    // fetchDoctors();
+    if (doctors.length) {
+      setLoading(false);
+    }
+  }, [loading, filteredDoctors]);
 
-    fetchDoctors();
-  }, []);
+  if (loading) {
+    return <div>LOADING</div>;
+  }
 
   return (
     <>
       <NavBar />
-      <Filter />
-      <div className={style.divSpecialists}>
-        <SearchBar />
-        <CardsContainer doctorsInPage={doctorsInPage} />
-        <Pagination
-          maxPages={maxPages}
-          page={currentPage}
-          handleChange={handleChange}
+      <Box
+        sx={{
+          backgroundImage: `url('${cards22}')`,
+          backgroundPosition: 'bottom',
+          backgroundPositionY: '70%',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed',
+          position: 'relative',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          // marginTop: "15%",
+
+          '@media (max-width: 600px)': {
+            height: {
+              xs: '50vh',
+              sm: '60vh',
+              md: '70vh',
+              lg: '80vh',
+            },
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexDirection: 'column',
+            height: '200px',
+          }}
+        ></Box>
+        <Filter handlePageChange={handlePageChange} />
+        <CardsContainer
+          doctorsInPage={doctorsInPage}
+          sx={{
+            width: '400px',
+          }}
         />
-      </div>
+        <Pagination maxPages={maxPages} page={currentPage} handlePageChange={handlePageChange} />
+        <Footer />
+      </Box>
     </>
   );
 };

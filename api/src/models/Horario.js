@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
     },
     dia_semana:{
       type: DataTypes.ENUM,
-      values: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"],
+      values: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
       allowNull: false,
     },
     atiende:{

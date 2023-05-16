@@ -5,11 +5,10 @@ import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import NavBar from '../../components/NavBar/NavBar';
+import { Link } from 'react-router-dom';
+import NavBar from "../../components/NavBar/NavBar";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -27,7 +26,7 @@ const images = [
   {
     label: '',
     imgPath:
-      '/images/9.png',
+      '/images/1.jpg',
   },
   {
     label: '',
@@ -46,30 +45,28 @@ function SwipeableTextMobileStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images?.length ?? 0;
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
-
+  
   return (
-    <>
-    <NavBar></NavBar>
-    
-    <Box sx={{ maxWidth: 'auto', flexGrow: 1 }}>
+    <Box sx={{ maxWidth: {
+      xs: '100%', 
+      sm: '80%', 
+      md: '60%', 
+      lg: '50%', 
+    }, 
+    flexGrow: 1, 
+    position: 'relative',
+    margin: '0 auto' }}>
+      <NavBar />
       <Paper
         square
         elevation={0}
         sx={{
           display: 'flex',
           alignItems: 'center',
-          height: 50,
+          height: 0,
           pl: 2,
           bgcolor: 'background.default',
         }}
@@ -81,6 +78,7 @@ function SwipeableTextMobileStepper() {
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
+        interval={6000} 
       >
         {images.map((step, index) => (
           <div key={step.imgPath}>
@@ -88,8 +86,7 @@ function SwipeableTextMobileStepper() {
               <Box
                 component="img"
                 sx={{
-                  height: 'auto',
-                  display: 'block',
+                  display: 'flex',
                   maxWidth: 'auto',
                   overflow: 'hidden',
                   width: '100%',
@@ -102,37 +99,48 @@ function SwipeableTextMobileStepper() {
         ))}
       </AutoPlaySwipeableViews>
       <MobileStepper
+        variant="dots"
         steps={maxSteps}
-        position="static"
+        position="absolute"
         activeStep={activeStep}
-        nextButton={
-          <Button
-            size="small"
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
-          >
-            Next
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowLeft />
-            ) : (
-              <KeyboardArrowRight />
-            )}
-          </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
-            Back
-          </Button>
-        }
+        sx={{ maxWidth: '100%', flexGrow: 1, 
+          position: 'absolute', top: '50%',
+          left: '50%', 
+          transform: 'translate(-50%, -50%)',
+          zIndex: 1,
+          '& .MuiMobileStepper-dotActive': {
+            backgroundColor: theme.palette.primary.main,
+          },
+          '@media (min-width: 600px)': {
+            maxWidth: 400,
+            left: '50%',
+            transform: 'translateX(-50%)',
+          },
+      }}
       />
+      <Button
+        component={Link}
+        to="/home"
+        variant="contained"
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 1,
+          width: 200,
+          height: 50,
+          borderRadius: '12px',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s ease', 
+          
+        }}
+      >
+        Ingresar 
+      </Button>
     </Box>
-    </>
   );
 }
-
 export default SwipeableTextMobileStepper;
+
+

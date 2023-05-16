@@ -1,10 +1,14 @@
-const {Cita}= require("../../db")
+const {Cita,DoctorType,PacienteType}= require("../../db")
 
-const createAppointment = async (fecha, descripcion)=>{
-    
+const createAppointment = async (fecha, hora, descripcion, idDoctor, idPatient)=>{
+    const newPacient = await PacienteType.findByPk(idPatient);
+    const newDoctor = await DoctorType.findByPk(idDoctor);
     const NewCita = await Cita.create({
         fecha,
-        descripcion
+        hora,
+        descripcion,
+        DoctorTypeId:newDoctor.id,
+        PacienteTypeId:newPacient.id
     })
     return NewCita;
 }

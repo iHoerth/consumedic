@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import style from "./DoctorDetail.module.css";
 import { Context } from "../../context/ContextProvider";
 import { useParams } from "react-router-dom";
 import CardMUI from "@mui/material/Card";
@@ -13,8 +12,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import LocationOnSharpIcon from "@mui/icons-material/LocationOnSharp";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SmsIcon from "@mui/icons-material/Sms";
@@ -27,25 +24,31 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { NavLink } from "react-router-dom";
+import { useMediaQuery, useTheme } from "@mui/material";
+import { Container, Box } from "@mui/material";
+import NavBar from "../../components/NavBar/NavBar";
+import Footer from '../../components/Footer/Footer';
+
+import Calendar from "../../components/Calendar/Calendar";
+
+import detail23 from '../../assets/Img/detail23.jpg'
+
 
 const DoctorDetail = () => {
-  const [loading, setLoading] = useState(true);
+  const theme = useTheme();
 
+  const [loading, setLoading] = useState(true);
   const [doctorsData] = useContext(Context);
-  const { doctorDetail, fetchDoctorById } = doctorsData;
+  const { doctorDetail, fetchDoctorById, cleanDetail } = doctorsData;
   const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
-
-    if (!Object.keys(doctorDetail).length) {
-      fetchDoctorById(id).then(() => {
-        setLoading(false);
-      });
-    } else {
-      console.log(doctorDetail);
+    fetchDoctorById(id).then(() => {
       setLoading(false);
-    }
+    });
+    setLoading(false);
+    
   }, [id]);
 
   const [expanded, setExpanded] = useState(false);
@@ -53,6 +56,7 @@ const DoctorDetail = () => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -61,158 +65,197 @@ const DoctorDetail = () => {
     return <div>CARGANDO</div>;
   }
 
+  console.log(doctorDetail);
+
   return (
-    <div className={style.divBody}>
-      <div>
-        <CardMUI
-          sx={{
-            maxWidth: 500,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <IconButton sx={{ p: 2 }}>
-            <Avatar
-              alt="img"
-              src={doctorDetail.imagen}
-              sx={{
-                width: 200,
-                height: 200,
-              }}
-            />
-          </IconButton>
+    <Container
+      sx={{
+        backgroundImage: `url('${detail23}')`,
+        backgroundPosition: "bottom",
+        backgroundPositionY: "23%", 
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        // typography: theme.typography,
+        '@media (max-width: 600px)': {
+          height: {
+            xs: '50vh',
+            sm: '60vh',
+            md: '70vh',
+            lg: '80vh',
+          }
+        }, 
+      }}
+    >
+      <NavBar />
 
-          <CardHeader
-            action={
-              <IconButton>
-                <FavoriteIcon />
-              </IconButton>
-            }
-            title={doctorDetail.nombre + doctorDetail.apellido}
-            subheader={
-              doctorDetail.Especialidads &&
-              doctorDetail.Especialidads.map((item, index) => (
-                <div key={index}>{item.name}</div>
-              ))
-            }
+      <CardMUI
+        sx={{
+          maxWidth: 500,
+          typography: theme.typography,
+          width: "100%",
+          mt: "10px",
+          mb: "30px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "15%",
+          marginBottom: "10%"
+        }}
+      >
+        
+        <IconButton sx={{ p: 2 }}>
+          <Avatar
+            alt="img"
+            src={doctorDetail.imagen}
+            sx={{
+              width: 200,
+              height: 200,
+            }}
           />
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ pb: 1, width: "50%" }}
-          >
-            {doctorDetail.Descripcion}
+        </IconButton>
+
+        <CardHeader
+          action={
+            <IconButton>
+              <FavoriteIcon color="primary" />
+            </IconButton>
+          }
+          title={doctorDetail.nombre + " " + doctorDetail.apellido}
+          subheader={
+            doctorDetail.Especialidads?.length &&
+            doctorDetail.Especialidads.map((item, index) => (
+              <span key={index}>{item.name}</span>
+            ))
+          }
+        />
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ pb: 1, width: "50%" }}
+        >
+          {doctorDetail.Descripcion}
+        </Typography>
+        <CardContent>
+          <Stack spacing={1}>
+            <Rating
+              name="half-rating-read"
+              defaultValue={
+                doctorDetail.Opinions?.length &&
+                doctorDetail.Opinions.reduce((acc, opinion, index) => {
+                  return (acc + opinion.puntaje) / (index + 1);
+                }, 0)
+              }
+              precision={0.5}
+              readOnly
+              color="primary"
+            />
+          </Stack>
+
+          <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+            {doctorDetail.Opinions?.length ? (
+              doctorDetail.Opinions.map((item, index) => (
+                <span key={index}>{item.mensaje}</span>
+              ))
+            ) : (
+              <span>No hay opiniones disponibles</span>
+            )}
           </Typography>
-          <CardContent>
-            <Stack spacing={1}>
-              <Rating
-                name="half-rating-read"
-                defaultValue={
-                  doctorDetail.Opinions &&
-                  doctorDetail.Opinions.map((item, index) => (
-                    <div key={index}>{item.puntaje}</div>
-                  ))
-                }
-                precision={0.5}
-                readOnly
-              />
-            </Stack>
-            <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-              {doctorDetail.Opinions &&
-                doctorDetail.Opinions.map((item, index) => (
-                  <div key={index}>{item.mensaje}</div>
-                ))}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                gap: 2,
-                alignItems: "center",
-                flexWrap: "wrap",
-              }}
-            >
-              <Button
-                color="primary"
-                variant="outlined"
-                size="md"
-                sx={{ mt: 2, mb: 2 }}
-              >
-                <CalendarMonthIcon />
-                <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
-                  Pedir turno
-                </Typography>
-              </Button>
-              <Button color="primary" variant="outlined" size="md">
-                <SmsIcon />
-                <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
-                  Enviar mensaje
-                </Typography>
-              </Button>
-            </Box>
 
-            <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-              <LocationOnSharpIcon sx={{ marginRight: "0.5rem" }} />
-              {doctorDetail.direccion}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-              <VideocamIcon sx={{ marginRight: "0.5rem" }} />
-              Consulta en linea: ${doctorDetail.precio}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-              <LocalPhoneIcon sx={{ marginRight: "0.5rem" }} />
-              {doctorDetail.telefono}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-              <PeopleAltIcon sx={{ marginRight: "0.5rem" }} />
-
-              {doctorDetail.ObraSocials &&
-                doctorDetail.ObraSocials.map((item, index) => (
-                  <div key={index}>Obra sociales: {item.nombre}</div>
-                ))}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-              <PaymentsIcon sx={{ marginRight: "0.5rem" }} />
-              Pagos: Mercado Pago
-            </Typography>
-            <NavLink
-              to={doctorDetail.linkedin}
-              target="_blank"
-              activeClassName="active"
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <Button
+              color="primary"
+              variant="outlined"
+              size="md"
+              sx={{ mt: 2, mb: 2 }}
             >
-              <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                <LinkedInIcon sx={{ marginRight: "0.5rem" }} />
-                LinkedIn
+              <CalendarMonthIcon />
+              <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
+                Pedir turno
               </Typography>
-            </NavLink>
+            </Button>
+            <Button color="primary" variant="outlined" size="md">
+              <SmsIcon color="primary" />
+              <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
+                Enviar mensaje
+              </Typography>
+            </Button>
+          </Box>
 
-            <Accordion
-              expanded={expanded === "panel2"}
-              onChange={handleChange("panel2")}
+          <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
+            <LocationOnSharpIcon
+              sx={{ marginRight: "0.5rem" }}
+              color="primary"
+            />
+            {doctorDetail.direccion}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
+            <VideocamIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+            Consulta en linea: ${doctorDetail.precio}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
+            <LocalPhoneIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+            {doctorDetail.telefono}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
+            <PeopleAltIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+            {doctorDetail.ObraSocials?.length &&
+              doctorDetail.ObraSocials.map((item, index) => (
+                <span key={index}>Obra sociales: {item.nombre}</span>
+              ))}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
+            <PaymentsIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+            Pagos: Mercado Pago
+          </Typography>
+          <NavLink to="https://www.linkedin.com" target="_blank">
+            <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
+              <LinkedInIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+              LinkedIn
+            </Typography>
+          </NavLink>
+
+          <Accordion
+            expanded={expanded === "panel2"}
+            onChange={handleChange("panel2")}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon color="primary" />}
+              aria-controls="panel2bh-content"
+              id="panel2bh-header"
             >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel2bh-content"
-                id="panel2bh-header"
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ width: "33%", flexShrink: 0 }}
               >
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ width: "33%", flexShrink: 0 }}
-                >
-                  Formacion
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography variant="body2" color="text.secondary">
-                  {doctorDetail.titulo}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          </CardContent>
-        </CardMUI>
-      </div>
-    </div>
+                Formacion
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography variant="body2" color="text.secondary">
+                {doctorDetail.titulo}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </CardContent>
+      </CardMUI>
+      <Calendar id={id} calendar={doctorDetail.calendar} />
+      <Footer />
+    </Container>
   );
 };
 

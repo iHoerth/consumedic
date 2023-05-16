@@ -1,12 +1,30 @@
 import { createContext, useState } from 'react';
 import axios from 'axios';
+import useLocalStorage from '../helpers/useLocalStorage';
 
 export const Context = createContext([]);
+export const UtilitiesContext = createContext([]);
+export const LoadingContext = createContext([]);
+export const FilterContext = createContext([]);
+export const SessionContext = createContext([]);
 
 const URL_PATIENTS = `http://localhost:3001/patients`;
 const URL_DOCTORS = `http://localhost:3001/doctors`;
+const URL_SPECIALTIES = `http://localhost:3001/specialties`;
+const URL_SOCIALSECURITY = `http://localhost:3001/socialSecurity`;
 
 const ContextProvider = ({ children }) => {
+  const [loading, setLoading] = useState(false);
+
+  const [user, setUser] = useLocalStorage('user', {});
+
+  const [selectedFilters, setSelectedFilters] = useState({
+    Especialidads: [false, {}],
+    ObraSocials: [false, {}],
+    Cita: [false, {}],
+    location: [false, {}],
+  });
+
   const [doctorsData, setDoctorsData] = useState({
     doctors: [],
     doctorDetail: {},
@@ -16,7 +34,8 @@ const ContextProvider = ({ children }) => {
       const data = await response.data;
       setDoctorsData((prevState) => ({
         ...prevState,
-        doctors: [...prevState.doctors, ...data],
+        doctors: [...data],
+        filteredDoctors: [...data],
       }));
     },
     fetchDoctorById: async (id) => {
@@ -35,13 +54,25 @@ const ContextProvider = ({ children }) => {
         doctorDetail: data,
       }));
     },
+    cleanDetail: async () => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        doctorDetail: {},
+      }));
+    },
     createDoctor: async (newDoctor) => {
       const response = await axios.post(`${URL_DOCTORS}`, newDoctor);
       const data = await response.data;
       setDoctorsData((prevState) => ({
         ...prevState,
         doctorDetail: { ...data },
-      }))
+      }));
+    },
+    filterDoctors: async (newFilter) => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        filteredDoctors: [...newFilter],
+      }));
     },
   });
 
@@ -71,13 +102,35 @@ const ContextProvider = ({ children }) => {
       setPatientsData((prevState) => ({
         ...prevState,
         patientDetail: { ...data },
-      }))
+      }));
+    },
+  });
+
+  const [utilities, setUtilities] = useState({
+    socialSecurity: [],
+    specialties: [],
+    fetchUtilities: async () => {
+      const socialSecurityData = (await axios(`${URL_SOCIALSECURITY}`)).data;
+      const specialtiesData = (await axios(`${URL_SPECIALTIES}`)).data;
+      setUtilities((prevState) => ({
+        ...prevState,
+        socialSecurity: [...socialSecurityData],
+        specialties: [...specialtiesData],
+      }));
     },
   });
 
   return (
     <>
-      <Context.Provider value={[doctorsData, patientsData]}>{children}</Context.Provider>
+      <SessionContext.Provider value={[user, setUser]}>
+        <LoadingContext.Provider value={[loading, setLoading]}>
+          <UtilitiesContext.Provider value={utilities}>
+            <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
+              <Context.Provider value={[doctorsData, patientsData]}>{children}</Context.Provider>
+            </FilterContext.Provider>
+          </UtilitiesContext.Provider>
+        </LoadingContext.Provider>
+      </SessionContext.Provider>
     </>
   );
 };

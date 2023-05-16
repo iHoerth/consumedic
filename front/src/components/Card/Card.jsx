@@ -1,92 +1,140 @@
-import React from "react";
-import { styled } from "@mui/material/styles";
-import CardMUI from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Tooltip from "@mui/material/Tooltip";
-import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
-import LocationOnSharpIcon from "@mui/icons-material/LocationOnSharp";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { styled } from '@mui/material/styles';
+import CardMUI from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Collapse from '@mui/material/Collapse';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Tooltip from '@mui/material/Tooltip';
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
+import LocationOnSharpIcon from '@mui/icons-material/LocationOnSharp';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import { NavLink } from 'react-router-dom';
+import { Grid, useTheme } from '@mui/material';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
   }),
 }));
 
-const Card = (props) => {
+const Card = ({
+  id,
+  profileImage,
+  name,
+  stars,
+  opinions,
+  infoStudies,
+  location,
+  price,
+  agenda,
+  specialty,
+}) => {
   const [expanded, setExpanded] = React.useState(false);
+  const theme = useTheme();
+  let averageRating = stars && stars.reduce((acc, cur) => acc + cur.puntaje, 0) / stars.length;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   return (
-    <CardMUI>
+    // <CardMUI
+    // sx={{
+    //   pl: "40px",
+    //   borderRadius: 4, // agregar borde redondeado
+    //   width: 400, // agregar ancho
+    //   height: 500, // agregar altura
+    //   // bgcolor: theme.palette.secondary.main,
+    //   typography: theme.typography,
+    //   }}
+    // >
+    <CardMUI
+      sx={{
+        pl: '40px',
+        borderRadius: 4,
+        width: 370,
+        height: 600,
+        mb: 6,
+        typography: theme.typography,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingRight: 4,
+      }}
+    >
       <Tooltip title="Ver Perfil">
-        <IconButton sx={{ p: 0 }}>
-          <NavLink to={`/detail/${props.id}`} activeClassName="active">
-            <Avatar alt="Remy Sharp" src={props.profileImage} />
+        <IconButton sx={{ p: 1 }}>
+          <NavLink to={`/detail/${id}`}>
+            <Avatar
+              alt="Remy Sharp"
+              src={profileImage}
+              sx={{
+                width: 120,
+                height: 120,
+              }}
+            />
           </NavLink>
         </IconButton>
       </Tooltip>
       <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+        title={
+          <NavLink
+            to={`/detail/${id}`}
+            sx={{ color: theme.palette.primary.main, textDecoration: 'none' }}
+          >
+            {name}
+          </NavLink>
         }
-        title={<NavLink to={`/detail/${props.id}`}>{props.name}</NavLink>}
-        subheader={props.specialty}
+        subheader={
+          specialty.length && specialty.map((item, index) => <span key={index}>{item.name}</span>)
+        }
       />
       <CardContent>
         <Stack spacing={1}>
-          <Rating
-            name="half-rating-read"
-            defaultValue={props.stars}
-            precision={0.5}
-            readOnly
-          />
+          <Rating name="controlled-rating" value={averageRating} color="secondary" />
         </Stack>
-        <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-          Especialidades: {props.specialty}
-        </Typography>
+
         <Typography variant="body2" color="text.secondary" sx={{ pb: 3 }}>
-          {props.opinions}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-          {props.infoStudies}
+          {opinions.length ? (
+            opinions.map((item, index) => <span key={index}>{item.mensaje}</span>)
+          ) : (
+            <span>No hay opiniones disponibles</span>
+          )}
         </Typography>
 
         <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-          <LocationOnSharpIcon />
-          {props.location}
+          {infoStudies}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-          Consulta ${props.price}
+          <LocationOnSharpIcon color="primary" />
+          Direccion: {location}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+          <VideocamIcon color="primary" />
+          Consulta ${price}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          <FavoriteIcon color="primary" />
         </IconButton>
         <IconButton aria-label="share">
-          <ShareIcon />
+          <ShareIcon color="primary" />
         </IconButton>
         <ExpandMore
           expand={expanded}
@@ -95,17 +143,14 @@ const Card = (props) => {
           aria-label="show more"
         >
           <Tooltip title="Ver Agenda">
-            <ExpandMoreIcon />
+            <ExpandMoreIcon color="primary" />
           </Tooltip>
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Agenda Disponible:</Typography>
-          <Typography paragraph>
-            {props.agenda &&
-              props.agenda.map((item, index) => <div key={index}>{item}</div>)}
-          </Typography>
+          <Typography paragraph></Typography>
         </CardContent>
       </Collapse>
     </CardMUI>

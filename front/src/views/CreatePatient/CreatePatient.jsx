@@ -66,7 +66,7 @@ const CreatePatient = () => {
     const value = event.target.value;
     setForm({
       ...form,
-      [property]: value
+      [property]: value,
     });
 
     validarForm({ ...form, [property]: value })
@@ -85,33 +85,33 @@ const CreatePatient = () => {
     const errors = {};
 
     if (!form.nombre) {
-      errors.nombre = 'El campo nombre es requerido';
+      errors.nombre = "El campo nombre es requerido";
     }
 
     if (!form.apellido) {
-      errors.apellido = 'El campo apellido es requerido';
+      errors.apellido = "El campo apellido es requerido";
     }
 
     if (!form.email) {
-      errors.email = 'El campo email es requerido';
+      errors.email = "El campo email es requerido";
     } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-      errors.email = 'El email ingresado no es válido';
+      errors.email = "El email ingresado no es válido";
     }
 
     if (!form.telefono) {
-      errors.telefono = 'El campo teléfono es requerido';
+      errors.telefono = "El campo teléfono es requerido";
     } else if (!/^\d{10}$/.test(form.phone)) {
-      errors.phone = 'El número de teléfono debe contener 10 dígitos';
+      errors.phone = "El número de teléfono debe contener 10 dígitos";
     }
 
     if (!form.idObraSocial) {
-      errors.idObraSocial = 'El campo obra social es requerido';
+      errors.idObraSocial = "El campo obra social es requerido";
     }
 
     if (!form.dni) {
-      errors.dni = 'El campo número de documento es requerido';
+      errors.dni = "El campo número de documento es requerido";
     } else if (!/^\d{7,8}$/.test(form.dni)) {
-      errors.dni = 'El número de documento debe contener entre 7 y 8 dígitos';
+      errors.dni = "El número de documento debe contener entre 7 y 8 dígitos";
     }
 
     if (!form.contrasena) {
@@ -133,9 +133,9 @@ const CreatePatient = () => {
   ///fn para contrasenas
   const handleCheckedPassword = () => {
     if (form.password !== form.confirmPassword) {
-      setError({ ...error, confirmPassword: 'Las contraseñas no coinciden' });
+      setError({ ...error, confirmPassword: "Las contraseñas no coinciden" });
     } else {
-      setError({ ...error, confirmPassword: '' });
+      setError({ ...error, confirmPassword: "" });
     }
   };
 
