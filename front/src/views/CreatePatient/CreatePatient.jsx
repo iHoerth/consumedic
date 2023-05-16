@@ -220,7 +220,7 @@ const CreatePatient = () => {
                 value={form.nombre}
                 name="nombre"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "100px" }}
+                sx={{ height: "110px", width: "400px" }}
                 helperText={
                   error.nombre ? (
                     <Typography color="error">{error.nombre}</Typography>
@@ -229,6 +229,7 @@ const CreatePatient = () => {
                   )
                 }
                 required
+                
               />
 
               {/* Apellido */}
@@ -240,7 +241,7 @@ const CreatePatient = () => {
                 value={form.apellido}
                 name="apellido"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "100px" }}
+                sx={{height: "110px", width: "400px" }}
                 helperText={
                   error.apellido ? (
                     <Typography color="error">{error.apellido}</Typography>
@@ -260,7 +261,7 @@ const CreatePatient = () => {
                 value={form.email}
                 name="email"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "100px" }}
+                sx={{ height: "110px", width: "400px" }}
                 helperText={
                   error.email ? (
                     <Typography color="error">{error.email}</Typography>
@@ -282,7 +283,7 @@ const CreatePatient = () => {
                 value={form.telefono}
                 name="telefono"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "100px" }}
+                sx={{ height: "110px", width: "400px" }}
                 helperText={
                   error.telefono ? (
                     <Typography color="error">{error.telefono}</Typography>
@@ -338,7 +339,7 @@ const CreatePatient = () => {
                 value={form.dni}
                 name="dni"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "100px" }}
+                sx={{ height: "110px", width: "400px" }}
                 helperText={
                   error.dni ? (
                     <Typography color="error">{error.dni}</Typography>
@@ -359,7 +360,7 @@ const CreatePatient = () => {
                 value={form.password}
                 name="password"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "100px" }}
+                sx={{ height: "110px", width: "400px" }}
                 helperText={
                   error.password ? (
                     <Typography color="error">{error.password}</Typography>
@@ -380,7 +381,7 @@ const CreatePatient = () => {
                 value={form.confirmPassword}
                 name="confirmPassword"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "100px" }}
+                sx={{ height: "110px", width: "400px" }}
                 helperText={
                   error.confirmPassword ? (
                     <Typography color="error">
