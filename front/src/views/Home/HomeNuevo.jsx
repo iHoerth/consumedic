@@ -1,18 +1,17 @@
+import { useState } from 'react';
+import { autoPlay } from 'react-swipeable-views-utils';
+import SwipeableViews from 'react-swipeable-views';
+
+import { Box, Card, CardContent, Typography, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 import NavBar from '../../components/NavBar/NavBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { Box, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
 import { bannerImages } from '../../helpers/helpers';
-import React, { useState } from 'react';
 
-import box1 from '../Img/box1.jpg';
-import box2 from '../Img/box2.jpg';
-import box3 from '../Img/box3.jpg';
-import box4 from '../Img/box4.jpg';
+import { homeCards } from '../../helpers/helpers';
 
 const HomeNuevo = () => {
   const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -97,9 +96,9 @@ const HomeNuevo = () => {
             flexDirection: 'column',
             justifyContent: 'end',
             alignItems: 'center',
-            gap:'20px',
+            gap: '20px',
             height: '72.5vh',
-            pb:'120px'
+            pb: '120px',
           }}
         >
           <Header />
@@ -107,96 +106,30 @@ const HomeNuevo = () => {
         </Box>
 
         <Box //cuadro grande
+          component="span"
           sx={{
+            border: '1px solid black',
             width: '100%',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '60px',
+            // display: 'flex',
+            // justifyContent: 'space-between',
+            // alignItems: 'center',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, minmax(Min(350px), 1fr))',
             height: '60vh',
-            // flexDirection: isMobile ? 'column' : 'row',
-            '@media (max-width: 600px)': {
-              height: {
-                xs: '50vh',
-                sm: '60vh',
-                md: '70vh',
-                lg: '80vh',
-              },
-            },
+            gap: '40px',
+            padding: '60px',
           }}
         >
-          <Box // primer box con texto a la izq.
-            sx={{
-              backgroundImage: `url('${box1}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              position: 'relative',
-              width: isMobile ? '100%' : '300px',
-              height: isMobile ? '200px' : '300px',
-              border: '1px solid grey',
-              borderRadius: '20px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: isMobile ? '20px' : 0,
-            }}
-          >
-            aca hay mucha info
-          </Box>
-          <Box
-            sx={{
-              backgroundImage: `url('${box2}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              position: 'relative',
-              width: '300px',
-              height: '300px',
-              border: '1px solid grey',
-              borderRadius: '20px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            aca hay mucha info
-          </Box>
-          <Box
-            sx={{
-              backgroundImage: `url('${box3}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              position: 'relative',
-              width: '300px',
-              height: '300px',
-              border: '1px solid grey',
-              borderRadius: '20px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            aca hay mucha info
-          </Box>
-          <Box
-            sx={{
-              backgroundImage: `url('${box4}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              position: 'relative',
-              width: '300px',
-              height: '300px',
-              border: '1px solid grey',
-              borderRadius: '20px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            aca hay mucha info
-          </Box>
+          {homeCards.map((text, index) => (
+            <Card key={`homeCards${index}`}>
+              <CardContent>
+                <Typography sx={{ fontSize: 16 }} gutterBottom>
+                  {text.title}
+                </Typography>
+                <Typography sx={{ fontSize: 14, wordSpacing: '0.2rem' }}>{text.body}</Typography>
+              </CardContent>
+            </Card>
+          ))}
         </Box>
         <Box
           sx={{
