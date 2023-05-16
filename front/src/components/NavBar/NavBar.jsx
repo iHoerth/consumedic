@@ -49,9 +49,9 @@ const NavBar = ({text}) => {
 
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
-      <AppBar></AppBar>
       <AppBar
         color={scrolled ? 'primary' : 'transparent'}
+        elevation={scrolled ? 4 : 0}
         position="fixed"
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
       >

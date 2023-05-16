@@ -240,7 +240,7 @@ const Userlogin = () => {
 
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             sx={{ margin: "10px" }}
             onClick={handleLocalSubmit}
           >

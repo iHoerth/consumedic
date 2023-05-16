@@ -40,9 +40,9 @@ const HomeNuevo = () => {
         enableMouseEvents
         interval={6000}
         style={{
-          maxWidth: '150%',
+          // maxWidth: '150%',
           maxHeight: '100vh',
-          // width: '1920px',
+          width: '1920px',
           margin: '0 auto',
         }}
       >
@@ -84,25 +84,18 @@ const HomeNuevo = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            '@media (max-width: 600px)': {
-              height: {
-                xs: '50vh',
-                sm: '60vh',
-                md: '70vh',
-                lg: '80vh',
-              },
-            },
+
           }}
         >
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'end',
+              justifyContent: 'center',
               alignItems: 'center',
               gap: '20px',
-              height: '72.5vh',
-              pb: '120px',
+              height: '70vh',
+              // pb: '120px',
             }}
           >
             <Header />

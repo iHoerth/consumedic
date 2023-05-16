@@ -20,7 +20,7 @@ const theme = createTheme({
       dark: blue[800],
     },
     secondary: {
-      main: teal['A400'],
+      main: cyan[200],
       light: teal['A100'],
       dark: teal[500],
     },
