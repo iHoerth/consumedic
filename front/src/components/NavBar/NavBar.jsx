@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Link, useMediaQuery, useTheme } from '@mui/material';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { useState, useEffect } from 'react';
 
@@ -51,7 +51,7 @@ const NavBar = ({text}) => {
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar></AppBar>
       <AppBar
-        color={scrolled ? 'secondary' : 'transparent'}
+        color={scrolled ? 'primary' : 'transparent'}
         position="fixed"
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
       >

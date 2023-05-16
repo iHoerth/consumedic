@@ -32,7 +32,7 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        bgcolor: theme.palette.secondary.main,
+        bgcolor: theme.palette.primary.main,
         width: "100%",
         height: "35vh",
         display: "flex",
@@ -47,14 +47,14 @@ const Footer = () => {
           p: 2,
           mb: 1,
           width: "100%",
-          bgcolor: theme.palette.secondary.main,
+          bgcolor: theme.palette.primary.main,
         }}
       >
         <BottomNavigation
           value={currentPage}
           onChange={handleNavigation}
           sx={{
-            bgcolor: theme.palette.secondary.main,
+            bgcolor: theme.palette.primary.main,
           }}
         >
           <BottomNavigationAction
@@ -93,21 +93,21 @@ const Footer = () => {
       </Box>
       <Box
         sx={{
-          bgcolor: "white",
+          bgcolor: "#212121",
           p: 2,
           mb: 1,
           width: "100%",
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
-          bgcolor: theme.palette.secondary.main,
+          bgcolor: theme.palette.primary.main,
         }}
       >
         <NavLink to="https://www.facebook.com" target="_blank">
           <Facebook
             sx={{
               mx: 1,
-              color: theme.palette.primary.main,
+              color: "#212121",
               fontSize: "30px",
               ml: "30px",
               mr: "30px",
@@ -118,7 +118,7 @@ const Footer = () => {
           <Twitter
             sx={{
               mx: 1,
-              color: theme.palette.primary.main,
+              color: "#212121",
               fontSize: "30px",
               ml: "30px",
               mr: "30px",
@@ -129,7 +129,7 @@ const Footer = () => {
           <Instagram
             sx={{
               mx: 1,
-              color: theme.palette.primary.main,
+              color: "#212121",
               fontSize: "30px",
               ml: "30px",
               mr: "30px",
