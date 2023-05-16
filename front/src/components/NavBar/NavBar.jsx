@@ -56,7 +56,7 @@ const NavBar = () => {
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
       >
         <Toolbar
-          color="primary"
+          color="white"
           sx={{
             width: {
               mobile: '100vw',
@@ -70,20 +70,18 @@ const NavBar = () => {
             display="flex"
             alignItems="center"
             gap="10px"
-            color={!scrolled ? 'black' : '#212121'}
+            color={!scrolled ? 'black' : 'white'}
             sx={{ flexGrow: 1 }}
           >
             <LocalHospitalIcon color="inherit" />
-            <Link href="/home" color={!scrolled ? '#212121' : '#212121'}>
-            <Typography variant="h5" component="div" color={!scrolled ? 'black' : '#212121'}>
+            <Typography variant="h5" component="div" color={!scrolled ? 'black' : 'white'}>
               CONSUMEDIC
             </Typography>
-            </Link>
           </Box>
           {screenSizeSmall ? (
             <DrawerComponent navLinksArray={navLinksArray} />
           ) : (
-            <nav style={{ color: `${!scrolled ? 'black' : '#212121'}` }}>
+            <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
               {navLinksArray.map((link, index) => (
                 <Button key={index} color="inherit" href={link.path}>
                   {link.title}
