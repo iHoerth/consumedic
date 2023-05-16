@@ -224,7 +224,7 @@ const createFakeData = async () => {
       email: faker.internet.email(),
       telefono: faker.datatype.number(),
       direccion: faker.address.streetAddress(),
-      imagen: faker.image.cats(),
+      imagen: `${faker.image.people(null, null, true)}?random=${Date.now()}`,
       password: faker.internet.password(),
       titulo: faker.music.genre(),
       Descripcion: faker.hacker.phrase(),

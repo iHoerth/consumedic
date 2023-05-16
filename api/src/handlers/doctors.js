@@ -4,6 +4,7 @@ const { getDoctorById } = require("../controllers/doctors/getDoctorById");
 const { createDoctor } = require("../controllers/doctors/createDoctor");
 const { modifyDoctor } = require("../controllers/doctors/modifyDoctor");
 const bcrypt = require("bcrypt");
+const cloudinary = require("../utils/cloudinary")
 
 const getDoctors = async (req, res) => {
   const { email } = req.query;
@@ -47,6 +48,17 @@ const postDoctor = async (req, res) => {
     // Generar un hash de la contraseña utilizando bcrypt
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const cloudinaryResult = await cloudinary.uploader.upload(imagen, {
+      folder: "Doctors",
+      width: 300,
+      crop: "scale"
+    })
+
+    // agregar esto en el createDoctor como parametro en reemplazo de imagen
+    // imagen: {
+    //   public_id: cloudinaryResult.public_id,
+    //   url: result.secure.url
+    // }
     const result = await createDoctor(
       dni,
       NumMatricula,

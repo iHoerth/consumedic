@@ -42,6 +42,14 @@ module.exports = (sequelize) => {
       imagen: {
         type: DataTypes.STRING,
         allowNull: false,
+        // public_id: {
+        //   type: DataTypes.STRING,
+        //   allowNull: false 
+        // },
+        // url: {
+        //   type: DataTypes.STRING,
+        //   allowNull: false
+        // }
       },
       password: {
         type: DataTypes.STRING,
