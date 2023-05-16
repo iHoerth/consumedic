@@ -1,42 +1,67 @@
-import React from 'react';
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { TextField, Select, MenuItem, InputLabel, FormControl, Button, Box, Paper, Typography, Checkbox } from '@mui/material';
+import { useContext, useState } from 'react';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import TextField from '@mui/material/TextField';
 import NavBar from '../../components/NavBar/NavBar';
+import { Container, Paper, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { Context } from '../../context/ContextProvider';
 
+const StyleForm = styled(Container)({
+  display: 'flex',
+  justifyContent: 'space-around',
+  flexDirection: 'column',
+  width: '600px',
+  height:'10  00px',
+  margin: "100px auto",
+  padding: '20px',
+})
+const Createpaciente = styled(Button)({
+  marginLeft: '200px',
+
+})
+const Title = styled(Typography)({
+  textAlign: 'center',
+  fontSize: '50px',
+  margin: 'auto'
+});
+
 const CreatePatient = () => {
-  const navigate = useNavigate();
-  const patients = useContext(Context)[1];
+  const navigate = useNavigate()
+  const patients = useContext(Context)[0];
   const { createPatient, patientDetail } = patients;
 
-  const verpatients = () => {
-    console.log(patients.doctors);
-  }
 
   const [form, setForm] = useState({
+    dni: '',
     nombre: '',
     apellido: '',
-    idObraSocial: '',
-    dni: '',
     email: '',
     telefono: '',
-    password: '',
-    confirmPassword: ''
+    contrasena: '',
+    confirmarContrasena: '',
+    esDoctor: false,
   });
 
   const [error, setError] = useState({
+    dni: '',
     nombre: '',
     apellido: '',
-    idObraSocial: '',
-    dni: '',
     email: '',
     telefono: '',
-    password: '',
-    confirmPassword: ''
+    contrasena: '',
+    confirmarContrasena: '',
+    esDoctor: false,
+    idObraSocial:''
   });
 
-  const handleFormChange = (event) => {
+
+  const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
     setForm({
@@ -44,10 +69,19 @@ const CreatePatient = () => {
       [property]: value
     });
 
-    validateForm({ ...form, [property]: value })
+    validarForm({ ...form, [property]: value })
   };
 
-  function validateForm(form) {
+  const handleFileChange = (event) => {
+    setForm({
+      ...form,
+      fotoMatricula: event.target.files[0],
+    });
+  };
+
+
+
+  function validarForm(form) {
     const errors = {};
 
     if (!form.nombre) {
@@ -80,32 +114,23 @@ const CreatePatient = () => {
       errors.dni = 'El número de documento debe contener entre 7 y 8 dígitos';
     }
 
-    if (!form.password) {
-      errors.password = 'El campo contraseña es requerido';
-    } else if (form.password.length < 8) {
-      errors.password = 'La contraseña debe contener al menos 8 caracteres';
+    if (!form.contrasena) {
+      errors.contrasena = 'El campo contraseña es requerido';
+    } else if (form.contrasena.length < 8) {
+      errors.contrasena = 'La contraseña debe contener al menos 8 caracteres';
     }
 
-    if (!form.confirmPassword) {
-      errors.confirmPassword = 'El campo confirmar contraseña es requerido';
-    } else if (form.confirmPassword !== form.password) {
-      errors.confirmPassword = 'Las contraseñas no coinciden';
+    if (!form.confirmarContrasena) {
+      errors.confirmarContrasena = 'El campo confirmar contraseña es requerido';
+    } else if (form.contrasena !== form.confirmarContrasena) {
+      errors.confirmarContrasena = 'Las contraseñas no coinciden';
     }
+
+   
     setError(errors);
     return Object.keys(errors).length === 0;
   }
-
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    const errors = validateForm(form);
-    setError(errors);
-    handleCheckedPassword();
-    createPatient({ ...form, isDoctor: false })
-    navigate(`/patientpanel/${patientDetail.id}`);
-  }
-
-
+  ///fn para contrasenas
   const handleCheckedPassword = () => {
     if (form.password !== form.confirmPassword) {
       setError({ ...error, confirmPassword: 'Las contraseñas no coinciden' });
@@ -114,8 +139,14 @@ const CreatePatient = () => {
     }
   };
 
-
-
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const errors = validarForm(form);
+    setError(errors);
+    handleCheckedPassword();
+    createPatient({ ...form, isDoctor: true })
+    navigate(`/patientpanel/${patientDetail.id}`);
+  };
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -123,140 +154,182 @@ const CreatePatient = () => {
     setShowPassword(!showPassword);
   };
 
-
-
   return (
     <>
       <NavBar></NavBar>
-      <Box component={Paper} elevation={5}
-        sx={{
-          width: '300px', display: 'flex', justifycontent: 'space-between',
-          alignItems: 'center',
-          flexDirection: 'column'
-        }} >
-        <form onSubmit={handleSubmit}>
-          <FormControl required>
-            <Typography variant='h6' align='center'>Crear nuevo usuario</Typography>
+      <StyleForm component={Paper} elevation={5}
+        onSubmit={handleSubmit} >
+           <Title>Registrarme</Title>
+        <Grid container spacing={2}>
+         
+          <Grid item xs={12} sm={6}>
             <TextField
-              id="name"
-              label="Nombre"
-              color="secondary"
-              value={form.nombre}
-              name="nombre"
-              onChange={(event) => handleFormChange(event)}
-              helperText={error.name ? <Typography color="error">{error.name}</Typography> : ''}
               required
-            />
-
-
-            <TextField
-              id="apellido"
-              label="Apelido"
-              color='secondary'
-              value={form.apellido}
-              name='apellido'
-              onChange={(event) => handleFormChange(event)}
-              helperText={error.apellido ? <Typography color="error">{error.apellido}</Typography> : ''}
-              required
-            />
-            <TextField
-              id='email'
-              label='Email'
-              color='secondary'
-              value={form.email}
-              name='email'
-              onChange={(event) => handleFormChange(event)}
-              helperText={error.email ? <Typography color="error">{error.email}</Typography> : (error.vacio ? <Typography>{error.vacio}</Typography> : '')}
-              required />
-
-            <TextField
-              id='phone'
-              label='Telefono'
-              color='secondary'
-              value={form.telefono}
-              name='telefono'
-              onChange={(event) => handleFormChange(event)}
-              helperText={error.telefono ? <Typography color="error">{error.telefono}</Typography> : ''}
-              required />
-
-
-            <InputLabel id="insurance-label"
-              color='secondary'>Obra social</InputLabel>
-            <Select style={{ width: '200px' }}
-              labelId="insurance-label"
-              id="idObraSocial"
-              color='secondary'
-              value={form.idObraSocial}
-              name='idObraSocial'
-              onChange={(event) => handleFormChange(event)}
-
-            >
-              <MenuItem value={'OSDE'}>OSDE</MenuItem>
-              <MenuItem value={'Swiss Medical'}>Swiss Medical</MenuItem>
-              <MenuItem value={'Galeno'}>Galeno</MenuItem>
-              <MenuItem value={'Otra'}>Otra</MenuItem>
-            </Select>
-
-            <TextField
-              id="document-number"
-              label="Número de documento"
-              type="number"
-              color='secondary'
+              id="dni"
+              name="dni"
+              label="Documento"
+              type='number'
+              fullWidth
               value={form.dni}
-              name='dni'
-              onChange={(event) => handleFormChange(event)}
-              helperText={error.dni ? <Typography color="error">{error.dni}</Typography> : ''}
-              required
+              onChange={handleChange}
+              helperText={
+                error.dni ? (
+                  <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                    {error.dni}
+                  </Typography>
+                ) : null
+              }
+              FormHelperTextProps={{ style: {  maxWidth: '200px'} }}
             />
 
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
             <TextField
-              id='password'
-              type={showPassword ? 'text' : 'password'}
-              label='Password'
-              color='secondary'
-              value={form.password}
-              name='password'
-              onChange={(event) => handleFormChange(event)}
-              helperText={error.password ? <Typography color="error">{error.password}</Typography> : ''}
-              required />
+              required
+              id="nombre"
+              name="nombre"
+              label="Nombre"
+              type='text'
+              fullWidth
+              value={form.nombre}
+              onChange={handleChange}
+              helperText={
+                error.nombre ? (
+                  <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                    {error.nombre}
+                  </Typography>
+                ) : null
+              }
+              FormHelperTextProps={{ style: {  maxWidth: '200px'} }}
+            />
 
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <TextField
-              id='confirmPassword'
+              required
+              id="apellido"
+              name="apellido"
+              label="Apellido"
+              type='text'
+              fullWidth
+              value={form.apellido}
+              onChange={handleChange}
+              helperText={
+                error.apellido ? (
+                  <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                    {error.apellido}
+                  </Typography>
+                ) : null
+              }
+              FormHelperTextProps={{ style: {  maxWidth: '200px'} }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              id="email"
+              name="email"
+              label="Correo electrónico"
+              type='email'
+              fullWidth
+              autoComplete="email"
+              value={form.email}
+              onChange={handleChange}
+              helperText={
+                error.email ? (
+                  <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                    {error.email}
+                  </Typography>
+                ) : null
+              }
+              FormHelperTextProps={{ style: {  maxWidth: '200px'} }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="telefono"
+              name="telefono"
+              label="Teléfono"
+              type='number'
+              fullWidth
+              value={form.telefono}
+              onChange={handleChange}
+              helperText={
+                error.telefono ? (
+                  <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                    {error.telefono}
+                  </Typography>
+                ) : null
+              }
+              FormHelperTextProps={{ style: {  maxWidth: '200px'} }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="contrasena"
+              name="contrasena"
+              label="Contraseña"
               type={showPassword ? 'text' : 'password'}
-              label='Confirmar password'
-              color='secondary'
-              value={form.confirmPassword}
-              name='confirmPassword'
-              onChange={(event) => handleFormChange(event)}
-              helperText={error.confirmPassword ? <Typography color="error">{error.confirmPassword}</Typography> : ''}
-              required />
+              fullWidth
+              autoComplete="new-password"
+              value={form.contrasena}
+              onChange={handleChange}
+              helperText={
+                error.contrasena ? (
+                  <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                    {error.contrasena}
+                  </Typography>
+                ) : null
+              }
+              FormHelperTextProps={{ style: {  maxWidth: '200px'} }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="confirmarContrasena"
+              name="confirmarContrasena"
+              label="Confirmar contraseña"
+              type={showPassword ? 'text' : 'password'}
+              fullWidth
+              value={form.confirmarContrasena}
+              onChange={handleChange}
+              helperText={
+                error.confirmarContrasena ? (
+                  <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                    {error.confirmarContrasena}
+                  </Typography>
+                ) : null
+              }
+              FormHelperTextProps={{ style: {  maxWidth: '200px'} }}
+            />
+          </Grid>
 
-
-            <Typography>Mostrar contrasenas
-              <Checkbox
-                checked={showPassword}
-                onChange={handleShowPassword}
-                color="primary"
-                label="Show Password"
-              /></Typography>
-
-            <br />
-            <br />
-            <Button
-              sx={{ marginBottom: '20px' }}
-              variant="contained"
-              color="primary"
-              type="submit"
-            >
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showPassword}
+                  onChange={handleShowPassword}
+                  color="primary"
+                  label="Show Password"
+                />
+              }
+              label="Ver contrasenas"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Createpaciente type="submit" variant="contained" color="primary">
               Crear usuario
-            </Button>
-          </FormControl>
-        </form>
-      </Box>
-    </>
-
-
-  );
-};
-
-export default CreatePatient;
+            </Createpaciente>
+          </Grid>
+        </Grid>
+      </StyleForm>
+      </>
+  )
+}
+export default CreatePatient;  
