@@ -8,7 +8,7 @@ import Filter from '../../components/Filter/Filter';
 
 import { Context } from '../../context/ContextProvider';
 
-import cards22 from '../Img/cards22.jpg';
+import cards22 from '../../assets/Img/cards22.jpg';
 import { Box, Container } from '@mui/material';
 
 const DoctorsList = () => {

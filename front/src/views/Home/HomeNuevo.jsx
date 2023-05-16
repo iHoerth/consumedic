@@ -9,8 +9,12 @@ import NavBar from '../../components/NavBar/NavBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { bannerImages } from '../../helpers/helpers';
+import AboutUs from '../../components/AboutUs/AboutUs';
 
+import cards22 from '../../assets/Img/cards22.jpg';
+
+import banner from '../../assets/Img/10.jpg'
+import { bannerImages } from '../../helpers/helpers';
 import { homeCards } from '../../helpers/helpers';
 
 const HomeNuevo = () => {
@@ -36,8 +40,8 @@ const HomeNuevo = () => {
         enableMouseEvents
         interval={6000}
         style={{
-          maxWidth: '100%',
-          maxHeight: '100%',
+          maxWidth: '150%',
+          maxHeight: '100vh',
           // width: '1920px',
           margin: '0 auto',
         }}
@@ -48,7 +52,7 @@ const HomeNuevo = () => {
               overflow: 'hidden',
               display: 'auto',
               alignItems: 'center',
-              height: '100%',
+              height: '100vh',
             }}
             key={step.imgPath}
           >
@@ -70,81 +74,68 @@ const HomeNuevo = () => {
           </div>
         ))}
       </AutoPlaySwipeableViews>
-
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '100px',
-          margin: '0 auto',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          '@media (max-width: 600px)': {
-            height: {
-              xs: '50vh',
-              sm: '60vh',
-              md: '70vh',
-              lg: '80vh',
-            },
-          },
-        }}
-      >
+     
         <Box
           sx={{
+            position: 'absolute',
+            top: '100px',
+            margin: '0 auto',
+            width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'end',
             alignItems: 'center',
-            gap: '20px',
-            height: '72.5vh',
-            pb: '120px',
+            '@media (max-width: 600px)': {
+              height: {
+                xs: '50vh',
+                sm: '60vh',
+                md: '70vh',
+                lg: '80vh',
+              },
+            },
           }}
         >
-          <Header />
-          <SearchBar />
-        </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'end',
+              alignItems: 'center',
+              gap: '20px',
+              height: '72.5vh',
+              pb: '120px',
+            }}
+          >
+            <Header />
+            <SearchBar />
+          </Box>
 
-        <Box //cuadro grande
-          component="span"
-          sx={{
-            border: '1px solid black',
-            width: '100%',
-            // display: 'flex',
-            // justifyContent: 'space-between',
-            // alignItems: 'center',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, minmax(Min(350px), 1fr))',
-            height: '60vh',
-            gap: '40px',
-            padding: '60px',
-          }}
-        >
-          {homeCards.map((text, index) => (
-            <Card key={`homeCards${index}`}>
-              <CardContent>
-                <Typography sx={{ fontSize: 16 }} gutterBottom>
-                  {text.title}
-                </Typography>
-                <Typography sx={{ fontSize: 14, wordSpacing: '0.2rem' }}>{text.body}</Typography>
-              </CardContent>
-            </Card>
-          ))}
+          <Box //cuadro grande
+            component="span"
+            sx={{
+              width: '100%',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, minmax(Min(400px), 1fr))',
+              placeItems: 'center',
+              height: '60vh',
+              gap: '40px',
+              padding: '60px',
+            }}
+          >
+            {homeCards.map((text, index) => (
+              <Card sx={{width:400}} key={`homeCards${index}`}>
+                <CardContent>
+                  <Typography sx={{ fontSize: 16 }} gutterBottom>
+                    {text.title}
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, wordSpacing: '0.2rem' }}>{text.body}</Typography>
+                </CardContent>
+              </Card>
+            ))}
+          </Box>
+
+          <AboutUs />
+          <Footer />
         </Box>
-        <Box
-          sx={{
-            width: '100%',
-            height: '80vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {' '}
-          ACA VA EL ABOUT US
-        </Box>
-        <Footer />
-      </Box>
     </>
   );
 };

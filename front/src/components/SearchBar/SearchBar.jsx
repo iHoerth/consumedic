@@ -1,39 +1,33 @@
 import * as React from 'react';
-import {
-  AppBar,
-  Select,
-  Toolbar,
-  FormControl,
-  IconButton,
-  Box,
-  InputLabel,
-  MenuItem,
-} from '@mui/material';
+import { AppBar, Button, Toolbar, IconButton, Box, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { NavLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Filter from '../Filter/Filter';
+import { useTheme } from '@mui/material/styles';
+import theme from '../../theme';
 
-const ProminentAppBar = () => {
+const SearchBar = () => {
+  const theme = useTheme();
   return (
-    <Box sx={{ width: 'auto', borderRadius: '8px', opacity:'0.92' }}>
-      <AppBar position="static" style={{ borderRadius: '10px', padding:'20px 0 20px 0px'}}>
-        <Toolbar sx={{gap:'20px'}}>
-          <Filter />
-          <NavLink to="/search">
-            <IconButton
-              size="large"
-              aria-label="search"
-              color="blue"
-              // sx={{ marginLeft: '5rem', backgroundColor: 'white', borderRadius: '50%' }}
-            >
-              <SearchIcon />
+    <AppBar
+      color="secondary"
+      position="static"
+      style={{ width: '700px', padding: '20px 0 20px 0px' }}
+    >
+      <Toolbar sx={{ gap: '20px' }}>
+        <Filter />
+        <NavLink to="/search">
+          <Button variant="contained">
+            <Typography color="white">Buscar</Typography>
+            <IconButton aria-label="search" color="blue">
+              <SearchIcon sx={{ color: 'white' }} />
             </IconButton>
-          </NavLink>
-        </Toolbar>
-      </AppBar>
-    </Box>
+          </Button>
+        </NavLink>
+      </Toolbar>
+    </AppBar>
   );
 };
 
-export default ProminentAppBar;
+export default SearchBar;

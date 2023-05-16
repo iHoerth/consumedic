@@ -1,72 +1,47 @@
-import React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import { Typography, useTheme } from "@mui/material";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import VideocamIcon from "@mui/icons-material/Videocam";
-import ApartmentIcon from "@mui/icons-material/Apartment";
+import React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import { Card, CardActions, CardContent, Typography, useTheme } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import ApartmentIcon from '@mui/icons-material/Apartment';
 
 const Header = () => {
   const theme = useTheme();
 
   return (
-    <Box
-    // color='secondary'
+    <Card
       sx={{
-        zIndex: 0,
         bgcolor: theme.palette.secondary.main,
-        opacity: '0.92',
-        width: "40%",
-        p: "30px",
-        // mt: "40px",
-        // mb: "30px",
-        borderRadius: "10px",
+        opacity: '0.96',
+        width: '700px',
+        p: '20px',
       }}
     >
-      <Typography
-        variant="h6"
-        sx={{
-          fontSize: "15px",
-          height: 70,
-        }}
-      >
-        Consumedic es una web para encontrar profesionales de la salud y agendar
-        turnos al instante de manera simple y rápida. Busca el profesional que
-        necesites ahora!
-      </Typography>
-
-      <Box spacing={2} direction="row">
-        <Button
-          variant="outlined"
+      <CardContent>
+        <Typography
           sx={{
-            color: "secondary",
-            fontWeight: 700,
-            borderColor: "secondary",
-            borderWidth: 2,
-            height: 40,
+            fontSize: '15px',
           }}
         >
-          {" "}
+          Consumedic es una web para encontrar profesionales de la salud y agendar turnos al
+          instante de manera simple y rápida. Busca el profesional que necesites ahora!
+        </Typography>
+      </CardContent>
+
+      <CardActions>
+        <Button variant="contained" sx={{ gap: 1, color: 'white' }}>
           <VideocamIcon />
           En linea
         </Button>
-        <Button
-          variant="outlined"
-          sx={{
-            color: "secondary",
-            fontWeight: 700,
-            borderColor: "secondary",
-            borderWidth: 2,
-            height: 40,
-          }}
-        >
+        <Button variant="contained" sx={{ gap: 1, color: 'white' }}>
           <ApartmentIcon />
           Presencial
         </Button>
-      </Box>
-    </Box>
+      </CardActions>
+    </Card>
   );
 };
 export default Header;
