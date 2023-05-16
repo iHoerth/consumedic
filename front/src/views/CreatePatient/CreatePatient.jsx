@@ -98,8 +98,8 @@ const CreatePatient = () => {
       errors.phone = "El número de teléfono debe contener 10 dígitos";
     }
 
-    if (!form.obraSocial) {
-      errors.obraSocial = "El campo obra social es requerido";
+    if (!form.idObraSocial) {
+      errors.idObraSocial = "El campo obra social es requerido";
     }
 
     if (!form.dni) {
@@ -295,14 +295,20 @@ const CreatePatient = () => {
 
               {/* Obra Social */}
 
-              <InputLabel id="obra-social-label">Obra Social</InputLabel>
+              <FormControl sx={{ minWidth: 200, height: "100px" }}>
+              <InputLabel 
+                id="obra-social-label"  
+                color="secondary">
+                Obra Social
+              </InputLabel>
               <Select
                 labelId="obra-social-label"
                 id="idObraSocial"
                 color="secondary"
                 value={form.idObraSocial}
-                name="idObraSocial"
+                name="obraSocial"
                 onChange={handleFormChange}
+                error={!!error.idObraSocial}
               >
                 <MenuItem value="">
                   <em>Seleccionar Obra Social</em>
@@ -320,8 +326,12 @@ const CreatePatient = () => {
                 )}
               </Select>
               {error.idObraSocial && (
-                <Typography color="error">{error.idObraSocial}</Typography>
+                <Typography error={true}>{error.idObraSocial}</Typography>
               )}
+            </FormControl>
+
+
+              {/* Documento */}
 
               <TextField
                 id="document-number"

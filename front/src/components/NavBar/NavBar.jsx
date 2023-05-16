@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Link, useMediaQuery, useTheme } from '@mui/material';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { useState, useEffect } from 'react';
 
@@ -51,12 +51,12 @@ const NavBar = () => {
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar></AppBar>
       <AppBar
-        color={scrolled ? 'secondary' : 'transparent'}
+        color={scrolled ? 'primary' : 'transparent'}
         position="fixed"
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
       >
         <Toolbar
-          color="white"
+          color="primary"
           sx={{
             width: {
               mobile: '100vw',
@@ -70,18 +70,20 @@ const NavBar = () => {
             display="flex"
             alignItems="center"
             gap="10px"
-            color={!scrolled ? 'black' : 'white'}
+            color={!scrolled ? 'black' : '#212121'}
             sx={{ flexGrow: 1 }}
           >
             <LocalHospitalIcon color="inherit" />
-            <Typography variant="h5" component="div" color={!scrolled ? 'black' : 'white'}>
+            <Link href="/home" color={!scrolled ? '#212121' : '#212121'}>
+            <Typography variant="h5" component="div" color={!scrolled ? 'black' : '#212121'}>
               CONSUMEDIC
             </Typography>
+            </Link>
           </Box>
           {screenSizeSmall ? (
             <DrawerComponent navLinksArray={navLinksArray} />
           ) : (
-            <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
+            <nav style={{ color: `${!scrolled ? 'black' : '#212121'}` }}>
               {navLinksArray.map((link, index) => (
                 <Button key={index} color="inherit" href={link.path}>
                   {link.title}
