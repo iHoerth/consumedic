@@ -1,16 +1,8 @@
-// import React from 'react'
-
-// const Appointment = () => {
-//   return (
-//     <div>Appointment</div>
-//   )
-// }
-
-// export default Appointment
-
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const Appointment = () => {
+  const { id, fecha, hora } = useParams();
   // Estado para almacenar el nombre del paciente
   const [patientName, setPatientName] = useState('');
 
