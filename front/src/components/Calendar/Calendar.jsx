@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {useTheme } from "@mui/material";
+import {Link} from "react-router-dom"
 import Box from '@mui/material/Box';
 import {Typography} from "@mui/material";
 import List from '@mui/material/List';
@@ -139,7 +140,8 @@ const Calendar = ({id, calendar}) => {
                             bgcolor: "#a7d5ec ",
                             color: "#0752df"
                           }}>
-                            <Typography>{`${hh}:${mm}`}</Typography>
+                            <Link style={{ textDecoration: 'none', color: "#0752df"}} to={`/turno/${id}/${dia.fecha}/${turno.hora}`}>{`${hh}:${mm}`}</Link>  
+                            {/* <Typography>{`${hh}:${mm}`}</Typography> */}
                         </ListItemButton> : 
                         <ListItemButton disabled 
                           sx={{ 
