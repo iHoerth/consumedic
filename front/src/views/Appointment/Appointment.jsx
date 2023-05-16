@@ -117,19 +117,19 @@ const Appointment = () => {
             </Typography>
             <Box>
               <Typography component="div" color='black' sx={{mt:"20px", mb:"5px"}}>
-                Motivo de la visita
+                Motivo de la consulta
               </Typography>
               <TextField
                 id="motivo"
-                label="Motivo de la visita"
+                label="Escriba un comentario con el motivo de la consulta"
                 color="secondary"
                 value={form.motivo}
                 name="motivo"
                 onChange={(event) => handleInputChange(event)}
                 sx={{ height: "100px", width: "500px" }}
                 helperText={
-                  error.nombre ? (
-                    <Typography color="error">{error.nombre}</Typography>
+                  error.motivo ? (
+                    <Typography color="error">{error.motivo}</Typography>
                   ) : (
                     ""
                   )
