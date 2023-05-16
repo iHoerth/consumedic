@@ -4,6 +4,7 @@ const Pagination = ({ page, maxPages, handlePageChange }) => {
   return (
     <>
       <PaginationMUI
+        page={page}
         count={maxPages}
         onChange={handlePageChange}
         color="primary"

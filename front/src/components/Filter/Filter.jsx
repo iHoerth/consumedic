@@ -14,7 +14,7 @@ const Filter = ({ handlePageChange }) => {
   const [selectedFilters, setSelectedFilters] = useContext(FilterContext);
 
   const handleSelectChange = (e, value, reason, filterType) => {
-    handlePageChange(e, 1);
+    handlePageChange && handlePageChange(e, 1);
     if (reason === 'clear') {
       setSelectedFilters((prevState) => ({
         ...prevState,
@@ -57,6 +57,7 @@ const Filter = ({ handlePageChange }) => {
 
   return (
     <Box
+      color="inherit"
       size="large"
       component="div"
       display="flex"
@@ -78,7 +79,13 @@ const Filter = ({ handlePageChange }) => {
         getOptionLabel={(option) => {
           return option.name;
         }}
-        renderInput={(params) => <TextField {...params} label="Especialidad" />}
+        renderInput={(params) => (
+          <TextField
+            sx={{ bgcolor: 'white', borderRadius: '4px' }}
+            {...params}
+            label="Especialidad"
+          />
+        )}
         renderOption={(props, option) => (
           <li style={{ fontSize: '14px' }} {...props} key={option.id}>
             {option.name}
@@ -101,7 +108,13 @@ const Filter = ({ handlePageChange }) => {
         getOptionLabel={(option) => {
           return option.nombre;
         }}
-        renderInput={(params) => <TextField {...params} label="Obra Social" />}
+        renderInput={(params) => (
+          <TextField
+            sx={{ bgcolor: 'white', borderRadius: '4px' }}
+            {...params}
+            label="Obra Social"
+          />
+        )}
         renderOption={(props, option) => (
           <li style={{ fontSize: '14px' }} {...props} key={option.id}>
             {option.nombre}

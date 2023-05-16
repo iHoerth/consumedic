@@ -32,7 +32,7 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        bgcolor: theme.palette.primary.main,
+        bgcolor: theme.palette.secondary.main,
         width: "100%",
         height: "35vh",
         display: "flex",
@@ -47,14 +47,14 @@ const Footer = () => {
           p: 2,
           mb: 1,
           width: "100%",
-          bgcolor: theme.palette.primary.main,
+          bgcolor: theme.palette.secondary.main,
         }}
       >
         <BottomNavigation
           value={currentPage}
           onChange={handleNavigation}
           sx={{
-            bgcolor: theme.palette.primary.main,
+            bgcolor: theme.palette.secondary.main,
           }}
         >
           <BottomNavigationAction
@@ -100,7 +100,7 @@ const Footer = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
-          bgcolor: theme.palette.primary.main,
+          bgcolor: theme.palette.secondary.main,
         }}
       >
         <NavLink to="https://www.facebook.com" target="_blank">
