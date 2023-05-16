@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 
 import DrawerComponent from './DrawerComponent';
 
-const NavBar = () => {
+const NavBar = ({text}) => {
   const theme = useTheme();
   const screenSizeSmall = useMediaQuery(theme.breakpoints.down('tablet'));
   const { values } = theme.breakpoints;
@@ -79,16 +79,23 @@ const NavBar = () => {
             </Typography>
           </Box>
           {screenSizeSmall ? (
-            <DrawerComponent navLinksArray={navLinksArray} />
-          ) : (
-            <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
-              {navLinksArray.map((link, index) => (
-                <Button key={index} color="inherit" href={link.path}>
-                  {link.title}
+              <DrawerComponent navLinksArray={navLinksArray} />
+            ) : (
+              <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
+                <Button color="inherit" href={navLinksArray[0].path}>
+                  {navLinksArray[0].title}
                 </Button>
-              ))}
-            </nav>
-          )}
+                {text ?
+                  null
+                  :
+                  navLinksArray.slice(1).map((link, index) => (
+                    <Button key={index} color="inherit" href={link.path}>
+                      {link.title}
+                    </Button>
+                  ))
+                }
+              </nav>
+            )}
         </Toolbar>
       </AppBar>
     </Box>
