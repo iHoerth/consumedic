@@ -29,7 +29,7 @@
 ---
 
 ## UTILIZACION DEL CONTEXT
-
+---
 Primero debemos importar el hook useContext de React, y el Context a utilizar desde el ContextProvider.jsx, de la sig forma:
 
 ```
