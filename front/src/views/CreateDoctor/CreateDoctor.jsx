@@ -180,7 +180,9 @@ const CreateDoctor = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const errors = validarForm(form);
+    console.log(form);
     setError(errors);
+    console.log(errors);
     handleCheckedPassword();
     createDoctor({ ...form, isDoctor: true })
     navigate(`/doctorpanel/${doctorDetail.id}`);
@@ -577,7 +579,7 @@ const CreateDoctor = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <CrearDoctor type="submit" variant="contained" color="primary">
+            <CrearDoctor type="submit" variant="contained" color="primary" onClick={handleSubmit}>
               Crear usuario
             </CrearDoctor>
           </Grid>
