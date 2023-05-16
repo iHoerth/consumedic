@@ -107,8 +107,8 @@ const Appointment = () => {
             flexDirection: "row",
             width: "fit-content",
             padding: "10px",
-            marginTop: "10%",
-            marginBottom: "3%",
+            marginTop: "12%",
+            marginBottom: "10%",
           }}
         >
           <Box>
@@ -155,7 +155,6 @@ const Appointment = () => {
               <ListItem alignItems="flex-start" sx={{pt:"0px"}}>
                 <ListItemAvatar sx={{mt:"0px"}}>
                   <Avatar alt="Img Doctor" src={doctor ? doctor.imagen : null} /> 
-                  {/* agregar url de imagen de doctor */}
                 </ListItemAvatar>
                 <ListItemText 
                   sx={{mt:"0px"}}
