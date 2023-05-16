@@ -296,40 +296,37 @@ const CreatePatient = () => {
               {/* Obra Social */}
 
               <FormControl sx={{ minWidth: 200, height: "100px" }}>
-              <InputLabel 
-                id="obra-social-label"  
-                color="secondary">
-                Obra Social
-              </InputLabel>
-              <Select
-                labelId="obra-social-label"
-                id="idObraSocial"
-                color="secondary"
-                value={form.idObraSocial}
-                name="obraSocial"
-                onChange={handleFormChange}
-                error={!!error.idObraSocial}
-              >
-                <MenuItem value="">
-                  <em>Seleccionar Obra Social</em>
-                </MenuItem>
-                {obraSocial ? (
-                  obraSocial.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.nombre}
-                    </MenuItem>
-                  ))
-                ) : (
+                <InputLabel id="obra-social-label" color="secondary">
+                  Obra Social
+                </InputLabel>
+                <Select
+                  labelId="obra-social-label"
+                  id="idObraSocial"
+                  color="secondary"
+                  value={form.idObraSocial}
+                  name="idObraSocial"
+                  onChange={handleFormChange}
+                  error={!!error.idObraSocial}
+                >
                   <MenuItem value="">
-                    <em>No se encontraron obras sociales</em>
+                    <em>Seleccionar Obra Social</em>
                   </MenuItem>
+                  {obraSocial ? (
+                    obraSocial.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.nombre}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="">
+                      <em>No se encontraron obras sociales</em>
+                    </MenuItem>
+                  )}
+                </Select>
+                {error.idObraSocial && (
+                  <Typography error={true}>{error.idObraSocial}</Typography>
                 )}
-              </Select>
-              {error.idObraSocial && (
-                <Typography error={true}>{error.idObraSocial}</Typography>
-              )}
-            </FormControl>
-
+              </FormControl>
 
               {/* Documento */}
 
