@@ -17,7 +17,7 @@ import banner from '../../assets/Img/10.jpg'
 import { bannerImages } from '../../helpers/helpers';
 import { homeCards } from '../../helpers/helpers';
 
-const Home = () => {
+const HomeNuevo = () => {
   const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
   const theme = useTheme();
@@ -133,4 +133,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeNuevo;
