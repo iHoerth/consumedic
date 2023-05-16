@@ -92,7 +92,7 @@ const PatientPanel = () => {
 
   return (
     <>
-      <NavBar></NavBar>
+      <NavBar text={"pacienteDetail"}></NavBar>
       <Container maxWidth="lg" height='200px'>
         <Box m={2} p={3} bgcolor="secondary.main" boxShadow={3}
           borderRadius={2}>
