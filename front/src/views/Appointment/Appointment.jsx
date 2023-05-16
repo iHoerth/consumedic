@@ -14,6 +14,7 @@ import axios from "axios";
 import Footer from "../../components/Footer/Footer";
 import create31 from "../../assets/Img/create31.jpg";
 import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -115,7 +116,7 @@ const Appointment = () => {
               Datos relativos a la cita
             </Typography>
             <Box>
-              <Typography component="div" color='black' sx={{mt:"10px", mb:"5px"}}>
+              <Typography component="div" color='black' sx={{mt:"20px", mb:"5px"}}>
                 Motivo de la visita
               </Typography>
               <TextField
@@ -144,13 +145,20 @@ const Appointment = () => {
               <Typography sx={{fontSize:"10px", mt:"5px"}}>una vez efectuado el pago se agendará la consulta</Typography>
           </Box>
           <Box>
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
+            <List 
+              subheader={
+                <ListSubheader component="div" sx={{mt:"15px"}}>
+                  Datos del Médico
+                </ListSubheader>
+              }
+            >
+              <ListItem alignItems="flex-start" sx={{pt:"0px"}}>
+                <ListItemAvatar sx={{mt:"0px"}}>
                   <Avatar alt="Img Doctor" src={doctor ? doctor.imagen : null} /> 
                   {/* agregar url de imagen de doctor */}
                 </ListItemAvatar>
                 <ListItemText 
+                  sx={{mt:"0px"}}
                   primary={doctor ? `${doctor.nombre} ${doctor.apellido}` : null} 
                   secondary={
                       <Typography
