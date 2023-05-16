@@ -7,13 +7,14 @@ import { FilterContext } from '../../context/ContextProvider';
 import { useTheme } from '@mui/material';
 import theme from '../../theme';
 
-const Filter = () => {
+const Filter = ({ handleChange }) => {
   const theme = useTheme();
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const { filteredDoctors, doctors, filterDoctors } = useContext(Context)[0];
   const [selectedFilters, setSelectedFilters] = useContext(FilterContext);
 
   const handleSelectChange = (e, value, reason, filterType) => {
+    handleChange(e, 1);
     if (reason === 'clear') {
       setSelectedFilters((prevState) => ({
         ...prevState,

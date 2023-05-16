@@ -8,7 +8,6 @@ import Filter from '../../components/Filter/Filter';
 
 import { Context } from '../../context/ContextProvider';
 
-// import style from "./DoctorsList.module.css";
 import cards22 from '../Img/cards22.jpg';
 import { Box, Container } from '@mui/material';
 
@@ -78,7 +77,7 @@ const DoctorsList = () => {
             height: '200px',
           }}
         ></Box>
-        <Filter />
+        <Filter handleChange={handleChange} />
         <CardsContainer
           doctorsInPage={doctorsInPage}
           sx={{
