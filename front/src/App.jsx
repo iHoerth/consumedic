@@ -9,6 +9,7 @@ import {
   DoctorDetail,
 } from './views';
 import Appointment from './views/Appointment/Appointment';
+import DoctorDashboard from './views/DoctorDashboard/DoctorDashboard'
 
 import { useContext, useEffect } from 'react';
 
@@ -43,6 +44,7 @@ const App = () => {
         <Route path="/turno/:id/:fecha/:hora" element={<Appointment />} />
         <Route path="*" element={<Error404 />} />
         <Route path="/loading" element={<Loading />} />
+        <Route path="/perfilMedico" element={<DoctorDashboard />} />
       </Routes>
     </div>
   );
