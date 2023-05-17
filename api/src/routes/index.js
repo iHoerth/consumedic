@@ -7,7 +7,8 @@ const opinions = require("./opinions");
 const clinicHistory = require("./clinicHistory");
 const payments = require("./payments");
 const horarios = require("./horarios");
-const appointments = require("./appointments")
+const appointments = require("./appointments");
+const mail = require("./mail");
 
 //!fake data
 const { createFakeData } = require("../fakeData/fakeData");
@@ -29,14 +30,10 @@ router.use("/specialties", specialties);
 router.use("/opinions", opinions);
 router.use("/clinicHistory", clinicHistory);
 router.use("/payments", payments);
-router.use('/appointments', appointments);
-
-
-
+router.use("/appointments", appointments);
+router.use("/mail", mail);
 
 //! en prueba
 router.use("/horarios", horarios);
-
-
 
 module.exports = router;

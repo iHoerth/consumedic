@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/ContextProvider";
 import { useParams } from "react-router-dom";
+import { styled } from '@mui/material/styles';
 import CardMUI from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -27,12 +28,19 @@ import { NavLink } from "react-router-dom";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { Container, Box } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
-import Footer from '../../components/Footer/Footer';
+import Footer from "../../components/Footer/Footer";
+import { Modal } from "@mui/material";
+import Mail from "../../components/Mail/Mail";
 
 import Calendar from "../../components/Calendar/Calendar";
 
-import detail23 from '../../assets/Img/detail23.jpg'
+import detail23 from "../../assets/Img/detail23.jpg";
 
+const StyledRating = styled(Rating)({
+  '& .MuiRating-iconFilled': {
+    color: '#0fb1bc',
+  },
+});
 
 const DoctorDetail = () => {
   const theme = useTheme();
@@ -40,6 +48,7 @@ const DoctorDetail = () => {
   const [loading, setLoading] = useState(true);
   const [doctorsData] = useContext(Context);
   const { doctorDetail, fetchDoctorById, cleanDetail } = doctorsData;
+  const [open, setOpen] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -48,7 +57,6 @@ const DoctorDetail = () => {
       setLoading(false);
     });
     setLoading(false);
-    
   }, [id]);
 
   const [expanded, setExpanded] = useState(false);
@@ -59,6 +67,14 @@ const DoctorDetail = () => {
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   if (loading) {
@@ -72,7 +88,7 @@ const DoctorDetail = () => {
       sx={{
         backgroundImage: `url('${detail23}')`,
         backgroundPosition: "bottom",
-        backgroundPositionY: "23%", 
+        backgroundPositionY: "23%",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
@@ -83,14 +99,14 @@ const DoctorDetail = () => {
         flexDirection: "column",
         alignItems: "center",
         // typography: theme.typography,
-        '@media (max-width: 600px)': {
+        "@media (max-width: 600px)": {
           height: {
-            xs: '50vh',
-            sm: '60vh',
-            md: '70vh',
-            lg: '80vh',
-          }
-        }, 
+            xs: "50vh",
+            sm: "60vh",
+            md: "70vh",
+            lg: "80vh",
+          },
+        },
       }}
     >
       <NavBar />
@@ -106,10 +122,9 @@ const DoctorDetail = () => {
           flexDirection: "column",
           alignItems: "center",
           marginTop: "15%",
-          marginBottom: "10%"
+          marginBottom: "10%",
         }}
       >
-        
         <IconButton sx={{ p: 2 }}>
           <Avatar
             alt="img"
@@ -144,7 +159,7 @@ const DoctorDetail = () => {
         </Typography>
         <CardContent>
           <Stack spacing={1}>
-            <Rating
+            <StyledRating
               name="half-rating-read"
               defaultValue={
                 doctorDetail.Opinions?.length &&
@@ -187,12 +202,35 @@ const DoctorDetail = () => {
                 Pedir turno
               </Typography>
             </Button>
-            <Button color="primary" variant="outlined" size="md">
+            <Button
+              color="primary"
+              variant="outlined"
+              size="md"
+              onClick={handleOpen}
+            >
               <SmsIcon color="primary" />
               <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
                 Enviar mensaje
               </Typography>
             </Button>
+
+            <Modal open={open} onClose={handleClose}>
+              <Box
+                sx={{
+                  position: "absolute",
+                  width: "30%",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  bgcolor: "background.paper",
+                  boxShadow: 24,
+                  p: 4,
+                  outline: "none",
+                }}
+              >
+                <Mail />
+              </Box>
+            </Modal>
           </Box>
 
           <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>

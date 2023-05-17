@@ -31,6 +31,12 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+const StyledRating = styled(Rating)({
+  '& .MuiRating-iconFilled': {
+    color: '#0fb1bc',
+  },
+});
+
 const Card = ({
   id,
   profileImage,
@@ -126,7 +132,7 @@ const Card = ({
           </Box>
           <CardContent>
             <Stack spacing={1}>
-              <Rating name="controlled-rating" value={averageRating} color="secondary" />
+              <StyledRating name="controlled-rating" value={averageRating} readOnly  />
             </Stack>
 
             <Typography variant="body2" color="text.secondary" sx={{ pb: 3 }}>
