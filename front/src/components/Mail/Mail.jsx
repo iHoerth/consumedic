@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { sendMail } from "./helper";
+import { TextField, Button, Typography, Box } from "@mui/material";
 
 const Mail = () => {
   const [values, setValues] = useState({
     name: "",
-    emailMedico: "noeliapaz676@gmail.com",
+    emailMedico: "medicoconsumedic@gmail.com",
     email: "",
     message: "",
   });
@@ -40,26 +41,49 @@ const Mail = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Escriba su nombre"
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+        Escribir mensaje
+      </Typography>
+      <TextField
+        id="outlined-basic"
+        label="Escriba su nombre"
+        variant="outlined"
         value={name}
         onChange={handleChange("name")}
+        sx={{ width: "90%", mb: "10px" }}
       />
-      <input
-        type="text"
-        placeholder="Dejame tu email para comunicarme con vos "
+      <TextField
+        id="outlined-basic"
+        label="Dejanos tu email para comunicarnos"
+        variant="outlined"
         value={email}
         onChange={handleChange("email")}
+        sx={{ width: "90%", mb: "10px" }}
       />
-      <textarea
-        placeholder="Escriba el Mensaje"
+      <TextField
+        id="outlined-basic"
+        label="Mensaje"
+        variant="outlined"
         value={message}
         onChange={handleChange("message")}
-      ></textarea>
-      <button type="submit">Enviar</button>
-    </form>
+        sx={{ width: "90%", mb: "10px" }}
+        multiline
+        rows={3}
+      />
+
+      <Button type="submit" variant="contained" color="primary">
+        Enviar
+      </Button>
+    </Box>
   );
 };
 
