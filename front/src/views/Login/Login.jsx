@@ -88,7 +88,7 @@ const Userlogin = () => {
     event.preventDefault();
 
     axios
-      .post("http://localhost:3001/login", {
+      .post("http://localhost:3001/patients/login", {
         email: localEmail,
         password: localPassword,
       })
@@ -106,7 +106,7 @@ const Userlogin = () => {
     console.log(response);
     setUser(response.profileObj);
     axios
-      .post("http://localhost:3001/login", {
+      .post("http://localhost:3001/patients/login", {
         tokenId: response.tokenId,
       })
       .then((res) => {
