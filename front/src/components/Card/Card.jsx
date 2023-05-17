@@ -143,12 +143,10 @@ const Card = ({
               <LocationOnSharpIcon color="primary" />
               Direccion: {location}
             </Typography>
-            <div component='span' style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
-              <VideocamIcon color="primary" />
               <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+               <VideocamIcon color="primary" />
                 Consulta ${price}
               </Typography>
-            </div>
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
