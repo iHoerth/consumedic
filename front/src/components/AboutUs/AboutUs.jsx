@@ -17,27 +17,23 @@ const AboutUs = () => {
     <Box
       component="span"
       sx={{
-        width: '100%',
+        width: '1340px',
+        mt: 20,
+        mb: 20,
         height: 'auto',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-        width: '100%',
         display: 'grid',
         gridTemplateColumns: 'repeat(2, minmax(Min(400px), 1fr))',
         placeItems: 'center',
-        gap: '40px',
-        padding: '60px',
+        gap: '80px 0px',
       }}
     >
       {members.map((member) => (
-        <Card>
+        <Card sx={{padding:'20px', margin:'0'}}>
           <CardHeader
             avatar={
               <Avatar
                 src={member.img}
-                sx={{ width: 200, height: 200, bgcolor: theme.palette.primary.light }}
+                sx={{ width: 160, height: 160, bgcolor: theme.palette.primary.light }}
                 aria-label="recipe"
               >
                 {member.name
@@ -46,15 +42,19 @@ const AboutUs = () => {
                   .join('')}
               </Avatar>
             }
+            title={
+              <>
+                <Typography variant="h5">{member.name}</Typography>
+                <Typography variant='h7'>{member.role}</Typography>
+              </>
+            }
           />
           <CardContent>
-            <Typography>{member.name}</Typography>
-            <Typography>{member.role}</Typography>
-            <Typography>{member.description}</Typography>
+            <Typography sx={{width:400, h:400, fontSize: 14,}}>{member.description}</Typography>
           </CardContent>
-          <CardActions>
-            <Link>{member.linkedin}</Link>
-            <Link>{member.github}</Link>
+          <CardActions sx={{display:'flex', flexDirection:'column'}}>
+            <Link sx={{fontSize: 16}}>{member.linkedin}</Link>
+            <Link sx={{fontSize: 16}}>{member.github}</Link>
           </CardActions>
         </Card>
       ))}
