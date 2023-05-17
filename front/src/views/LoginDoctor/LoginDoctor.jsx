@@ -13,25 +13,24 @@ import { Google } from "@mui/icons-material";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { useEffect } from "react";
-import Footer from '../../components/Footer/Footer';
+import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/ContextProvider";
 import { useContext } from "react";
 
-import login21 from '../../assets/Img/login21.jpg'
-
+import login21 from "../../assets/Img/login21.jpg";
 
 const LoginDoctor = () => {
   const navigate = useNavigate();
-  const patients = useContext(Context)[1];
+  const doctors = useContext(Context)[1];
 
   const clientID =
     "508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com";
 
   const [user, setUser] = useState({});
 
-  const { createPatient, patientDetail } = patients;
+  const { createDoctor, doctorDetail } = doctors;
   //estados de email y contraseña
   const [localEmail, setLocalEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -43,7 +42,8 @@ const LoginDoctor = () => {
   const [passwordHelperText, setPasswordHelperText] = useState("");
 
   //expresion regular para mails
-  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   useEffect(() => {
     const start = () => {
@@ -88,13 +88,13 @@ const LoginDoctor = () => {
     event.preventDefault();
 
     axios
-      .post("http://localhost:3001/patients/login", {
+      .post("http://localhost:3001/doctors/loginDoctor", {
         email: localEmail,
         password: localPassword,
       })
       .then((res) => {
         //autenticacion exitosa, redirige al panel del paciente
-        navigate(`/patientpanel/${patientDetail.id}`);
+        navigate(`/patientpanel/${doctorDetail}`);
       })
       .catch((err) => {
         //error de autenticacion
@@ -106,12 +106,12 @@ const LoginDoctor = () => {
     console.log(response);
     setUser(response.profileObj);
     axios
-      .post("http://localhost:3001/patients/login", {
+      .post("http://localhost:3001/doctors/loginDoctor", {
         tokenId: response.tokenId,
       })
       .then((res) => {
         console.log(res.data);
-        navigate(`/patientpanel/${patientDetail.id}`);
+        navigate(`/patientpanel/${doctorDetail}`);
       })
       .catch((err) => {
         console.error(err);
@@ -135,136 +135,140 @@ const LoginDoctor = () => {
           position: "relative",
           width: "100%",
           height: "100%",
-          display: 'flex',
+          display: "flex",
           flexDirection: "column",
-          alignItems: 'center',
-          '@media (max-width: 600px)': {
+          alignItems: "center",
+          "@media (max-width: 600px)": {
             height: {
-              xs: '50vh',
-              sm: '60vh',
-              md: '70vh',
-              lg: '80vh',
-            }
-          }, 
-        }}
-    >
-      <Container 
-        component={Paper} 
-        elevation={5} 
-        sx={{ 
-          minWidth: "300px", 
-          width: "400px", 
-          padding: "15px",
-          marginTop: "10%",
-          marginBottom: "3%"
+              xs: "50vh",
+              sm: "60vh",
+              md: "70vh",
+              lg: "80vh",
+            },
+          },
         }}
       >
-        <Typography variant="h6" align="center" sx={{ marginTop: "50px" , marginBottom: "20px"}}>
-          Ingresa tu cuenta
-        </Typography>
-
-        <Box
-          component="form"
-          className="login"
+        <Container
+          component={Paper}
+          elevation={5}
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexDirection: "column",
-            height: "450px",
+            minWidth: "300px",
+            width: "400px",
+            padding: "15px",
+            marginTop: "10%",
+            marginBottom: "3%",
           }}
         >
-          <TextField
-            required
-            id="fieldset"
-            defaultValue="Email"
-            color="secondary"
-            type="email"
-            name="mail"
-            value={localEmail}
-            placeholder="Enter your mail"
-            onChange={(event) => handleLocalEmailChange(event)}
-            helperText={emailError ? <p>{emailHelperText}</p> : ""}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: emailError ? "red" : "secondary",
-                },
-                "&:hover fieldset": {
-                  borderColor: emailError ? "red" : "secondary",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: emailError ? "red" : "secondary",
-                  borderWidth: "2px",
-                },
-              },
-              "& .MuiFormHelperText-root": {
-                color: emailError ? "red" : "secondary",
-              },
-              height: "80px",
-              width: "320px",
-            }}
-          ></TextField>
-
-          <TextField
-            required
-            id="outlined-required"
-            defaultValue="Password"
-            color="secondary"
-            type="password"
-            name="password"
-            value={localPassword}
-            placeholder="Enter your password"
-            onChange={(event) => handleLocalPasswordChange(event)}
-            helperText={passwordError ? <p>{passwordHelperText}</p> : ""}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: passwordError ? "red" : "secondary",
-                },
-                "&:hover fieldset": {
-                  borderColor: passwordError ? "red" : "secondary",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: passwordError ? "red" : "secondary",
-                  borderWidth: "2px",
-                },
-              },
-              "& .MuiFormHelperText-root": {
-                color: passwordError ? "red" : "secondary",
-              },
-              height: "80px",
-              width: "320px",
-            }}
-          ></TextField>
-
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ margin: "10px" }}
-            onClick={handleLocalSubmit}
+          <Typography
+            variant="h6"
+            align="center"
+            sx={{ marginTop: "50px", marginBottom: "20px" }}
           >
-            Ingresar
-          </Button>
-          <GoogleLogin
-            clientId={clientID}
-            //clientId="508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com"
-            buttonText="Iniciar sesión con Google"
-            onSuccess={onSuccess}
-            onFailure={onFailure}
-            cookiePolicy={"single_host_origin"}
-          />
-          <div className={user ? "profile" : "hidden"}>
-            <img src={user.imageUrl} alt="" />
-            <h3>{user.name}</h3>
-          </div>
-          <Typography>No tienes una cuenta?</Typography>
-          <Button color="primary" href="/createDoctor">
-            Crear cuenta
-          </Button>
-        </Box>
-      </Container>
-      <Footer />
+            Ingresa tu cuenta
+          </Typography>
+
+          <Box
+            component="form"
+            className="login"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexDirection: "column",
+              height: "450px",
+            }}
+          >
+            <TextField
+              required
+              id="fieldset"
+              defaultValue="Email"
+              color="secondary"
+              type="email"
+              name="mail"
+              value={localEmail}
+              placeholder="Enter your mail"
+              onChange={(event) => handleLocalEmailChange(event)}
+              helperText={emailError ? <p>{emailHelperText}</p> : ""}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: emailError ? "red" : "secondary",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: emailError ? "red" : "secondary",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: emailError ? "red" : "secondary",
+                    borderWidth: "2px",
+                  },
+                },
+                "& .MuiFormHelperText-root": {
+                  color: emailError ? "red" : "secondary",
+                },
+                height: "80px",
+                width: "320px",
+              }}
+            ></TextField>
+
+            <TextField
+              required
+              id="outlined-required"
+              defaultValue="Password"
+              color="secondary"
+              type="password"
+              name="password"
+              value={localPassword}
+              placeholder="Enter your password"
+              onChange={(event) => handleLocalPasswordChange(event)}
+              helperText={passwordError ? <p>{passwordHelperText}</p> : ""}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: passwordError ? "red" : "secondary",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: passwordError ? "red" : "secondary",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: passwordError ? "red" : "secondary",
+                    borderWidth: "2px",
+                  },
+                },
+                "& .MuiFormHelperText-root": {
+                  color: passwordError ? "red" : "secondary",
+                },
+                height: "80px",
+                width: "320px",
+              }}
+            ></TextField>
+
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ margin: "10px" }}
+              onClick={handleLocalSubmit}
+            >
+              Ingresar
+            </Button>
+            <GoogleLogin
+              clientId={clientID}
+              //clientId="508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com"
+              buttonText="Iniciar sesión con Google"
+              onSuccess={onSuccess}
+              onFailure={onFailure}
+              cookiePolicy={"single_host_origin"}
+            />
+            <div className={user ? "profile" : "hidden"}>
+              <img src={user.imageUrl} alt="" />
+              <h3>{user.name}</h3>
+            </div>
+            <Typography>No tienes una cuenta?</Typography>
+            <Button color="primary" href="/createDoctor">
+              Crear cuenta
+            </Button>
+          </Box>
+        </Container>
+        <Footer />
       </Box>
     </>
   );
