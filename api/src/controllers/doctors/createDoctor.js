@@ -8,7 +8,7 @@ const createDoctor = async (
   email,
   telefono,
   direccion,
-  imagen,
+  imagenCloudinary,
   hashedPassword,
   titulo,
   Descripcion,
@@ -19,6 +19,9 @@ const createDoctor = async (
   if (!idEspecialidad) {
     throw new Error("Se debe proporcionar al menos una especialidad");
   }
+  if (!idObraSocial) {
+    throw new Error("Se debe proporcionar al menos una obra social");
+  }
 
   const newDoctor = await DoctorType.create({
     dni,
@@ -28,7 +31,7 @@ const createDoctor = async (
     email,
     telefono,
     direccion,
-    imagen,
+    imagen: imagenCloudinary,
     password: hashedPassword,
     titulo,
     Descripcion,
@@ -39,8 +42,7 @@ const createDoctor = async (
     const newEspecialidad = await Especialidad.findAll({
       where: { id: idEspecialidad },
     });
-
-    console.log("especialidad: ", newEspecialidad);
+    //console.log("especialidad: ", newEspecialidad);
     newDoctor.addEspecialidads(newEspecialidad);
   }
 
@@ -48,8 +50,7 @@ const createDoctor = async (
     const newObraSocial = await ObraSocial.findAll({
       where: { id: idObraSocial },
     });
-
-    console.log("obra social: ", newObraSocial);
+    //console.log("obra social: ", newObraSocial);
     newDoctor.addObraSocials(newObraSocial);
   }
 
