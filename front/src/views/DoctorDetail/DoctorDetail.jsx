@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/ContextProvider";
 import { useParams } from "react-router-dom";
+import { styled } from '@mui/material/styles';
 import CardMUI from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -34,6 +35,12 @@ import Mail from "../../components/Mail/Mail";
 import Calendar from "../../components/Calendar/Calendar";
 
 import detail23 from "../../assets/Img/detail23.jpg";
+
+const StyledRating = styled(Rating)({
+  '& .MuiRating-iconFilled': {
+    color: '#0fb1bc',
+  },
+});
 
 const DoctorDetail = () => {
   const theme = useTheme();
@@ -152,7 +159,7 @@ const DoctorDetail = () => {
         </Typography>
         <CardContent>
           <Stack spacing={1}>
-            <Rating
+            <StyledRating
               name="half-rating-read"
               defaultValue={
                 doctorDetail.Opinions?.length &&
