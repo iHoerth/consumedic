@@ -469,7 +469,7 @@ export default function CustomizedList() {
   const [open, setOpen] = React.useState(true);
   return (
     <>
-    <NavBar/>
+    <NavBar text={"PatientDetail"}/>
       <Box
         sx={{
           // backgroundImage: `url('${login21}')`,
