@@ -50,48 +50,50 @@ const Home = () => {
         </>
       </Modal>
       <NavBar />
-      <AutoPlaySwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={activeStep}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
-        interval={6000}
+      <div
         style={{
-          // maxWidth: '150%',
-          maxHeight: '100vh',
-          width: '1920px',
-          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          height: '100vh',
         }}
       >
-        {bannerImages.map((step, index) => (
-          <div
-            style={{
-              overflow: 'hidden',
-              display: 'auto',
-              alignItems: 'center',
-              height: '100vh',
-            }}
-            key={step.imgPath}
-          >
-            {Math.abs(activeStep - index) <= 2 ? (
-              <Box
-                component="img"
-                sx={{
-                  position: 'relative',
-                  display: 'flex',
-                  maxWidth: 'auto',
-                  width: '100%',
-                  mt: '0px',
-                  mb: '500px',
-                }}
-                src={step.imgPath}
-                alt={step.label}
-              />
-            ) : null}
-          </div>
-        ))}
-      </AutoPlaySwipeableViews>
-
+        <AutoPlaySwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={activeStep}
+          onChangeIndex={handleStepChange}
+          enableMouseEvents
+          interval={6000}
+        >
+          {bannerImages.map((step, index) => (
+            <div
+              style={{
+                overflow: 'hidden',
+                display: 'flex',
+                justifyContent: 'center',
+                height: '100vh',
+              }}
+              key={step.imgPath}
+            >
+              {Math.abs(activeStep - index) <= 2 ? (
+                <Box
+                  component="img"
+                  sx={{
+                    position: 'relative',
+                    display: 'flex',
+                    width: '1920px',
+                    height: '760px',
+                    mt: '0px',
+                    mb: '500px',
+                  }}
+                  src={step.imgPath}
+                  alt={step.label}
+                />
+              ) : null}
+            </div>
+          ))}
+        </AutoPlaySwipeableViews>
+      </div>
       <Box
         sx={{
           position: 'absolute',
