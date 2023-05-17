@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Tooltip from '@mui/material/Tooltip';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
@@ -19,6 +18,7 @@ import LocationOnSharpIcon from '@mui/icons-material/LocationOnSharp';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { NavLink } from 'react-router-dom';
 import { Grid, useTheme } from '@mui/material';
+import Skeleton from '@mui/material';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -52,16 +52,6 @@ const Card = ({
   };
 
   return (
-    // <CardMUI
-    // sx={{
-    //   pl: "40px",
-    //   borderRadius: 4, // agregar borde redondeado
-    //   width: 400, // agregar ancho
-    //   height: 500, // agregar altura
-    //   // bgcolor: theme.palette.secondary.main,
-    //   typography: theme.typography,
-    //   }}
-    // >
     <CardMUI
       sx={{
         pl: '40px',

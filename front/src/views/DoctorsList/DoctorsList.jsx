@@ -5,7 +5,7 @@ import CardsContainer from '../../components/CardsContainer/CardsContainer';
 
 import NavBar from '../../components/NavBar/NavBar';
 import Filter from '../../components/Filter/Filter';
-
+import Loading from '../../components/Loading/Loading';
 import { Context } from '../../context/ContextProvider';
 
 import cards22 from '../../assets/Img/cards22.jpg';
@@ -37,7 +37,7 @@ const DoctorsList = () => {
   }, [loading, filteredDoctors]);
 
   if (loading) {
-    return <div>LOADING</div>;
+    return <Loading />;
   }
 
   return (

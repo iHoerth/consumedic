@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
-import { CircularProgress, Box, Modal } from '@mui/material';
+import { CircularProgress, Box } from '@mui/material';
+import NavBar from '../NavBar/NavBar';
+import Footer from '../Footer/Footer';
 
-const Loading = ({ loading }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleOpen = () => setModalOpen(true);
-  const handleClose = () => setModalOpen(false);
-
-
-
+const Loading = () => {
   return (
-    <Box>
-      <CircularProgress />
-    </Box>
+    <>
+      <NavBar />
+      <Box
+        sx={{
+          border: '1px solid black',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '60vh',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+      <Footer />
+    </>
   );
 };
 
