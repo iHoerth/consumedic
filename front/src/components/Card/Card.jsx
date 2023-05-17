@@ -76,15 +76,16 @@ const Card = ({
         typography: theme.typography,
         display: 'flex',
         flexDirection: 'column',
-        pl: '40px',
-        paddingRight: 4,
+        padding: '30px',
       }}
     >
       {loading ? (
         <>
           <Stack spacing={4}>
-            <Skeleton variant="circular" sx={{ margin: 'auto auto' }} width={100} height={100} />
-            <Skeleton variant="text" sx={{ fontSize: '1.4rem' }} />
+            <Box display='flex'>
+              <Skeleton variant="circular" sx={{ margin: 'auto auto' }} width={100} height={100} />
+              <Skeleton variant="text" sx={{ fontSize: '1.4rem' }} />
+            </Box>
             <Skeleton variant="text" sx={{ fontSize: '1.4rem' }} />
             <Skeleton variant="rectangular" width={210} height={60} />
             <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
@@ -143,10 +144,10 @@ const Card = ({
               <LocationOnSharpIcon color="primary" />
               Direccion: {location}
             </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-               <VideocamIcon color="primary" />
-                Consulta ${price}
-              </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+              <VideocamIcon color="primary" />
+              Consulta ${price}
+            </Typography>
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">

@@ -125,23 +125,34 @@ const Home = () => {
           sx={{
             width: '100%',
             display: 'grid',
-            gridTemplateColumns: 'repeat(2, minmax(Min(400px), 1fr))',
             placeItems: 'center',
-            height: '60vh',
+            height: '80vh',
             gap: '40px',
             padding: '60px',
           }}
         >
-          {homeCards.map((text, index) => (
-            <Card sx={{ width: 400 }} key={`homeCards${index}`}>
-              <CardContent>
-                <Typography sx={{ fontSize: 16 }} gutterBottom>
-                  {text.title}
-                </Typography>
-                <Typography sx={{ fontSize: 14, wordSpacing: '0.2rem' }}>{text.body}</Typography>
-              </CardContent>
-            </Card>
-          ))}
+          <Box
+            component="span"
+            sx={{
+              width: 'auto',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, minmax(Min(400px), 1fr))',
+              placeItems: 'center',
+              gap: '100px 340px',
+              padding: '60px',
+            }}
+          >
+            {homeCards.map((text, index) => (
+              <Card sx={{ width: 400, height: 260, display: 'grid', placeItems: 'center' }} key={`homeCards${index}`}>
+                <CardContent>
+                  <Typography sx={{ fontSize: 16 }} gutterBottom>
+                    {text.title}
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, wordSpacing: '0.2rem' }}>{text.body}</Typography>
+                </CardContent>
+              </Card>
+            ))}
+          </Box>
         </Box>
 
         <AboutUs />
