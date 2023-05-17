@@ -18,6 +18,7 @@ import { Context, UtilitiesContext } from './context/ContextProvider';
 import './App.css';
 import CreateDoctor from './views/CreateDoctor/CreateDoctor';
 import LoginDoctor from './views/LoginDoctor/LoginDoctor';
+import Error404 from './components/Error404/Error404';
 
 const App = () => {
   const { fetchUtilities } = useContext(UtilitiesContext);
@@ -40,11 +41,12 @@ const App = () => {
         <Route path="/search" element={<DoctorsList />} />
         <Route path="/detail/:id" element={<DoctorDetail />} />
         <Route path="/login" element={<Login />} />
-        <Route path='/loginDoctor' element={<LoginDoctor/>}/>
+        <Route path="/loginDoctor" element={<LoginDoctor />} />
         <Route path="/create" element={<CreatePatient />} />
         <Route path="/createDoctor" element={<CreateDoctor />} />
         <Route path="/patientpanel/:id" element={<PatientPanel />} />
         <Route path="/turno/:id/:fecha/:hora" element={<Appointment />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </div>
   );
