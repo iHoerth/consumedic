@@ -9,9 +9,9 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import TextField from '@mui/material/TextField';
 import imagen8 from '../../assets/Img/8.jpg'
 import NavBar from '../../components/NavBar/NavBar';
-import { Container, Paper, Typography } from '@mui/material';
+import { Container, Paper, Typography, Autocomplete } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../../context/ContextProvider';
+import { Context, UtilitiesContext } from '../../context/ContextProvider';
 import { FormHelperText } from '@mui/material';
 import Footer from '../../components/Footer/Footer';
 
@@ -44,6 +44,7 @@ const CreateDoctor = () => {
 
   const navigate = useNavigate()
   const doctor = useContext(Context)[0];
+  const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const { createDoctor, doctorDetail } = doctor;
 
 
@@ -63,6 +64,8 @@ const CreateDoctor = () => {
     status: '',
     precioConsulta: '',
     esDoctor: false,
+    especialidad: '',
+    obraSocial: ''
   });
 
   const [error, setError] = useState({
@@ -81,6 +84,8 @@ const CreateDoctor = () => {
     status: '',
     precioConsulta: '',
     esDoctor: false,
+    especialidad: '',
+    obraSocial: ''
   });
 
 
@@ -95,22 +100,16 @@ const CreateDoctor = () => {
     validarForm({ ...form, [property]: value })
   };
 
-  const handleFileChange = (event) => {
-    setForm({
-      ...form,
-      fotoMatricula: event.target.files[0],
-    });
-  };
-
-
-
+  
+  
+  
   function validarForm(form) {
     const errors = {};
-
+    
     if (!form.nombre) {
       errors.nombre = 'El campo nombre es requerido';
     }
-
+    
     if (!form.apellido) {
       errors.apellido = 'El campo apellido es requerido';
     }
@@ -120,17 +119,17 @@ const CreateDoctor = () => {
     } else if (!/\S+@\S+\.\S+/.test(form.email)) {
       errors.email = 'El email ingresado no es válido';
     }
-
+    
     if (!form.telefono) {
       errors.telefono = 'El campo teléfono es requerido';
     } else if (!/^\d{10}$/.test(form.phone)) {
       errors.phone = 'El número de teléfono debe contener 10 dígitos';
     }
-
+    
     if (!form.idObraSocial) {
       errors.idObraSocial = 'El campo obra social es requerido';
     }
-
+    
     if (!form.dni) {
       errors.dni = 'El campo número de documento es requerido';
     } else if (!/^\d{7,8}$/.test(form.dni)) {
@@ -142,13 +141,13 @@ const CreateDoctor = () => {
     } else if (form.contrasena.length < 8) {
       errors.contrasena = 'La contraseña debe contener al menos 8 caracteres';
     }
-
+    
     if (!form.confirmarContrasena) {
       errors.confirmarContrasena = 'El campo confirmar contraseña es requerido';
     } else if (form.contrasena !== form.confirmarContrasena) {
       errors.confirmarContrasena = 'Las contraseñas no coinciden';
     }
-
+    
     if (!form.tituloUniversitario) {
       errors.tituloUniversitario = 'El titulo universitario es requerido';
     }
@@ -158,7 +157,12 @@ const CreateDoctor = () => {
     if (!form.fotoMatricula) {
       errors.fotoMatricula = 'La foto de la matricula es requerida';
     }
-  
+    if (!form.especialidad) {
+      errors.especialidad = 'El campo especialidad es requerido';
+    }
+    if (!form.obraSocial) {
+      errors.obraSocial = 'El campo obra social es requerido';
+    }
     if (!form.precioConsulta) {
       errors.precioConsulta = 'El precio de la consulta es requerido';
     }
@@ -176,21 +180,81 @@ const CreateDoctor = () => {
       setError({ ...error, confirmPassword: '' });
     }
   };
-
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const errors = validarForm(form);
     setError(errors);
+    const newDoctor = {
+      dni: form.dni,
+      NumMatricula: form.numeroMatricula,
+      nombre: form.nombre,
+      apellido: form.apellido,
+      email: form.email,
+      telefono: form.telefono,
+      direccion: form.direccion,
+      imagen: form.fotoMatricula,
+      password: form.contrasena,
+      titulo: form.tituloUniversitario,
+      Descripcion: form.descripcion,
+      isDoctor: true,
+      status: "active",
+      precio: form.precioConsulta,
+      idEspecialidad: form.especialidad,
+      idObraSocial: form.obraSocial
+    }
+    console.log(newDoctor);
     handleCheckedPassword();
-    createDoctor({ ...form, isDoctor: true })
+    createDoctor(newDoctor)
     navigate(`/doctorpanel/${doctorDetail.id}`);
   };
-
+  
   const [showPassword, setShowPassword] = useState(false);
-
+  
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  //handle and convert it in base 64
+  const handleImage = (e) =>{
+    const file = e.target.files[0];
+    setFileToBase(file);
+  }
+
+  const setFileToBase = (file) =>{
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () =>{
+        setForm({
+          ...form,
+          fotoMatricula: reader.result,
+        });
+    }
+  }
+
+  const handleEspecialidad = (event) =>{
+    const property = "especialidad";
+    const value = Number(event.target.id);
+    setForm({
+      ...form,
+      [property]: value
+    });
+
+    validarForm({ ...form, [property]: value })
+  }
+
+  const handleObraSocial = (event) =>{
+    const property = "obraSocial";
+    const value = Number(event.target.id);
+    console.log(property);
+    console.log(value)
+    setForm({
+      ...form,
+      [property]: value
+    });
+
+    validarForm({ ...form, [property]: value })
+  }
 
   return (
     <>
@@ -395,7 +459,7 @@ const CreateDoctor = () => {
               id="fotoMatricula"
               name="fotoMatricula"
               type="file"
-              onChange={handleFileChange}
+              onChange={handleImage}
               helperText={
                 error.fotoMatricula ? (
                   <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
@@ -536,6 +600,74 @@ const CreateDoctor = () => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Autocomplete
+              sx={{
+                width: 240,
+              }}
+              disablePortal
+              id="especialidad"
+              name="especialidad"
+              options={specialties}
+              getOptionLabel={(option) => {
+                return option.name;
+              }}
+              renderInput={(params) => (
+                <TextField
+                  sx={{ bgcolor: 'white', borderRadius: '4px' }}
+                  {...params}
+                  label="Especialidad"
+                  helperText={
+                    error.especialidad ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.especialidad}
+                      </Typography>
+                    ) : null
+                  }
+                />
+              )}
+              renderOption={(props, option) => (
+                <li style={{ fontSize: '14px' }} {...props} key={option.id} id={option.id} value={option.name}>
+                  {option.name}
+                </li>
+              )}
+              onChange={handleEspecialidad}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Autocomplete
+              sx={{
+                width: 240,
+              }}
+              disablePortal
+              id="obraSocial"
+              name="obraSocial"
+              options={socialSecurity}
+              getOptionLabel={(option) => {
+                return option.nombre;
+              }}
+              renderInput={(params) => (
+                <TextField
+                  sx={{ bgcolor: 'white', borderRadius: '4px' }}
+                  {...params}
+                  label="Obra Social"
+                  helperText={
+                    error.obraSocial ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.obraSocial}
+                      </Typography>
+                    ) : null
+                  }
+                />
+              )}
+              renderOption={(props, option) => (
+                <li style={{ fontSize: '14px' }} {...props} key={option.id} id={option.id} value={option.name}>
+                  {option.nombre}
+                </li>
+              )}
+              onChange={handleObraSocial}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <TextField
               required
               id="precioConsulta"
@@ -577,7 +709,7 @@ const CreateDoctor = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <CrearDoctor type="submit" variant="contained" color="primary">
+            <CrearDoctor type="submit" variant="contained" color="primary" onClick={handleSubmit}>
               Crear usuario
             </CrearDoctor>
           </Grid>

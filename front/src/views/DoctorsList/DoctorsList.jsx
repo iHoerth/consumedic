@@ -1,20 +1,21 @@
 import { useContext, useState, useEffect } from 'react';
-import Footer from '../../components/Footer/Footer';
-import Pagination from '../../components/Pagination/Pagination';
-import CardsContainer from '../../components/CardsContainer/CardsContainer';
+import { Box, Container } from '@mui/material';
+import { Modal } from '@mui/material';
 
+import Home from '../Home/Home';
 import NavBar from '../../components/NavBar/NavBar';
+import CardsContainer from '../../components/CardsContainer/CardsContainer';
+import Loading from '../../components/Loading/Loading';
 import Filter from '../../components/Filter/Filter';
-
+import Pagination from '../../components/Pagination/Pagination';
+import Footer from '../../components/Footer/Footer';
 import { Context } from '../../context/ContextProvider';
 
 import cards22 from '../../assets/Img/cards22.jpg';
-import { Box, Container } from '@mui/material';
 
 const DoctorsList = () => {
   const [loading, setLoading] = useState(true);
-  const { doctors, fetchDoctors, filteredDoctors } = useContext(Context)[0];
-
+  const { doctors, filteredDoctors } = useContext(Context)[0];
   const [currentPage, setCurrentPage] = useState(1);
 
   const doctorsPerPage = 15;
@@ -30,15 +31,10 @@ const DoctorsList = () => {
   };
 
   useEffect(() => {
-    // fetchDoctors();
     if (doctors.length) {
       setLoading(false);
     }
   }, [loading, filteredDoctors]);
-
-  if (loading) {
-    return <div>LOADING</div>;
-  }
 
   return (
     <>
@@ -56,16 +52,7 @@ const DoctorsList = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          // marginTop: "15%",
-
-          '@media (max-width: 600px)': {
-            height: {
-              xs: '50vh',
-              sm: '60vh',
-              md: '70vh',
-              lg: '80vh',
-            },
-          },
+  
         }}
       >
         <Box
@@ -74,19 +61,29 @@ const DoctorsList = () => {
             justifyContent: 'space-between',
             alignItems: 'center',
             flexDirection: 'column',
-            height: '200px',
+            height: '130px',
           }}
         ></Box>
         <Filter handlePageChange={handlePageChange} />
-        <CardsContainer
-          doctorsInPage={doctorsInPage}
-          sx={{
-            width: '400px',
-          }}
-        />
-        <Pagination maxPages={maxPages} page={currentPage} handlePageChange={handlePageChange} />
-        <Footer />
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <CardsContainer
+              doctorsInPage={doctorsInPage}
+              sx={{
+                width: '400px',
+              }}
+            />
+            <Pagination
+              maxPages={maxPages}
+              page={currentPage}
+              handlePageChange={handlePageChange}
+            />
+          </>
+        )}
       </Box>
+      <Footer />
     </>
   );
 };

@@ -53,11 +53,11 @@ const postDoctor = async (req, res) => {
       width: 300,
       crop: "scale"
     })
-
+    const imagenCloudinary = cloudinaryResult.secure_url;
     // agregar esto en el createDoctor como parametro en reemplazo de imagen
     // imagen: {
     //   public_id: cloudinaryResult.public_id,
-    //   url: result.secure.url
+    //   url: cloudinaryResult.secure_url
     // }
     const result = await createDoctor(
       dni,
@@ -67,7 +67,7 @@ const postDoctor = async (req, res) => {
       email,
       telefono,
       direccion,
-      imagen,
+      imagenCloudinary,
       hashedPassword,
       titulo,
       Descripcion,

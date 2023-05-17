@@ -544,7 +544,7 @@ const PatientPanel = () => {
       <NavBar/>
       <Box
         sx={{
-          backgroundImage: `url('/panelPatient/${props.match.params.id}')`,
+          // backgroundImage: `url('/panelPatient/${props.match.params.id}')`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",

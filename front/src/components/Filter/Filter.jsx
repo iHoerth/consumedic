@@ -62,6 +62,7 @@ const Filter = ({ handlePageChange }) => {
       component="div"
       display="flex"
       flexDirection="row"
+      justifyContent='center'
       gap="20px"
       sx={{
         width: {
