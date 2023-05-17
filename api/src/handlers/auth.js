@@ -22,13 +22,13 @@ function generateToken(user) {
 
 // Controlador para el login de doctor
 async function loginDoctor(req, res) {
-  const { email, password, token } = req.body; // email, password, token
+  const { email, password, tokenId } = req.body; // email, password, token
   console.log("loginDoctor");
   try {
-    if (token) {
+    if (tokenId) {
       // Verificar el token de Google
       const ticket = await client.verifyIdToken({
-        idToken: token,
+        idToken: tokenId,
         audience: GOOGLE_CLIENT_ID, // Reemplaza con tu ID de cliente de Google
       });
 
@@ -36,10 +36,30 @@ async function loginDoctor(req, res) {
       const googleEmail = payload.email;
 
       // Buscar al doctor por su email en la base de datos
-      const doctor = await DoctorType.findOne({ where: { googleEmail } }); // googleEmail
+      const doctor = await DoctorType.findOne({
+        where: { email: googleEmail },
+      }); // googleEmail
       if (!doctor) {
         return res.status(404).json({ message: "Doctor not found" });
       }
+      // Verificar la contraseña
+      // const isMatch = await bcrypt.compare(password, doctor.password);
+
+      // if (!isMatch) {
+      //   return res.status(401).json({ message: "Invalid credentials" });
+      // }
+
+      // Generar el token JWT y enviarlo en la respuesta
+      const token = generateToken(doctor);
+      res.json({ token });
+    } else {
+      //buscar doctor por su email en la bd
+      const doctor = await DoctorType.findOne({ where: { email: email } });
+
+      if (!doctor) {
+        return res.status(404).json({ message: "doctor not found" });
+      }
+      //aca se compara la contraseña, pero si uno inicia sesion con goolge no hace falta enviar la contraseña
       // Verificar la contraseña
       const isMatch = await bcrypt.compare(password, doctor.password);
 
