@@ -33,7 +33,7 @@ import Mail from "../../components/Mail/Mail";
 
 import Calendar from "../../components/Calendar/Calendar";
 
-import detail23 from "../Img/detail23.jpg";
+import detail23 from "../../assets/Img/detail23.jpg";
 
 const DoctorDetail = () => {
   const theme = useTheme();

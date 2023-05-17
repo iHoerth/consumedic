@@ -16,7 +16,7 @@ doctorsRouter.get("/:id", getDoctorsById);
 
 // POST
 doctorsRouter.post("/", postDoctor);
-doctorsRouter.post("/login", loginDoctor);
+doctorsRouter.post("/loginDoctor", loginDoctor);
 //PUT
 doctorsRouter.put("/", putDoctor);
 

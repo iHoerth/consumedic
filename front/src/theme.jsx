@@ -15,24 +15,14 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      //Dejo comentados otros colores como para probar descomentando:
-      main: lightBlue['500'],
-      // main: teal['A400'],
-      // main: teal['A200'],
-      // main: teal[200],
-
-      // main: green['A100'],
-      //main: green['A200'],
-
-      // main: cyan['A200'],
-      //main: cyan[500],
-      //main: blue[600],
+      main: blue[500],
+      light: lightBlue['400'],
+      dark: blue[800],
     },
-
     secondary: {
-      main: teal['A400'],
-      //main: blue[600],
-      //-- main: lightBlue['500']
+      main: cyan[200],
+      light: teal['A100'],
+      dark: teal[500],
     },
   },
   typography: {

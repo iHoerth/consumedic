@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {useTheme } from "@mui/material";
+import {Link} from "react-router-dom"
 import Box from '@mui/material/Box';
 import {Typography} from "@mui/material";
 import List from '@mui/material/List';
@@ -23,6 +24,7 @@ const Calendar = ({id, calendar}) => {
   let cantHojas;
   let mostrados;
   const [pagina, setPagina]= useState(1);
+  const [button, setButton]= useState("Mostrar mas horas")
   
   if(calendar){ 
     mostrados = calendar.slice((pagina-1)*4,cantMostrados*pagina);
@@ -44,22 +46,50 @@ const Calendar = ({id, calendar}) => {
     }
   }
 
+  const handleHeight = ()=>{
+    if(button === "Mostrar mas horas"){
+      setButton("Mostrar menos horas")
+    }
+    else if(button=== "Mostrar menos horas"){
+      setButton("Mostrar mas horas")
+    }
+  }
+  if(calendar){
+    return (
+      <Box sx={{
+        bgcolor: 'background.paper',
+        display:"flex",
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: "center",
+        borderRadius: "20px",
+        border: "solid 1px",
+        borderColor: "#aeaeae"
+        }}>
+        <Box sx={{
+          bgcolor: 'background.paper',
+          justifyContent: 'center',
+          m: 0,
+          borderBottom: "1px solid",
+          borderRadius: "20px 20px 0 0",
+          borderColor: "#aeaeae",
+          overflow: "hidden",
+          ...(button==="Mostrar mas horas" && {
+            height: "300px"
+          }),
+          ...(button==="Mostrar menos horas" && {
+            height: "560px"
+          })
+        }}>
 
-
-  
-    
-    if(calendar){
-      return (
           <Box 
             sx={{
               display: 'flex',
               flexDirection: 'row',
               bgcolor: 'background.paper',
               justifyContent: 'center',
-              border: "solid 1px",
-              borderColor: "#aeaeae",
               m: 0,
-              zIndex:1
+              height: "560px"
 
             }}>
             <Box sx={{
@@ -110,7 +140,8 @@ const Calendar = ({id, calendar}) => {
                             bgcolor: "#a7d5ec ",
                             color: "#0752df"
                           }}>
-                            <Typography>{`${hh}:${mm}`}</Typography>
+                            <Link style={{ textDecoration: 'none', color: "#0752df"}} to={`/turno/${id}/${dia.fecha}/${turno.hora}`}>{`${hh}:${mm}`}</Link>  
+                            {/* <Typography>{`${hh}:${mm}`}</Typography> */}
                         </ListItemButton> : 
                         <ListItemButton disabled 
                           sx={{ 
@@ -150,14 +181,23 @@ const Calendar = ({id, calendar}) => {
               <Button disabled={pagina === cantHojas} onClick={handleClick} name="mas"> ᐅ </Button>
             </Box>
           </Box>
-      );
-    } else {
-      return (
-        <>
-        </>
-      )
-    }
-  };
+        </Box>
+        <Box sx={{
+          mt: "5px",
+          mb: "5px",
+        }}>
+          <Button onClick={handleHeight}>{button} horas</Button>
+        </Box>
+      </Box>
+
+    );
+  } else {
+    return (
+      <>
+      </>
+    )
+  }
+};
   
   export default Calendar;
   
