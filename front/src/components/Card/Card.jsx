@@ -16,7 +16,7 @@ import Stack from '@mui/material/Stack';
 import LocationOnSharpIcon from '@mui/icons-material/LocationOnSharp';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { NavLink } from 'react-router-dom';
-import { Grid, useTheme } from '@mui/material';
+import { Box, Grid, useTheme } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { useState, useEffect } from 'react';
 
@@ -46,6 +46,8 @@ const Card = ({
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
   const theme = useTheme();
+  const { values } = theme.breakpoints;
+
   let averageRating = stars && stars.reduce((acc, cur) => acc + cur.puntaje, 0) / stars.length;
 
   const handleExpandClick = () => {
@@ -62,23 +64,26 @@ const Card = ({
   return (
     <CardMUI
       sx={{
-        pl: '40px',
-        borderRadius: 4,
-        width: 370,
-        height: 600,
-        mb: 6,
+        transition: '0.05s',
+        borderRadius: 1,
+        width: {
+          mobile: '100vw',
+          tablet: values.tablet,
+          laptop: values.tablet,
+          desktop: 570,
+        },
+        height: 'auto',
         typography: theme.typography,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        pl: '40px',
         paddingRight: 4,
       }}
     >
       {loading ? (
         <>
           <Stack spacing={4}>
-            <Skeleton variant="circular" sx={{margin:'auto auto'}} width={100} height={100} />
+            <Skeleton variant="circular" sx={{ margin: 'auto auto' }} width={100} height={100} />
             <Skeleton variant="text" sx={{ fontSize: '1.4rem' }} />
             <Skeleton variant="text" sx={{ fontSize: '1.4rem' }} />
             <Skeleton variant="rectangular" width={210} height={60} />
@@ -88,34 +93,36 @@ const Card = ({
         </>
       ) : (
         <>
-          <Tooltip title="Ver Perfil">
-            <IconButton sx={{ p: 1 }}>
-              <NavLink to={`/detail/${id}`}>
-                <Avatar
-                  alt="Remy Sharp"
-                  src={profileImage}
-                  sx={{
-                    width: 120,
-                    height: 120,
-                  }}
-                />
-              </NavLink>
-            </IconButton>
-          </Tooltip>
-          <CardHeader
-            title={
-              <NavLink
-                to={`/detail/${id}`}
-                sx={{ color: theme.palette.primary.main, textDecoration: 'none' }}
-              >
-                {name}
-              </NavLink>
-            }
-            subheader={
-              specialty.length &&
-              specialty.map((item, index) => <span key={index}>{item.name}</span>)
-            }
-          />
+          <Box component="div" sx={{ display: 'flex' }}>
+            <Tooltip title="Ver Perfil">
+              <IconButton sx={{ p: 1 }}>
+                <NavLink to={`/detail/${id}`}>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={profileImage}
+                    sx={{
+                      width: 120,
+                      height: 120,
+                    }}
+                  />
+                </NavLink>
+              </IconButton>
+            </Tooltip>
+            <CardHeader
+              title={
+                <NavLink
+                  to={`/detail/${id}`}
+                  sx={{ color: theme.palette.primary.main, textDecoration: 'none' }}
+                >
+                  {name}
+                </NavLink>
+              }
+              subheader={
+                specialty.length &&
+                specialty.map((item, index) => <span key={index}>{item.name}</span>)
+              }
+            />
+          </Box>
           <CardContent>
             <Stack spacing={1}>
               <Rating name="controlled-rating" value={averageRating} color="secondary" />
@@ -136,10 +143,12 @@ const Card = ({
               <LocationOnSharpIcon color="primary" />
               Direccion: {location}
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+            <div component='span' style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
               <VideocamIcon color="primary" />
-              Consulta ${price}
-            </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+                Consulta ${price}
+              </Typography>
+            </div>
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
