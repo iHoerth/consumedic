@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 
 import DrawerComponent from './DrawerComponent';
 
-const NavBar = ({text}) => {
+const NavBar = ({ component, variant }) => {
   const theme = useTheme();
   const screenSizeSmall = useMediaQuery(theme.breakpoints.down('tablet'));
   const { values } = theme.breakpoints;
@@ -50,9 +50,15 @@ const NavBar = ({text}) => {
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar
-        color={scrolled ? 'primary' : 'transparent'}
+        color={
+          variant === 'block' ? (
+            'primary'
+          ) : (
+            scrolled ? 'primary' : 'transparent'
+          )
+        }
         elevation={scrolled ? 4 : 0}
-        position="fixed"
+        position={variant === 'block' ? 'block' : 'fixed'}
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
       >
         <Toolbar
@@ -79,23 +85,21 @@ const NavBar = ({text}) => {
             </Typography>
           </Box>
           {screenSizeSmall ? (
-              <DrawerComponent navLinksArray={navLinksArray} />
-            ) : (
-              <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
-                <Button color="inherit" href={navLinksArray[0].path}>
-                  {navLinksArray[0].title}
-                </Button>
-                {text ?
-                  null
-                  :
-                  navLinksArray.slice(1).map((link, index) => (
+            <DrawerComponent navLinksArray={navLinksArray} />
+          ) : (
+            <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
+              <Button color="inherit" href={navLinksArray[0].path}>
+                {navLinksArray[0].title}
+              </Button>
+              {component === 'PatientDetail'
+                ? null
+                : navLinksArray.slice(1).map((link, index) => (
                     <Button key={index} color="inherit" href={link.path}>
                       {link.title}
                     </Button>
-                  ))
-                }
-              </nav>
-            )}
+                  ))}
+            </nav>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
