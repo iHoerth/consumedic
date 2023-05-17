@@ -81,7 +81,7 @@ const Home = () => {
                   sx={{
                     position: 'relative',
                     display: 'flex',
-                    width: '1920px',
+                    width: '100%',
                     height: '760px',
                     mt: '0px',
                     mb: '500px',
