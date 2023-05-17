@@ -177,6 +177,7 @@ const CreatePatient = () => {
           justifycontent: "space-between",
           alignItems: "center",
           flexDirection: "column",
+          paddingBottom: "20%",
         }}
       >
         <Container
