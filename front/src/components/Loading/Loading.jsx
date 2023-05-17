@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import { CircularProgress, Box, Modal } from '@mui/material';
+import { CircularProgress, Box } from '@mui/material';
 
-const Loading = ({ loading }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleOpen = () => setModalOpen(true);
-  const handleClose = () => setModalOpen(false);
-
-
-
+const Loading = () => {
   return (
-    <Box>
-      <CircularProgress />
-    </Box>
+    <>
+      <Box
+        sx={{
+          height: '60vh',
+        }}
+      >
+        <CircularProgress sx={{position:'fixed', top:'30%',left:'50%'}}/>
+      </Box>
+    </>
   );
 };
 
