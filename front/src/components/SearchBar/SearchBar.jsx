@@ -7,7 +7,7 @@ import Filter from '../Filter/Filter';
 import { useTheme } from '@mui/material/styles';
 import theme from '../../theme';
 
-const SearchBar = () => {
+const SearchBar = ({ handleSearch }) => {
   const theme = useTheme();
   return (
     <AppBar
@@ -17,14 +17,14 @@ const SearchBar = () => {
     >
       <Toolbar sx={{ gap: '20px' }}>
         <Filter />
-        <NavLink to="/search">
-          <Button variant="contained">
-            <Typography color="white">Buscar</Typography>
-            <IconButton aria-label="search" color="blue">
-              <SearchIcon sx={{ color: 'white' }} />
-            </IconButton>
-          </Button>
-        </NavLink>
+        {/* <NavLink to="/search"> */}
+        <Button variant="contained" onClick={() => handleSearch()}>
+          <Typography color="white">Buscar</Typography>
+          <IconButton aria-label="search" color="blue">
+            <SearchIcon sx={{ color: 'white' }} />
+          </IconButton>
+        </Button>
+        {/* </NavLink> */}
       </Toolbar>
     </AppBar>
   );
