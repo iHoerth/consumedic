@@ -52,14 +52,7 @@ const DoctorsList = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          '@media (max-width: 600px)': {
-            height: {
-              xs: '50vh',
-              sm: '60vh',
-              md: '70vh',
-              lg: '80vh',
-            },
-          },
+  
         }}
       >
         <Box
@@ -68,7 +61,7 @@ const DoctorsList = () => {
             justifyContent: 'space-between',
             alignItems: 'center',
             flexDirection: 'column',
-            height: '200px',
+            height: '130px',
           }}
         ></Box>
         <Filter handlePageChange={handlePageChange} />
