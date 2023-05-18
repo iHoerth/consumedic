@@ -12,7 +12,7 @@ import DrawerComponent from './DrawerComponent';
 import { Context } from '../../context/ContextProvider';
 import { useNavigate } from 'react-router-dom';
 
-const NavBar = ({ component, variant }) => {
+const NavBar = ({ component, variant,text, type }) => {
   const { session, setSession } = useContext(Context)[2];
   const navigate = useNavigate();
   const theme = useTheme();
@@ -107,7 +107,9 @@ const NavBar = ({ component, variant }) => {
                     }`,
                   }}
                 >
-                  CONSUMEDIC
+                  { text === "Mi Cuenta:"  ? (<> Mi cuenta: {type.nombre}<br/> <span style={{fontSize: '50%'}}>{type.email}</span> </>) : 'CONSUMEDIC' }
+
+                 
                 </Box>
               </Link>
             </Typography>

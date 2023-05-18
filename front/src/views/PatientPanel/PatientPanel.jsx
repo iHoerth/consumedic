@@ -160,6 +160,7 @@ const PatientPanel = () => {
   useEffect(() => {
     patientDetail.id && setLoading(false) 
     console.log(patientDetail) 
+    console.log(patientDetail.email) 
   }, [patientDetail]);
   
   if(loading){
@@ -169,7 +170,7 @@ const PatientPanel = () => {
   return (
     <>
       
-      <NavBar />
+      <NavBar text={"Mi Cuenta:"} type={patientDetail}/>
       <Box
         sx={{
           position: 'relative',
