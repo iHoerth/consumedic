@@ -1,32 +1,29 @@
 import React from 'react'
 import NavBar from '../../components/NavBar/NavBar';
 import Footer from '../../components/Footer/Footer';
+import ConfigAgenda from '../../components/DoctorDashboard/ConfigAgenda';
 
 import { useState } from 'react';
 
-import { useTheme } from '@mui/material/styles';
+
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import { Stack, Drawer, Divider } from '@mui/material';
-import ListSubheader from '@mui/material/ListSubheader';
+import { Stack, Divider } from '@mui/material';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { blue } from '@mui/material/colors';
-import EditIcon from '@mui/icons-material/Edit';
+
 
 
 
 const DoctorDashboard = () => {
-  const theme = useTheme();
   const [view, setView]=useState(0)
   const views = ["Mi Perfil", "Editar Perfil", "Ver Mis Turnos", "Configurar Agenda", "Administrar Agenda", "Ver Opiniones"]
   const handleClick = (event) => {
     const index=views.findIndex(el => el === event.target.innerHTML)
     console.log(event.target.innerHTML);
     console.log(index);
-    setView(index)
+    setView(index-1)
 
   }
 
@@ -66,22 +63,15 @@ const DoctorDashboard = () => {
                 <Divider/>
               </List>
             </Box>
-            <Box sx={{ bgcolor: '#0834f8', height: "85vh", width: '90vw', m:"10px" }}>
-                COMPONENTES (variables segun el estado de view)
+            <Box sx={{ height: "85vh", width: '90vw', m:"10px", display:"flex", flexDirection:"column", justifyContent:"center"}}>
+                {view === 2 ? <ConfigAgenda/> : null}
             </Box>
           </Stack>
         </Box>
       </Container>
+      <Footer />
     </>
   )
 }
 
 export default DoctorDashboard
-
-
-{/* <Drawer
-  anchor='left'
-  open={isDrawerOpen}
-  onClose={()=> setIsDrawerOpen(false)}
->
-</Drawer> */}

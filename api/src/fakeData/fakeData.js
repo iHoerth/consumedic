@@ -275,7 +275,7 @@ const createFakeData = async () => {
       "Sábado",
     ];
     const atiende = ["si", "no"];
-    const horarioInAgenda = ["08:00:00", "09:00:00", "10:00:00", "11:00:00"];
+    const horarioInAgenda = ["8:00:00", "9:00:00", "10:00:00", "11:00:00"];
     const horarioFinAgenda = ["15:00:00", "16:00:00", "17:00:00", "18:00:00"];
 
     for (let i = 0; i < daysOfWeek.length; i++) {
