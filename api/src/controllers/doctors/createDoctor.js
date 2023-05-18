@@ -48,6 +48,11 @@ const createDoctor = async (
       console.log("newEspecialidad: ", newEspecialidad);
       newDoctor.addEspecialidads(newEspecialidad);
     }
+  } else {
+    const newEspecialidad = await Especialidad.findAll({
+          where: { id: idEspecialidad },
+        });
+        newDoctor.addEspecialidads(newEspecialidad);
   }
   // if (idEspecialidad) {
   //   const newEspecialidad = await Especialidad.findAll({
@@ -66,6 +71,12 @@ const createDoctor = async (
       console.log("newObraSocial: ", newObraSocial);
       newDoctor.addObraSocials(newObraSocial);
     }
+  } else {
+      const newObraSocial = await ObraSocial.findAll({
+        where: { id: idObraSocial },
+      });
+      //console.log("obra social: ", newObraSocial);
+      newDoctor.addObraSocials(newObraSocial);
   }
   // if (idObraSocial) {
   //   const newObraSocial = await ObraSocial.findAll({

@@ -1,16 +1,19 @@
 const {DoctorType}= require("../../db")
+const {getDoctorCalendar}=require("../appointments/getDoctorCalendar")
 
 const getDoctor = async (email) => {
-    const doctor = await DoctorType.findAll({
+    const doctor = await DoctorType.findOne({
         where: {
             email: email
         },
         include: {all: true}
     });
-    if(!doctor.length){
+    if(!doctor.id){
         throw new Error(`No se encontró el doctor con el email: ${email}`);
     }
-    return doctor[0];
+    const calendar = await getDoctorCalendar(doctor.id);
+    doctor.dataValues.calendar=calendar;
+    return doctor;
 }
 
 module.exports = { getDoctor };
