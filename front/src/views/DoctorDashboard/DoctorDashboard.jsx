@@ -4,6 +4,7 @@ import Footer from "../../components/Footer/Footer";
 import Loading from "../../components/Loading/Loading";
 import ConfigAgenda from "../../components/DoctorDashboard/ConfigAgenda";
 import Profile from "../../components/DoctorDashboard/Profile/Profile";
+import Pacientes from "../../components/DoctorDashboard/Pacientes";
 
 import { useState, useContext, useEffect } from "react";
 import { Context } from '../../context/ContextProvider';
@@ -20,7 +21,7 @@ const DoctorDashboard = () => {
   const { session } = useContext(Context)[2];
   const { fetchDoctorByEmail, doctorDetail } = useContext(Context)[0];
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     if (!doctorDetail.email) {
       const search = async () => {
@@ -159,7 +160,7 @@ const DoctorDashboard = () => {
               {loading ? (<Loading />) : (
                 <>
                   {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
-                  {view === 0 ? <Profile /> : view === 3 ? <ConfigAgenda doctorDetail={doctorDetail}/> : null}
+                  {view === 0 ? <Profile /> : (view === 3 ? <ConfigAgenda doctorDetail={doctorDetail}/> : ( view===6 ? <Pacientes id={doctorDetail.id} /> : null))}
                 </>
               )}
             </Box>
