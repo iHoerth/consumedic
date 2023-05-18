@@ -17,15 +17,15 @@ const NavBar = ({ component, variant }) => {
 
   const navLinksArray = [
     {
-      title: 'Home',
+      title: 'Inicio',
       path: '/',
     },
     {
-      title: 'Login',
+      title: 'Ingresar',
       path: '/login',
     },
     {
-      title: 'Eres un medico?',
+      title: 'Eres médico/a?',
       path: '/loginDoctor',
     },
   ];
@@ -81,20 +81,22 @@ const NavBar = ({ component, variant }) => {
           >
             <LocalHospitalIcon color="inherit" />
             <Typography variant="h5" component="div" color={!scrolled ? 'black' : 'white'}>
-              CONSUMEDIC
+              <Link href="/" color={!scrolled ? 'inherit' : 'white'} underline="none">
+                CONSUMEDIC
+              </Link>
             </Typography>
           </Box>
           {screenSizeSmall ? (
             <DrawerComponent navLinksArray={navLinksArray} />
           ) : (
             <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
-              <Button color="inherit" href={navLinksArray[0].path}>
+              <Button color="inherit" href={navLinksArray[0].path} sx={{padding: 2 }}>
                 {navLinksArray[0].title}
               </Button>
               {component === 'PatientDetail'
                 ? null
                 : navLinksArray.slice(1).map((link, index) => (
-                    <Button key={index} color="inherit" href={link.path}>
+                    <Button key={index} color="inherit" href={link.path} sx={{padding: 2 }}>
                       {link.title}
                     </Button>
                   ))}
