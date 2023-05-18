@@ -16,7 +16,10 @@ const URL_SOCIALSECURITY = `http://localhost:3001/socialSecurity`;
 const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
-  const [user, setUser] = useLocalStorage('user', {});
+  const [session, setSession] = useLocalStorage('loggedUser', {
+    isDoctor: false,
+    token: '',
+  }); //user es tanto paciente como doctor.
 
   const [selectedFilters, setSelectedFilters] = useState({
     Especialidads: [false, {}],
@@ -74,6 +77,10 @@ const ContextProvider = ({ children }) => {
         filteredDoctors: [...newFilter],
       }));
     },
+    loginDoctor: async (loginData) => {
+      const postData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)).data;
+      return postData;
+    },
   });
 
   const [patientsData, setPatientsData] = useState({
@@ -81,28 +88,50 @@ const ContextProvider = ({ children }) => {
     patientDetail: {},
     filteredPatients: [],
     fetchPatients: async () => {
-      const response = await axios(URL_PATIENTS);
-      const data = await response.data;
-      setPatientsData((prevState) => ({
-        ...prevState,
-        patients: [...prevState.patients, ...data],
-      }));
+      try {
+        const data = (await axios(URL_PATIENTS)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          patients: [...prevState.patients, ...data],
+        }));
+      } catch (error) {
+        console.log(error);
+      }
     },
     fetchPatientByEmail: async (email) => {
-      const response = await axios(`${URL_PATIENTS}?email=${email}`);
-      const data = await response.data;
-      setPatientsData((prevState) => ({
-        ...prevState,
-        patientDetail: { ...data },
-      }));
+      try {
+        const data = (await axios(`${URL_PATIENTS}?email=${email}`)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          patientDetail: { ...data },
+        }));
+        return { ...data };
+      } catch (error) {
+        console.log(error);
+      }
     },
     createPatient: async (newPatient) => {
-      const response = await axios.post(`${URL_PATIENTS}`, newPatient);
-      const data = await response.data;
-      setPatientsData((prevState) => ({
-        ...prevState,
-        patientDetail: { ...data },
-      }));
+      try {
+        const data = (await axios.post(`${URL_PATIENTS}`, newPatient)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          patientDetail: { ...data },
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    loginPatient: async (loginData) => {
+      try {
+        const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData)).data;
+        console.log(loginData.email)
+        const patientData = await patientsData.fetchPatientByEmail(loginData.email);
+        setSession(sessionData);
+        console.log({ sessionData, patientData });
+        return { sessionData, patientData };
+      } catch (error) {
+        console.log(error, 'TRY CATCH CONTEXT');
+      }
     },
   });
 
@@ -122,15 +151,15 @@ const ContextProvider = ({ children }) => {
 
   return (
     <>
-      <SessionContext.Provider value={[user, setUser]}>
-        <LoadingContext.Provider value={[loading, setLoading]}>
-          <UtilitiesContext.Provider value={utilities}>
-            <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
-              <Context.Provider value={[doctorsData, patientsData]}>{children}</Context.Provider>
-            </FilterContext.Provider>
-          </UtilitiesContext.Provider>
-        </LoadingContext.Provider>
-      </SessionContext.Provider>
+      <LoadingContext.Provider value={[loading, setLoading]}>
+        <UtilitiesContext.Provider value={utilities}>
+          <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
+            <Context.Provider value={[doctorsData, patientsData, { session, setSession }]}>
+              {children}
+            </Context.Provider>
+          </FilterContext.Provider>
+        </UtilitiesContext.Provider>
+      </LoadingContext.Provider>
     </>
   );
 };
