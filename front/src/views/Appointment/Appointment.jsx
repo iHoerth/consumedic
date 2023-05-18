@@ -1,5 +1,6 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useContext} from 'react';
+import { Context } from '../../context/ContextProvider';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import {
   TextField,
@@ -23,6 +24,8 @@ import Avatar from '@mui/material/Avatar';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+initMercadoPago('TEST-9e5c4674-d7f9-42bc-9f39-62fe105ad00c');
 
 
 
@@ -30,13 +33,15 @@ const Appointment = () => {
   const { id, fecha, hora } = useParams(); // viene de parametros
   const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
   let yy = fecha.split("-")[0]
-  let mm = meses[Number(fecha.split("-")[1])-1]
+  let mm = meses[Number(fecha.split("-")[1]) - 1]
   let dd = fecha.split("-")[2]
   let hh = hora.split(":")[0]
   let min = hora.split(":")[1]
   let datosTurno = `${dd} ${mm} ${yy}, ${hh}:${min} hs`
   const [doctor, setDoctor] = useState({})
 
+  const navigate = useNavigate()
+  
   useEffect(() => {
     axios
       .get(`http://localhost:3001/doctors/${id}`)
@@ -74,6 +79,59 @@ const Appointment = () => {
     setError(errors);
     return Object.keys(errors).length === 0
   }
+  
+
+  const dataDoctors = useContext(Context)[0];
+  const {doctorDetail} = dataDoctors;
+  const dataPreferences = {
+    doctorName: doctorDetail.nombre,
+    doctorApellido: doctorDetail.apellido,
+    precioConsulta: doctorDetail.precio,
+    doctorEmail: doctorDetail.email,
+    doctorDireccion: doctorDetail.direccion,
+    doctorId: doctorDetail.id
+  }
+
+
+  
+  function handleClickMp() {
+    axios.post('http://localhost:3001/turno', dataPreferences)
+      .then((res) => {
+        console.log(res);
+        window.location.href = res.data.global;
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+  
+
+  const [preferences, setPreferences] = useState([]);
+
+
+    // useEffect(()=>{
+  //   console.log(dataPreferences);
+  // })
+
+
+  // useEffect(() => {
+  //   axios.get('/generar')
+  //     .then(response => {
+  //       setPreferences(response.data);
+  //     })
+  //     .catch(error => console.error(error));
+  // }, []);
+
+
+  // const pagarConsulta = async (req, res) => {
+  //   const idDoctor = req.params.id;
+
+  //   const cita = await Cita.findByPk ()
+  //   //defino las preferencias
+  //   let preferences = {
+  //     transaction_amount: parseInt()
+  //   }
+  // }
 
   return (
     <>
@@ -116,7 +174,7 @@ const Appointment = () => {
               Datos relativos a la cita
             </Typography>
             <Box>
-              <Typography component="div" color='black' sx={{mt:"20px", mb:"5px"}}>
+              <Typography component="div" color='black' sx={{ mt: "20px", mb: "5px" }}>
                 Motivo de la consulta
               </Typography>
               <TextField
@@ -137,37 +195,40 @@ const Appointment = () => {
                 required
               />
             </Box>
-            <Button 
+            <Button
               variant="contained"
               disabled={error.motivo}
+              onClick={handleClickMp}
             >
               Proceder al Pago</Button>
-              <Typography sx={{fontSize:"10px", mt:"5px"}}>una vez efectuado el pago se agendará la consulta</Typography>
+
+           
+            <Typography sx={{ fontSize: "10px", mt: "5px" }}>una vez efectuado el pago se agendará la consulta</Typography>
           </Box>
           <Box>
-            <List 
+            <List
               subheader={
-                <ListSubheader component="div" sx={{mt:"15px"}}>
+                <ListSubheader component="div" sx={{ mt: "15px" }}>
                   Datos del Médico
                 </ListSubheader>
               }
             >
-              <ListItem alignItems="flex-start" sx={{pt:"0px"}}>
-                <ListItemAvatar sx={{mt:"0px"}}>
-                  <Avatar alt="Img Doctor" src={doctor ? doctor.imagen : null} /> 
+              <ListItem alignItems="flex-start" sx={{ pt: "0px" }}>
+                <ListItemAvatar sx={{ mt: "0px" }}>
+                  <Avatar alt="Img Doctor" src={doctor ? doctor.imagen : null} />
                 </ListItemAvatar>
-                <ListItemText 
-                  sx={{mt:"0px"}}
-                  primary={doctor ? `${doctor.nombre} ${doctor.apellido}` : null} 
+                <ListItemText
+                  sx={{ mt: "0px" }}
+                  primary={doctor ? `${doctor.nombre} ${doctor.apellido}` : null}
                   secondary={
-                      <Typography
-                        sx={{ display: 'inline' }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        {doctor.Especialidads ? doctor.Especialidads.map(espe=>`${espe.name} `) : null}
-                      </Typography>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {doctor.Especialidads ? doctor.Especialidads.map(espe => `${espe.name} `) : null}
+                    </Typography>
                   }
                 />
               </ListItem>
@@ -175,7 +236,7 @@ const Appointment = () => {
                 <ListItemIcon>
                   <CalendarMonthIcon />
                 </ListItemIcon>
-                <ListItemText 
+                <ListItemText
                   primary={datosTurno}
                 />
               </ListItem>
@@ -183,16 +244,16 @@ const Appointment = () => {
                 <ListItemIcon>
                   <AttachMoneyIcon />
                 </ListItemIcon>
-                <ListItemText 
-                  primary={doctor ? doctor.precio : null} 
+                <ListItemText
+                  primary={doctor ? doctor.precio : null}
                 />
               </ListItem>
               <ListItem alignItems="flex-start">
                 <ListItemIcon>
                   <LocationOnIcon />
                 </ListItemIcon>
-                <ListItemText 
-                  primary={doctor ? doctor.direccion : null } 
+                <ListItemText
+                  primary={doctor ? doctor.direccion : null}
                 />
               </ListItem>
             </List>
