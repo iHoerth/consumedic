@@ -28,6 +28,7 @@ const DoctorDashboard = () => {
         await fetchDoctorByEmail(session.email);
       };
       search();
+      console.log(doctorDetail);
     } else {
       setLoading(false);
     }
@@ -109,22 +110,22 @@ const DoctorDashboard = () => {
                     onClick={handleClick}
                   />
                 </ListItemButton>
-                <ListItemButton>
+                {/* <ListItemButton>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: "15px" }}
                     sx={{ m: "0px" }}
                     primary="Administrar Agenda"
                     onClick={handleClick}
                   />
-                </ListItemButton>
-                <ListItemButton>
+                </ListItemButton> */}
+                {/* <ListItemButton>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: "15px" }}
                     sx={{ m: "0px" }}
                     primary="Ver Opiniones"
                     onClick={handleClick}
                   />
-                </ListItemButton>
+                </ListItemButton> */}
                 <ListItemButton>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: "15px" }}
@@ -133,14 +134,14 @@ const DoctorDashboard = () => {
                     onClick={handleClick}
                   />
                 </ListItemButton>
-                <ListItemButton>
+                {/* <ListItemButton>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: "15px" }}
                     sx={{ m: "0px" }}
                     primary="Gestionar Cuenta"
                     onClick={handleClick}
                   />
-                </ListItemButton>
+                </ListItemButton> */}
                 <Divider />
               </List>
             </Box>
@@ -161,7 +162,7 @@ const DoctorDashboard = () => {
                 <>
                   {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
                   {view === 0 ? (
-                    <Profile />
+                    <Profile doctorDetail={doctorDetail}/>
                   ) : view === 3 ? (
                     <ConfigAgenda doctorDetail={doctorDetail} />
                   ) : view === 6 ? (
