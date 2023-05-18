@@ -80,9 +80,18 @@ const NavBar = ({ component, variant }) => {
             sx={{ flexGrow: 1 }}
           >
             <LocalHospitalIcon color="inherit" />
-            <Typography variant="h5" component="div" color={!scrolled ? 'black' : 'white'}>
+            <Typography variant="h5" component="div" color={!scrolled ? 'black' : 'white'}
+            sx={{
+              fontSize: '2rem', // increase the font size to 2rem
+            }}
+            >
               <Link href="/" color={!scrolled ? 'inherit' : 'white'} underline="none">
-                CONSUMEDIC
+              <Box
+                sx={{
+                  textShadow: `${!scrolled ? '3px 3px 3px rgba(0,0,0,0.5)' : '2px 2px 2px rgba(255,255,255,0.5)'}`,
+                }}
+              >CONSUMEDIC
+              </Box>
               </Link>
             </Typography>
           </Box>
