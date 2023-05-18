@@ -9,7 +9,7 @@ const createDoctor = async (
   telefono,
   direccion,
   imagenCloudinary,
-  hashedPassword,
+  password,
   titulo,
   Descripcion,
   precio,
@@ -32,27 +32,48 @@ const createDoctor = async (
     telefono,
     direccion,
     imagen: imagenCloudinary,
-    password: hashedPassword,
+    password,
     titulo,
     Descripcion,
     precio,
   });
 
-  if (idEspecialidad) {
-    const newEspecialidad = await Especialidad.findAll({
-      where: { id: idEspecialidad },
-    });
-    //console.log("especialidad: ", newEspecialidad);
-    newDoctor.addEspecialidads(newEspecialidad);
+  if (Array.isArray(idEspecialidad) && idEspecialidad.length > 0) {
+    for (let name of idEspecialidad) {
+      console.log("name: ", name);
+      let idEpecial = name;
+      const newEspecialidad = await Especialidad.findAll({
+        where: { id: idEpecial },
+      });
+      console.log("newEspecialidad: ", newEspecialidad);
+      newDoctor.addEspecialidads(newEspecialidad);
+    }
   }
-
-  if (idObraSocial) {
-    const newObraSocial = await ObraSocial.findAll({
-      where: { id: idObraSocial },
-    });
-    //console.log("obra social: ", newObraSocial);
-    newDoctor.addObraSocials(newObraSocial);
+  // if (idEspecialidad) {
+  //   const newEspecialidad = await Especialidad.findAll({
+  //     where: { id: idEspecialidad },
+  //   });
+  //   //console.log("especialidad: ", newEspecialidad);
+  //   newDoctor.addEspecialidads(newEspecialidad);
+  // }
+  if (Array.isArray(idObraSocial) && idObraSocial.length > 0) {
+    for (let name of idObraSocial) {
+      // console.log("name: ", name);
+      let idObra = name;
+      const newObraSocial = await ObraSocial.findAll({
+        where: { id: idObra },
+      });
+      console.log("newObraSocial: ", newObraSocial);
+      newDoctor.addObraSocials(newObraSocial);
+    }
   }
+  // if (idObraSocial) {
+  //   const newObraSocial = await ObraSocial.findAll({
+  //     where: { id: idObraSocial },
+  //   });
+  //   //console.log("obra social: ", newObraSocial);
+  //   newDoctor.addObraSocials(newObraSocial);
+  // }
 
   return newDoctor;
 };

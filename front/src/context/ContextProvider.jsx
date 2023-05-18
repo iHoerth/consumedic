@@ -16,7 +16,11 @@ const URL_SOCIALSECURITY = `http://localhost:3001/socialSecurity`;
 const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
-  const [user, setUser] = useLocalStorage('user', {});
+  const [session, setSession] = useLocalStorage('loggedUser', {
+    isDoctor: false,
+    token: '',
+    email: '',
+  }); //user es tanto paciente como doctor.
 
   const [selectedFilters, setSelectedFilters] = useState({
     Especialidads: [false, {}],
@@ -47,12 +51,14 @@ const ContextProvider = ({ children }) => {
       }));
     },
     fetchDoctorByEmail: async (email) => {
-      const response = await axios(`${URL_DOCTORS}/${email}`);
-      const data = await response.data;
+      const data = (await axios(`${URL_DOCTORS}?email=${email}`)).data;
+      console.log(data);
       setDoctorsData((prevState) => ({
         ...prevState,
-        doctorDetail: data,
+        doctorDetail: { ...data },
       }));
+      console.log({ ...data });
+      return { ...data };
     },
     cleanDetail: async () => {
       setDoctorsData((prevState) => ({
@@ -74,6 +80,18 @@ const ContextProvider = ({ children }) => {
         filteredDoctors: [...newFilter],
       }));
     },
+    loginDoctor: async (loginData) => {
+      try {
+        const sessionData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)).data;
+        const doctorData = await doctorsData.fetchDoctorByEmail(loginData.email);
+        console.log(doctorData);
+        setSession({ ...sessionData, email: loginData.email });
+        console.log({ sessionData, doctorData });
+        return { sessionData, doctorData };
+      } catch (error) {
+        console.log(error.message, 'TRY CATCH CONTEXT');
+      }
+    },
   });
 
   const [patientsData, setPatientsData] = useState({
@@ -81,28 +99,51 @@ const ContextProvider = ({ children }) => {
     patientDetail: {},
     filteredPatients: [],
     fetchPatients: async () => {
-      const response = await axios(URL_PATIENTS);
-      const data = await response.data;
-      setPatientsData((prevState) => ({
-        ...prevState,
-        patients: [...prevState.patients, ...data],
-      }));
+      try {
+        const data = (await axios(URL_PATIENTS)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          patients: [...prevState.patients, ...data],
+        }));
+      } catch (error) {
+        console.log(error);
+      }
     },
     fetchPatientByEmail: async (email) => {
-      const response = await axios(`${URL_PATIENTS}?email=${email}`);
-      const data = await response.data;
-      setPatientsData((prevState) => ({
-        ...prevState,
-        patientDetail: { ...data },
-      }));
+      try {
+        const data = (await axios(`${URL_PATIENTS}?email=${email}`)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          patientDetail: { ...data },
+        }));
+        return { ...data };
+      } catch (error) {
+        console.log(error);
+      }
     },
     createPatient: async (newPatient) => {
-      const response = await axios.post(`${URL_PATIENTS}`, newPatient);
-      const data = await response.data;
-      setPatientsData((prevState) => ({
-        ...prevState,
-        patientDetail: { ...data },
-      }));
+      try {
+        const data = (await axios.post(`${URL_PATIENTS}`, newPatient)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          patientDetail: { ...data },
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    loginPatient: async (loginData) => {
+      console.log(loginData)
+      try {
+        const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData)).data;
+        console.log(loginData.email, `*** CONTEXT ***`);
+        const patientData = await patientsData.fetchPatientByEmail(loginData.email);
+        setSession({ ...sessionData, email: loginData.email });
+        console.log({ sessionData, patientData });
+        return { sessionData, patientData };
+      } catch (error) {
+        console.log(error, 'TRY CATCH CONTEXT');
+      }
     },
   });
 
@@ -122,15 +163,15 @@ const ContextProvider = ({ children }) => {
 
   return (
     <>
-      <SessionContext.Provider value={[user, setUser]}>
-        <LoadingContext.Provider value={[loading, setLoading]}>
-          <UtilitiesContext.Provider value={utilities}>
-            <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
-              <Context.Provider value={[doctorsData, patientsData]}>{children}</Context.Provider>
-            </FilterContext.Provider>
-          </UtilitiesContext.Provider>
-        </LoadingContext.Provider>
-      </SessionContext.Provider>
+      <LoadingContext.Provider value={[loading, setLoading]}>
+        <UtilitiesContext.Provider value={utilities}>
+          <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
+            <Context.Provider value={[doctorsData, patientsData, { session, setSession }]}>
+              {children}
+            </Context.Provider>
+          </FilterContext.Provider>
+        </UtilitiesContext.Provider>
+      </LoadingContext.Provider>
     </>
   );
 };

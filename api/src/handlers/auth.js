@@ -51,7 +51,7 @@ async function loginDoctor(req, res) {
 
       // Generar el token JWT y enviarlo en la respuesta
       const token = generateToken(doctor);
-      res.json({ token });
+      res.json({ token, isDoctor: true });
     } else {
       //buscar doctor por su email en la bd
       const doctor = await DoctorType.findOne({ where: { email: email } });
@@ -69,7 +69,7 @@ async function loginDoctor(req, res) {
 
       // Generar el token JWT y enviarlo en la respuesta
       const token = generateToken(doctor);
-      res.json({ token });
+      res.json({ token, isDoctor: true });
     }
   } catch (error) {
     console.error(error);
@@ -112,7 +112,7 @@ async function loginPatient(req, res) {
 
       // Generar el token JWT y enviarlo en la respuesta
       const token = generateToken(patient);
-      res.json({ token });
+      res.json({ token, isDoctor: false });
     } else {
       //mientras le podes poner asi para que responda si o si algo
       console.log("aqqqqquuuiiiii");
@@ -135,7 +135,7 @@ async function loginPatient(req, res) {
 
       // Generar el token JWT y enviarlo en la respuesta
       const token = generateToken(patient);
-      res.json({ token });
+      res.json({ token, isDoctor: false });
     }
   } catch (error) {
     console.error(error);

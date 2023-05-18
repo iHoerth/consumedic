@@ -66,8 +66,8 @@ const CreateDoctor = () => {
     status: "",
     precioConsulta: "",
     esDoctor: false,
-    especialidad: "",
-    obraSocial: "",
+    idEspecialidad: "",
+    idObraSocial: "",
   });
 
   const [error, setError] = useState({
@@ -86,8 +86,8 @@ const CreateDoctor = () => {
     status: "",
     precioConsulta: "",
     esDoctor: false,
-    especialidad: "",
-    obraSocial: "",
+    idEspecialidad: "",
+    idObraSocial: "",
   });
 
   const handleChange = (event) => {
@@ -124,9 +124,9 @@ const CreateDoctor = () => {
       errors.phone = "El número de teléfono debe contener 10 dígitos";
     }
 
-    if (!form.idObraSocial) {
-      errors.idObraSocial = "El campo obra social es requerido";
-    }
+    // if (!form.idObraSocial) {
+    //   errors.idObraSocial = "El campo obra social es requerido";
+    // }
 
     if (!form.dni) {
       errors.dni = "El campo número de documento es requerido";
@@ -155,11 +155,11 @@ const CreateDoctor = () => {
     if (!form.fotoMatricula) {
       errors.fotoMatricula = "La foto de la matricula es requerida";
     }
-    if (!form.especialidad) {
-      errors.especialidad = "El campo especialidad es requerido";
+    if (!form.idEspecialidad) {
+      errors.idEspecialidad = "El campo especialidad es requerido";
     }
-    if (!form.obraSocial) {
-      errors.obraSocial = "El campo obra social es requerido";
+    if (!form.idObraSocial) {
+      errors.idObraSocial = "El campo obra social es requerido";
     }
     if (!form.precioConsulta) {
       errors.precioConsulta = "El precio de la consulta es requerido";
@@ -198,8 +198,8 @@ const CreateDoctor = () => {
       isDoctor: true,
       status: "active",
       precio: form.precioConsulta,
-      idEspecialidad: form.especialidad,
-      idObraSocial: form.obraSocial,
+      idEspecialidad: form.idEspecialidad,
+      idObraSocial: form.idObraSocial,
     };
     console.log(newDoctor);
     handleCheckedPassword();
@@ -230,28 +230,30 @@ const CreateDoctor = () => {
     };
   };
 
-  const handleEspecialidad = (event) => {
-    const property = "especialidad";
-    const value = Number(event.target.id);
+  const handleEspecialidad = (selectedOptionsE) => {
+    const property = "idEspecialidad";
+    const values = selectedOptionsE.map((option) => Number(option.id));
+    console.log(property);
+    console.log(values);
     setForm({
       ...form,
-      [property]: value,
+      [property]: values,
     });
 
-    validarForm({ ...form, [property]: value });
+    validarForm({ ...form, [property]: values });
   };
 
-  const handleObraSocial = (event) => {
-    const property = "obraSocial";
-    const value = Number(event.target.id);
+  const handleObraSocial = (selectedOptions) => {
+    const property = "idObraSocial";
+    const values = selectedOptions.map((option) => Number(option.id));
     console.log(property);
-    console.log(value);
+    console.log(values);
     setForm({
       ...form,
-      [property]: value,
+      [property]: values,
     });
 
-    validarForm({ ...form, [property]: value });
+    validarForm({ ...form, [property]: values });
   };
 
   useEffect(() => {
@@ -667,6 +669,7 @@ const CreateDoctor = () => {
 
             <Grid item xs={12} sm={6}>
               <Autocomplete
+                multiple
                 sx={{
                   width: 240,
                 }}
@@ -683,13 +686,13 @@ const CreateDoctor = () => {
                     {...params}
                     label="Especialidad"
                     helperText={
-                      error.especialidad ? (
+                      error.idEspecialidad ? (
                         <Typography
                           variant="inherit"
                           color="error"
                           style={{ maxWidth: "200px" }}
                         >
-                          {error.especialidad}
+                          {error.idEspecialidad}
                         </Typography>
                       ) : null
                     }
@@ -706,11 +709,14 @@ const CreateDoctor = () => {
                     {option.name}
                   </li>
                 )}
-                onChange={handleEspecialidad}
+                onChange={(selectedOptionsE, value) =>
+                  handleEspecialidad(value)
+                }
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Autocomplete
+                multiple
                 sx={{
                   width: 240,
                 }}
@@ -727,13 +733,13 @@ const CreateDoctor = () => {
                     {...params}
                     label="Obra Social"
                     helperText={
-                      error.obraSocial ? (
+                      error.idObraSocial ? (
                         <Typography
                           variant="inherit"
                           color="error"
                           style={{ maxWidth: "200px" }}
                         >
-                          {error.obraSocial}
+                          {error.idObraSocial}
                         </Typography>
                       ) : null
                     }
@@ -750,7 +756,7 @@ const CreateDoctor = () => {
                     {option.nombre}
                   </li>
                 )}
-                onChange={handleObraSocial}
+                onChange={(selectedOptions, value) => handleObraSocial(value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>

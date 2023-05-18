@@ -275,7 +275,7 @@ const createFakeData = async () => {
       "Sábado",
     ];
     const atiende = ["si", "no"];
-    const horarioInAgenda = ["08:00:00", "09:00:00", "10:00:00", "11:00:00"];
+    const horarioInAgenda = ["8:00:00", "9:00:00", "10:00:00", "11:00:00"];
     const horarioFinAgenda = ["15:00:00", "16:00:00", "17:00:00", "18:00:00"];
 
     for (let i = 0; i < daysOfWeek.length; i++) {
@@ -309,6 +309,28 @@ const createFakeData = async () => {
     nombre: "Consumedic",
     apellido: "Paciente PF Henry",
     isDoctor: false,
+    status: "active",
+    ObraSocialId: newObraSocial.dataValues.id,
+  });
+  const paciente2 = await db.PacienteType.create({
+    dni: faker.datatype.number(),
+    email: "pruebas@gmail.com",
+    password: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
+    telefono: faker.datatype.number(),
+    nombre: "Pruebas",
+    apellido: "Paciente PF Henry",
+    isDoctor: false,
+    status: "active",
+    ObraSocialId: newObraSocial.dataValues.id,
+  });
+  const paciente3 = await db.PacienteType.create({
+    dni: faker.datatype.number(),
+    email: "pruebasDoctor@gmail.com",
+    password: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
+    telefono: faker.datatype.number(),
+    nombre: "Pruebas",
+    apellido: "Paciente PF Henry",
+    isDoctor: true,
     status: "active",
     ObraSocialId: newObraSocial.dataValues.id,
   });
