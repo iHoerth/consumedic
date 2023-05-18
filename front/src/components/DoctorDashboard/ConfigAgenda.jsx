@@ -149,369 +149,366 @@ const ConfigAgenda = ({doctorDetail}) => {
   if(doctorDetail.calendar.length>0){
     return ( 
       <>
-        <Typography>Ya tiene configurada la agenda</Typography>
+        <Typography>Ya tiene configurada una agenda</Typography>
       </>
     )
   }
-  else {
+  return (
+    <>
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Día</TableCell>
+            <TableCell align="center">Atiende S/N</TableCell>
+            <TableCell align="center">Horario Inicio</TableCell>
+            <TableCell align="center">Horario Fin</TableCell>
+            <TableCell align="center">Duracion de Turno</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
 
-    return (
-      <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Día</TableCell>
-              <TableCell align="center">Atiende S/N</TableCell>
-              <TableCell align="center">Horario Inicio</TableCell>
-              <TableCell align="center">Horario Fin</TableCell>
-              <TableCell align="center">Duracion de Turno</TableCell>
+            {/* LUNES */}
+            <TableRow
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                <Typography>Lunes</Typography>
+              </TableCell>
+              <TableCell align="center">
+                <Checkbox checked={check10} id="1" onChange={handleChange}/>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check10}
+                        value={value11}
+                        onChange={(newValue) => setValue11(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check10}
+                        value={value12}
+                        onChange={(newValue) => setValue12(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check10}
+                        value={value13}
+                        onChange={(newValue) => setValue13(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-  
-              {/* LUNES */}
-              <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Typography>Lunes</Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Checkbox checked={check10} id="1" onChange={handleChange}/>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check10}
-                          value={value11}
-                          onChange={(newValue) => setValue11(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check10}
-                          value={value12}
-                          onChange={(newValue) => setValue12(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
+
+            {/* Martes */}
+            <TableRow
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                <Typography>Martes</Typography>
+              </TableCell>
+              <TableCell align="center">
+                <Checkbox checked={check20} id="2" onChange={handleChange}/>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check10}
-                          value={value13}
-                          onChange={(newValue) => setValue13(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-              </TableRow>
-  
-              {/* Martes */}
-              <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Typography>Martes</Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Checkbox checked={check20} id="2" onChange={handleChange}/>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check20}
-                          value={value21}
-                          onChange={(newValue) => setValue21(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check20}
-                          value={value22}
-                          onChange={(newValue) => setValue22(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check20}
+                        value={value21}
+                        onChange={(newValue) => setValue21(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check20}
-                          value={value23}
-                          onChange={(newValue) => setValue23(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-              </TableRow>
-  
-              {/* Miercoles */}
-              <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Typography>Miércoles</Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Checkbox checked={check30} id="3" onChange={handleChange}/>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check30}
-                          value={value31}
-                          onChange={(newValue) => setValue31(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check30}
-                          value={value32}
-                          onChange={(newValue) => setValue32(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check20}
+                        value={value22}
+                        onChange={(newValue) => setValue22(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check20}
+                        value={value23}
+                        onChange={(newValue) => setValue23(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+            </TableRow>
+
+            {/* Miercoles */}
+            <TableRow
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                <Typography>Miércoles</Typography>
+              </TableCell>
+              <TableCell align="center">
+                <Checkbox checked={check30} id="3" onChange={handleChange}/>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check30}
-                          value={value33}
-                          onChange={(newValue) => setValue33(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-              </TableRow>
-  
-              {/* Jueves */}
-              <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Typography>Jueves</Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Checkbox checked={check40} id="4" onChange={handleChange}/>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check40}
-                          value={value41}
-                          onChange={(newValue) => setValue41(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check40}
-                          value={value42}
-                          onChange={(newValue) => setValue42(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check30}
+                        value={value31}
+                        onChange={(newValue) => setValue31(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check40}
-                          value={value43}
-                          onChange={(newValue) => setValue43(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-              </TableRow>
-  
-              {/* Viernes */}
-              <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Typography>Viernes</Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Checkbox checked={check50} id="5" onChange={handleChange}/>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check50}
-                          value={value51}
-                          onChange={(newValue) => setValue51(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check50}
-                          value={value52}
-                          onChange={(newValue) => setValue52(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check30}
+                        value={value32}
+                        onChange={(newValue) => setValue32(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check30}
+                        value={value33}
+                        onChange={(newValue) => setValue33(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+            </TableRow>
+
+            {/* Jueves */}
+            <TableRow
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                <Typography>Jueves</Typography>
+              </TableCell>
+              <TableCell align="center">
+                <Checkbox checked={check40} id="4" onChange={handleChange}/>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check50}
-                          value={value53}
-                          onChange={(newValue) => setValue53(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-              </TableRow>
-              
-              {/* Sabado */}
-              <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Typography>Sábado</Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Checkbox checked={check60} id="6" onChange={handleChange}/>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check60}
-                          value={value61}
-                          onChange={(newValue) => setValue61(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check60}
-                          value={value62}
-                          onChange={(newValue) => setValue62(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check40}
+                        value={value41}
+                        onChange={(newValue) => setValue41(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check60}
-                          value={value63}
-                          onChange={(newValue) => setValue63(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-              </TableRow>
-              
-              {/* Domingo */}
-              <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Typography>Domingo</Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Checkbox checked={check70} id="7" onChange={handleChange}/>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check70}
-                          value={value71}
-                          onChange={(newValue) => setValue71(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check70}
-                          value={value72}
-                          onChange={(newValue) => setValue72(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-                <TableCell align="center" sx={{width:"20px"}}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check40}
+                        value={value42}
+                        onChange={(newValue) => setValue42(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check40}
+                        value={value43}
+                        onChange={(newValue) => setValue43(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+            </TableRow>
+
+            {/* Viernes */}
+            <TableRow
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                <Typography>Viernes</Typography>
+              </TableCell>
+              <TableCell align="center">
+                <Checkbox checked={check50} id="5" onChange={handleChange}/>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                          <TimeField
-                          disabled={!check70}
-                          value={value73}
-                          onChange={(newValue) => setValue73(newValue)}
-                          format="HH:mm"
-                          />
-                      </DemoContainer>
-                  </LocalizationProvider>
-                </TableCell>
-              </TableRow>
-          </TableBody>
-        </Table>
-        <Button variant="contained" onClick={handleSubmit}>Agregar Agenda</Button>
-      </TableContainer>
-      </>
-    )
-  }
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check50}
+                        value={value51}
+                        onChange={(newValue) => setValue51(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check50}
+                        value={value52}
+                        onChange={(newValue) => setValue52(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check50}
+                        value={value53}
+                        onChange={(newValue) => setValue53(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+            </TableRow>
+            
+            {/* Sabado */}
+            <TableRow
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                <Typography>Sábado</Typography>
+              </TableCell>
+              <TableCell align="center">
+                <Checkbox checked={check60} id="6" onChange={handleChange}/>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check60}
+                        value={value61}
+                        onChange={(newValue) => setValue61(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check60}
+                        value={value62}
+                        onChange={(newValue) => setValue62(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check60}
+                        value={value63}
+                        onChange={(newValue) => setValue63(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+            </TableRow>
+            
+            {/* Domingo */}
+            <TableRow
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                <Typography>Domingo</Typography>
+              </TableCell>
+              <TableCell align="center">
+                <Checkbox checked={check70} id="7" onChange={handleChange}/>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check70}
+                        value={value71}
+                        onChange={(newValue) => setValue71(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check70}
+                        value={value72}
+                        onChange={(newValue) => setValue72(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+              <TableCell align="center" sx={{width:"20px"}}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
+                        <TimeField
+                        disabled={!check70}
+                        value={value73}
+                        onChange={(newValue) => setValue73(newValue)}
+                        format="HH:mm"
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </TableCell>
+            </TableRow>
+        </TableBody>
+      </Table>
+      <Button variant="contained" onClick={handleSubmit}>Agregar Agenda</Button>
+    </TableContainer>
+    </>
+  );
 }
 export default ConfigAgenda
 
