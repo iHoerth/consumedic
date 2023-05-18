@@ -216,11 +216,13 @@ const createFakeData = async () => {
 
   const idEspecialidad = Math.ceil(Math.random() * 82);
   const newEspecialidad = await db.Especialidad.findByPk(idEspecialidad);
+  const idOSocial = Math.ceil(Math.random() * 108)
+  const newOs = await db.ObraSocial.findByPk(idOSocial);
   const doctor = await db.DoctorType.create({
     dni: faker.datatype.number(),
     NumMatricula: faker.datatype.number(),
     nombre: "Consumedic",
-    apellido: "Paciente PF Henry",
+    apellido: "Doctor PF Henry",
     email: "consumedicgeneral@gmail.com",
     telefono: faker.datatype.number(),
     direccion: faker.address.streetAddress(),
@@ -234,6 +236,8 @@ const createFakeData = async () => {
     status: "active",
     EspecialidadId: newEspecialidad.dataValues.id,
   });
+  doctor.addEspecialidads(newEspecialidad);
+  doctor.addObraSocials(newOs);
   // Crear DoctorType
   for (let i = 0; i < docsAndPatients; i++) {
     const doctor = await db.DoctorType.create({

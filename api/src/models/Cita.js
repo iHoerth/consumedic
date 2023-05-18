@@ -19,6 +19,10 @@ module.exports = (sequelize) => {
     descripcion:{
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    respuestaMedico:{
+      type: DataTypes.STRING,
+      allowNull: true,
     }
   },{
     timestamps: false

@@ -1,10 +1,12 @@
 import React from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
+import Loading from "../../components/Loading/Loading";
 import ConfigAgenda from "../../components/DoctorDashboard/ConfigAgenda";
 import Profile from "../../components/DoctorDashboard/Profile/Profile";
 
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { Context } from "../../context/ContextProvider";
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -15,6 +17,22 @@ import ListItemText from "@mui/material/ListItemText";
 
 const DoctorDashboard = () => {
   const [view, setView] = useState(0);
+  const { session } = useContext(Context)[2];
+  const { fetchDoctorByEmail, doctorDetail } = useContext(Context)[0];
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!doctorDetail.email) {
+      const search = async () => {
+        await fetchDoctorByEmail(session.email);
+      };
+      search();
+    } else {
+      setLoading(false);
+    }
+    console.log(loading);
+  }, [loading, doctorDetail]);
+
   const views = [
     "Mi Perfil",
     "Editar Perfil",
@@ -136,9 +154,18 @@ const DoctorDashboard = () => {
                 alignItems: "center",
               }}
             >
-              {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
-
-              {view === 0 ? <Profile /> : view === 2 ? <ConfigAgenda /> : null}
+              {loading ? (
+                <Loading />
+              ) : (
+                <>
+                  {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
+                  {view === 0 ? (
+                    <Profile />
+                  ) : view === 3 ? (
+                    <ConfigAgenda doctorDetail={doctorDetail} />
+                  ) : null}
+                </>
+              )}
             </Box>
           </Stack>
         </Box>

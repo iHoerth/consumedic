@@ -48,6 +48,7 @@ const {
   PacienteType,
   Pago,
   Horario,
+  Documento
 } = sequelize.models;
 
 // 1:1
@@ -94,6 +95,15 @@ HistorialMedico.hasOne(PacienteType);
 
 Horario.belongsTo(DoctorType);
 DoctorType.hasOne(Horario);
+
+DoctorType.hasMany(Documento); 
+Documento.belongsTo(DoctorType);
+
+PacienteType.hasMany(Documento); 
+Documento.belongsTo(PacienteType);
+
+Cita.hasMany(Documento); 
+Documento.belongsTo(Cita);
 
 module.exports = {
   ...sequelize.models,
