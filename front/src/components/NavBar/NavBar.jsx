@@ -25,7 +25,7 @@ const NavBar = ({ component, variant }) => {
       path: '/login',
     },
     {
-      title: 'Eres medico/a?',
+      title: 'Eres médico/a?',
       path: '/loginDoctor',
     },
   ];
@@ -90,13 +90,13 @@ const NavBar = ({ component, variant }) => {
             <DrawerComponent navLinksArray={navLinksArray} />
           ) : (
             <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
-              <Button color="inherit" href={navLinksArray[0].path}>
+              <Button color="inherit" href={navLinksArray[0].path} sx={{padding: 2 }}>
                 {navLinksArray[0].title}
               </Button>
               {component === 'PatientDetail'
                 ? null
                 : navLinksArray.slice(1).map((link, index) => (
-                    <Button key={index} color="inherit" href={link.path}>
+                    <Button key={index} color="inherit" href={link.path} sx={{padding: 2 }}>
                       {link.title}
                     </Button>
                   ))}
