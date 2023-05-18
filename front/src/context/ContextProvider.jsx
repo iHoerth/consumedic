@@ -19,6 +19,7 @@ const ContextProvider = ({ children }) => {
   const [session, setSession] = useLocalStorage('loggedUser', {
     isDoctor: false,
     token: '',
+    email: '',
   }); //user es tanto paciente como doctor.
 
   const [selectedFilters, setSelectedFilters] = useState({
@@ -50,14 +51,14 @@ const ContextProvider = ({ children }) => {
       }));
     },
     fetchDoctorByEmail: async (email) => {
-      const data = (await axios(`${URL_DOCTORS}?email=${email}`)).data
-      console.log(data)
+      const data = (await axios(`${URL_DOCTORS}?email=${email}`)).data;
+      console.log(data);
       setDoctorsData((prevState) => ({
         ...prevState,
-        doctorDetail: {...data},
+        doctorDetail: { ...data },
       }));
-      console.log({...data})
-      return {...data}
+      console.log({ ...data });
+      return { ...data };
     },
     cleanDetail: async () => {
       setDoctorsData((prevState) => ({
@@ -83,8 +84,8 @@ const ContextProvider = ({ children }) => {
       try {
         const sessionData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)).data;
         const doctorData = await doctorsData.fetchDoctorByEmail(loginData.email);
-        console.log(doctorData)
-        setSession(sessionData);
+        console.log(doctorData);
+        setSession({ ...sessionData, email: loginData.email });
         console.log({ sessionData, doctorData });
         return { sessionData, doctorData };
       } catch (error) {
@@ -132,11 +133,12 @@ const ContextProvider = ({ children }) => {
       }
     },
     loginPatient: async (loginData) => {
+      console.log(loginData)
       try {
         const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData)).data;
-        console.log(loginData.email)
+        console.log(loginData.email, `*** CONTEXT ***`);
         const patientData = await patientsData.fetchPatientByEmail(loginData.email);
-        setSession(sessionData);
+        setSession({ ...sessionData, email: loginData.email });
         console.log({ sessionData, patientData });
         return { sessionData, patientData };
       } catch (error) {
