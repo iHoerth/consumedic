@@ -1,0 +1,225 @@
+import { Container, Box, Paper, Button, TableHead, TableRow, TableBody, Table, TableCell } from '@mui/material'
+import React, { useEffect, useContext, useState } from 'react'
+import NavBar from '../../components/NavBar/NavBar'
+import { Context } from '../../context/ContextProvider'
+import { Link, useParams} from 'react-router-dom';
+import Footer from '../../components/Footer/Footer';
+import panel41 from '../../assets/Img/panel41.jpg'
+
+
+const PatientPanel = () => {
+  const { id } = useParams();
+
+  const patient = useContext(Context)[1];
+  const {patientDetail} = patient;
+
+  // const detailPatient = () => {
+  //   console.log(patientDetail);
+  // }
+
+  const [numRows, setNumRows] = useState(3); // Inicia con 3 filas
+
+  const handleShowMoreClick = () => {
+    setNumRows(numRows + 3); // Agrega 3 filas más
+  };
+
+  const turnos = [
+    {
+      id: 1,
+      fecha: "2022-06-10",
+      hora: "10:00",
+      especialidad: "Cardiología",
+      médico: "Dr. Juan Pérez",
+      consultorio: "Consultorio 3",
+      dirección: "Av. Rivadavia 1234"
+    },
+    {
+      id: 2,
+      fecha: "2022-06-15",
+      hora: "15:30",
+      especialidad: "Dermatología",
+      médico: "Dra. Ana González",
+      consultorio: "Consultorio 2",
+      dirección: "Av. Belgrano 4321"
+    },
+    {
+      id: 3,
+      fecha: "2022-06-20",
+      hora: "11:15",
+      especialidad: "Pediatría",
+      médico: "Dr. Carlos Ruiz",
+      consultorio: "Consultorio 1",
+      dirección: "Virtual"
+    },
+    {
+      id: 4,
+      fecha: "2022-06-20",
+      hora: "15:00",
+      especialidad: "Pediatría",
+      médico: "Dr. Alberto Gomez",
+      consultorio: "Consultorio 1",
+      dirección: "Av. Corrientes 5678"
+    },
+    {
+      id: 5,
+      fecha: "2022-06-20",
+      hora: "19:45",
+      especialidad: "Oftalmologia",
+      médico: "Dr. Paez Carlos",
+      consultorio: "Consultorio 1",
+      dirección: "Av. Corrientes 5678"
+    },
+    {
+      id: 6,
+      fecha: "2022-06-10",
+      hora: "10:00",
+      especialidad: "Cardiología",
+      médico: "Dr. Juan Pérez",
+      consultorio: "Consultorio 3",
+      dirección: "Av. Rivadavia 1234"
+    },
+    {
+      id: 7,
+      fecha: "2022-06-15",
+      hora: "15:30",
+      especialidad: "Dermatología",
+      médico: "Dra. Ana González",
+      consultorio: "Consultorio 2",
+      dirección: "Av. Belgrano 4321"
+    },
+    {
+      id: 8,
+      fecha: "2022-06-20",
+      hora: "11:15",
+      especialidad: "Pediatría",
+      médico: "Dr. Carlos Ruiz",
+      consultorio: "Consultorio 1",
+      dirección: "Virtual"
+    },
+    {
+      id: 9,
+      fecha: "2022-06-20",
+      hora: "15:00",
+      especialidad: "Pediatría",
+      médico: "Dr. Alberto Gomez",
+      consultorio: "Consultorio 1",
+      dirección: "Av. Corrientes 5678"
+    },
+    {
+      id: 10,
+      fecha: "2022-06-20",
+      hora: "19:45",
+      especialidad: "Oftalmologia",
+      médico: "Dr. Paez Carlos",
+      consultorio: "Consultorio 1",
+      dirección: "Av. Corrientes 5678"
+    },
+  ];
+
+
+  
+
+  //
+
+  
+  
+
+  return (
+    <>
+      <NavBar/>
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          display: 'flex',
+          flexDirection: "column",
+          alignItems: 'center',
+          '@media (max-width: 600px)': {
+            height: {
+              xs: '50vh',
+              sm: '60vh',
+              md: '70vh',
+              lg: '80vh',
+            }
+          }, 
+        }}
+    >
+
+    </Box>
+
+      <Container 
+        maxWidth="lg" 
+        sx={{ 
+          minWidth: "300px", 
+          width: "80%", 
+          // padding: "15px",
+          marginTop: "10%",
+          // marginBottom: "3%",
+          '@media (max-width: 600px)': {
+            height: {
+              xs: '50vh',
+              sm: '60vh',
+              md: '70vh',
+              lg: '80vh',
+            }
+          }, 
+        }}
+        >
+        <Box m={2} p={3}  boxShadow={3}
+          borderRadius={2} backgroundColor= '#b2dfdb'>
+          <h2>Mis turnos</h2>
+          <Box>
+            {/* <Button onClick={detailPatient}>Log detalle paciente</Button> */}
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Especialidad</TableCell>
+                  <TableCell>Fecha</TableCell>
+                  <TableCell>Hora</TableCell>
+                  <TableCell>Medico</TableCell>
+                  <TableCell>Direccion</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+          {turnos?.map((turno, index) => {
+            if (index < numRows) { // Mostrar hasta numRows filas
+              return (
+                <TableRow key={turno.id}>
+                  <TableCell>{turno.especialidad}</TableCell>
+                  <TableCell>{turno.fecha}</TableCell>
+                  <TableCell>{turno.hora}</TableCell>
+                  <TableCell>{turno.médico}</TableCell>
+                  <TableCell>{turno.dirección}</TableCell>
+                </TableRow>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </TableBody>
+            </Table>
+          </Box>
+          <Box display='flex' justifyContent='space-around' alignItems='center'>
+          <Button
+          variant="contained"
+          sx={{ margin: '10px' }}
+          onClick={handleShowMoreClick}
+        >
+          Mostrar más
+        </Button>
+          
+          </Box>
+
+        </Box>
+
+        
+
+      </Container>
+      <Footer />
+    </>
+
+  )
+}
+
+export default PatientPanel
