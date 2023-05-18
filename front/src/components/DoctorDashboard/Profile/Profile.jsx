@@ -5,9 +5,12 @@ import { Grid, Box, AvatarGroup } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Opinions from "../../Opinions/Opinions";
 import { useTheme } from "@mui/material";
+import { useState, useContext, useEffect } from "react";
+import { Context } from '../../../context/ContextProvider';
 
 const Profile = () => {
   const theme = useTheme();
+  const { pacientes, pacienteHistorial, fetchPacientes, fetchPacienteHistorial} = useContext(Context)[3];
   const opinions = [
     {
       name: "John Doe",
