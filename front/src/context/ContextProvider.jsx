@@ -12,6 +12,7 @@ const URL_PATIENTS = `http://localhost:3001/patients`;
 const URL_DOCTORS = `http://localhost:3001/doctors`;
 const URL_SPECIALTIES = `http://localhost:3001/specialties`;
 const URL_SOCIALSECURITY = `http://localhost:3001/socialSecurity`;
+const URL_PERFILMEDICO= `http://localhost:3001/perfilMedico`
 
 const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
@@ -161,12 +162,43 @@ const ContextProvider = ({ children }) => {
     },
   });
 
+  const [panelMedico, setPanelMedico] = useState({
+    pacientes: [],
+    pacienteHistoria: [],
+    view: 0,
+
+    
+    fetchPacientes: async (id) => {
+      const pacientesData = (await axios(`${URL_PERFILMEDICO}/${id}/pacientes`)).data;
+      setPanelMedico((prevState) => ({
+        ...prevState,
+        pacientes: [...pacientesData],
+      }));
+    },
+    fetchPacienteHistorial: async (idMedico,idPaciente) => {
+      const pacienteHistorialData = (await axios(`${URL_PERFILMEDICO}/${idMedico}/pacientes/${idPaciente}`)).data;
+      setPanelMedico((prevState) => ({
+        ...prevState,
+        pacienteHistoria: [...pacienteHistorialData],
+      }));
+    },
+    setView: (view) =>{
+      setPanelMedico((prevState) => ({
+        ...prevState,
+        view: view,
+      }));
+    }
+
+  });
+
+
+
   return (
     <>
       <LoadingContext.Provider value={[loading, setLoading]}>
         <UtilitiesContext.Provider value={utilities}>
           <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
-            <Context.Provider value={[doctorsData, patientsData, { session, setSession }]}>
+            <Context.Provider value={[doctorsData, patientsData, { session, setSession }, panelMedico]}>
               {children}
             </Context.Provider>
           </FilterContext.Provider>

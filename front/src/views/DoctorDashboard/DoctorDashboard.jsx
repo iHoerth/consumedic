@@ -4,6 +4,7 @@ import Footer from "../../components/Footer/Footer";
 import Loading from "../../components/Loading/Loading";
 import ConfigAgenda from "../../components/DoctorDashboard/ConfigAgenda";
 import Profile from "../../components/DoctorDashboard/Profile/Profile";
+import Pacientes from "../../components/DoctorDashboard/Pacientes";
 
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/ContextProvider";
@@ -163,6 +164,8 @@ const DoctorDashboard = () => {
                     <Profile />
                   ) : view === 3 ? (
                     <ConfigAgenda doctorDetail={doctorDetail} />
+                  ) : view === 6 ? (
+                    <Pacientes id={doctorDetail.id} />
                   ) : null}
                 </>
               )}
