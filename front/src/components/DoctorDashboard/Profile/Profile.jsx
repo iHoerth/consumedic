@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Grid, Box, Divider, AvatarGroup } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import Opinions from "../Opinions/Opinions";
+import Opinions from "../../Opinions/Opinions";
 
 const Profile = () => {
   const opinions = [
