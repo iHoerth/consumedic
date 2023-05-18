@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { Rating, Avatar } from "@mui/material";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 
 export default function TextMobileStepper({ opinions }) {
   const theme = useTheme();
@@ -50,7 +50,7 @@ export default function TextMobileStepper({ opinions }) {
           alignItems: "center",
           height: 30,
           pl: 2,
-          bgcolor: theme.palette.primary.main,
+          bgcolor: theme.palette.primary.light,
           borderRadius: "10px",
           p: "25px",
           width: "100%",
