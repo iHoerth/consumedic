@@ -7,7 +7,7 @@ import Profile from "../../components/DoctorDashboard/Profile/Profile";
 import Pacientes from "../../components/DoctorDashboard/Pacientes";
 
 import { useState, useContext, useEffect } from "react";
-import { Context } from '../../context/ContextProvider';
+import { Context } from "../../context/ContextProvider";
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -21,21 +21,18 @@ const DoctorDashboard = () => {
   const { session } = useContext(Context)[2];
   const { fetchDoctorByEmail, doctorDetail } = useContext(Context)[0];
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
-    if (!doctorDetail.email) {
+    if (session.email && !doctorDetail.email) {
       const search = async () => {
-        await fetchDoctorByEmail(session.email)
-      }
-      search()
-      
-    }
-    else{
+        await fetchDoctorByEmail(session.email);
+      };
+      search();
+    } else {
       setLoading(false);
     }
     console.log(loading);
   }, [loading, doctorDetail]);
-
 
   const views = [
     "Mi Perfil",
@@ -154,13 +151,22 @@ const DoctorDashboard = () => {
                 m: "10px",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "top",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              {loading ? (<Loading />) : (
+              {loading ? (
+                <Loading />
+              ) : (
                 <>
                   {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
-                  {view === 0 ? <Profile /> : (view === 3 ? <ConfigAgenda doctorDetail={doctorDetail}/> : ( view===6 ? <Pacientes id={doctorDetail.id} /> : null))}
+                  {view === 0 ? (
+                    <Profile />
+                  ) : view === 3 ? (
+                    <ConfigAgenda doctorDetail={doctorDetail} />
+                  ) : view === 6 ? (
+                    <Pacientes id={doctorDetail.id} />
+                  ) : null}
                 </>
               )}
             </Box>
