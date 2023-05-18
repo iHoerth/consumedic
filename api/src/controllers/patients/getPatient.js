@@ -1,6 +1,9 @@
 const {PacienteType}= require("../../db")
 
 const getPatient = async (email) => {
+    if(!email){
+        throw new Error(`No se encontró el paciente con el email: ${email}`)
+    }
     const patient = await PacienteType.findAll({
         where: {
             email: email

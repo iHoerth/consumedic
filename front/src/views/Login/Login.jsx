@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import NavBar from '../../components/NavBar/NavBar';
+import {useEffect, useState,useContext } from 'react';
+import axios from 'axios';
+import { GoogleLogin } from 'react-google-login';
+import { gapi } from 'gapi-script';
 import {
   Container,
   Paper,
@@ -7,29 +9,28 @@ import {
   Box,
   Button,
   Typography,
-  imageListClasses,
+  useTheme
 } from '@mui/material';
 import { Google } from '@mui/icons-material';
-import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script';
-import { useEffect } from 'react';
-import Footer from '../../components/Footer/Footer';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../../context/ContextProvider';
-import { useContext } from 'react';
 
+import NavBar from '../../components/NavBar/NavBar';
+import Footer from '../../components/Footer/Footer';
+
+import { Context } from '../../context/ContextProvider';
 import login21 from '../../assets/Img/login21.jpg';
 
 const Userlogin = () => {
-  const navigate = useNavigate();
   const { patientDetail, loginPatient } = useContext(Context)[1];
-  const { session, setSession } = useContext(Context)[2];
-
   const clientID = '508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com';
 
-  const [user, setUser] = useState({});
+  const theme = useTheme();
+  const { values } = theme.breakpoints;
 
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState({});
+  
   //estados de email y contraseña
   const [localEmail, setLocalEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
@@ -94,9 +95,8 @@ const Userlogin = () => {
   }, [patientDetail]);
 
   const onSuccess = (response) => {
-    console.log(response);
     setUser(response.profileObj);
-    loginPatient({ email: localEmail, password: localPassword, tokenId: response.tokenId }).catch(
+    loginPatient({ email: response.profileObj.email, tokenId: response.tokenId }).catch(
       (err) => {
         console.error(err);
       }
@@ -129,8 +129,12 @@ const Userlogin = () => {
           component={Paper}
           elevation={5}
           sx={{
-            minWidth: '300px',
-            width: '400px',
+            width: {
+              desktop: 400,
+              laptop: 400,
+              tablet: '100%',
+              mobile: '100%',
+            },
             padding: '15px',
             marginTop: '145px',
             marginBottom: '50px',

@@ -93,16 +93,11 @@ const LoginDoctor = () => {
   const onSuccess = (response) => {
     console.log(response);
     setUser(response.profileObj);
-    axios
-      .post('http://localhost:3001/doctors/loginDoctor', {
-        tokenId: response.tokenId,
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
+    loginDoctor({ email: response.profileObj.email, tokenId: response.tokenId }).catch(
+      (err) => {
         console.error(err);
-      });
+      }
+    );
   };
 
   const onFailure = () => {
@@ -131,8 +126,12 @@ const LoginDoctor = () => {
           component={Paper}
           elevation={5}
           sx={{
-            minWidth: '300px',
-            width: '400px',
+            width: {
+              desktop: 400,
+              laptop: 400,
+              tablet: '100%',
+              mobile: '100%',
+            },
             padding: '15px',
             marginTop: '145px',
             marginBottom: '50px',
