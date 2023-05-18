@@ -1,44 +1,54 @@
-require('dotenv').config();
-const { DB_USER, DB_PASS, DB_HOST, DB_NAME} = process.env;
-const { Sequelize } = require('sequelize');
-const fs = require('fs');
-const path = require('path');
-
+require("dotenv").config();
+const { DB_USER, DB_PASS, DB_HOST, DB_NAME } = process.env;
+const { Sequelize } = require("sequelize");
+const fs = require("fs");
+const path = require("path");
 
 // REQUIRE MODELS "const characterModel = require('./models/Character')"
 
-
-
 const sequelize = new Sequelize(
-   `postgres://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}`,
-   { logging: false, native: false }
+  `postgres://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}`,
+  { logging: false, native: false }
 );
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
 
 // Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
-fs.readdirSync(path.join(__dirname, '/models'))
-  .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+fs.readdirSync(path.join(__dirname, "/models"))
+  .filter(
+    (file) =>
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+  )
   .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, '/models', file)));
+    modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
 // Injectamos la conexion (sequelize) a todos los modelos
-modelDefiners.forEach(model => model(sequelize));
+modelDefiners.forEach((model) => model(sequelize));
 // Capitalizamos los nombres de los modelos ie: product => Product
 let entries = Object.entries(sequelize.models);
-let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
+let capsEntries = entries.map((entry) => [
+  entry[0][0].toUpperCase() + entry[0].slice(1),
+  entry[1],
+]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-// models "characterModel(sequelize);" 
-
-
+// models "characterModel(sequelize);"
 
 // Definir los modelos y sus realaciones
 
-const {Cita, DoctorType, Especialidad, HistorialMedico, ObraSocial, Opinion, PacienteType, Pago, Horario} = sequelize.models
-
+const {
+  Cita,
+  DoctorType,
+  Especialidad,
+  HistorialMedico,
+  ObraSocial,
+  Opinion,
+  PacienteType,
+  Pago,
+  Horario,
+} = sequelize.models;
 
 // 1:1
 // Organization.belongsTo(User, { foreignKey: 'owner_id' });
@@ -55,11 +65,11 @@ const {Cita, DoctorType, Especialidad, HistorialMedico, ObraSocial, Opinion, Pac
 DoctorType.hasMany(Cita);
 Cita.belongsTo(DoctorType);
 
-DoctorType.belongsToMany(ObraSocial, {through: 'doctor_opinions'});
-ObraSocial.belongsToMany(DoctorType, {through: 'doctor_opinions'});
+DoctorType.belongsToMany(ObraSocial, { through: "doctor_obraSocials" });
+ObraSocial.belongsToMany(DoctorType, { through: "doctor_obraSocials" });
 
-DoctorType.belongsToMany(Especialidad, {through: 'doctor_especialidades'});
-Especialidad.belongsToMany(DoctorType, {through: 'doctor_especialidades'});
+DoctorType.belongsToMany(Especialidad, { through: "doctor_especialidades" });
+Especialidad.belongsToMany(DoctorType, { through: "doctor_especialidades" });
 
 DoctorType.hasMany(Opinion);
 Opinion.belongsTo(DoctorType);
@@ -76,7 +86,7 @@ Cita.belongsTo(HistorialMedico);
 PacienteType.hasMany(Cita);
 Cita.belongsTo(PacienteType);
 
-ObraSocial.hasMany(PacienteType);  // a verificar si puede ser muchos a muchos
+ObraSocial.hasMany(PacienteType); // a verificar si puede ser muchos a muchos
 PacienteType.belongsTo(ObraSocial);
 
 PacienteType.belongsTo(HistorialMedico);
@@ -86,7 +96,7 @@ Horario.belongsTo(DoctorType);
 DoctorType.hasOne(Horario);
 
 module.exports = {
-   ...sequelize.models,
-   conn: sequelize,
-   sequelize
+  ...sequelize.models,
+  conn: sequelize,
+  sequelize,
 };
