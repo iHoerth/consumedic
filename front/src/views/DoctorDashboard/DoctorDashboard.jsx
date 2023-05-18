@@ -18,7 +18,7 @@ import ListItemText from '@mui/material/ListItemText';
 
 const DoctorDashboard = () => {
   const [view, setView]=useState(0)
-  const views = ["Mi Perfil", "Editar Perfil", "Ver Mis Turnos", "Configurar Agenda", "Administrar Agenda", "Ver Opiniones"]
+  const views = ["Mi Perfil", "Editar Perfil", "Ver Mis Turnos", "Configurar Agenda", "Administrar Agenda", "Ver Opiniones", "Mis Pacientes", "Gestionar Cuenta"]
   const handleClick = (event) => {
     const index=views.findIndex(el => el === event.target.innerHTML)
     console.log(event.target.innerHTML);
@@ -60,11 +60,21 @@ const DoctorDashboard = () => {
                 <ListItemButton>
                   <ListItemText primaryTypographyProps={{fontSize: '15px'}} sx={{ m:"0px"}} primary="Ver Opiniones" onClick={handleClick} />
                 </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primaryTypographyProps={{fontSize: '15px'}} sx={{ m:"0px"}} primary="Mis Pacientes" onClick={handleClick} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primaryTypographyProps={{fontSize: '15px'}} sx={{ m:"0px"}} primary="Gestionar Cuenta" onClick={handleClick} />
+                </ListItemButton>
                 <Divider/>
               </List>
             </Box>
             <Box sx={{ height: "85vh", width: '90vw', m:"10px", display:"flex", flexDirection:"column", justifyContent:"center"}}>
+                
+                {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
+                
                 {view === 2 ? <ConfigAgenda/> : null}
+                
             </Box>
           </Stack>
         </Box>
@@ -75,3 +85,4 @@ const DoctorDashboard = () => {
 }
 
 export default DoctorDashboard
+
