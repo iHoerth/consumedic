@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 const NavBar = ({ component, variant }) => {
   const { session, setSession } = useContext(Context)[2];
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const theme = useTheme();
   const screenSizeSmall = useMediaQuery(theme.breakpoints.down('tablet'));
   const { values } = theme.breakpoints;
@@ -39,7 +39,7 @@ const NavBar = ({ component, variant }) => {
 
   const handleSessionClose = () => {
     setSession({});
-    navigate('/')
+    navigate('/');
   };
   /*listener de eventos de scroll a la ventana */
   useEffect(() => {
@@ -128,7 +128,10 @@ const NavBar = ({ component, variant }) => {
                 ))
               ) : (
                 <>
-                  <Button color="inherit" href="/patientpanel">
+                  <Button
+                    color="inherit"
+                    href={session.isDoctor ? '/perfilMedico' : '/patientpanel'}
+                  >
                     MI CUENTA
                   </Button>
                   <Button color="inherit" href="/" onClick={handleSessionClose}>
