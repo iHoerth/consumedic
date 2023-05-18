@@ -41,8 +41,9 @@ const Pacientes = ({id}) => {
     const handleClick = async (event) =>{
         const idPaciente = Number(event.target.id);
         const idMedico = id
-        paciente = await fetchPacienteHistorial(idMedico,idPaciente)
-        setView(1)
+        await fetchPacienteHistorial(idMedico,idPaciente)
+        paciente=pacienteHistorial
+        console.log(paciente);
     }
 
 
@@ -80,7 +81,7 @@ const Pacientes = ({id}) => {
             </>
         )
     }
-    else if (view===1) {
+    else if (view!==0) {
             console.log(paciente);
         <>
             hola

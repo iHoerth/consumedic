@@ -164,7 +164,7 @@ const ContextProvider = ({ children }) => {
 
   const [panelMedico, setPanelMedico] = useState({
     pacientes: [],
-    pacienteHistoria: [],
+    pacienteHistorial: [],
     view: 0,
 
     
@@ -179,7 +179,7 @@ const ContextProvider = ({ children }) => {
       const pacienteHistorialData = (await axios(`${URL_PERFILMEDICO}/${idMedico}/pacientes/${idPaciente}`)).data;
       setPanelMedico((prevState) => ({
         ...prevState,
-        pacienteHistoria: [...pacienteHistorialData],
+        pacienteHistorial: [...pacienteHistorialData],
       }));
     },
     setView: (view) =>{
