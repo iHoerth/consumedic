@@ -50,13 +50,7 @@ const NavBar = ({ component, variant }) => {
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar
-        color={
-          variant === 'block' ? (
-            'primary'
-          ) : (
-            scrolled ? 'primary' : 'transparent'
-          )
-        }
+        color={variant === 'block' ? 'primary' : scrolled ? 'primary' : 'transparent'}
         elevation={scrolled ? 4 : 0}
         position={variant === 'block' ? 'block' : 'fixed'}
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
@@ -79,19 +73,34 @@ const NavBar = ({ component, variant }) => {
             color={!scrolled ? 'black' : 'white'}
             sx={{ flexGrow: 1 }}
           >
-            <LocalHospitalIcon color="inherit" />
-            <Typography variant="h5" component="div" color={!scrolled ? 'black' : 'white'}
-            sx={{
-              fontSize: '2rem', // increase the font size to 2rem
-            }}
+            <Link
+              href="/"
+              color={!scrolled ? 'inherit' : 'white'}
+              sx={{ display: 'flex', alignItems: 'center' }}
+              underline="none"
+            >
+              <LocalHospitalIcon color="inherit" />
+            </Link>
+            <Typography
+              variant="h5"
+              component="div"
+              color={!scrolled ? 'black' : 'white'}
+              sx={{
+                fontSize: '2rem', // increase the font size to 2rem
+              }}
             >
               <Link href="/" color={!scrolled ? 'inherit' : 'white'} underline="none">
-              <Box
-                sx={{
-                  textShadow: `${!scrolled ? '3px 3px 3px rgba(0,0,0,0.5)' : '2px 2px 2px rgba(255,255,255,0.5)'}`,
-                }}
-              >CONSUMEDIC
-              </Box>
+                <Box
+                  sx={{
+                    textShadow: `${
+                      !scrolled
+                        ? '3px 3px 3px rgba(0,0,0,0.5)'
+                        : '2px 2px 2px rgba(255,255,255,0.5)'
+                    }`,
+                  }}
+                >
+                  CONSUMEDIC
+                </Box>
               </Link>
             </Typography>
           </Box>
@@ -99,13 +108,13 @@ const NavBar = ({ component, variant }) => {
             <DrawerComponent navLinksArray={navLinksArray} />
           ) : (
             <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
-              <Button color="inherit" href={navLinksArray[0].path} sx={{padding: 2 }}>
+              <Button color="inherit" href={navLinksArray[0].path} sx={{ padding: 2 }}>
                 {navLinksArray[0].title}
               </Button>
               {component === 'PatientDetail'
                 ? null
                 : navLinksArray.slice(1).map((link, index) => (
-                    <Button key={index} color="inherit" href={link.path} sx={{padding: 2 }}>
+                    <Button key={index} color="inherit" href={link.path} sx={{ padding: 2 }}>
                       {link.title}
                     </Button>
                   ))}

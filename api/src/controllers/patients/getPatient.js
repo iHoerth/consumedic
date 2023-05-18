@@ -10,7 +10,7 @@ const getPatient = async (email) => {
     if(!patient.length){
         throw new Error(`No se encontró el paciente con el email: ${email}`);
     }
-    return patient;
+    return patient[0];
 }
 
 module.exports = { getPatient };

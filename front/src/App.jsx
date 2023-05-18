@@ -9,7 +9,7 @@ import {
   DoctorDetail,
 } from './views';
 import Appointment from './views/Appointment/Appointment';
-import DoctorDashboard from './views/DoctorDashboard/DoctorDashboard'
+import DoctorDashboard from './views/DoctorDashboard/DoctorDashboard';
 
 import { useContext, useEffect } from 'react';
 
@@ -24,6 +24,7 @@ import Loading from './components/Loading/Loading';
 const App = () => {
   const { fetchUtilities } = useContext(UtilitiesContext);
   const { fetchDoctors } = useContext(Context)[0];
+  const { session, setSession } = useContext(Context)[2];
 
   useEffect(() => {
     fetchUtilities();
@@ -33,6 +34,7 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
+        <Route></Route>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<DoctorsList />} />
         <Route path="/detail/:id" element={<DoctorDetail />} />

@@ -34,12 +34,11 @@ const Footer = () => {
       sx={{
         bgcolor: theme.palette.secondary.main,
         width: "100%",
-        height: "35vh",
+        height: "20vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        p: 2,
       }}
     >
       <Box
@@ -94,8 +93,8 @@ const Footer = () => {
       <Box
         sx={{
           bgcolor: "#212121",
-          p: 2,
-          mb: 1,
+          // p: 2,
+          // mb: 1,
           width: "100%",
           display: "flex",
           flexDirection: "row",
@@ -146,7 +145,7 @@ const Footer = () => {
           justifyContent: "center",
         }}
       >
-        <Typography variant="body2" align="center" sx={{ mt: 1 }}>
+        <Typography variant="body2" align="center">
           {`Copyright © ${new Date().getFullYear()}
           Consumedic. Encontrá tu especialista y pedí turno`}
         </Typography>

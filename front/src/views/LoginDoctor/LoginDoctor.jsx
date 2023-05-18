@@ -133,32 +133,24 @@ const LoginDoctor = () => {
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
           position: "relative",
-          width: "100%",
-          height: "150%",
-          display: "flex",
+          width: "1920p",
+          height: '1080p',
+          display: 'flex',
           flexDirection: "column",
-          alignItems: "center",
-          "@media (max-width: 600px)": {
-            height: {
-              xs: "50vh",
-              sm: "60vh",
-              md: "70vh",
-              lg: "80vh",
-            },
-          },
+          alignItems: 'center',
+        }}
+    >
+      <Container 
+        component={Paper} 
+        elevation={5} 
+        sx={{ 
+          minWidth: "300px", 
+          width: "400px", 
+          padding: "15px",
+          marginTop: "145px",
+          marginBottom: "50px"
         }}
       >
-        <Container
-          component={Paper}
-          elevation={5}
-          sx={{
-            // minWidth: "300px",
-            maxWidth: "500px",
-            padding: "15px",
-            marginTop: "20%",
-            marginBottom: "10%",
-          }}
-        >
           <Typography
             variant="h6"
             align="center"
