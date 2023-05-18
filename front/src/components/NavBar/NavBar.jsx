@@ -17,15 +17,15 @@ const NavBar = ({ component, variant }) => {
 
   const navLinksArray = [
     {
-      title: 'Home',
+      title: 'Inicio',
       path: '/',
     },
     {
-      title: 'Login',
+      title: 'Ingresar',
       path: '/login',
     },
     {
-      title: 'Eres un medico?',
+      title: 'Eres medico/a?',
       path: '/loginDoctor',
     },
   ];
@@ -81,7 +81,9 @@ const NavBar = ({ component, variant }) => {
           >
             <LocalHospitalIcon color="inherit" />
             <Typography variant="h5" component="div" color={!scrolled ? 'black' : 'white'}>
-              CONSUMEDIC
+              <Link href="/" color={!scrolled ? 'inherit' : 'white'} underline="none">
+                CONSUMEDIC
+              </Link>
             </Typography>
           </Box>
           {screenSizeSmall ? (

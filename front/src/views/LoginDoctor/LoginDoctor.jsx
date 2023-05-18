@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/ContextProvider";
 import { useContext } from "react";
 
-import login21 from "../../assets/Img/login21.jpg";
+import logindoc24 from "../../assets/Img/logindoc24.jpg";
 
 const LoginDoctor = () => {
   const navigate = useNavigate();
@@ -127,14 +127,14 @@ const LoginDoctor = () => {
       <NavBar />
       <Box
         sx={{
-          backgroundImage: `url('${login21}')`,
+          backgroundImage: `url('${logindoc24}')`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
           position: "relative",
           width: "100%",
-          height: "100%",
+          height: "150%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -152,19 +152,19 @@ const LoginDoctor = () => {
           component={Paper}
           elevation={5}
           sx={{
-            minWidth: "300px",
-            width: "400px",
+            // minWidth: "300px",
+            maxWidth: "500px",
             padding: "15px",
-            marginTop: "10%",
-            marginBottom: "3%",
+            marginTop: "20%",
+            marginBottom: "10%",
           }}
         >
           <Typography
             variant="h6"
             align="center"
-            sx={{ marginTop: "50px", marginBottom: "20px" }}
+            sx={{ marginTop: "50px", marginBottom: "40px" }}
           >
-            Ingresa tu cuenta
+            Ingreso exclusivo para profesionales
           </Typography>
 
           <Box
@@ -206,7 +206,7 @@ const LoginDoctor = () => {
                   color: emailError ? "red" : "secondary",
                 },
                 height: "80px",
-                width: "320px",
+                width: "70%",
               }}
             ></TextField>
 
@@ -238,7 +238,7 @@ const LoginDoctor = () => {
                   color: passwordError ? "red" : "secondary",
                 },
                 height: "80px",
-                width: "320px",
+                width: "70%",
               }}
             ></TextField>
 

@@ -85,6 +85,7 @@ const Home = () => {
                     height: '760px',
                     mt: '0px',
                     mb: '500px',
+                    objectFit: 'cover',
                   }}
                   src={step.imgPath}
                   alt={step.label}
