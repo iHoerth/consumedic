@@ -130,7 +130,7 @@ const ContextProvider = ({ children }) => {
         console.log({ sessionData, patientData });
         return { sessionData, patientData };
       } catch (error) {
-        console.log(error);
+        console.log(error, 'TRY CATCH CONTEXT');
       }
     },
   });

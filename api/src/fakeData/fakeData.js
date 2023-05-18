@@ -312,6 +312,28 @@ const createFakeData = async () => {
     status: "active",
     ObraSocialId: newObraSocial.dataValues.id,
   });
+  const paciente2 = await db.PacienteType.create({
+    dni: faker.datatype.number(),
+    email: "pruebas@gmail.com",
+    password: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
+    telefono: faker.datatype.number(),
+    nombre: "Pruebas",
+    apellido: "Paciente PF Henry",
+    isDoctor: false,
+    status: "active",
+    ObraSocialId: newObraSocial.dataValues.id,
+  });
+  const paciente3 = await db.PacienteType.create({
+    dni: faker.datatype.number(),
+    email: "pruebasDoctor@gmail.com",
+    password: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
+    telefono: faker.datatype.number(),
+    nombre: "Pruebas",
+    apellido: "Paciente PF Henry",
+    isDoctor: true,
+    status: "active",
+    ObraSocialId: newObraSocial.dataValues.id,
+  });
   // Crear PacienteType
   for (let i = 0; i < docsAndPatients; i++) {
     const idObraSocial = Math.ceil(Math.random() * 82);

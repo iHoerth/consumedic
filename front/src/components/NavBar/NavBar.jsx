@@ -7,10 +7,14 @@ import Button from '@mui/material/Button';
 import { Link, useMediaQuery, useTheme } from '@mui/material';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { useState, useEffect } from 'react';
-
+import { useContext } from 'react';
 import DrawerComponent from './DrawerComponent';
+import { Context } from '../../context/ContextProvider';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar = ({ component, variant }) => {
+  const { session, setSession } = useContext(Context)[2];
+  const navigate = useNavigate()
   const theme = useTheme();
   const screenSizeSmall = useMediaQuery(theme.breakpoints.down('tablet'));
   const { values } = theme.breakpoints;
@@ -33,6 +37,10 @@ const NavBar = ({ component, variant }) => {
   /* Estado para ver si se bajo o no */
   const [scrolled, setScrolled] = useState(false);
 
+  const handleSessionClose = () => {
+    setSession({});
+    navigate('/')
+  };
   /*listener de eventos de scroll a la ventana */
   useEffect(() => {
     const handleScroll = () => {
@@ -111,13 +119,23 @@ const NavBar = ({ component, variant }) => {
               <Button color="inherit" href={navLinksArray[0].path} sx={{ padding: 2 }}>
                 {navLinksArray[0].title}
               </Button>
-              {component === 'PatientDetail'
-                ? null
-                : navLinksArray.slice(1).map((link, index) => (
-                    <Button key={index} color="inherit" href={link.path} sx={{ padding: 2 }}>
-                      {link.title}
-                    </Button>
-                  ))}
+
+              {!session.token ? (
+                navLinksArray.slice(1).map((link, index) => (
+                  <Button key={index} color="inherit" href={link.path} sx={{ padding: 2 }}>
+                    {link.title}
+                  </Button>
+                ))
+              ) : (
+                <>
+                  <Button color="inherit" href="/patientpanel">
+                    MI CUENTA
+                  </Button>
+                  <Button color="inherit" href="/patientpanel" onClick={handleSessionClose}>
+                    CERRAR SESION
+                  </Button>
+                </>
+              )}
             </nav>
           )}
         </Toolbar>

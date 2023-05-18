@@ -84,29 +84,14 @@ const Userlogin = () => {
   //submit
   function handleLocalSubmit(event) {
     event.preventDefault();
-    loginPatient({ email: localEmail, password: localPassword })
-      .then((res) => {
-        console.log(patientDetail);
-        // navigate(`/patientpanel/${patientDetail.id}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    // axios
-    //   .post('http://localhost:3001/patients/login', {
-    //     email: localEmail,
-    //     password: localPassword,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     //autenticacion exitosa, redirige al panel del paciente
-    //     navigate(`/patientpanel/${patientDetail.id}`);
-    //   })
-    //   .catch((err) => {
-    //     //error de autenticacion
-    //     console.error(err);
-    //   });
+    loginPatient({ email: localEmail, password: localPassword }).catch((err) => {
+      console.error(err);
+    });
   }
+
+  useEffect(() => {
+    patientDetail.id && navigate(`/patientpanel/`);
+  }, [patientDetail]);
 
   const onSuccess = (response) => {
     console.log(response);
@@ -117,7 +102,7 @@ const Userlogin = () => {
       })
       .then((res) => {
         console.log(res.data);
-        navigate(`/patientpanel/${patientDetail.id}`);
+        navigate(`/patientpanel/`);
       })
       .catch((err) => {
         console.error(err);
@@ -127,10 +112,6 @@ const Userlogin = () => {
   const onFailure = () => {
     console.log('something went wrong');
   };
-
-  useEffect(() => {
-    console.log(patientDetail, 'PATIENT DETAAAAILLLL!!!');
-  }, [patientDetail]);
 
   return (
     <>
