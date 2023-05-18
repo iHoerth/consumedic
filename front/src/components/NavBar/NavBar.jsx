@@ -131,7 +131,7 @@ const NavBar = ({ component, variant }) => {
                   <Button color="inherit" href="/patientpanel">
                     MI CUENTA
                   </Button>
-                  <Button color="inherit" href="/patientpanel" onClick={handleSessionClose}>
+                  <Button color="inherit" href="/" onClick={handleSessionClose}>
                     CERRAR SESION
                   </Button>
                 </>

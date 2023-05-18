@@ -50,12 +50,14 @@ const ContextProvider = ({ children }) => {
       }));
     },
     fetchDoctorByEmail: async (email) => {
-      const response = await axios(`${URL_DOCTORS}/${email}`);
-      const data = await response.data;
+      const data = (await axios(`${URL_DOCTORS}?email=${email}`)).data
+      console.log(data)
       setDoctorsData((prevState) => ({
         ...prevState,
-        doctorDetail: data,
+        doctorDetail: {...data},
       }));
+      console.log({...data})
+      return {...data}
     },
     cleanDetail: async () => {
       setDoctorsData((prevState) => ({
@@ -78,8 +80,16 @@ const ContextProvider = ({ children }) => {
       }));
     },
     loginDoctor: async (loginData) => {
-      const postData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)).data;
-      return postData;
+      try {
+        const sessionData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)).data;
+        const doctorData = await doctorsData.fetchDoctorByEmail(loginData.email);
+        console.log(doctorData)
+        setSession(sessionData);
+        console.log({ sessionData, doctorData });
+        return { sessionData, doctorData };
+      } catch (error) {
+        console.log(error.message, 'TRY CATCH CONTEXT');
+      }
     },
   });
 
