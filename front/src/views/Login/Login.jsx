@@ -96,17 +96,11 @@ const Userlogin = () => {
   const onSuccess = (response) => {
     console.log(response);
     setUser(response.profileObj);
-    axios
-      .post('http://localhost:3001/patients/login', {
-        tokenId: response.tokenId,
-      })
-      .then((res) => {
-        console.log(res.data);
-        navigate(`/patientpanel/`);
-      })
-      .catch((err) => {
+    loginPatient({ email: localEmail, password: localPassword, tokenId: response.tokenId }).catch(
+      (err) => {
         console.error(err);
-      });
+      }
+    );
   };
 
   const onFailure = () => {
