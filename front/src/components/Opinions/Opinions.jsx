@@ -50,7 +50,8 @@ export default function TextMobileStepper({ opinions }) {
           alignItems: "center",
           height: 30,
           pl: 2,
-          bgcolor: "black",
+          bgcolor: theme.palette.primary.main,
+          borderRadius: "10px",
           p: "25px",
           width: "100%",
         }}
