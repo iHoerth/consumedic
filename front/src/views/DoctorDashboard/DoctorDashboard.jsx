@@ -23,7 +23,7 @@ const DoctorDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!doctorDetail.email) {
+    if (session.email && !doctorDetail.email) {
       const search = async () => {
         await fetchDoctorByEmail(session.email);
       };
