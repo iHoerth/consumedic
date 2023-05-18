@@ -23,6 +23,7 @@ import { Context } from '../../context/ContextProvider';
 import NavBar from '../../components/NavBar/NavBar';
 import Loading from '../../components/Loading/Loading';
 import Footer from '../../components/Footer/Footer';
+import { Link, useMediaQuery, useTheme } from '@mui/material';
 
 import panel41 from '../../assets/Img/panel41.jpg';
 
@@ -36,7 +37,7 @@ const PatientPanel = () => {
   const [selectedDirection, setSelectedDirection] = useState(null);
   const [hasResults, setHasResults] = useState(true);
   const [filteredResults, setFilteredResults] = useState([]);
-
+  const theme = useTheme();
   const message = 'No hay resultados para esta búsqueda, toque Restaurar';
 
   const handleShowMoreClick = () => {
@@ -167,152 +168,198 @@ const PatientPanel = () => {
     return <Loading></Loading>
   }
 
+  //infobutton
+  function InfoButton() {
+    const [showInfo, setShowInfo] = useState(false);
+  
+  
+    return (
+      <div style={{ position: "relative"}}>
+        <button style={{ background:"white" }}
+          onMouseEnter={() => setShowInfo(true)}
+          onMouseLeave={() => setShowInfo(false)}
+        >
+          <span style={{ writingMode: "vertical-lr", textOrientation: "upright",fontSize:"13px", fontFamily:"unset"}}>
+          Mis Datos
+        </span>
+        </button>
+        {showInfo && (
+          <div
+            style={{
+              position: "absolute",
+              top: "-40px",
+              margin: "34px",
+              left: 0,
+              backgroundColor: theme.palette.primary.main,
+              borderRadius: "5px",
+              boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+            }}
+          >
+            <p style={{ fontSize: "15px",backgroundColor: theme.palette.primary.main, }}><b> Dni:</b> {patientDetail.email} </p>
+            <p style={{ fontSize: "15px" }}><b>Obra Social</b>: {patientDetail.ObraSocial.nombre} </p>
+            <p style={{ fontSize: "15px" }}><b>Apellido</b>: {patientDetail.apellido} </p>
+            <p style={{ fontSize: "15px" }}><b>Estado:</b> {patientDetail.status} </p>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+
   return (
     <>
-      
+
       <NavBar text={"Mi Cuenta:"} type={patientDetail}/>
-      <Box
-        sx={{
-          position: 'relative',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          '@media (max-width: 600px)': {
-            height: {
-              xs: '50vh',
-              sm: '60vh',
-              md: '70vh',
-              lg: '80vh',
-            },
-          },
-        }}
-      ></Box>
-      <Container
-        maxWidth="lg"
-        sx={{
-          minWidth: '300px',
-          width: '80%',
-          // padding: "15px",
-          marginTop: '20%',
-          // marginBottom: "3%",
-          '@media (max-width: 600px)': {
-            height: {
-              xs: '50vh',
-              sm: '60vh',
-              md: '70vh',
-              lg: '80vh',
-            },
-          },
-        }}
-      >
+    
+        <div style={{paddingTop: "120px", position: "relative" }}>
+        <InfoButton style={{  right: "20px"}} />
+        </div>
+
         <Box
-          m={2}
-          p={3}
-          boxShadow={3}
-          borderRadius={2}
-          backgroundColor="#c8e6c9"
-          sx={{ mb: '20%' }}
+        
+          sx={{
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            '@media (max-width: 600px)': {
+              height: {
+                xs: '50vh',
+                sm: '60vh',
+                md: '70vh',
+                lg: '80vh',
+              },
+            },
+          }}
+        ></Box>
+      
+        <Container
+          maxWidth="lg"
+          sx={{
+            minWidth: '300px',
+            width: '80%',
+            // padding: "15px",
+            marginTop: '0%',
+            // marginBottom: "3%",
+            '@media (max-width: 600px)': {
+              height: {
+                xs: '50vh',
+                sm: '60vh',
+                md: '70vh',
+                lg: '80vh',
+              },
+            },
+          }}
         >
-          <h2>Mis turnos</h2>
+          <Box
+            m={2}
+            p={3}
+            boxShadow={3}
+            borderRadius={2}
+            backgroundColor="#c8e6c9"
+            sx={{ mb: '20%' }}
+          >
+            <h2>Mis turnos</h2>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1%', mb: '7%' }}>
-            <FormControl sx={{ minWidth: 120, mr: '5%' }}>
-              <InputLabel id="specialty-select-label">Especialidad</InputLabel>
-              <Select
-                labelId="specialty-select-label"
-                id="specialty-select"
-                value={selectedSpecialty}
-                label="Especialidad"
-                onChange={(e) => setSelectedSpecialty(e.target.value)}
-                sx={{ minWidth: '260px' }}
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1%', mb: '7%' }}>
+              <FormControl sx={{ minWidth: 120, mr: '5%' }}>
+                <InputLabel id="specialty-select-label">Especialidad</InputLabel>
+                <Select
+                  labelId="specialty-select-label"
+                  id="specialty-select"
+                  value={selectedSpecialty}
+                  label="Especialidad"
+                  onChange={(e) => setSelectedSpecialty(e.target.value)}
+                  sx={{ minWidth: '260px' }}
+                >
+                  <MenuItem value={null}>Todas</MenuItem>
+                  <MenuItem value="Cardiología">Cardiología</MenuItem>
+                  <MenuItem value="Dermatología">Dermatología</MenuItem>
+                  <MenuItem value="Pediatría">Pediatría</MenuItem>
+                  <MenuItem value="Oftalmologia">Oftalmología</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl sx={{ minWidth: 120, ml: '5%', mr: '3%' }}>
+                <InputLabel id="specialty-select-label">Dirección</InputLabel>
+                <Select
+                  labelId="direction-select-label"
+                  id="direction-select"
+                  value={selectedDirection}
+                  label="Dirección"
+                  onChange={(e) => setSelectedDirection(e.target.value)}
+                  sx={{ minWidth: '260px' }}
+                >
+                  <MenuItem value={null}>Todas</MenuItem>
+                  <MenuItem value="Virtual">Virtual</MenuItem>
+                </Select>
+              </FormControl>
+              <Button
+                onClick={() => {
+                  setSelectedSpecialty(null);
+                  setSelectedDirection(null);
+                }}
+                sx={{ gap: 1.3 }}
               >
-                <MenuItem value={null}>Todas</MenuItem>
-                <MenuItem value="Cardiología">Cardiología</MenuItem>
-                <MenuItem value="Dermatología">Dermatología</MenuItem>
-                <MenuItem value="Pediatría">Pediatría</MenuItem>
-                <MenuItem value="Oftalmologia">Oftalmología</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl sx={{ minWidth: 120, ml: '5%', mr: '3%' }}>
-              <InputLabel id="specialty-select-label">Dirección</InputLabel>
-              <Select
-                labelId="direction-select-label"
-                id="direction-select"
-                value={selectedDirection}
-                label="Dirección"
-                onChange={(e) => setSelectedDirection(e.target.value)}
-                sx={{ minWidth: '260px' }}
-              >
-                <MenuItem value={null}>Todas</MenuItem>
-                <MenuItem value="Virtual">Virtual</MenuItem>
-              </Select>
-            </FormControl>
-            <Button
-              onClick={() => {
-                setSelectedSpecialty(null);
-                setSelectedDirection(null);
-              }}
-              sx={{ gap: 1.3 }}
-            >
-              <SettingsBackupRestoreIcon />
-              Restaurar
-            </Button>
-          </Box>
+                <SettingsBackupRestoreIcon />
+                Restaurar
+              </Button>
+            </Box>
 
-          <Box>
-            <Table>
-              <TableHead>
-                {turnos?.filter(
-                  (turno) =>
-                    (turno.especialidad === selectedSpecialty || selectedSpecialty === null) &&
-                    (turno.dirección === selectedDirection || selectedDirection === null)
-                ).length === 0 && (
-                  <Box>
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ display: 'flex', justifyContent: 'center', ml: '20%', mb: '10%' }}
-                    >
-                      No hay resultados para esta búsqueda, toque Restaurar
-                    </Typography>
-                  </Box>
-                )}
-                <TableRow>
-                  <TableCell>Especialidad</TableCell>
-                  <TableCell>Fecha</TableCell>
-                  <TableCell>Hora</TableCell>
-                  <TableCell>Medico</TableCell>
-                  <TableCell>Direccion</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {turnos
-                  ?.filter(
+            <Box>
+              <Table>
+                <TableHead>
+                  {turnos?.filter(
                     (turno) =>
                       (turno.especialidad === selectedSpecialty || selectedSpecialty === null) &&
                       (turno.dirección === selectedDirection || selectedDirection === null)
-                  )
-                  .slice(0, numRows)
-                  .map((turno) => (
-                    <TableRow key={turno.id}>
-                      <TableCell>{turno.especialidad}</TableCell>
-                      <TableCell>{turno.fecha}</TableCell>
-                      <TableCell>{turno.hora}</TableCell>
-                      <TableCell>{turno.médico}</TableCell>
-                      <TableCell>{turno.dirección}</TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
+                  ).length === 0 && (
+                    <Box>
+                      <Typography
+                        variant="subtitle1"
+                        sx={{ display: 'flex', justifyContent: 'center', ml: '20%', mb: '10%' }}
+                      >
+                        No hay resultados para esta búsqueda, toque Restaurar
+                      </Typography>
+                    </Box>
+                  )}
+                  <TableRow>
+                    <TableCell>Especialidad</TableCell>
+                    <TableCell>Fecha</TableCell>
+                    <TableCell>Hora</TableCell>
+                    <TableCell>Medico</TableCell>
+                    <TableCell>Direccion</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {turnos
+                    ?.filter(
+                      (turno) =>
+                        (turno.especialidad === selectedSpecialty || selectedSpecialty === null) &&
+                        (turno.dirección === selectedDirection || selectedDirection === null)
+                    )
+                    .slice(0, numRows)
+                    .map((turno) => (
+                      <TableRow key={turno.id}>
+                        <TableCell>{turno.especialidad}</TableCell>
+                        <TableCell>{turno.fecha}</TableCell>
+                        <TableCell>{turno.hora}</TableCell>
+                        <TableCell>{turno.médico}</TableCell>
+                        <TableCell>{turno.dirección}</TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </Box>
+            <Box display="flex" justifyContent="space-around" alignItems="center">
+              <Button variant="contained" sx={{ margin: '10px' }} onClick={handleShowMoreClick}>
+                Mostrar más
+              </Button>
+            </Box>
           </Box>
-          <Box display="flex" justifyContent="space-around" alignItems="center">
-            <Button variant="contained" sx={{ margin: '10px' }} onClick={handleShowMoreClick}>
-              Mostrar más
-            </Button>
-          </Box>
-        </Box>
-      </Container>
+          
+        </Container>
       <Footer />
     </>
   );
