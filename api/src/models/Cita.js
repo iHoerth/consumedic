@@ -6,7 +6,6 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
-
     },
     fecha:{
       type: DataTypes.DATEONLY,
@@ -23,7 +22,11 @@ module.exports = (sequelize) => {
     respuestaMedico:{
       type: DataTypes.STRING,
       allowNull: true,
-    }
+    },
+    // pagado:{
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: false,
+    // }
   },{
     timestamps: false
   });

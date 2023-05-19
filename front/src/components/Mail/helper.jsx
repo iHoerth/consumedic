@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const URL_MAIL = process.env.URL_MAIL
+
 export const sendMail = (data) => {
   return axios
-    .post("http://localhost:3001/mail", data, {
+    .post(URL_MAIL, data, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
