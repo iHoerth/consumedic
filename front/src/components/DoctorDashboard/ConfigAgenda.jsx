@@ -12,7 +12,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import {Button} from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 
@@ -155,9 +155,13 @@ const ConfigAgenda = ({doctorDetail}) => {
   // }
   return (
     <>
+    <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
+        <Typography style={{fontSize:"larger", fontWeight:"600"}}>Configure sus Días y Horarios de Atención</Typography>
+    </Box>
+    <Divider />
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+        <TableHead style={{ backgroundColor: "lightgray", position: "sticky", top: 0, zIndex:1 }}>
           <TableRow>
             <TableCell>Día</TableCell>
             <TableCell align="center">Atiende S/N</TableCell>
