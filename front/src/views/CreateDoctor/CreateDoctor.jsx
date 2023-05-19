@@ -47,9 +47,6 @@ const CreateDoctor = () => {
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const { createDoctor, doctorDetail } = doctor;
 
-  const [obraSocial, setObraSocial] = useState();
-  const [especialidad, setEspecialidad] = useState();
-
   const [form, setForm] = useState({
     dni: "",
     numeroMatricula: "",
@@ -204,7 +201,7 @@ const CreateDoctor = () => {
     console.log(newDoctor);
     handleCheckedPassword();
     createDoctor(newDoctor);
-    navigate(`/doctorpanel/${doctorDetail.id}`);
+    navigate(`/perfilMedico/`);
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -255,27 +252,6 @@ const CreateDoctor = () => {
 
     validarForm({ ...form, [property]: values });
   };
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/socialSecurity")
-      .then((res) => {
-        setObraSocial(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/specialties")
-      .then((res) => {
-        setEspecialidad(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
 
   return (
     <>
