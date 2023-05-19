@@ -11,13 +11,13 @@ import { Context } from "../../../context/ContextProvider";
 const Profile = ({ doctorDetail }) => {
   const theme = useTheme();
   const { nombre, apellido, direccion, Especialidads, imagen } = doctorDetail;
-  console.log("doctorDetail", doctorDetail);
   const {
     pacientes,
     pacienteHistorial,
     fetchPacientes,
     fetchPacienteHistorial,
   } = useContext(Context)[3];
+
   const opinions = [
     {
       name: "John Doe",
@@ -160,7 +160,7 @@ const Profile = ({ doctorDetail }) => {
         >
           <Typography variant="body2" color="text.secondary">
             Total pascientes
-            <AvatarGroup total={24}>
+            <AvatarGroup total={pacientes.length}>
               <Avatar
                 alt="Remy Sharp"
                 src="https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg"
@@ -182,7 +182,7 @@ const Profile = ({ doctorDetail }) => {
         </Grid>
       </Box>
       <Box sx={{ width: "30%", mt: "40px" }}>
-        <Grid container sx={{}}>
+        <Grid container>
           <Opinions opinions={opinions} />
         </Grid>
       </Box>
