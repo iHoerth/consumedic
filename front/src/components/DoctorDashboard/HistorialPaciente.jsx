@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { Context } from '../../context/ContextProvider';
 
-import { Divider, ListItem } from "@mui/material";
+import { Divider, ListItem, TextField } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -18,12 +18,24 @@ import { Button, Box, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
-import { fontWeight } from "@mui/system";
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 
 const HistorialPaciente = () => {
-    const {pacienteHistorial, setVista} = useContext(Context)[3];
+    const {pacienteHistorial, setVista, postDocumentosCita, postRespuestaCita,fetchPacienteHistorial} = useContext(Context)[3];
     const [loading, setLoading] = useState(true);
+    const [openResponse, setOpenResponse] = useState(false)
+    const [openDocuments, setOpenDocuments] = useState(false)
+    const [files64, setFiles64]=useState()
+    const [respuesta, setRespuesta]=useState()
+    const [currentCita,setCurrentCita]=useState(0)
 
     useEffect(() => {
         if (pacienteHistorial){
@@ -32,13 +44,71 @@ const HistorialPaciente = () => {
         console.log(pacienteHistorial);
     }, [loading, pacienteHistorial]);
 
-    const handleClickBack = async (event) =>{
+    useEffect(() => {
+        fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
+    }, [openResponse,openDocuments]);
+
+    const handleClickBack = async () =>{
         setVista(6)
     }
 
-    const handleClick = (event)=>{
-        console.log(event.target);
+    const handleClickOpen = (event)=>{
+        console.log(event.target.id);
+        console.log(event.target.name);
+        if(event.target.name!=="documentos"){
+            setOpenResponse(true)
+        }
+        else{
+            setOpenDocuments(true)
+        }
+        setCurrentCita(event.target.id)
     }
+    const handleClose = (event)=>{
+        const idCita=currentCita; 
+        const name=event.target.name;
+        console.log(idCita);
+        if(name==="respuesta"){
+            // setOpenResponse(false)
+            console.log("Post Respuesta");
+            postRespuestaCita(idCita, respuesta)
+            
+            fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
+            // fetch citas doctor y paciente
+        }
+        if(name==="documentos"){
+            // setOpenDocuments(false)
+            console.log("Post Documentos");
+            // console.log(files64);
+            postDocumentosCita(idCita,files64, pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
+            // fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
+            // fetch citas doctor y paciente???
+        }
+        setOpenResponse(false)
+        setOpenDocuments(false)
+        console.log("Final");
+        setCurrentCita(0)
+
+    }
+
+    const handleSelectedFile = (event) => {
+        setFiles64()
+        const file = event.target.files[0];
+        console.log(file);
+        setFilesToBase(file)
+    };
+    const setFilesToBase = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setFiles64(reader.result)
+        }
+    };
+
+    const handleText = (event)=>{
+        const value = event.target.value;
+        setRespuesta(value);
+    }
+
     return ( 
         <>
             <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
@@ -86,6 +156,7 @@ const HistorialPaciente = () => {
                             <TableCell align="center">Devolución del Medico</TableCell>
                             <TableCell align="center">Documentos Relacionados</TableCell>
                             <TableCell align="center">Acciones</TableCell>
+                            <TableCell align="center">ID CITA</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -98,30 +169,83 @@ const HistorialPaciente = () => {
                                     <TableCell align="center">Documentos</TableCell>
                                     <TableCell align="center">
                                         <Button 
-                                            id={pacienteHistorial.paciente.id} 
-                                            onClick={handleClick} 
+                                            id={cita.id} 
+                                            onClick={handleClickOpen} 
                                             variant="outlined" 
                                             size="small" 
+                                            name="respuesta"
                                             disabled={cita.respuestaMedico!== null && true}
                                         >
                                             Dar Respuesta
                                         </Button>
                                         <Button 
-                                            id={pacienteHistorial.paciente.id} 
-                                            onClick={handleClick} 
+                                            id={cita.id} 
+                                            onClick={handleClickOpen} 
                                             variant="outlined" 
                                             size="small" 
-                                            disabled={cita.respuestaMedico!== null && true}
+                                            name="documentos"
                                             sx={{ml:"10px"}}
                                         >
-                                            Subir Documentos
+                                            Subir Documento
                                         </Button>
+                                        <Dialog open={openResponse} onClose={handleClose}>
+                                            <DialogTitle>Respuesta</DialogTitle>
+                                            <DialogContent>
+                                                <DialogContentText>
+                                                    Escriba una respuesta de la visita con lo indicado al paciente
+                                                </DialogContentText>
+                                            </DialogContent>
+                                            <TextField 
+                                                autoFocus
+                                                margin="dense"
+                                                id={cita.id}
+                                                label="Escriba aqui"
+                                                variant="standard"
+                                                sx={{margin:"0 10px 0 10px"}}
+                                                onChange={handleText}
+                                            />
+                                        <DialogActions>
+                                            <Button onClick={handleClose}>Cancelar</Button>
+                                            <Button id={cita.id} name="respuesta" variant="contained" onClick={handleClose}>Registrar</Button>
+                                        </DialogActions>
+                                        </Dialog>
+                                        <Dialog open={openDocuments} onClose={handleClose}>
+                                            <DialogTitle>Agregar Documento</DialogTitle>
+                                            <DialogContent>
+                                                <DialogContentText>
+                                                    Seleccione el archivo a subir (solo formato imagen)
+                                                </DialogContentText>
+                                            </DialogContent>
+                                            <Box sx={{display:"flex", justifyContent:"center", mb:"20px"}}>
+                                                <input 
+                                                    type="file" 
+                                                    accept="image/*"
+                                                    style={{display: "none"}}
+                                                    id="archivos" name="archivos" 
+                                                    onChange={handleSelectedFile} 
+                                                />
+                                                <label htmlFor="archivos">
+                                                    <Button
+                                                        variant="contained"
+                                                        component="span"
+                                                        startIcon={<PhotoCamera />}
+                                                    >
+                                                        Archivo
+                                                    </Button>
+                                                </label>
+                                            </Box>
+                                        <DialogActions>
+                                            <Button onClick={handleClose}>Cancelar</Button>
+                                            <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose}>Registrar</Button>
+                                        </DialogActions>
+                                        </Dialog>
                                     </TableCell>
+                                    <TableCell>{cita.id}</TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>
                 </Table>
-            </TableContainer>
+            </TableContainer>           
         </>
     )
 }

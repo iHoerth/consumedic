@@ -1,4 +1,4 @@
-const { Cita, PacienteType } = require("../../db");
+const { Cita, PacienteType, Documento } = require("../../db");
 
 const getPatientHistory = async (idMedico, idPaciente) => {
 
@@ -8,6 +8,19 @@ const getPatientHistory = async (idMedico, idPaciente) => {
         PacienteTypeId: idPaciente
      },
   });
+  console.log(citas);
+  let documentos = []
+  for(let i=0;i<citas.length;i++){
+    const documentoCita = await Documento.findAll({
+      where: {
+          CitumId: citas[i].dataValues.id,
+          DoctorTypeId: idMedico,
+          PacienteTypeId: idPaciente
+       },
+    });
+    documentos.push(documentoCita)
+    citas[i].dataValues.documentos=documentoCita;
+  }
   const paciente = await PacienteType.findOne({ 
     where: { 
         id: idPaciente,
