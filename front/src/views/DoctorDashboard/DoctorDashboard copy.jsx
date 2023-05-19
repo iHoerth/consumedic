@@ -66,18 +66,12 @@ const DoctorDashboard = () => {
             sx={{ border: "1px solid", borderColor: "#bababa" }}
             divider={<Divider orientation="vertical" flexItem />}
           >
-            <Box
-              sx={{
-                height: "88vh",
-                width: "150px",
-                backgroundColor: theme.palette.secondary.dark,
-              }}
-            >
+            <Box sx={{ height: "85vh", width: "150px" }}>
               <List
                 sx={{
                   width: "100%",
                   maxWidth: 360,
-                  backgroundColor: theme.palette.secondary.dark,
+                  bgcolor: "background.paper",
                 }}
                 component="nav"
                 aria-labelledby="list-subheader"
@@ -162,7 +156,7 @@ const DoctorDashboard = () => {
                 m: "10px",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "top",
+                justifyContent: "center",
                 alignItems: "center",
               }}
             >
