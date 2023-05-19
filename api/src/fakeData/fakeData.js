@@ -3,7 +3,7 @@ const db = require("../db");
 
 const createFakeData = async () => {
   //! Modificar Cantidad de Pacientes y Medicos de ser necesarios
-  let docsAndPatients = 31;
+  let docsAndPatients = 200;
   //! *******************
 
   // Crear Especialidades

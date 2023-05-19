@@ -16,11 +16,11 @@ const server = express();
 server.use(express.json());
 server.use(cors());
 server.use(morgan('dev'));
-
+//
 
 server.use('/', routes);
 
-conn.sync({ force: true }).then(async () => {
+conn.sync().then(async () => {
     console.log('Database connected');
     server.listen(port, () => {
         console.log('Server raised on port ' + port);
