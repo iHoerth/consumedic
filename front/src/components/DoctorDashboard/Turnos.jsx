@@ -9,7 +9,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button } from '@mui/material';
+
+import { Button, Box, Typography, Divider } from '@mui/material';
 
 
 
@@ -36,11 +37,15 @@ const Turnos = ({id}) => {
     }
     return ( 
         <>
+            <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
+                <Typography style={{fontSize:"larger", fontWeight:"600"}}>Listado de Turnos</Typography>
+            </Box>
+            <Divider />
             <TableContainer component={Paper}>
                 <Table>
-                    <TableHead>
+                    <TableHead style={{ backgroundColor: "lightgray", position: "sticky", top: 0, zIndex:1 }}>
                         <TableRow>
-                            <TableCell key="nombre" align="center">Fecha</TableCell>
+                            <TableCell key="nombre" align="left">Fecha</TableCell>
                             <TableCell key="apellido" align="center">Hora</TableCell>
                             <TableCell align="center">Paciente</TableCell>
                             <TableCell align="center">Nota del Paciente</TableCell>
@@ -50,7 +55,7 @@ const Turnos = ({id}) => {
                     <TableBody>
                             {turnos.map(turno => (
                                 <TableRow>
-                                    <TableCell align="center">{turno.fecha}</TableCell>
+                                    <TableCell align="left">{turno.fecha}</TableCell>
                                     <TableCell align="center">{turno.hora}</TableCell>
                                     <TableCell align="center">{`${turno.paciente.nombre} ${turno.paciente.apellido}`}</TableCell>
                                     <TableCell align="center">{turno.descripcion}</TableCell>

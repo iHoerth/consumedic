@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button } from '@mui/material';
+import { Button, Box, Typography, Divider } from '@mui/material';
 
 
 
@@ -39,12 +39,16 @@ const Pacientes = ({id}) => {
     
     return ( 
         <>
+            <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
+                <Typography style={{fontSize:"larger", fontWeight:"600"}}>Listado de Pacientes</Typography>
+            </Box>
+            <Divider />
             <TableContainer component={Paper}>
                 <Table>
-                    <TableHead>
+                    <TableHead style={{ backgroundColor: "lightgray", position: "sticky", top: 0, zIndex:1 }}>
                         <TableRow>
-                            <TableCell key="nombre" align="center">Nombre</TableCell>
-                            <TableCell key="apellido" align="center">Apellido</TableCell>
+                            <TableCell key="nombre" align="left">Nombre y Apellido</TableCell>
+                            {/* <TableCell key="apellido" align="center">Apellido</TableCell> */}
                             <TableCell align="center">DNI</TableCell>
                             <TableCell align="center">Obra Social</TableCell>
                             <TableCell align="center">Telefono</TableCell>
@@ -55,8 +59,8 @@ const Pacientes = ({id}) => {
                     <TableBody>
                             { pacientes.map(paciente => (
                                 <TableRow>
-                                    <TableCell align="center">{paciente.nombre}</TableCell>
-                                    <TableCell align="center">{paciente.apellido}</TableCell>
+                                    <TableCell align="left">{paciente.nombre} {paciente.apellido}</TableCell>
+                                    {/* <TableCell align="center">{paciente.apellido}</TableCell> */}
                                     <TableCell align="center">{paciente.dni}</TableCell>
                                     <TableCell align="center">{paciente.ObraSocialId.nombre}</TableCell>
                                     <TableCell align="center">{paciente.telefono}</TableCell>
