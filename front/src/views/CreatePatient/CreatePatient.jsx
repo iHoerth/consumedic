@@ -20,6 +20,8 @@ import axios from "axios";
 import Footer from "../../components/Footer/Footer";
 
 import create31 from "../../assets/Img/create31.jpg";
+// import { GoogleLogin } from "react-google-login";
+
 
 const CreatePatient = () => {
   const navigate = useNavigate();
@@ -156,6 +158,18 @@ const CreatePatient = () => {
         console.error(err);
       });
   }, []);
+
+
+  const responseGoogle = (response) => {
+    const { givenName, familyName, email } = response.profileObj;
+    setForm({
+      ...form,
+      nombre: givenName,
+      apellido: familyName,
+      email: email,
+    });
+  };
+
 
   return (
     <>
@@ -415,6 +429,13 @@ const CreatePatient = () => {
               >
                 Crear usuario
               </Button>
+              {/* <GoogleLogin
+                clientId="YOUR_GOOGLE_CLIENT_ID"
+                buttonText="Registrarse con Google"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={"single_host_origin"}
+              /> */}
             </FormControl>
           </form>
         </Container>

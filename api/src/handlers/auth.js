@@ -143,6 +143,71 @@ async function loginPatient(req, res) {
   }
 }
 
+
+// async function loginPatient(req, res) {
+//   const { email, password, tokenId } = req.body;
+//   console.log(tokenId, " - ", req.body);
+  
+//   try {
+//     if (tokenId) {
+//       console.log("acaaaaaa");
+//       const ticket = await client.verifyIdToken({
+//         idToken: tokenId,
+//         audience: GOOGLE_CLIENT_ID,
+//       });
+
+//       const payload = ticket.getPayload();
+//       const googleEmail = payload.email;
+
+//       let patient = await PacienteType.findOne({
+//         where: { email: googleEmail },
+//       });
+
+//       if (!patient) {
+//         Create a new patient using the Gmail data
+//         const hashedPassword = await bcrypt.hash(googleEmail, 10);
+
+//         const newObraSocial = await ObraSocial.findByPk(idObraSocial);
+//         patient = await PacienteType.create({
+//           dni: "",
+//           email: googleEmail,
+//           password: hashedPassword,
+//           telefono: "",
+//           nombre: payload.given_name,
+//           apellido: payload.family_name,
+//           ObraSocialId: newObraSocial.id,
+//         });
+//       }
+
+//       const token = generateToken(patient);
+//       res.json({ token, isDoctor: false });
+//     } else {
+//       console.log("aqqqqquuuiiiii");
+
+//       const patient = await PacienteType.findOne({
+//         where: { email: email },
+//       });
+
+//       if (!patient) {
+//         return res.status(404).json({ message: "Patient not found" });
+//       }
+
+//       const isMatch = await bcrypt.compare(password, patient.password);
+
+//       if (!isMatch) {
+//         return res.status(401).json({ message: "Invalid credentials" });
+//       }
+
+//       const token = generateToken(patient);
+//       res.json({ token, isDoctor: false });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// }
+
+
 module.exports = {
   loginDoctor,
   loginPatient,

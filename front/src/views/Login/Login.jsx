@@ -228,8 +228,8 @@ const Userlogin = () => {
               Ingresar
             </Button>
             <GoogleLogin
-              clientId={clientID}
-              //clientId="508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com"
+              // clientId={clientID}
+              clientId="508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com"
               buttonText="Iniciar sesión con Google"
               onSuccess={onSuccess}
               onFailure={onFailure}
