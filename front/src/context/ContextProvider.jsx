@@ -13,6 +13,7 @@ const URL_DOCTORS = `http://localhost:3001/doctors`;
 const URL_SPECIALTIES = `http://localhost:3001/specialties`;
 const URL_SOCIALSECURITY = `http://localhost:3001/socialSecurity`;
 const URL_PERFILMEDICO= `http://localhost:3001/perfilMedico`
+const URL_TURNOS=`http://localhost:3001/appointments`
 
 const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
@@ -164,8 +165,9 @@ const ContextProvider = ({ children }) => {
 
   const [panelMedico, setPanelMedico] = useState({
     pacientes: [],
-    pacienteHistorial: [],
-    view: 0,
+    pacienteHistorial: {},
+    turnos: [],
+    vista: 0,
 
     
     fetchPacientes: async (id) => {
@@ -179,13 +181,20 @@ const ContextProvider = ({ children }) => {
       const pacienteHistorialData = (await axios(`${URL_PERFILMEDICO}/${idMedico}/pacientes/${idPaciente}`)).data;
       setPanelMedico((prevState) => ({
         ...prevState,
-        pacienteHistorial: [...pacienteHistorialData],
+        pacienteHistorial: pacienteHistorialData,
       }));
     },
-    setView: (view) =>{
+    fetchTurnos: async (id)=>{
+      const turnosData = (await axios(`${URL_TURNOS}/doctor/${id}`)).data;
       setPanelMedico((prevState) => ({
         ...prevState,
-        view: view,
+        turnos: turnosData,
+      }));
+    },
+    setVista: (vista) =>{
+      setPanelMedico((prevState) => ({
+        ...prevState,
+        vista: vista,
       }));
     }
 

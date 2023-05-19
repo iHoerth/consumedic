@@ -146,13 +146,13 @@ const ConfigAgenda = ({doctorDetail}) => {
     }
 
 
-  if(doctorDetail.calendar.length>0){
-    return ( 
-      <>
-        <Typography>Ya tiene configurada una agenda</Typography>
-      </>
-    )
-  }
+  // if(doctorDetail.calendar.length>0){
+  //   return ( 
+  //     <>
+  //       <Typography>Ya tiene configurada una agenda</Typography>
+  //     </>
+  //   )
+  // }
   return (
     <>
     <TableContainer component={Paper}>
