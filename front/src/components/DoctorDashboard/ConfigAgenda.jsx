@@ -18,6 +18,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 import axios from "axios";
 
+const URL_POSTAGENDA = process.env.URL_POSTAGENDA
 
 
 const ConfigAgenda = ({doctorDetail}) => {
@@ -138,7 +139,7 @@ const ConfigAgenda = ({doctorDetail}) => {
     //! ACA DEBERIAMOS ENVIAR ESTO AL CONTEXT 
     const postAgenda = async (agenda, id) => {
         try {
-            const post = await axios.post("http://localhost:3001/horarios/bulk", {agenda, id})
+            const post = await axios.post(URL_POSTAGENDA, {agenda, id})
             console.log(post.data);
         } catch (error) {
             console.log(error);

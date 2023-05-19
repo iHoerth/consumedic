@@ -1,6 +1,6 @@
-import React from "react";
-import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   TextField,
   MenuItem,
@@ -13,56 +13,53 @@ import {
   Container,
   Select,
   InputLabel,
-} from "@mui/material";
-import NavBar from "../../components/NavBar/NavBar";
-import { Context } from "../../context/ContextProvider";
-import axios from "axios";
-import Footer from "../../components/Footer/Footer";
+} from '@mui/material';
+import NavBar from '../../components/NavBar/NavBar';
+import { Context } from '../../context/ContextProvider';
+import { UtilitiesContext } from '../../context/ContextProvider';
+import Footer from '../../components/Footer/Footer';
 
-import create31 from "../../assets/Img/create31.jpg";
+import create31 from '../../assets/Img/create31.jpg';
 
 const CreatePatient = () => {
   const navigate = useNavigate();
-  const patients = useContext(Context)[1];
-  const { createPatient, patientDetail } = patients;
+  const { createPatient, patientDetail } = useContext(Context)[1];
+  const { socialSecurity, specialties } = useContext(UtilitiesContext);
+
+  //! hacer que loguee en cuanto se crea
+  //! hacer que loguee en cuanto se crea
+  //! hacer que loguee en cuanto se crea
+  //! hacer que loguee en cuanto se crea
+  //! hacer que loguee en cuanto se crea
 
   const [form, setForm] = useState({
-    nombre: "",
-    apellido: "",
-    idObraSocial: "",
-    dni: "",
-    email: "",
-    telefono: "",
-    password: "",
-    confirmPassword: "",
+    nombre: '',
+    apellido: '',
+    idObraSocial: '',
+    dni: '',
+    email: '',
+    telefono: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const [error, setError] = useState({
-    nombre: "",
-    apellido: "",
-    idObraSocial: "",
-    dni: "",
-    email: "",
-    telefono: "",
-    password: "",
-    confirmPassword: "",
+    nombre: '',
+    apellido: '',
+    idObraSocial: '',
+    dni: '',
+    email: '',
+    telefono: '',
+    password: '',
+    confirmPassword: '',
   });
 
-  const [obraSocial, setObraSocial] = useState();
-
-  //
-
-  // const ObraSocialSelect = ({ obraSocial, form, handleFormChange, error }) => {
-  //   const [selectedValue, setSelectedValue] = useState(form.obraSocial)
-  // };
 
   const handleSelectChange = (event) => {
     const { name, value } = event.target;
-    // setSelectedValue(value);
     handleFormChange({ target: { name, value } });
   };
 
-  //
 
   const handleFormChange = (event) => {
     const property = event.target.name;
@@ -79,45 +76,45 @@ const CreatePatient = () => {
     const errors = {};
 
     if (!form.nombre) {
-      errors.nombre = "El campo nombre es requerido";
+      errors.nombre = 'El campo nombre es requerido';
     }
 
     if (!form.apellido) {
-      errors.apellido = "El campo apellido es requerido";
+      errors.apellido = 'El campo apellido es requerido';
     }
 
     if (!form.email) {
-      errors.email = "El campo email es requerido";
+      errors.email = 'El campo email es requerido';
     } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-      errors.email = "El email ingresado no es válido";
+      errors.email = 'El email ingresado no es válido';
     }
 
     if (!form.telefono) {
-      errors.telefono = "El campo teléfono es requerido";
+      errors.telefono = 'El campo teléfono es requerido';
     } else if (!/^\d{10}$/.test(form.phone)) {
-      errors.phone = "El número de teléfono debe contener 10 dígitos";
+      errors.phone = 'El número de teléfono debe contener 10 dígitos';
     }
 
     if (!form.idObraSocial) {
-      errors.idObraSocial = "El campo obra social es requerido";
+      errors.idObraSocial = 'El campo obra social es requerido';
     }
 
     if (!form.dni) {
-      errors.dni = "El campo número de documento es requerido";
+      errors.dni = 'El campo número de documento es requerido';
     } else if (!/^\d{7,8}$/.test(form.dni)) {
-      errors.dni = "El número de documento debe contener entre 7 y 8 dígitos";
+      errors.dni = 'El número de documento debe contener entre 7 y 8 dígitos';
     }
 
     if (!form.password) {
-      errors.password = "El campo contraseña es requerido";
+      errors.password = 'El campo contraseña es requerido';
     } else if (form.password.length < 8) {
-      errors.password = "La contraseña debe contener al menos 8 caracteres";
+      errors.password = 'La contraseña debe contener al menos 8 caracteres';
     }
 
     if (!form.confirmPassword) {
-      errors.confirmPassword = "El campo confirmar contraseña es requerido";
+      errors.confirmPassword = 'El campo confirmar contraseña es requerido';
     } else if (form.confirmPassword !== form.password) {
-      errors.confirmPassword = "Las contraseñas no coinciden";
+      errors.confirmPassword = 'Las contraseñas no coinciden';
     }
     setError(errors);
     return Object.keys(errors).length === 0;
@@ -129,14 +126,14 @@ const CreatePatient = () => {
     setError(errors);
     handleCheckedPassword();
     createPatient({ ...form, isDoctor: false });
-    navigate(`/patientpanel/${patientDetail.id}`);
+    navigate(`/patientpanel/`);
   }
 
   const handleCheckedPassword = () => {
     if (form.password !== form.confirmPassword) {
-      setError({ ...error, confirmPassword: "Las contraseñas no coinciden" });
+      setError({ ...error, confirmPassword: 'Las contraseñas no coinciden' });
     } else {
-      setError({ ...error, confirmPassword: "" });
+      setError({ ...error, confirmPassword: '' });
     }
   };
 
@@ -146,16 +143,6 @@ const CreatePatient = () => {
     setShowPassword(!showPassword);
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/socialSecurity")
-      .then((res) => {
-        setObraSocial(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
 
   return (
     <>
@@ -163,51 +150,49 @@ const CreatePatient = () => {
       <Box
         sx={{
           backgroundImage: `url('${create31}')`,
-          backgroundPosition: "center",
-          // backgroundPositionY: "10%",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          // backgroundAttachment: "fixed",
-          position: "relative",
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          position: 'relative',
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifycontent: "space-between",
-          alignItems: "center",
-          flexDirection: "column",
-          paddingBottom: "20%",
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          justifycontent: 'space-between',
+          alignItems: 'center',
+          flexDirection: 'column',
+          paddingBottom: '20%',
         }}
       >
         <Container
           component={Paper}
           elevation={5}
           sx={{
-            display: "flex",
-            justifycontent: "space-between",
-            alignItems: "center",
-            flexDirection: "column",
-            minWidth: "300px",
-            width: "500px",
-            padding: "10px",
-            marginTop: "10%",
-            marginBottom: "3%",
+            display: 'flex',
+            justifycontent: 'space-between',
+            alignItems: 'center',
+            flexDirection: 'column',
+            minWidth: '300px',
+            width: '500px',
+            padding: '10px',
+            marginTop: '10%',
+            marginBottom: '3%',
           }}
         >
           <form onSubmit={handleSubmit}>
             <FormControl
               variant="outlined"
               sx={{
-                minWidth: "300px",
-                marginBottom: "10%",
+                minWidth: '300px',
+                marginBottom: '10%',
               }}
               required
             >
               <Typography
                 variant="h6"
                 align="center"
-                sx={{ marginTop: "50px", marginBottom: "30px" }}
+                sx={{ marginTop: '50px', marginBottom: '30px' }}
               >
                 Crear nuevo usuario
               </Typography>
@@ -221,16 +206,11 @@ const CreatePatient = () => {
                 value={form.nombre}
                 name="nombre"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "110px", width: "400px" }}
+                sx={{ height: '110px', width: '400px' }}
                 helperText={
-                  error.nombre ? (
-                    <Typography color="error">{error.nombre}</Typography>
-                  ) : (
-                    ""
-                  )
+                  error.nombre ? <Typography color="error">{error.nombre}</Typography> : ''
                 }
                 required
-                
               />
 
               {/* Apellido */}
@@ -242,13 +222,9 @@ const CreatePatient = () => {
                 value={form.apellido}
                 name="apellido"
                 onChange={(event) => handleFormChange(event)}
-                sx={{height: "110px", width: "400px" }}
+                sx={{ height: '110px', width: '400px' }}
                 helperText={
-                  error.apellido ? (
-                    <Typography color="error">{error.apellido}</Typography>
-                  ) : (
-                    ""
-                  )
+                  error.apellido ? <Typography color="error">{error.apellido}</Typography> : ''
                 }
                 required
               />
@@ -262,14 +238,14 @@ const CreatePatient = () => {
                 value={form.email}
                 name="email"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "110px", width: "400px" }}
+                sx={{ height: '110px', width: '400px' }}
                 helperText={
                   error.email ? (
                     <Typography color="error">{error.email}</Typography>
                   ) : error.vacio ? (
                     <Typography>{error.vacio}</Typography>
                   ) : (
-                    ""
+                    ''
                   )
                 }
                 required
@@ -284,20 +260,16 @@ const CreatePatient = () => {
                 value={form.telefono}
                 name="telefono"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "110px", width: "400px" }}
+                sx={{ height: '110px', width: '400px' }}
                 helperText={
-                  error.telefono ? (
-                    <Typography color="error">{error.telefono}</Typography>
-                  ) : (
-                    ""
-                  )
+                  error.telefono ? <Typography color="error">{error.telefono}</Typography> : ''
                 }
                 required
               />
 
               {/* Obra Social */}
 
-              <FormControl sx={{ minWidth: 200, height: "100px" }}>
+              <FormControl sx={{ minWidth: 200, height: '100px' }}>
                 <InputLabel id="obra-social-label" color="secondary">
                   Obra Social
                 </InputLabel>
@@ -313,8 +285,8 @@ const CreatePatient = () => {
                   <MenuItem value="">
                     <em>Seleccionar Obra Social</em>
                   </MenuItem>
-                  {obraSocial ? (
-                    obraSocial.map((item) => (
+                  {socialSecurity ? (
+                    socialSecurity.map((item) => (
                       <MenuItem key={item.id} value={item.id}>
                         {item.nombre}
                       </MenuItem>
@@ -325,9 +297,7 @@ const CreatePatient = () => {
                     </MenuItem>
                   )}
                 </Select>
-                {error.idObraSocial && (
-                  <Typography error={true}>{error.idObraSocial}</Typography>
-                )}
+                {error.idObraSocial && <Typography error={true}>{error.idObraSocial}</Typography>}
               </FormControl>
 
               {/* Documento */}
@@ -340,14 +310,8 @@ const CreatePatient = () => {
                 value={form.dni}
                 name="dni"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "110px", width: "400px" }}
-                helperText={
-                  error.dni ? (
-                    <Typography color="error">{error.dni}</Typography>
-                  ) : (
-                    ""
-                  )
-                }
+                sx={{ height: '110px', width: '400px' }}
+                helperText={error.dni ? <Typography color="error">{error.dni}</Typography> : ''}
                 required
               />
 
@@ -355,19 +319,15 @@ const CreatePatient = () => {
 
               <TextField
                 id="password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 label="Password"
                 color="secondary"
                 value={form.password}
                 name="password"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "110px", width: "400px" }}
+                sx={{ height: '110px', width: '400px' }}
                 helperText={
-                  error.password ? (
-                    <Typography color="error">{error.password}</Typography>
-                  ) : (
-                    ""
-                  )
+                  error.password ? <Typography color="error">{error.password}</Typography> : ''
                 }
                 required
               />
@@ -376,20 +336,18 @@ const CreatePatient = () => {
 
               <TextField
                 id="confirmPassword"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 label="Confirmar password"
                 color="secondary"
                 value={form.confirmPassword}
                 name="confirmPassword"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: "110px", width: "400px" }}
+                sx={{ height: '110px', width: '400px' }}
                 helperText={
                   error.confirmPassword ? (
-                    <Typography color="error">
-                      {error.confirmPassword}
-                    </Typography>
+                    <Typography color="error">{error.confirmPassword}</Typography>
                   ) : (
-                    ""
+                    ''
                   )
                 }
                 required
@@ -408,7 +366,7 @@ const CreatePatient = () => {
               <br />
               <br />
               <Button
-                sx={{ marginBottom: "10px" }}
+                sx={{ marginBottom: '10px' }}
                 variant="contained"
                 color="primary"
                 type="submit"
