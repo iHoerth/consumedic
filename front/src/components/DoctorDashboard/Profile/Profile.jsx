@@ -6,11 +6,16 @@ import Avatar from "@mui/material/Avatar";
 import Opinions from "../../Opinions/Opinions";
 import { useTheme } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
-import { Context } from '../../../context/ContextProvider';
+import { Context } from "../../../context/ContextProvider";
 
 const Profile = () => {
   const theme = useTheme();
-  const { pacientes, pacienteHistorial, fetchPacientes, fetchPacienteHistorial} = useContext(Context)[3];
+  const {
+    pacientes,
+    pacienteHistorial,
+    fetchPacientes,
+    fetchPacienteHistorial,
+  } = useContext(Context)[3];
   const opinions = [
     {
       name: "John Doe",
@@ -70,7 +75,7 @@ const Profile = () => {
       >
         <CardContent
           sx={{
-            bgcolor: theme.palette.primary.light,
+            bgcolor: theme.palette.secondary.dark,
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
@@ -171,7 +176,7 @@ const Profile = () => {
           </Typography>
         </Grid>
       </Box>
-      <Box sx={{ width: "70%", mt: "40px" }}>
+      <Box sx={{ width: "30%", mt: "40px" }}>
         <Grid container sx={{}}>
           <Opinions opinions={opinions} />
         </Grid>

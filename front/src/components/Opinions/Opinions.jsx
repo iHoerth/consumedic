@@ -28,7 +28,8 @@ export default function TextMobileStepper({ opinions }) {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-start",
+
         border: "solid 1px",
         padding: "25px",
         borderRadius: "10px",
@@ -50,7 +51,7 @@ export default function TextMobileStepper({ opinions }) {
           alignItems: "center",
           height: 30,
           pl: 2,
-          bgcolor: theme.palette.primary.light,
+          bgcolor: theme.palette.secondary.dark,
           borderRadius: "10px",
           p: "25px",
           width: "100%",
@@ -67,7 +68,12 @@ export default function TextMobileStepper({ opinions }) {
         </Typography>
       </Paper>
       <Box component="fieldset" mb={1} borderColor="transparent">
-        <Rating name="stars" value={opinions[activeStep].stars} readOnly />
+        <Rating
+          name="stars"
+          sx={{ color: theme.palette.secondary.dark }}
+          value={opinions[activeStep].stars}
+          readOnly
+        />
       </Box>
       <Box
         sx={{
@@ -75,6 +81,7 @@ export default function TextMobileStepper({ opinions }) {
           overflow: "hidden",
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
+          pb: "30px",
         }}
       >
         {opinions[activeStep].text}
