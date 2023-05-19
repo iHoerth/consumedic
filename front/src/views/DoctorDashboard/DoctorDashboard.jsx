@@ -163,7 +163,7 @@ const DoctorDashboard = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "top",
-                alignItems: "center",
+                alignItems: "left",
               }}
             >
               {loading ? (
