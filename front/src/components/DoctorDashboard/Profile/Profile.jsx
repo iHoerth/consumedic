@@ -8,8 +8,10 @@ import { useTheme } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../../context/ContextProvider";
 
-const Profile = () => {
+const Profile = ({ doctorDetail }) => {
   const theme = useTheme();
+  const { nombre, apellido, direccion, Especialidads, imagen } = doctorDetail;
+  console.log("doctorDetail", doctorDetail);
   const {
     pacientes,
     pacienteHistorial,
@@ -87,7 +89,7 @@ const Profile = () => {
         >
           <Avatar
             alt="Remy Sharp"
-            src="https://cloudfront-us-east-1.images.arcpublishing.com/infobae/5KCVGAGSP5HFJA7KMALNP7ITS4.jpg"
+            src={imagen}
             sx={{
               width: 200,
               height: 200,
@@ -107,7 +109,7 @@ const Profile = () => {
           >
             <Grid item xs>
               <Typography gutterBottom variant="h4" component="div">
-                Hola Dr. Juan Perez
+                Hola Dr. {nombre + " " + apellido}
               </Typography>
               <Typography color="text.secondary" variant="body2">
                 Aqui puede ver todos sus datos.
@@ -132,7 +134,7 @@ const Profile = () => {
           }}
         >
           <Typography gutterBottom variant="h5" component="div">
-            Juan Perez
+            {nombre + " " + apellido}
           </Typography>
           <Typography
             variant="body2"
@@ -141,10 +143,13 @@ const Profile = () => {
               pb: "1px",
             }}
           >
-            Medico Gastroenterologo
+            {doctorDetail.Especialidads?.length &&
+              doctorDetail.Especialidads.map((item, index) => (
+                <span key={index}>{item.name}</span>
+              ))}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Buenos aires
+            {direccion}
           </Typography>
         </Grid>
         <Grid
