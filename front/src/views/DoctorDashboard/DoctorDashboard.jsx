@@ -5,6 +5,7 @@ import Loading from "../../components/Loading/Loading";
 import ConfigAgenda from "../../components/DoctorDashboard/ConfigAgenda";
 import Profile from "../../components/DoctorDashboard/Profile/Profile";
 import Pacientes from "../../components/DoctorDashboard/Pacientes";
+import { useTheme } from "@mui/material";
 
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/ContextProvider";
@@ -17,6 +18,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
 const DoctorDashboard = () => {
+  const theme = useTheme();
   const [view, setView] = useState(0);
   const { session } = useContext(Context)[2];
   const { fetchDoctorByEmail, doctorDetail } = useContext(Context)[0];
@@ -62,12 +64,18 @@ const DoctorDashboard = () => {
             sx={{ border: "1px solid", borderColor: "#bababa" }}
             divider={<Divider orientation="vertical" flexItem />}
           >
-            <Box sx={{ height: "85vh", width: "150px" }}>
+            <Box
+              sx={{
+                height: "88vh",
+                width: "150px",
+                backgroundColor: theme.palette.secondary.dark,
+              }}
+            >
               <List
                 sx={{
                   width: "100%",
                   maxWidth: 360,
-                  bgcolor: "background.paper",
+                  backgroundColor: theme.palette.secondary.dark,
                 }}
                 component="nav"
                 aria-labelledby="list-subheader"
@@ -162,7 +170,7 @@ const DoctorDashboard = () => {
                 <>
                   {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
                   {view === 0 ? (
-                    <Profile doctorDetail={doctorDetail}/>
+                    <Profile doctorDetail={doctorDetail} />
                   ) : view === 3 ? (
                     <ConfigAgenda doctorDetail={doctorDetail} />
                   ) : view === 6 ? (
