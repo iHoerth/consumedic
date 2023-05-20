@@ -1,4 +1,4 @@
-const { Cita, DoctorType, ObraSocial, Especialidad, Opinion } = require("../../db");
+const { Cita, DoctorType, ObraSocial, Especialidad, Opinion, Documento } = require("../../db");
 
 const getAllDoctorsByPatient = async (id) => {
   const citas = await Cita.findAll({
@@ -30,7 +30,10 @@ const getAllDoctorsByPatient = async (id) => {
               {model: Cita,
                 where:{
                       PacienteTypeId: id
-                    }
+                },
+                include: [
+                  {model: Documento}
+                ]
               },
             ]
          });

@@ -7,6 +7,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -33,6 +34,12 @@ const HistorialPaciente = () => {
     const [loading, setLoading] = useState(true);
     const [openResponse, setOpenResponse] = useState(false)
     const [openDocuments, setOpenDocuments] = useState(false)
+    const [openImage, setOpenImage] = useState(false)
+    const [imagen, setImagen] = useState("")
+    const [fileName, setFileName] = useState("")
+    const [title, setTitle] = useState("")
+
+
     const [files64, setFiles64]=useState()
     const [respuesta, setRespuesta]=useState()
     const [currentCita,setCurrentCita]=useState(0)
@@ -49,7 +56,7 @@ const HistorialPaciente = () => {
     }, [openResponse,openDocuments]);
 
     const handleClickBack = async () =>{
-        setVista(6)
+        setVista(6) 
     }
 
     const handleClickOpen = (event)=>{
@@ -69,7 +76,7 @@ const HistorialPaciente = () => {
         console.log(idCita);
         if(name==="respuesta"){
             // setOpenResponse(false)
-            console.log("Post Respuesta");
+            // console.log("Post Respuesta");
             postRespuestaCita(idCita, respuesta)
             
             fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
@@ -77,14 +84,18 @@ const HistorialPaciente = () => {
         }
         if(name==="documentos"){
             // setOpenDocuments(false)
-            console.log("Post Documentos");
+            // console.log("Post Documentos");
             // console.log(files64);
-            postDocumentosCita(idCita,files64, pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
+            postDocumentosCita(idCita,files64, pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId, title)
+            fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
             // fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
             // fetch citas doctor y paciente???
         }
         setOpenResponse(false)
         setOpenDocuments(false)
+        setOpenImage(false)
+        setImagen("")
+        setFileName("")
         console.log("Final");
         setCurrentCita(0)
 
@@ -93,7 +104,8 @@ const HistorialPaciente = () => {
     const handleSelectedFile = (event) => {
         setFiles64()
         const file = event.target.files[0];
-        console.log(file);
+        // console.log(file);
+        setFileName(file.name)
         setFilesToBase(file)
     };
     const setFilesToBase = (file) => {
@@ -107,6 +119,17 @@ const HistorialPaciente = () => {
     const handleText = (event)=>{
         const value = event.target.value;
         setRespuesta(value);
+    }
+
+    const handleTextTitle = (event)=>{
+        const value = event.target.value;
+        setTitle(value);
+        console.log(value);
+    }
+
+    const handleImageClick = (event)=>{
+        setOpenImage(true)
+        setImagen(event.target.name)
     }
 
     return ( 
@@ -166,7 +189,22 @@ const HistorialPaciente = () => {
                                     <TableCell align="center">{cita.hora}</TableCell>
                                     <TableCell align="center">{cita.descripcion}</TableCell>
                                     <TableCell align="center">{cita.respuestaMedico}</TableCell>
-                                    <TableCell align="center">Documentos</TableCell>
+                                    <TableCell align="center">
+                                        {cita.documentos.length ? 
+                                            cita.documentos.map(doc=>(
+                                                <Button onClick={handleImageClick} id={doc.id} name={doc.documento} variant="outlined" sx={{m:"5px"}}>
+                                                    {doc.titulo}
+                                                </Button>
+                                            )) 
+                                        : "No hay Documentos"}
+                                        <Dialog open={openImage} onClose={handleClose}>
+                                            <DialogTitle>Imagen</DialogTitle>
+                                            <img alt="img" src={imagen} />
+                                            <DialogActions>
+                                                <Button onClick={handleClose}>Cancelar</Button>
+                                            </DialogActions>
+                                        </Dialog>
+                                    </TableCell>
                                     <TableCell align="center">
                                         <Button 
                                             id={cita.id} 
@@ -212,10 +250,27 @@ const HistorialPaciente = () => {
                                         <Dialog open={openDocuments} onClose={handleClose}>
                                             <DialogTitle>Agregar Documento</DialogTitle>
                                             <DialogContent>
-                                                <DialogContentText>
-                                                    Seleccione el archivo a subir (solo formato imagen)
-                                                </DialogContentText>
+                                                <Box sx={{display:"flex", alignItems:"end"}}>
+                                                    <Typography type="span">Titulo del Archivo:</Typography>
+                                                    <TextField 
+                                                        autoFocus
+                                                        margin="dense"
+                                                        id={cita.id}
+                                                        label="Escriba aqui"
+                                                        variant="standard"
+                                                        sx={{margin:"0 10px 0 10px"}}
+                                                        onChange={handleTextTitle}
+                                                    />
+                                                </Box>
+                                                
                                             </DialogContent>
+                                                <DialogContentText sx={{p:"0 10px 0 10px", m:"0 auto 0"}}>
+                                                    Seleccione el archivo a subir 
+                                                </DialogContentText>
+                                                <DialogContentText sx={{p:"0 10px 0 10px", m:"0 auto 10px"}}>
+                                                        (solo formato imagen)
+                                                </DialogContentText>
+                                                
                                             <Box sx={{display:"flex", justifyContent:"center", mb:"20px"}}>
                                                 <input 
                                                     type="file" 
@@ -234,6 +289,7 @@ const HistorialPaciente = () => {
                                                     </Button>
                                                 </label>
                                             </Box>
+                                            <Typography sx={{ml:"38%", mb:"10px"}}>{fileName}</Typography>
                                         <DialogActions>
                                             <Button onClick={handleClose}>Cancelar</Button>
                                             <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose}>Registrar</Button>
