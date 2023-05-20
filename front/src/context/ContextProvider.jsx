@@ -200,8 +200,8 @@ const ContextProvider = ({ children }) => {
         vista: vista,
       }));
     },
-    postDocumentosCita: async (idCita,files64,idMedico, idPaciente) => {
-      (await axios.post(`${URL_PERFILMEDICO}/doctor/cita/documento`,{idCita,files64,idMedico, idPaciente}));
+    postDocumentosCita: async (idCita,files64,idMedico, idPaciente, titulo) => {
+      (await axios.post(`${URL_PERFILMEDICO}/doctor/cita/documento`,{idCita,files64,idMedico, idPaciente, titulo}));
     },
     postRespuestaCita: async (idCita, respuesta) =>{
       console.log(idCita,respuesta);

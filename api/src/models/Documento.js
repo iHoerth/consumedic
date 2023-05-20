@@ -9,6 +9,10 @@ module.exports = (sequelize) => {
       primaryKey: true
 
     },
+    titulo: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     documento: {
       type: DataTypes.STRING,
       allowNull: false,

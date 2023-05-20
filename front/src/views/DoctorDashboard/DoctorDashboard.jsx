@@ -51,8 +51,8 @@ const DoctorDashboard = () => {
   ];
   const handleClick = (event) => {
     const index = views.findIndex((el) => el === event.target.innerHTML);
-    console.log(event.target.innerHTML);
-    console.log(index);
+    // console.log(event.target.innerHTML);
+    // console.log(index);
     setVista(index);
   };
 
@@ -70,14 +70,14 @@ const DoctorDashboard = () => {
               sx={{
                 height: "88vh",
                 width: "150px",
-                backgroundColor: theme.palette.secondary.dark,
+                backgroundColor: theme.palette.primary.main,
               }}
             >
               <List
                 sx={{
                   width: "100%",
                   maxWidth: 360,
-                  backgroundColor: theme.palette.secondary.dark,
+                  backgroundColor: theme.palette.primary.main,
                 }}
                 component="nav"
                 aria-labelledby="list-subheader"

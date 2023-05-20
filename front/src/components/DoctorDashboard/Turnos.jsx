@@ -28,7 +28,7 @@ const Turnos = ({id}) => {
         else{
           setLoading(false);
         }
-        console.log(turnos);
+        // console.log(turnos);
     }, [loading]);
 
 
