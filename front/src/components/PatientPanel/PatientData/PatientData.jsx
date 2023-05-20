@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import Box from "@mui/material/Box";
-import MyDates from "../MyDates/MyDates";
+import { Box, Typography } from "@mui/material";
+import MyDoctors from "../MyDoctors/MyDoctors";
 import { useTheme } from "@mui/material";
 
 const PatientData = () => {
@@ -29,14 +29,19 @@ const PatientData = () => {
       }}
     >
       <Tabs value={value} onChange={handleChange} aria-label="tabs example">
-        <Tab label="Mis Citas" value="1" />
+        <Tab label="Medicos" value="1" />
         <Tab label="Mi Historial" value="2" />
-        <Tab label="Medicos" value="3" />
+        <Tab label="Mis citas" value="3" />
       </Tabs>
       {value === "1" && (
-        <Box value="1">
-          Tabla de citas
-          <MyDates />
+        <Box
+          value="1"
+          sx={{
+            width: "100%",
+            p: "20px",
+          }}
+        >
+          <MyDoctors />
         </Box>
       )}
       {value === "2" && <Box value="2">Tabla con las historias</Box>}
