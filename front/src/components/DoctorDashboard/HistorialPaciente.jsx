@@ -53,7 +53,7 @@ const HistorialPaciente = () => {
 
     useEffect(() => {
         fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
-    }, [openResponse,openDocuments]);
+    }, [openResponse,openDocuments, imagen, files64]);
 
     const handleClickBack = async () =>{
         setVista(6) 
@@ -66,6 +66,7 @@ const HistorialPaciente = () => {
             setOpenResponse(true)
         }
         else{
+            setRespuesta()
             setOpenDocuments(true)
         }
         setCurrentCita(event.target.id)
@@ -75,28 +76,17 @@ const HistorialPaciente = () => {
         const name=event.target.name;
         console.log(idCita);
         if(name==="respuesta"){
-            // setOpenResponse(false)
-            // console.log("Post Respuesta");
             postRespuestaCita(idCita, respuesta)
-            
-            fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
-            // fetch citas doctor y paciente
         }
         if(name==="documentos"){
-            // setOpenDocuments(false)
-            // console.log("Post Documentos");
-            // console.log(files64);
             postDocumentosCita(idCita,files64, pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId, title)
-            fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
-            // fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
-            // fetch citas doctor y paciente???
         }
+        fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
         setOpenResponse(false)
         setOpenDocuments(false)
         setOpenImage(false)
         setImagen("")
         setFileName("")
-        console.log("Final");
         setCurrentCita(0)
 
     }
@@ -124,7 +114,6 @@ const HistorialPaciente = () => {
     const handleTextTitle = (event)=>{
         const value = event.target.value;
         setTitle(value);
-        console.log(value);
     }
 
     const handleImageClick = (event)=>{
@@ -212,7 +201,6 @@ const HistorialPaciente = () => {
                                             variant="outlined" 
                                             size="small" 
                                             name="respuesta"
-                                            disabled={cita.respuestaMedico!== null && true}
                                         >
                                             Dar Respuesta
                                         </Button>
