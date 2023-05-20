@@ -29,7 +29,7 @@ const getHistorialPaciente = async (req, res)=>{
 const postDoctorResponse = async (req,res)=>{
     try {
         const {idCita,respuesta} = req.body
-        console.log(idCita,respuesta);
+        // console.log(idCita,respuesta);
         const result = await postAppointmentResponse(idCita,respuesta)
         res.status(200).json(result);
     } catch (error) {
@@ -39,16 +39,16 @@ const postDoctorResponse = async (req,res)=>{
 
 const postDoctorDocument = async (req,res)=>{
     try {
-        const {idCita,files64, idMedico, idPaciente} = req.body
+        const {idCita,files64, idMedico, idPaciente, titulo} = req.body
 
-        console.log(idCita,files64, idMedico, idPaciente);
+        // console.log(idCita,files64, idMedico, idPaciente);
 
         const cloudinaryResult = await cloudinary.uploader.upload(files64, {
             folder: "Documents",
           })
           const imagenCloudinary = cloudinaryResult.secure_url;
 
-        const result = await postAppointmentDocument(idCita,imagenCloudinary,idMedico, idPaciente)
+        const result = await postAppointmentDocument(idCita,imagenCloudinary,idMedico, idPaciente,titulo)
         res.status(200).json(result);
     } catch (error) {
         res.status(400).json({error: error.message})

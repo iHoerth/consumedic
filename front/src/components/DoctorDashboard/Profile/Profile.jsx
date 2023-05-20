@@ -77,7 +77,7 @@ const Profile = ({ doctorDetail }) => {
       >
         <CardContent
           sx={{
-            bgcolor: theme.palette.secondary.dark,
+            bgcolor: theme.palette.primary.main,
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",

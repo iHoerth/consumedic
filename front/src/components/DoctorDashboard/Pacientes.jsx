@@ -26,7 +26,7 @@ const Pacientes = ({id}) => {
         else{
           setLoading(false);
         }
-        console.log(pacienteHistorial);
+        // console.log(pacienteHistorial);
     }, [loading, pacientes]);
 
 

@@ -51,7 +51,7 @@ export default function TextMobileStepper({ opinions }) {
           alignItems: "center",
           height: 30,
           pl: 2,
-          bgcolor: theme.palette.secondary.dark,
+          bgcolor: theme.palette.primary.light,
           borderRadius: "10px",
           p: "25px",
           width: "100%",
@@ -70,7 +70,7 @@ export default function TextMobileStepper({ opinions }) {
       <Box component="fieldset" mb={1} borderColor="transparent">
         <Rating
           name="stars"
-          sx={{ color: theme.palette.secondary.dark }}
+          sx={{ color: theme.palette.primary.main }}
           value={opinions[activeStep].stars}
           readOnly
         />
