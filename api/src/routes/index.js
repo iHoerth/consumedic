@@ -11,6 +11,7 @@ const appointments = require("./appointments");
 const mail = require("./mail");
 const documentos = require("./documentos")
 const dashboardMedico = require("./dashboardMedico")
+const dashboardPaciente=require("./dashboardPaciente")
 
 //!fake data
 // const { createFakeData } = require("../fakeData/fakeData");
@@ -38,5 +39,6 @@ router.use("/mail", mail);
 router.use("/horarios", horarios);
 router.use("/documentos", documentos);
 router.use("/perfilMedico/", dashboardMedico);
+router.use("/perfilPaciente/", dashboardPaciente);
 
 module.exports = router;

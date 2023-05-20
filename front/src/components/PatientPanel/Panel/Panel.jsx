@@ -22,7 +22,7 @@ const Panel = () => {
   const [loading, setLoading] = useState(true);
   const { nombre, apellido, email, dni, telefono } = patientDetail;
 
-  console.log("patientDetail", patientDetail);
+  // console.log("patientDetail", patientDetail);
 
   useEffect(() => {
     fetchPatientByEmail(session.email);

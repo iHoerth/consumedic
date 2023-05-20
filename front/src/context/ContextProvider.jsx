@@ -14,6 +14,8 @@ const URL_SPECIALTIES = `http://localhost:3001/specialties`;
 const URL_SOCIALSECURITY = `http://localhost:3001/socialSecurity`;
 const URL_PERFILMEDICO = `http://localhost:3001/perfilMedico`;
 const URL_TURNOS = `http://localhost:3001/appointments`;
+const URL_PERFILPACIENTE = `http://localhost:3001/perfilPaciente`;
+
 
 const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
@@ -222,13 +224,27 @@ const ContextProvider = ({ children }) => {
     setPayedToTrue: async () => {},
   });
 
+  const [panelPaciente, setPanelPaciente] = useState({
+    informacion: [],
+
+    fetchPatientData: async (id) => {
+
+      const pacientesData = (await axios(`${URL_PERFILPACIENTE}/${id}/doctors`)).data;
+      setPanelPaciente((prevState) => ({
+        ...prevState,
+        informacion: [...pacientesData],
+      }));
+    },
+    
+  });
+
   return (
     <>
       <LoadingContext.Provider value={[loading, setLoading]}>
         <UtilitiesContext.Provider value={utilities}>
           <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
             <Context.Provider
-              value={[doctorsData, patientsData, { session, setSession }, panelMedico, appointment]}
+              value={[doctorsData, patientsData, { session, setSession }, panelMedico, appointment, panelPaciente]}
             >
               {children}
             </Context.Provider>
