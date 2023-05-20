@@ -182,7 +182,7 @@ const ContextProvider = ({ children }) => {
       ).data;
       setPanelMedico((prevState) => ({
         ...prevState,
-        pacienteHistorial: pacienteHistorialData,
+        pacienteHistorial: {...pacienteHistorialData},
       }));
     },
     fetchTurnos: async (id) => {
@@ -198,6 +198,13 @@ const ContextProvider = ({ children }) => {
         vista: vista,
       }));
     },
+    postDocumentosCita: async (idCita,files64,idMedico, idPaciente) => {
+      (await axios.post(`${URL_PERFILMEDICO}/doctor/cita/documento`,{idCita,files64,idMedico, idPaciente}));
+    },
+    postRespuestaCita: async (idCita, respuesta) =>{
+      console.log(idCita,respuesta);
+      (await axios.post(`${URL_PERFILMEDICO}/doctor/cita/respuesta`,{idCita, respuesta}));
+    }
   });
 
   const [appointment, setAppointment] = useState({
