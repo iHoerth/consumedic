@@ -7,7 +7,7 @@ const {
 const dashboardPacienteRouter = Router();
 
 // GET
-dashboardPacienteRouter.get("/doctors", getDoctorsByPatients);
+dashboardPacienteRouter.get("/:id/doctors", getDoctorsByPatients);
 
 
 

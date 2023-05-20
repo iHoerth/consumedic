@@ -5,7 +5,8 @@ const {getAllDoctorsByPatient} = require("../controllers/doctors/getAllDoctorsBy
 
 const getDoctorsByPatients = async (req, res)=>{
     try {
-        const {id} = req.body
+        const {id} = req.params
+
         console.log(id);
         const result = await getAllDoctorsByPatient(Number(id));
         res.status(200).json(result);
