@@ -9,13 +9,15 @@ const PatientPanel = () => {
   const { session } = useContext(Context)[2];
   const { fetchPatientByEmail, patientDetail } = useContext(Context)[1];
   const [loading, setLoading] = useState(true);
+  console.log("patientDetail.email", patientDetail.email);
 
   useEffect(() => {
     if (session.email && !patientDetail.email) {
-      const search = async () => {
-        await fetchPatientByEmail(session.email);
-      };
-      search();
+      setLoading(true);
+      fetchPatientByEmail(session.email).then(() => {
+        setLoading(false);
+      });
+      setLoading(false);
     } else {
       setLoading(false);
     }
