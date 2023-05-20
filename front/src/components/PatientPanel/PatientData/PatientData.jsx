@@ -3,8 +3,10 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Box from "@mui/material/Box";
 import MyDates from "../MyDates/MyDates";
+import { useTheme } from "@mui/material";
 
 const PatientData = () => {
+  const theme = useTheme();
   const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {
@@ -26,12 +28,7 @@ const PatientData = () => {
         alignItems: "center",
       }}
     >
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        aria-label="tabs example"
-        sx={{}}
-      >
+      <Tabs value={value} onChange={handleChange} aria-label="tabs example">
         <Tab label="Mis Citas" value="1" />
         <Tab label="Mi Historial" value="2" />
         <Tab label="Medicos" value="3" />

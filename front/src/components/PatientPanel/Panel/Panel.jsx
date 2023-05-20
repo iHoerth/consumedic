@@ -41,7 +41,6 @@ const Panel = () => {
       <Box
         container
         sx={{
-          bgcolor: theme.palette.primary.main,
           padding: "30px",
           display: "flex",
           flexDirection: "column",
@@ -54,7 +53,7 @@ const Panel = () => {
         }}
       >
         <Box sx={{ padding: "10px" }}>
-          <Card sx={{ width: "100%" }}>
+          <Card sx={{ width: "100%", bgcolor: theme.palette.primary.main }}>
             <CardHeader title={`Bienvenido ${nombre}`} subheader={email} />
           </Card>
         </Box>
@@ -74,12 +73,13 @@ const Panel = () => {
               borderRadius: "10px",
             }}
           >
-            <CardActions>
-              <Button size="small">Editar</Button>
-            </CardActions>
             <CardContent sx={{ minWidth: 275 }}>
               <Typography
-                sx={{ fontSize: 20, pb: "25px" }}
+                sx={{
+                  fontSize: 20,
+                  pb: "25px",
+                  bgcolor: theme.palette.primary.main,
+                }}
                 color="text.secondary"
               >
                 Datos Personales
@@ -94,6 +94,9 @@ const Panel = () => {
                 Telefono: {telefono}
               </Typography>
             </CardContent>
+            <CardActions>
+              <Button size="small">Editar</Button>
+            </CardActions>
           </Card>
           <Box sx={{ width: "80%" }}>
             <PatientData />
