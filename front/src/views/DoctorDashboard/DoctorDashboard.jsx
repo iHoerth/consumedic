@@ -18,6 +18,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import HistorialPaciente from "../../components/DoctorDashboard/HistorialPaciente";
 import Turnos from "../../components/DoctorDashboard/Turnos";
+import EditarPerfil from "../../components/DoctorDashboard/EditarPerfil";
 
 const DoctorDashboard = () => {
   const theme = useTheme();
@@ -52,7 +53,7 @@ const DoctorDashboard = () => {
   const handleClick = (event) => {
     const index = views.findIndex((el) => el === event.target.innerHTML);
     // console.log(event.target.innerHTML);
-    // console.log(index);
+    console.log(index);
     setVista(index);
   };
 
@@ -181,6 +182,8 @@ const DoctorDashboard = () => {
                     <Turnos id={doctorDetail.id} />
                   ) : vista === 10 ? (
                     <HistorialPaciente id={doctorDetail.id} />
+                  ) : vista === 1 ? (
+                    <EditarPerfil doctorDetail={doctorDetail} />
                   ) : null}
                 </>
               )}
