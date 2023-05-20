@@ -19,11 +19,13 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 initMercadoPago('TEST-9e5c4674-d7f9-42bc-9f39-62fe105ad00c');
+// require('dotenv').config();
 
-const URL_TURN = process.env.URL_TURN;
 
 
 const Appointment = () => {
+
+  const URL_TURN = process.env.REACT_APP_URL_TURN
   const { id, fecha, hora } = useParams(); // viene de parametros
   const meses = [
     'Ene',
@@ -93,6 +95,7 @@ const Appointment = () => {
   }
 
   function handleClickMp() {
+    console.log(URL_TURN);
     axios
       .post(URL_TURN, dataPreferences)
       .then((res) => {
