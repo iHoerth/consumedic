@@ -44,7 +44,7 @@ const Panel = () => {
           bgcolor: theme.palette.primary.main,
           padding: "30px",
           display: "flex",
-          flexDirection: "raw",
+          flexDirection: "column",
           justifyContent: "space-between",
           alignItems: "stretch",
           height: "55rem",
@@ -54,11 +54,26 @@ const Panel = () => {
         }}
       >
         <Box sx={{ padding: "10px" }}>
-          <Card sx={{ maxWidth: 345 }}>
+          <Card sx={{ width: "100%" }}>
             <CardHeader title={`Bienvenido ${nombre}`} subheader={email} />
           </Card>
-          <br />
-          <Card sx={{ minWidth: 275, height: "80vh" }}>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+          }}
+        >
+          <Card
+            sx={{
+              width: "20%",
+              height: "80vh",
+              marginRight: "10px",
+              borderRadius: "10px",
+            }}
+          >
             <CardActions>
               <Button size="small">Editar</Button>
             </CardActions>
@@ -80,9 +95,9 @@ const Panel = () => {
               </Typography>
             </CardContent>
           </Card>
-        </Box>
-        <Box sx={{ width: "75%" }}>
-          <PatientData />
+          <Box sx={{ width: "80%" }}>
+            <PatientData />
+          </Box>
         </Box>
       </Box>
     </>

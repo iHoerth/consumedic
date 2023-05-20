@@ -7,6 +7,7 @@ const PatientPanel = () => {
   return (
     <>
       <NavBar />
+
       <Box
         sx={{
           width: "100%",

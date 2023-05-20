@@ -17,7 +17,7 @@ const PatientData = () => {
         borderBottom: 1,
         borderColor: "divider",
         width: "100%",
-        height: "95vh",
+        height: "80vh",
         backgroundColor: "white",
         p: "10px",
         borderRadius: "10px",
