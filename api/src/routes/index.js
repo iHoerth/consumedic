@@ -9,23 +9,23 @@ const payments = require("./payments");
 const horarios = require("./horarios");
 const appointments = require("./appointments");
 const mail = require("./mail");
-const documentos = require("./documentos")
-const dashboardMedico = require("./dashboardMedico")
-const dashboardPaciente=require("./dashboardPaciente")
+const documentos = require("./documentos");
+const dashboardMedico = require("./dashboardMedico");
+const dashboardPaciente = require("./dashboardPaciente");
 
 //!fake data
-// const { createFakeData } = require("../fakeData/fakeData");
+const { createFakeData } = require("../fakeData/fakeData");
 
 const router = Router();
 
-// router.post("/fake", async (req, res) => {
-//   try {
-//     await createFakeData();
-//     return res.status(200).send("data created");
-//   } catch (error) {
-//     return res.status(404).send(error.message);
-//   }
-// });
+router.post("/fake", async (req, res) => {
+  try {
+    await createFakeData();
+    return res.status(200).send("data created");
+  } catch (error) {
+    return res.status(404).send(error.message);
+  }
+});
 
 router.use("/doctors", doctors);
 router.use("/patients", patients);
