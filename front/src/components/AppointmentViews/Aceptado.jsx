@@ -21,7 +21,7 @@ initMercadoPago('TEST-9e5c4674-d7f9-42bc-9f39-62fe105ad00c');
 
 
 
-const Aceptado = (idPaciente) => {
+const Aceptado = ({idPaciente}) => {
     const navigate = useNavigate()
     
   const { id, fecha, hora, comentario } = useParams(); 
@@ -47,20 +47,35 @@ const Aceptado = (idPaciente) => {
   let datosTurno = `${dd} ${mm} ${yy}, ${hh}:${min} hs`;
 
   const { doctorDetail, fetchDoctorById } = useContext(Context)[0];
-  const { postAppointment } = useContext(Context)[1];
+  const { patientDetail, postAppointment,fetchPatientByEmail } = useContext(Context)[1];
+  const { session } = useContext(Context)[2];
+  const [loading, setLoading] = useState(true);
   
   const datos = {
     fecha: fecha,
     hora: hora,
     descripcion: comentario,
     idDoctor: id,
-    idPatient: idPaciente
+    idPatient: patientDetail.id
   }
 
   useEffect(() => {
     fetchDoctorById(id);
-    postAppointment(datos);
+    
   }, []);
+
+  useEffect(() => {
+    if (session.email && !patientDetail.email) {
+      const search = async () => {
+        await fetchPatientByEmail(session.email);
+      };
+      search();
+      console.log(patientDetail);
+    } else {
+      setLoading(false);
+      postAppointment(datos);
+    }
+  }, [loading, patientDetail]);
 
   const handleClick = ()=>{
     navigate("/patientpanel/");
