@@ -36,15 +36,15 @@ server.post("/turno", (req, res) => {
   // res.status(200).send('ok');
 
   const dataPreferences = req.body;
-  // console.log('cita'+dataPreferences);
+  console.log('cita: '+dataPreferences);
 
   // Crea un objeto de preferencia
   let preference = {
     //urls donde te redirige en cada caso, pago exitoso, pendiente y fallo, x razon
     back_urls: {
-      success: "http://localhost:3000",
-      // pending: 'http://localhost:3001/pending',
-      failure: "http://localhost:3001/failure",
+      success: `http://localhost:3000/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/aprobado/${dataPreferences.comentario}`,
+      // pending: `http://localhost:3000/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/pendiente/`,
+      failure: `http://localhost:3001/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/rechazado/0`,
     },
     items: [
       {
@@ -73,7 +73,7 @@ server.post("/turno", (req, res) => {
   mercadopago.preferences
     .create(preference)
     .then(function (response) {
-      console.log(response.body);
+      //console.log(response.body);
       res.json({
         global: response.body.init_point,
       });

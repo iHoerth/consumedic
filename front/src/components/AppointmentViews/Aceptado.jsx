@@ -73,11 +73,14 @@ const Aceptado = () => {
           }}
         >
           <Box>
-            <Typography variant="h5" component="div" color="black" sx={{mb:"30px"}}>
+            <Typography variant="h5" component="div" color="black" sx={{mb:"10px"}}>
               Pago Aceptado!
             </Typography>
             <Typography variant="h6" component="div" color="black" sx={{width:"400px"}}>
               Su Cita ha sido Programada
+            </Typography>
+            <Typography component="div" color="black" sx={{width:"400px", fontSize:"15px"}}>
+              Recibira un correo electronico con la confirmacion
             </Typography>
             <Typography component="div" color="black" sx={{ mt: '15px', mb: '5px', fontSize: "20px"}}>
             {`Motivo de la consulta: `}
