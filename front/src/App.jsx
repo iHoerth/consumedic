@@ -82,7 +82,7 @@ const App = () => {
             <Route path="/create" element={<CreatePatient />} />
             <Route path="/createDoctor" element={<CreateDoctor />} />
             <Route path="/patientpanel/" element={<PatientPanel />} />
-            <Route path="/turno/:id/:fecha/:hora" element={<Appointment />} />
+            <Route path="/turno/:id/:fecha/:hora/:estado/:comentario" element={<Appointment />} />
             <Route path="*" element={<Error404 />} />
             <Route path="/loading" element={<Loading />} />
             <Route path="/perfilMedico" element={<DoctorDashboard />} />
