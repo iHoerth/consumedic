@@ -98,6 +98,9 @@ const putDoctorEdit = async (req, res) => {
   const doctorNewDetails = req.body;
   console.log(doctorNewDetails);
   try {
+    // console.log(doctorNewDetails.prevImagen);
+    // const deletePrevPhoto = await cloudinary.uploader.destroy(doctorNewDetails.prevImagen)
+    // console.log(deletePrevPhoto);
     const cloudinaryResult = await cloudinary.uploader.upload(doctorNewDetails.imagen, {
       folder: "Doctors",
       width: 300,

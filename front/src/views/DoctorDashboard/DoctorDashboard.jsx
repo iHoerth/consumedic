@@ -183,7 +183,7 @@ const DoctorDashboard = () => {
                   ) : vista === 10 ? (
                     <HistorialPaciente id={doctorDetail.id} />
                   ) : vista === 1 ? (
-                    <EditarPerfil doctorDetail={doctorDetail} />
+                    <EditarPerfil doctorDetail1={doctorDetail} />
                   ) : null}
                 </>
               )}
