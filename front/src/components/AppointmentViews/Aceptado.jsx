@@ -21,7 +21,7 @@ initMercadoPago('TEST-9e5c4674-d7f9-42bc-9f39-62fe105ad00c');
 
 
 
-const Aceptado = () => {
+const Aceptado = (idPaciente) => {
     const navigate = useNavigate()
     
   const { id, fecha, hora, comentario } = useParams(); 
@@ -47,9 +47,19 @@ const Aceptado = () => {
   let datosTurno = `${dd} ${mm} ${yy}, ${hh}:${min} hs`;
 
   const { doctorDetail, fetchDoctorById } = useContext(Context)[0];
+  const { postAppointment } = useContext(Context)[1];
+  
+  const datos = {
+    fecha: fecha,
+    hora: hora,
+    descripcion: comentario,
+    idDoctor: id,
+    idPatient: idPaciente
+  }
 
   useEffect(() => {
     fetchDoctorById(id);
+    postAppointment(datos);
   }, []);
 
   const handleClick = ()=>{
