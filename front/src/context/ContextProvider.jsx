@@ -56,12 +56,12 @@ const ContextProvider = ({ children }) => {
     },
     fetchDoctorByEmail: async (email) => {
       const data = (await axios(`${URL_DOCTORS}?email=${email}`)).data;
-      console.log(data);
+      //console.log(data);
       setDoctorsData((prevState) => ({
         ...prevState,
         doctorDetail: { ...data },
       }));
-      console.log({ ...data });
+      //console.log({ ...data });
       return { ...data };
     },
     cleanDetail: async () => {

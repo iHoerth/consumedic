@@ -15,8 +15,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-
 import { Button, Box, Typography, Divider, TextField, Avatar, Autocomplete } from '@mui/material';
+
+import Loading from "../Loading/Loading";
 
 import { Context, UtilitiesContext } from '../../context/ContextProvider';
 import { Stack } from "@mui/system";
@@ -24,10 +25,11 @@ import { Stack } from "@mui/system";
 import { styled } from "@mui/material/styles";
 
 
-const EditarPerfil = ({doctorDetail}) => {
-    const {id, nombre, Descripcion, apellido, direccion, dni, email, imagen, precio, telefono, titulo, Especialidads, ObraSocials} = doctorDetail
+
+const EditarPerfil = ({doctorDetail1}) => {
+    const {id, nombre, Descripcion, apellido, direccion, dni, email, imagen, precio, telefono, titulo, Especialidads, ObraSocials} = doctorDetail1
     const { socialSecurity, specialties, fetchUtilities } = useContext(UtilitiesContext);
-    const {putDoctor} = useContext(Context)[0];
+    const {putDoctor, doctorDetail,fetchDoctorByEmail} = useContext(Context)[0];
     const [loading, setLoading] = useState(true);
     const [openEspecialidades, setOpenEspecialidades] = useState(false)
     const [openObrasSociales, setOpenObrasSociales] = useState(false)
@@ -35,7 +37,20 @@ const EditarPerfil = ({doctorDetail}) => {
     const [fileName, setFileName] = useState("")
     const [files64, setFiles64]=useState()
 
-    console.log(doctorDetail);
+    useEffect(() => {
+       if(!socialSecurity.length && !specialties.length){
+        const search = async () => {
+            await fetchUtilities()
+          }
+          search()
+       }
+       else{
+        setLoading(false);
+       }
+
+    }, [loading, socialSecurity,specialties,doctorDetail]);
+
+    //console.log(doctorDetail1);
 
     const [datos, setDatos]= useState({
         id: id,
@@ -44,6 +59,7 @@ const EditarPerfil = ({doctorDetail}) => {
         direccion: direccion,
         dni: dni,
         email: email,
+        prevImagen: imagen,
         imagen: imagen,
         precio: precio,
         telefono: telefono,
@@ -60,12 +76,6 @@ const EditarPerfil = ({doctorDetail}) => {
     let obrasSocialesString = datos.obrasSociales.map(esp=> esp.nombre)
     obrasSocialesString=obrasSocialesString.join(", ")
     
-    useEffect(() => {
-       if(!socialSecurity.length||!specialties.length){
-        fetchUtilities()
-       }
-
-    }, [loading, socialSecurity,specialties]);
 
     const handleClick = (event)=>{
         const name = event.target.name;
@@ -153,13 +163,15 @@ const EditarPerfil = ({doctorDetail}) => {
     }
 
     const handleSubmit = () => {
-        
         putDoctor(datos)
+        fetchDoctorByEmail(datos.email)
     }
    
-
-    return ( 
-        <>  
+    if(loading) return (<Loading />)
+    else{
+        return (  
+            
+            <>
             <Stack alignItems="center">
                 <Typography sx={{fontSize:"25px", fontWeight:"500", mb:"15px"}}>Editar los datos de Perfil</Typography>
                 <Stack direction="row" spacing={5} justifyContent="space-around">
@@ -325,13 +337,13 @@ const EditarPerfil = ({doctorDetail}) => {
                         style={{display: "none"}}
                         id="archivos" name="archivos" 
                         onChange={handleSelectedFile} 
-                    />
+                        />
                     <label htmlFor="archivos">
                         <Button
                             variant="contained"
                             component="span"
                             startIcon={<PhotoCamera />}
-                        >
+                            >
                             Archivo
                         </Button>
                     </label>
@@ -343,6 +355,8 @@ const EditarPerfil = ({doctorDetail}) => {
                 </DialogActions>
             </Dialog>
         </>
-    )
+        
+        )
+    }
 }
 export default EditarPerfil
