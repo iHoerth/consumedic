@@ -6,6 +6,7 @@ const {
   getDoctorsById,
   postDoctor,
   putDoctor,
+  putDoctorEdit
 } = require("../handlers/doctors");
 
 const doctorsRouter = Router();
@@ -19,5 +20,7 @@ doctorsRouter.post("/", postDoctor);
 doctorsRouter.post("/loginDoctor", loginDoctor);
 //PUT
 doctorsRouter.put("/", putDoctor);
+doctorsRouter.put("/edit", putDoctorEdit);
+
 
 module.exports = doctorsRouter;

@@ -3,6 +3,8 @@ const { getAllDoctors } = require("../controllers/doctors/getAllDoctors");
 const { getDoctorById } = require("../controllers/doctors/getDoctorById");
 const { createDoctor } = require("../controllers/doctors/createDoctor");
 const { modifyDoctor } = require("../controllers/doctors/modifyDoctor");
+const { modifyProfileDoctor } = require("../controllers/doctors/modifyProfileDoctor");
+
 const bcrypt = require("bcrypt");
 const cloudinary = require("../utils/cloudinary")
 
@@ -92,9 +94,28 @@ const putDoctor = async (req, res) => {
   }
 };
 
+const putDoctorEdit = async (req, res) => {
+  const doctorNewDetails = req.body;
+  console.log(doctorNewDetails);
+  try {
+    const cloudinaryResult = await cloudinary.uploader.upload(doctorNewDetails.imagen, {
+      folder: "Doctors",
+      width: 300,
+      crop: "scale"
+    })
+    const imagenCloudinary = cloudinaryResult.secure_url;
+    doctorNewDetails.imagen=imagenCloudinary;
+    const result = await modifyProfileDoctor(doctorNewDetails);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getDoctors,
   getDoctorsById,
   postDoctor,
   putDoctor,
+  putDoctorEdit
 };
