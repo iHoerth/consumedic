@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     hora:{
-      type: DataTypes.TIME,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     estado:{
