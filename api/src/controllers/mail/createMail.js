@@ -50,7 +50,7 @@ const createMail = async (name, email, message, emailMedico) => {
       </head>
       <body>
         <div class="container">
-          <h1>Consulta de un Pasciente</h1>
+          <h1>Consulta de un Paciente</h1>
           <p>Hola, mi nombre es ${name}.</p>
           <p>Mi email para contacto es: ${email}.</p>
           <p>Consulta:</p>
