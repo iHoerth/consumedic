@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Context } from '../../context/ContextProvider';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect, useContext, useState  } from 'react';
+
 import { TextField, Button, Box, Paper, Typography, Container } from '@mui/material';
 import NavBar from '../../components/NavBar/NavBar';
 import Loading from '../../components/Loading/Loading';
@@ -30,12 +31,13 @@ initMercadoPago('TEST-9e5c4674-d7f9-42bc-9f39-62fe105ad00c');
 
 
 const Appointment = () => {
-
+  const { patientDetail, fetchPatientByEmail } = useContext(Context)[1];
+  const { session } = useContext(Context)[2];
   const [vista,setVista]=useState("Loading")
+  const [loading, setLoading] = useState(true);
   const params = useParams()
-  console.log(params);
   const {id, fecha, hora, estado} = useParams()
-  console.log(id, fecha, hora, estado);
+
 
   useEffect(() => {
     console.log(params);
@@ -52,6 +54,18 @@ const Appointment = () => {
       setVista("Loading")
     }
   }, [estado]);
+
+  useEffect(() => {
+    if (session.email && !patientDetail.email) {
+      const search = async () => {
+        await fetchPatientByEmail(session.email);
+      };
+      search();
+      console.log(patientDetail);
+    } else {
+      setLoading(false);
+    }
+  }, [loading, patientDetail]);
 
 
   return (
@@ -77,7 +91,7 @@ const Appointment = () => {
         }}
       >
         
-          {vista === "Loading" ? <Loading/> : ( vista === "Reserva" ? <Reserva /> : (vista==="Aprobado"? <Aceptado/>:( vista==="Rechazado" ? <Rechazado /> : null) ))}
+          {vista === "Loading" ? <Loading/> : ( vista === "Reserva" ? <Reserva /> : (vista==="Aprobado"? <Aceptado idPaciente={patientDetail.id}/>:( vista==="Rechazado" ? <Rechazado /> : null) ))}
       </Box>
       <Footer />
     </>
