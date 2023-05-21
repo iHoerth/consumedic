@@ -278,10 +278,10 @@ const HistorialPaciente = () => {
                                                 </label>
                                             </Box>
                                             <Typography sx={{ml:"38%", mb:"10px"}}>{fileName}</Typography>
-                                        <DialogActions>
-                                            <Button onClick={handleClose}>Cancelar</Button>
-                                            <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose}>Registrar</Button>
-                                        </DialogActions>
+                                            <DialogActions>
+                                                <Button onClick={handleClose}>Cancelar</Button>
+                                                <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose}>Registrar</Button>
+                                            </DialogActions>
                                         </Dialog>
                                     </TableCell>
                                     <TableCell>{cita.id}</TableCell>
