@@ -17,6 +17,8 @@ const URL_TURNOS = `http://localhost:3001/appointments`;
 const URL_PERFILPACIENTE = `http://localhost:3001/perfilPaciente`;
 
 
+
+
 const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
@@ -140,6 +142,13 @@ const ContextProvider = ({ children }) => {
           ...prevState,
           patientDetail: { ...data },
         }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    postAppointment: async (datosTurno) => {
+      try {
+        await axios.post(`${URL_TURNOS}`, datosTurno)
       } catch (error) {
         console.log(error);
       }
