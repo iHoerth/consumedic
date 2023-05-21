@@ -96,6 +96,14 @@ const ContextProvider = ({ children }) => {
         console.log(error.message, 'TRY CATCH CONTEXT');
       }
     },
+    putDoctor: async (doctorNewDetails) =>{
+      console.log(doctorNewDetails);
+      const data = await axios.put(`${URL_DOCTORS}/edit`, doctorNewDetails).data
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        doctorDetail: { ...data },
+      }));
+    }
   });
 
   const [patientsData, setPatientsData] = useState({
