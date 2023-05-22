@@ -29,7 +29,7 @@ const Reserva = () => {
     const [error, setError] = useState({
       motivo: '',
     });
-    const URL_TURN = process.env.REACT_APP_URL_TURN
+    const URL_TURNOS = process.env.REACT_APP_URL_TURNOS
   const { id, fecha, hora } = useParams(); // viene de parametros
   const meses = [
     'Ene',
@@ -91,9 +91,9 @@ const Reserva = () => {
   }
 
   function handleClickMp() {
-    console.log(URL_TURN);
+    console.log(URL_TURNOS);
     axios
-      .post(URL_TURN, dataPreferences)
+      .post(URL_TURNOS, dataPreferences)
       .then((res) => {
         console.log(res);
         window.location.href = res.data.global;
