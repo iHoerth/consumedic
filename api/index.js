@@ -8,8 +8,8 @@ const cors = require('cors');
 const routes = require('./src/routes/index');
 const { conn } = require('./src/db');
 
-const hostFront = DEPLOY || 'http://localhost';
-const portFront = DEPLOYPORT || 3000;
+const hostFront = DEPLOY || 'localhost';
+const portFront = DEPLOYPORT || ':3000';
 
 const port = PORT || 3001;
 
@@ -17,9 +17,10 @@ const server = express();
 server.use(express.json());
 server.use(
   cors({
-    origin: '*',
+    origin: ['*', 'https://apideploy-production.up.railway.app'],
   })
 );
+
 
 // server.use(
 //   cors({
@@ -51,9 +52,9 @@ server.post('/turno', (req, res) => {
   let preference = {
     //urls donde te redirige en cada caso, pago exitoso, pendiente y fallo, x razon
     back_urls: {
-      success: `${hostFront}:${portFront}/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/aprobado/${dataPreferences.comentario}`,
+      success: `http://${hostFront}${portFront}/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/aprobado/${dataPreferences.comentario}`,
       // pending: `http://localhost:3000/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/pendiente/`,
-      failure: `${hostFront}:${portFront}/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/rechazado/0`,
+      failure: `http://${hostFront}${portFront}/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/rechazado/0`,
     },
     items: [
       {
