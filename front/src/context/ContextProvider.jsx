@@ -13,7 +13,14 @@ import {
 } from '../helpers/urlVariables';
 
 
-const URLPRUEBA = process.env.REACT_APP_URL_PRUEBA
+const URL_PATIENTS = process.env.REACT_APP_URL_PATIENTS
+const URL_DOCTORS = process.env.REACT_APP_URL_DOCTORS
+const URL_SPECIALTIES = process.env.REACT_APP_URL_SPECIALTIES
+const URL_SOCIALSECURITY = process.env.REACT_APP_URL_SOCIALSECURITY
+const URL_PERFILMEDICO= process.env.REACT_APP_URL_PERFILMEDICO
+const URL_MAIL=process.env.REACT_APP_URL_MAIL
+const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA
+const URL_TURNOS= process.env.REACT_APP_URL_TURNOS
 
 export const Context = createContext([]);
 export const UtilitiesContext = createContext([]);
@@ -23,7 +30,6 @@ export const SessionContext = createContext([]);
 
 
 const ContextProvider = ({ children }) => {
-  console.log(URLPRUEBA)
   console.log(URL_DOCTORS);
   const [loading, setLoading] = useState(false);
 
