@@ -33,7 +33,7 @@ server.use(morgan('dev'));
 
 server.use('/', routes);
 
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   console.log('Database connected');
   server.listen(port, HOST ? HOST : '0.0.0.0', () => {
     console.log('Server raised on port ' + port);

@@ -12,6 +12,7 @@ const createPatient = async (dni, email, hashedPassword, telefono, nombre, apell
         apellido,
         ObraSocialId: newObraSocial.id
     })
+    //! DEVOLVER JWTOKEN
     newPatient.password="";
     return newPatient
 }
