@@ -23,6 +23,8 @@ import EditarPerfil from "../../components/DoctorDashboard/EditarPerfil";
 const DoctorDashboard = () => {
   const theme = useTheme();
   const { session } = useContext(Context)[2];
+  const {turnos} = useContext(Context)[3];
+  const {pacienteHistorial, pacientes} = useContext(Context)[3];
   const { fetchDoctorByEmail, doctorDetail } = useContext(Context)[0];
   const { vista, setVista} = useContext(Context)[3];
   const [loading, setLoading] = useState(true);
@@ -38,7 +40,7 @@ const DoctorDashboard = () => {
       setLoading(false);
     }
     console.log(loading);
-  }, [loading, doctorDetail]);
+  }, [loading, doctorDetail, turnos, pacientes, pacienteHistorial]);
 
   const views = [
     "Mi Perfil",
