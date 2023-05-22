@@ -19,7 +19,7 @@ const Turnos = ({id}) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!turnos.lenghth) {
+        if (!turnos.length) {
             const search = async () => {
                 await fetchTurnos(id)
             }

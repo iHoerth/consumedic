@@ -62,7 +62,7 @@ const Calendar = ({id, calendar}) => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: "center",
-        borderRadius: "20px",
+        borderRadius: "5px",
         border: "solid 1px",
         borderColor: "#aeaeae"
         }}>
@@ -71,7 +71,7 @@ const Calendar = ({id, calendar}) => {
           justifyContent: 'center',
           m: 0,
           borderBottom: "1px solid",
-          borderRadius: "20px 20px 0 0",
+          borderRadius: "5px 5px 0 0",
           borderColor: "#aeaeae",
           overflow: "hidden",
           ...(button==="Mostrar mas horas" && {

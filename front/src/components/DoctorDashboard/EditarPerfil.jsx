@@ -162,9 +162,9 @@ const EditarPerfil = ({doctorDetail1}) => {
         };
     }
 
-    const handleSubmit = () => {
-        putDoctor(datos)
-        fetchDoctorByEmail(datos.email)
+    const handleSubmit = async () => {
+        await putDoctor(datos)
+        await fetchDoctorByEmail(datos.email)
     }
    
     if(loading) return (<Loading />)
