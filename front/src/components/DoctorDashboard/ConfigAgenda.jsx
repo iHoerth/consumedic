@@ -18,8 +18,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 import axios from "axios";
 
-const URL_POSTAGENDA = process.env.URL_POSTAGENDA
-
+const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA 
 
 const ConfigAgenda = ({doctorDetail}) => {
     
@@ -128,15 +127,9 @@ const ConfigAgenda = ({doctorDetail}) => {
             duracion_turno: check70 === true ? value73.$d.toLocaleTimeString() : null,
         }
         const agenda = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
-
-        //! ID MEDICO HARDCODEADO DEBE SACARLO DEL CONTEXT
-        const id = 33;
+        const id = doctorDetail.id;
         postAgenda(agenda, id)
-
-
     }
-
-    //! ACA DEBERIAMOS ENVIAR ESTO AL CONTEXT 
     const postAgenda = async (agenda, id) => {
         try {
             const post = await axios.post(URL_POSTAGENDA, {agenda, id})

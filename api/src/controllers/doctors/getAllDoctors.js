@@ -5,7 +5,8 @@ const getAllDoctors = async () => {
         where: { status: 'active'},
         include: {all: true}
     });
-    return doctors;
+    if(!doctors.length) throw new Error("No se encuentran Doctores en la Base de Datos")
+    else return doctors;
 }
 
 module.exports = { getAllDoctors };
