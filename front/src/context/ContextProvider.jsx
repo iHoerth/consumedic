@@ -12,23 +12,21 @@ import useLocalStorage from '../helpers/useLocalStorage';
 //   URL_PERFILPACIENTE,
 // } from '../helpers/urlVariables';
 
-
-const URL_PATIENTS = process.env.REACT_APP_URL_PATIENTS
-const URL_DOCTORS = process.env.REACT_APP_URL_DOCTORS
-const URL_SPECIALTIES = process.env.REACT_APP_URL_SPECIALTIES
-const URL_SOCIALSECURITY = process.env.REACT_APP_URL_SOCIALSECURITY
-const URL_PERFILMEDICO= process.env.REACT_APP_URL_PERFILMEDICO
-const URL_MAIL=process.env.REACT_APP_URL_MAIL
-const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA
-const URL_TURNOS= process.env.REACT_APP_URL_TURNOS
-const URL_PERFILPACIENTE= process.env.REACT_APP_URL_PERFILPACIENTE
+const URL_PATIENTS = process.env.REACT_APP_URL_PATIENTS;
+const URL_DOCTORS = process.env.REACT_APP_URL_DOCTORS;
+const URL_SPECIALTIES = process.env.REACT_APP_URL_SPECIALTIES;
+const URL_SOCIALSECURITY = process.env.REACT_APP_URL_SOCIALSECURITY;
+const URL_PERFILMEDICO = process.env.REACT_APP_URL_PERFILMEDICO;
+const URL_MAIL = process.env.REACT_APP_URL_MAIL;
+const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA;
+const URL_TURNOS = process.env.REACT_APP_URL_TURNOS;
+const URL_PERFILPACIENTE = process.env.REACT_APP_URL_PERFILPACIENTE;
 
 export const Context = createContext([]);
 export const UtilitiesContext = createContext([]);
 export const LoadingContext = createContext([]);
 export const FilterContext = createContext([]);
 export const SessionContext = createContext([]);
-
 
 const ContextProvider = ({ children }) => {
   console.log(URL_DOCTORS);
@@ -168,6 +166,13 @@ const ContextProvider = ({ children }) => {
     },
     loginPatient: async (loginData) => {
       console.log(loginData);
+      console.log('*********')
+      if (loginData.token) {
+      console.log('*********')
+
+        setSession({ email: loginData.email, token: loginData.token, isDoctor: false });
+        return loginData;
+      }
       try {
         const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData)).data;
         console.log(loginData.email, `*** CONTEXT ***`);
@@ -176,7 +181,8 @@ const ContextProvider = ({ children }) => {
         console.log({ sessionData, patientData });
         return { sessionData, patientData };
       } catch (error) {
-        console.log(error, 'TRY CATCH CONTEXT');
+        window.alert(error.message);
+        console.log(error);
       }
     },
   });
