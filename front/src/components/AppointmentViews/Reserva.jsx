@@ -17,6 +17,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import {URL_TURNOS} from '../../helpers/urlVariables'
 initMercadoPago('TEST-9e5c4674-d7f9-42bc-9f39-62fe105ad00c');
 
 
@@ -29,7 +30,6 @@ const Reserva = () => {
     const [error, setError] = useState({
       motivo: '',
     });
-    const URL_TURNOS = process.env.REACT_APP_URL_TURNOS
   const { id, fecha, hora } = useParams(); // viene de parametros
   const meses = [
     'Ene',
