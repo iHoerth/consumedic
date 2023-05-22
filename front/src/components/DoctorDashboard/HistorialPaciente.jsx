@@ -53,7 +53,7 @@ const HistorialPaciente = () => {
 
     useEffect(() => {
         fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
-    }, [openResponse,openDocuments, imagen, files64]);
+    }, [openResponse,openDocuments, imagen, files64,]);
 
     const handleClickBack = async () =>{
         setVista(6) 
