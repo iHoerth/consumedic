@@ -3,6 +3,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { Box, Typography } from "@mui/material";
 import MyDoctors from "../MyDoctors/MyDoctors";
+import MyDates from "../MyDates/MyDates";
 import { useTheme } from "@mui/material";
 
 const PatientData = () => {
@@ -44,7 +45,12 @@ const PatientData = () => {
           <MyDoctors />
         </Box>
       )}
-      {value === "2" && <Box value="2">Tabla con las historias</Box>}
+      {value === "2" && (
+        <Box value="2">
+          Tabla con las historias
+          <MyDates />
+        </Box>
+      )}
       {value === "3" && (
         <Box value="3">todos los medicos con lo que se atendio</Box>
       )}
