@@ -2,16 +2,26 @@ import { createContext, useState } from 'react';
 import axios from 'axios';
 import useLocalStorage from '../helpers/useLocalStorage';
 
-import {
-  URL_PATIENTS,
-  URL_DOCTORS,
-  URL_SPECIALTIES,
-  URL_SOCIALSECURITY,
-  URL_PERFILMEDICO,
-  URL_TURNOS,
-  URL_PERFILPACIENTE,
-} from '../helpers/urlVariables';
+// import {
+//   URL_PATIENTS,
+//   URL_DOCTORS,
+//   URL_SPECIALTIES,
+//   URL_SOCIALSECURITY,
+//   URL_PERFILMEDICO,
+//   URL_TURNOS,
+//   URL_PERFILPACIENTE,
+// } from '../helpers/urlVariables';
 
+
+const URL_PATIENTS = process.env.REACT_APP_URL_PATIENTS
+const URL_DOCTORS = process.env.REACT_APP_URL_DOCTORS
+const URL_SPECIALTIES = process.env.REACT_APP_URL_SPECIALTIES
+const URL_SOCIALSECURITY = process.env.REACT_APP_URL_SOCIALSECURITY
+const URL_PERFILMEDICO= process.env.REACT_APP_URL_PERFILMEDICO
+const URL_MAIL=process.env.REACT_APP_URL_MAIL
+const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA
+const URL_TURNOS= process.env.REACT_APP_URL_TURNOS
+const URL_PERFILPACIENTE= process.env.REACT_APP_URL_PERFILPACIENTE
 
 export const Context = createContext([]);
 export const UtilitiesContext = createContext([]);
