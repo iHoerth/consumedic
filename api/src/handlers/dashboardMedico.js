@@ -8,7 +8,8 @@ const {postAppointmentResponse}=require("../controllers/appointments/postAppoint
 const getPatientsByDoctor = async (req, res)=>{
     try {
         const {id} = req.params
-        console.log(id);
+        if(!id) throw new Error("Debe propocionar el ID del Medico")
+
         const result = await getAllPatientsByDoctor(Number(id));
         res.status(200).json(result);
     } catch (error) {
@@ -19,6 +20,8 @@ const getPatientsByDoctor = async (req, res)=>{
 const getHistorialPaciente = async (req, res)=>{
     try {
         const {idMedico, idPaciente} = req.params
+        if(!idMedico || !idPaciente) throw new Error("Debe propocionar el ID del Medico y el ID del paciente para ver el Historial")
+
         const result = await getPatientHistory(Number(idMedico),Number(idPaciente));
         res.status(200).json(result);
     } catch (error) {
@@ -29,7 +32,8 @@ const getHistorialPaciente = async (req, res)=>{
 const postDoctorResponse = async (req,res)=>{
     try {
         const {idCita,respuesta} = req.body
-        // console.log(idCita,respuesta);
+        if(!idCita || !respuesta) throw new Error("Debe proporcionar el Id de la cita y la respuesta para publicar la misma")
+
         const result = await postAppointmentResponse(idCita,respuesta)
         res.status(200).json(result);
     } catch (error) {
@@ -41,13 +45,14 @@ const postDoctorDocument = async (req,res)=>{
     try {
         const {idCita,files64, idMedico, idPaciente, titulo} = req.body
 
-        // console.log(idCita,files64, idMedico, idPaciente);
+        if(!idCita || !files64 || !idMedico || !idPaciente || !titulo) throw new Error("faltan datos; Debe proporcionar: idCita, archivo en base 64, idMedico, idPaciente y Titulo del archivo")
 
         const cloudinaryResult = await cloudinary.uploader.upload(files64, {
             folder: "Documents",
-          })
-          const imagenCloudinary = cloudinaryResult.secure_url;
+        })
+        if(!cloudinaryResult) throw new Error("Error en la carga del archivo a Cloudinary")
 
+        const imagenCloudinary = cloudinaryResult.secure_url;
         const result = await postAppointmentDocument(idCita,imagenCloudinary,idMedico, idPaciente,titulo)
         res.status(200).json(result);
     } catch (error) {
