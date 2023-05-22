@@ -182,7 +182,13 @@ const ContextProvider = ({ children }) => {
     },
     loginPatient: async (loginData) => {
       console.log(loginData);
+
       // try {
+        if (loginData.token) {
+
+        setSession({ email: loginData.email, token: loginData.token, isDoctor: false });
+        return loginData;
+      }
       const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData))
         .data;
       console.log(loginData.email, `*** CONTEXT ***`);

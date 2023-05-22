@@ -102,7 +102,7 @@ const Userlogin = () => {
     setUser(response.profileObj);
     loginPatient({
       email: response.profileObj.email,
-      tokenId: response.tokenId,
+      token: response.tokenId,
     }).catch((err) => {
       if (err?.response?.data?.message == "Patient not found") {
         navigate("/create", { state: response.profileObj, replace: true });
