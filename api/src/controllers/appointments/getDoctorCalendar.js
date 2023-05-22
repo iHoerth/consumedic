@@ -88,23 +88,23 @@ const getDoctorCalendar = async (idDoctor) => {
   //! hasta aca parece todo bien
   //! hasta aca parece todo bien
 
-  console.log('71. TRAER TURNOS');
+  // console.log('71. TRAER TURNOS');
   const traerTurnos = async (idDoctor) => {
     const turnosReservados = await getAppointmentsByDoctor(idDoctor);
     // console.log('74. -- TURNOS RESERVADOS --\n', turnosReservados);
     return turnosReservados;
   };
-  console.log('78. FILTRAR TURNOS');
+  // console.log('78. FILTRAR TURNOS');
   const filtrarTurnos = (turno) => {
     if (turno.estado !== 'no atiende') {
       let horario = turno.hora.split(':');
-      console.log('101 HORARIO ', horario);
+      // console.log('101 HORARIO ', horario);
       let dia = turno.fecha.split('-');
-      console.log('103 DIA ', dia);
-      console.log('104 TURNO.FECHA ', turno.fecha);
+      // console.log('103 DIA ', dia);
+      // console.log('104 TURNO.FECHA ', turno.fecha);
 
       // console.log('106 MES VS MESHOY ', dia[1] < diaHoy[1]);
-      console.log('106 DIA VS DIAHOY ', dia[2] < diaHoy[2]);
+      // console.log('106 DIA VS DIAHOY ', dia[2] < diaHoy[2]);
       if (dia[0] < diaHoy[0]) return false;
       if (dia[0] === diaHoy[0] && dia[1] < diaHoy[1]) return false;
       if (dia[0] === diaHoy[0] && dia[1] === diaHoy[1] && dia[2] < diaHoy[2]) return false;
@@ -142,7 +142,7 @@ const getDoctorCalendar = async (idDoctor) => {
     diaHoyDate.getMonth() < 10 ? `0${diaHoyDate.getMonth() + 1}` : `${diaHoyDate.getMonth() + 1}`,
     `${diaHoyDate.getDate()}`,
   ];
-  console.log('143 DIA HOY ', diaHoy);
+  // console.log('143 DIA HOY ', diaHoy);
 
   let turnosFiltrados = turnosMedico.filter(filtrarTurnos); //Filter turnos menores a la fecha actual
 
@@ -153,7 +153,7 @@ const getDoctorCalendar = async (idDoctor) => {
     );
     if (found >= 0) turnosFiltrados[found].estado = 'ocupado';
   }
-  console.log('128 TIME TABLE');
+  // console.log('128 TIME TABLE');
   const timeTable = [];
 
   let today = new Date();
@@ -172,7 +172,7 @@ const getDoctorCalendar = async (idDoctor) => {
 
   // console.log('144. TODAY :', today, '\n MANANA: ', manana);
 
-  console.log('147. ---- TURNOS FILTRADOS LENGTH ----\n', turnosFiltrados.length);
+  // console.log('147. ---- TURNOS FILTRADOS LENGTH ----\n', turnosFiltrados.length);
   for (let i = 0; i < turnosFiltrados.length; ) {
     let turnosDia = [];
     let dia = turnosFiltrados[i].dia_semana;
@@ -219,7 +219,7 @@ const getDoctorCalendar = async (idDoctor) => {
       i++;
     }
   }
-  console.log('RETURN');
+  // console.log('RETURN');
   return timeTable;
 };
 module.exports = {

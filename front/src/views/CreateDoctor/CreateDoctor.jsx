@@ -286,34 +286,8 @@ const CreateDoctor = () => {
           style={{ backgroundColor: "rgba(255, 255, 255)" }}
         >
           <Grid container spacing={2}>
-            <Title>Crear usuario doctor</Title>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="dni"
-                name="dni"
-                label="Documento"
-                fullWidth
-                value={form.dni}
-                onChange={handleChange}
-                helperText={
-                  error.dni ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
-                      {error.dni}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
-                sx={{
-                  height: "90px",
-                  width: "250px",
-                }}
-              />
-            </Grid>
+            <Title>Crear Usuario Profesional</Title>
+            
 
             <Grid item xs={12} sm={6}>
               <TextField
@@ -367,7 +341,83 @@ const CreateDoctor = () => {
                   height: "90px",
                   width: "250px",
                 }}
+                />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="dni"
+                name="dni"
+                label="Documento"
+                fullWidth
+                value={form.dni}
+                onChange={handleChange}
+                helperText={
+                  error.dni ? (
+                    <Typography
+                      variant="inherit"
+                      color="error"
+                      style={{ maxWidth: "200px" }}
+                    >
+                      {error.dni}
+                    </Typography>
+                  ) : null
+                }
+                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                sx={{
+                  height: "90px",
+                  width: "250px",
+                }}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <input
+                accept="image/*"
+                style={{ display: "none" }}
+                id="fotoMatricula"
+                name="fotoMatricula"
+                type="file"
+                onChange={handleImage}
+                helperText={
+                  error.fotoMatricula ? (
+                    <Typography
+                      variant="inherit"
+                      color="error"
+                      style={{ maxWidth: "200px" }}
+                    >
+                      {error.fotoMatricula}
+                    </Typography>
+                  ) : null
+                }
+                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                sx={{
+                  height: "90px",
+                  width: "250px",
+                }}
+              />
+              <label htmlFor="fotoMatricula">
+                <Button
+                  variant="contained"
+                  component="span"
+                  startIcon={<PhotoCamera />}
+                  sx={{
+                    height: "55px",
+                    width: "250px",
+                  }}
+                >
+                  Foto de Perfil
+                </Button>
+              </label>
+              {form.fotoMatricula && <span>{form.fotoMatricula.name}</span>}
+              {error.fotoMatricula ? (
+                <Typography
+                  variant="inherit"
+                  color="error"
+                  style={{ maxWidth: "180px", fontSize: "12px", margin: "6px" }}
+                >
+                  {error.fotoMatricula}
+                </Typography>
+              ) : null}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -478,55 +528,6 @@ const CreateDoctor = () => {
                   width: "250px",
                 }}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <input
-                accept="image/*"
-                style={{ display: "none" }}
-                id="fotoMatricula"
-                name="fotoMatricula"
-                type="file"
-                onChange={handleImage}
-                helperText={
-                  error.fotoMatricula ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
-                      {error.fotoMatricula}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
-                sx={{
-                  height: "90px",
-                  width: "250px",
-                }}
-              />
-              <label htmlFor="fotoMatricula">
-                <Button
-                  variant="contained"
-                  component="span"
-                  startIcon={<PhotoCamera />}
-                  sx={{
-                    height: "55px",
-                    width: "250px",
-                  }}
-                >
-                  Foto de matrícula
-                </Button>
-              </label>
-              {form.fotoMatricula && <span>{form.fotoMatricula.name}</span>}
-              {error.fotoMatricula ? (
-                <Typography
-                  variant="inherit"
-                  color="error"
-                  style={{ maxWidth: "180px", fontSize: "12px", margin: "6px" }}
-                >
-                  {error.fotoMatricula}
-                </Typography>
-              ) : null}
             </Grid>
 
             <Grid item xs={12}>

@@ -141,7 +141,7 @@ const Reserva = () => {
                 required
               />
             </Box>
-            <Button variant="contained" disabled={error.motivo} onClick={handleClickMp}>
+            <Button variant="contained" disabled={form.motivo==="" ? true : false} onClick={handleClickMp}>
               Proceder al Pago
             </Button>
 
