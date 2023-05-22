@@ -1,6 +1,6 @@
 require('dotenv').config();
 // const { PORT } = process.env;
-const { PORT, HOST, DEPLOY, DEPLOYPORT, tokenMP, MP_SUCCES, MP_PENDING, MP_FAILURE } = process.env;
+const { PORT, HOST, DEPLOY, DEPLOYPORT, tokenMP, MP_SUCCES, MP_PENDING, MP_FAILURE, LIKN_DEPLOY } = process.env;
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -10,7 +10,8 @@ const { conn } = require('./src/db');
 
 const hostFront = DEPLOY || 'localhost';
 const portFront = DEPLOYPORT || ':3000';
-
+const mp_success = MP_SUCCES;
+const mp_failure = MP_FAILURE;
 const port = PORT || 3001;
 
 const server = express();
@@ -48,13 +49,15 @@ server.post('/turno', (req, res) => {
   const dataPreferences = req.body;
   console.log('cita: ' + dataPreferences);
 
+  // https://pf-soyhenry.vercel.app
+
   // Crea un objeto de preferencia
   let preference = {
     //urls donde te redirige en cada caso, pago exitoso, pendiente y fallo, x razon
     back_urls: {
-      success: `http://${hostFront}${portFront}/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/aprobado/${dataPreferences.comentario}`,
+      success: `${mp_success}`,
       // pending: `http://localhost:3000/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/pendiente/`,
-      failure: `http://${hostFront}${portFront}/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/rechazado/0`,
+      failure: `${mp_failure}`,
     },
     items: [
       {
