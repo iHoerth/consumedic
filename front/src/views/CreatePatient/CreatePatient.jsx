@@ -25,6 +25,7 @@ const CreatePatient = () => {
   const navigate = useNavigate();
   const { createPatient, patientDetail } = useContext(Context)[1];
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
+  const { setSession } = useContext(Context)[2];
 
   //! hacer que loguee en cuanto se crea
   //! hacer que loguee en cuanto se crea
@@ -54,12 +55,10 @@ const CreatePatient = () => {
     confirmPassword: '',
   });
 
-
   const handleSelectChange = (event) => {
     const { name, value } = event.target;
     handleFormChange({ target: { name, value } });
   };
-
 
   const handleFormChange = (event) => {
     const property = event.target.name;
@@ -125,8 +124,15 @@ const CreatePatient = () => {
     const errors = validateForm(form);
     setError(errors);
     handleCheckedPassword();
-    createPatient({ ...form, isDoctor: false });
-    navigate(`/patientpanel/`);
+    createPatient({ ...form, isDoctor: false }).then((res) => {
+      console.log(res)
+      setSession({
+        isDoctor: false,
+        token: 'res.token', //! 
+        email: res.email,
+      })
+      navigate(`/patientpanel/`);
+    });
   }
 
   const handleCheckedPassword = () => {
@@ -142,7 +148,6 @@ const CreatePatient = () => {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
 
   return (
     <>
