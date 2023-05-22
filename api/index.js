@@ -17,7 +17,7 @@ const server = express();
 server.use(express.json());
 server.use(
   cors({
-    origin: ['*', 'https://apideploy-production.up.railway.app'],
+    origin: '*',
   })
 );
 
