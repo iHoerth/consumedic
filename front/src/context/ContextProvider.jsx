@@ -13,6 +13,8 @@ import {
 } from '../helpers/urlVariables';
 
 
+const URLPRUEBA = process.env.REACT_APP_URL_PRUEBA
+
 export const Context = createContext([]);
 export const UtilitiesContext = createContext([]);
 export const LoadingContext = createContext([]);
@@ -21,6 +23,7 @@ export const SessionContext = createContext([]);
 
 
 const ContextProvider = ({ children }) => {
+  console.log(URLPRUEBA)
   console.log(URL_DOCTORS);
   const [loading, setLoading] = useState(false);
 

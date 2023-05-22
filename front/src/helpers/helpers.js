@@ -20,20 +20,6 @@ export const bannerImages = [
     label: '',
     imgPath: '/images/10.jpg',
   },
-
-  // FEARDAS
-  // {
-  //   label: '',
-  //   imgPath: '/images/7.jpg',
-  // },
-  // {
-  //   label: '',
-  //   imgPath: '/images/8.jpg',
-  // },
-  // {
-  //   label: '',
-  //   imgPath: '/images/11.jpg',
-  // },
 ];
 
 export const homeCards = [
