@@ -36,7 +36,7 @@ const EditarPerfil = ({doctorDetail1}) => {
     const [openImagen, setOpenImagen]=useState(false)
     const [fileName, setFileName] = useState("")
     const [files64, setFiles64]=useState()
-
+    let respuesta=0;
     useEffect(() => {
        if(!socialSecurity.length && !specialties.length){
         const search = async () => {
@@ -48,7 +48,7 @@ const EditarPerfil = ({doctorDetail1}) => {
         setLoading(false);
        }
 
-    }, [loading, socialSecurity,specialties,doctorDetail]);
+    }, [loading, socialSecurity,specialties,doctorDetail, respuesta]);
 
     //console.log(doctorDetail1);
 
@@ -164,7 +164,8 @@ const EditarPerfil = ({doctorDetail1}) => {
 
     const handleSubmit = async () => {
         await putDoctor(datos)
-        await fetchDoctorByEmail(datos.email)
+        respuesta = await fetchDoctorByEmail(datos.email)
+        
     }
    
     if(loading) return (<Loading />)

@@ -21,6 +21,7 @@ const URL_PERFILMEDICO = process.env.REACT_APP_URL_PERFILMEDICO;
 const URL_MAIL = process.env.REACT_APP_URL_MAIL;
 const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA;
 const URL_TURNOS = process.env.REACT_APP_URL_TURNOS;
+const URL_APPOINTMENTS = process.env.REACT_APP_URL_APPOINTMENTS;
 const URL_PERFILPACIENTE = process.env.REACT_APP_URL_PERFILPACIENTE;
 
 export const Context = createContext([]);
@@ -129,6 +130,7 @@ const ContextProvider = ({ children }) => {
         ...prevState,
         doctorDetail: { ...data },
       }));
+      return data
     },
   });
 
@@ -242,7 +244,7 @@ const ContextProvider = ({ children }) => {
       }));
     },
     fetchTurnos: async (id) => {
-      const turnosData = (await axios(`${URL_TURNOS}/doctor/${id}`)).data;
+      const turnosData = (await axios(`${URL_APPOINTMENTS}/doctor/${id}`)).data;
       setPanelMedico((prevState) => ({
         ...prevState,
         turnos: turnosData,
@@ -313,12 +315,12 @@ const ContextProvider = ({ children }) => {
           <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
             <Context.Provider
               value={[
-                doctorsData,
-                patientsData,
-                { session, setSession },
-                panelMedico,
-                appointment,
-                panelPaciente,
+                doctorsData, //[0]
+                patientsData, //[1]
+                { session, setSession },//[2]
+                panelMedico,//[3]
+                appointment,//[4]
+                panelPaciente,//[5]
               ]}
             >
               {children}
