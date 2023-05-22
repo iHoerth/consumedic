@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../../../context/ContextProvider";
 import { DataGrid } from "@material-ui/data-grid";
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 
 const MyDoctors = () => {
   const { informacion, fetchPatientData } = useContext(Context)[5];
@@ -60,13 +60,23 @@ const MyDoctors = () => {
         <div>CARGANDO</div>
       ) : (
         <Box sx={{ height: 400, width: "100%" }}>
-          <DataGrid
-            disableSelectionOnClick
-            rows={informacionData}
-            columns={columns}
-            pageSize={5}
-            checkboxSelection
-          />
+          {
+            !informacion.length ? (
+              <>
+                <Skeleton>NO HAY INFO CRACK</Skeleton>
+              </>
+            ) : (
+
+              <DataGrid
+                disableSelectionOnClick
+                rows={informacionData}
+                columns={columns}
+                pageSize={5}
+                checkboxSelection
+                // id={patientDetail.id && patientDetail.id}
+              />
+            )
+          }
         </Box>
       )}
     </>

@@ -23,9 +23,9 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       telefono: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        // unique: true,
       },
       nombre: {
         type: DataTypes.STRING,
