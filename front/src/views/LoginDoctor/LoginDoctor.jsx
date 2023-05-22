@@ -100,8 +100,8 @@ const LoginDoctor = () => {
     );
   };
 
-  const onFailure = () => {
-    console.log('something went wrong');
+  const onFailure = (error) => {
+    console.log(error);
   };
 
   return (
