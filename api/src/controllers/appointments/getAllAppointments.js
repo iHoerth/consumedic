@@ -3,8 +3,8 @@ const {Cita}= require("../../db")
 const getAllAppointments = async ()=>{
     
     const appointments = await Cita.findAll()
-    // falta incluir modelo doctro y modelo patient
-    return appointments;
+    if(!appointments.length) throw new Error("No se encontraron citas")
+    else return appointments;
 }
 module.exports = { 
     getAllAppointments

@@ -9,8 +9,8 @@ const bcrypt = require("bcrypt");
 const cloudinary = require("../utils/cloudinary")
 
 const getDoctors = async (req, res) => {
-  const { email } = req.query;
   try {
+    const { email } = req.query;
     const result = email ? await getDoctor(email) : await getAllDoctors();
     res.status(200).json(result);
   } catch (error) {
@@ -19,8 +19,10 @@ const getDoctors = async (req, res) => {
 };
 
 const getDoctorsById = async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
+    if(!id) throw new Error("Falta ID del Doctor para proceder a la busqueda")
+
     const result = await getDoctorById(id);
     res.status(200).json(result);
   } catch (error) {
@@ -47,20 +49,32 @@ const postDoctor = async (req, res) => {
   } = req.body;
 
   try {
-    // Generar un hash de la contraseña utilizando bcrypt
-    const hashedPassword = await bcrypt.hash(password, 10);
+    if(!dni ||
+      !NumMatricula ||
+      !nombre ||
+      !apellido ||
+      !email ||
+      !telefono ||
+      !direccion ||
+      !imagen ||
+      !password ||
+      !titulo ||
+      !Descripcion ||
+      !precio ||
+      !idEspecialidad ||
+      !idObraSocial) throw new Error ("Faltan datos para crear Doctor")
+    
+      const hashedPassword = await bcrypt.hash(password, 10);
+      if(!hashedPassword) throw new Error("No se ha podido hashear la contraseña")
 
     const cloudinaryResult = await cloudinary.uploader.upload(imagen, {
       folder: "Doctors",
       width: 300,
       crop: "scale"
     })
+    if(!cloudinaryResult) throw new Error("Error en la carga del archivo a Cloudinary")
     const imagenCloudinary = cloudinaryResult.secure_url;
-    // agregar esto en el createDoctor como parametro en reemplazo de imagen
-    // imagen: {
-    //   public_id: cloudinaryResult.public_id,
-    //   url: cloudinaryResult.secure_url
-    // }
+    
     const result = await createDoctor(
       dni,
       NumMatricula,
@@ -85,8 +99,10 @@ const postDoctor = async (req, res) => {
 };
 
 const putDoctor = async (req, res) => {
-  const { id, status } = req.body;
   try {
+    const { id, status } = req.body;
+    if(!id || !status) throw new Error("Faltan datos; Debe proporcionar ID y Status")
+
     const result = await modifyDoctor(id, status);
     res.status(200).json(result);
   } catch (error) {
@@ -95,19 +111,20 @@ const putDoctor = async (req, res) => {
 };
 
 const putDoctorEdit = async (req, res) => {
-  const doctorNewDetails = req.body;
-  console.log(doctorNewDetails);
+  
   try {
-    // console.log(doctorNewDetails.prevImagen);
-    // const deletePrevPhoto = await cloudinary.uploader.destroy(doctorNewDetails.prevImagen)
-    // console.log(deletePrevPhoto);
+    const doctorNewDetails = req.body;
+    if(!doctorNewDetails) throw new Error("No se han recibido Datos")
+    
     const cloudinaryResult = await cloudinary.uploader.upload(doctorNewDetails.imagen, {
       folder: "Doctors",
       width: 300,
       crop: "scale"
     })
+    if(!cloudinaryResult) throw new Error("Error en la carga del archivo a Cloudinary")
     const imagenCloudinary = cloudinaryResult.secure_url;
     doctorNewDetails.imagen=imagenCloudinary;
+    
     const result = await modifyProfileDoctor(doctorNewDetails);
     res.status(200).json(result);
   } catch (error) {

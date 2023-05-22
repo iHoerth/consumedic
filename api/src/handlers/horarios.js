@@ -5,9 +5,10 @@ const { createHorariosBulk } = require("../controllers/horarios/createHorariosBu
 
 
 const getHorariosId = async (req, res) =>{
-    const {id} = req.params;
-    const idMedico=id;
     try {
+        const {id} = req.params;
+        const idMedico=id;
+        if(!idMedico) throw new Error("Debe proporcionar ID del medico para buscar horarios")
         const result = await getHorariosById(idMedico)
         res.status(200).json(result);
     } catch (error) {
@@ -17,8 +18,9 @@ const getHorariosId = async (req, res) =>{
 
 
 const postHorarios = async (req, res) => {
-    const { idMedico, agenda } = req.body;
     try {
+        const { idMedico, agenda } = req.body;
+        if(!idMedico || !agenda) throw new Error("Debe proporcionar idMedico y agenda para publicar la misma")
         const result = await createHorarios(idMedico, agenda)
         res.status(200).json(result);
     } catch (error) {
@@ -27,10 +29,9 @@ const postHorarios = async (req, res) => {
 }
 
 const postHorariosBulk = async (req, res) => {
-    const {agenda, id} = req.body;
-    console.log(agenda);
-    console.log(id)
     try {
+        const {agenda, id} = req.body;
+        if(!id || !agenda) throw new Error("Debe proporcionar idMedico y agenda para publicar la misma")
         const result = await createHorariosBulk( agenda, id)
         res.status(200).json(result);
     } catch (error) {

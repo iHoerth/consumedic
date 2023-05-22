@@ -38,6 +38,8 @@ const createDoctor = async (
     precio,
   });
 
+  if(!newDoctor) throw new Error("No se pudo agregar el Doctor")
+
   if (Array.isArray(idEspecialidad) && idEspecialidad.length > 0) {
     for (let name of idEspecialidad) {
       console.log("name: ", name);
@@ -45,47 +47,33 @@ const createDoctor = async (
       const newEspecialidad = await Especialidad.findAll({
         where: { id: idEpecial },
       });
-      console.log("newEspecialidad: ", newEspecialidad);
+      if(!newEspecialidad) throw new Error("No se encuentra Especialidad con el ID enviado")
       newDoctor.addEspecialidads(newEspecialidad);
     }
   } else {
     const newEspecialidad = await Especialidad.findAll({
           where: { id: idEspecialidad },
         });
+        if(!newEspecialidad) throw new Error("No se encuentra Especialidad con el ID enviado")
         newDoctor.addEspecialidads(newEspecialidad);
   }
-  // if (idEspecialidad) {
-  //   const newEspecialidad = await Especialidad.findAll({
-  //     where: { id: idEspecialidad },
-  //   });
-  //   //console.log("especialidad: ", newEspecialidad);
-  //   newDoctor.addEspecialidads(newEspecialidad);
-  // }
+ 
   if (Array.isArray(idObraSocial) && idObraSocial.length > 0) {
     for (let name of idObraSocial) {
-      // console.log("name: ", name);
       let idObra = name;
       const newObraSocial = await ObraSocial.findAll({
         where: { id: idObra },
       });
-      console.log("newObraSocial: ", newObraSocial);
+      if(!newObraSocial) throw new Error("No se encuentra Obra Social con el ID enviado")
       newDoctor.addObraSocials(newObraSocial);
     }
   } else {
       const newObraSocial = await ObraSocial.findAll({
         where: { id: idObraSocial },
       });
-      //console.log("obra social: ", newObraSocial);
+      if(!newObraSocial) throw new Error("No se encuentra Obra Social con el ID enviado")
       newDoctor.addObraSocials(newObraSocial);
   }
-  // if (idObraSocial) {
-  //   const newObraSocial = await ObraSocial.findAll({
-  //     where: { id: idObraSocial },
-  //   });
-  //   //console.log("obra social: ", newObraSocial);
-  //   newDoctor.addObraSocials(newObraSocial);
-  // }
-
   return newDoctor;
 };
 
