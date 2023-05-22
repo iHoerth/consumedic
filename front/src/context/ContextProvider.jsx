@@ -122,6 +122,7 @@ const ContextProvider = ({ children }) => {
         ...prevState,
         doctorDetail: { ...data },
       }));
+      return data
     },
   });
 
@@ -306,12 +307,12 @@ const ContextProvider = ({ children }) => {
           <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
             <Context.Provider
               value={[
-                doctorsData,
-                patientsData,
-                { session, setSession },
-                panelMedico,
-                appointment,
-                panelPaciente,
+                doctorsData, //[0]
+                patientsData, //[1]
+                { session, setSession },//[2]
+                panelMedico,//[3]
+                appointment,//[4]
+                panelPaciente,//[5]
               ]}
             >
               {children}
