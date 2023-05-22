@@ -17,9 +17,10 @@ import { Button, Box, Typography, Divider } from '@mui/material';
 const Turnos = ({id}) => {
     const {turnos, fetchTurnos} = useContext(Context)[3];
     const [loading, setLoading] = useState(true);
+    const [view, setView] = useState(0)
 
     useEffect(() => {
-        if (!turnos.length) {
+        if (!turnos.viejosTurnos||!turnos.futurosTurnos) {
             const search = async () => {
                 await fetchTurnos(id)
             }
@@ -35,10 +36,20 @@ const Turnos = ({id}) => {
     const handleClick = (event)=>{
         console.log(event.target);
     }
+
+    const handleTurnoClick = (event)=>{
+        if(view===0){
+            setView(1)
+        }
+        else setView(0)
+    }
     return ( 
         <>
             <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
                 <Typography style={{fontSize:"larger", fontWeight:"600"}}>Listado de Turnos</Typography>
+                <Box sx={{position:"absolute",  right:"10%", mb: "15px"}}>
+                    <Button variant="contained" size="small" onClick={handleTurnoClick}>{view===0?"Turnos Pasados":"Turnos por Venir"}</Button>
+                </Box>
             </Box>
             <Divider />
             <TableContainer component={Paper}>
@@ -53,7 +64,7 @@ const Turnos = ({id}) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                            {turnos.map(turno => (
+                            {view===0 ? (turnos.futurosTurnos&&turnos.futurosTurnos.length ? turnos.futurosTurnos.map(turno => (
                                 <TableRow>
                                     <TableCell align="left">{turno.fecha}</TableCell>
                                     <TableCell align="center">{turno.hora}</TableCell>
@@ -61,7 +72,15 @@ const Turnos = ({id}) => {
                                     <TableCell align="center">{turno.descripcion}</TableCell>
                                     <TableCell align="center"><Button id={turno.id} onClick={handleClick} variant="outlined" size="small">Cancelar Turno</Button></TableCell>
                                 </TableRow>
-                            ))}
+                            )):"No hay turnos para mostrar") : (turnos.viejosTurnos&&turnos.viejosTurnos.length ? turnos.viejosTurnos.map(turno => (
+                                <TableRow>
+                                    <TableCell align="left">{turno.fecha}</TableCell>
+                                    <TableCell align="center">{turno.hora}</TableCell>
+                                    <TableCell align="center">{`${turno.paciente.nombre} ${turno.paciente.apellido}`}</TableCell>
+                                    <TableCell align="center">{turno.descripcion}</TableCell>
+                                    <TableCell align="center"><Button id={turno.id} onClick={handleClick} variant="outlined" size="small" disabled>Cancelar Turno</Button></TableCell>
+                                </TableRow>
+                            )):"No hay turnos para mostrar") }
                     </TableBody>
                 </Table>
             </TableContainer>
