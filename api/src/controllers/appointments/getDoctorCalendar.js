@@ -38,9 +38,6 @@ const getDoctorCalendar = async (idDoctor) => {
         // console.log('38 HORA INICIO ', horaInicio);
         const horaInicioHH = horaInicio.split(':')[0];
 
-        //! la siguiente linea de codigo no sirve!!
-        // if (horaInicioHH < 10) horaInicio = `0${horaInicio}`;
-
         let horaFin = agenda[i].horario_fin;
         // console.log('40 HORA FIN ', agenda[i].horario_fin);
 
