@@ -99,20 +99,27 @@ const ContextProvider = ({ children }) => {
       }));
     },
     loginDoctor: async (loginData) => {
-      try {
-        const sessionData = (
-          await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)
-        ).data;
-        const doctorData = await doctorsData.fetchDoctorByEmail(
-          loginData.email
-        );
-        console.log(doctorData);
-        setSession({ ...sessionData, email: loginData.email });
-        console.log({ sessionData, doctorData });
-        return { sessionData, doctorData };
-      } catch (error) {
-        console.log(error.message, "TRY CATCH CONTEXT");
-      }
+      // try {
+      const sessionData = (
+        await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)
+      ).data;
+      const doctorData = await doctorsData.fetchDoctorByEmail(
+        loginData.email,
+        loginData.nombre,
+        loginData.apellido
+      );
+      console.log(doctorData);
+      setSession({
+        ...sessionData,
+        email: loginData.email,
+        nombre: loginData.nombre,
+        apellido: loginData.apellido,
+      });
+      console.log({ sessionData, doctorData });
+      return { sessionData, doctorData };
+      // } catch (error) {
+      //   console.log(error.message, "TRY CATCH CONTEXT");
+      // }
     },
     putDoctor: async (doctorNewDetails) => {
       console.log(doctorNewDetails);
