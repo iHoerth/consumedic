@@ -2,6 +2,13 @@ const {Horario, DoctorType}= require("../../db")
 
 const createHorariosBulk = async (agenda, id)=>{
     const newDoctor = await DoctorType.findByPk(id);
+    
+    await Horario.destroy({
+        where:{
+            DoctorTypeId: id
+        }
+    });
+
     if(newDoctor){
         for (let i=0; i<agenda.length; i++){
             const newHorario = await Horario.create({
@@ -22,6 +29,72 @@ const createHorariosBulk = async (agenda, id)=>{
 
 module.exports = { createHorariosBulk };
 
+
+// [
+// 	{
+// 		"id": 1,
+// 		"dia_semana": "Domingo",
+// 		"atiende": "si",
+// 		"horario_inicio": "09:00:00",
+// 		"horario_fin": "16:00:00",
+// 		"duracion_turno": "00:30:00",
+// 		"DoctorTypeId": 1
+// 	},
+// 	{
+// 		"id": 2,
+// 		"dia_semana": "Lunes",
+// 		"atiende": "si",
+// 		"horario_inicio": "11:00:00",
+// 		"horario_fin": "18:00:00",
+// 		"duracion_turno": "00:30:00",
+// 		"DoctorTypeId": 1
+// 	},
+// 	{
+// 		"id": 3,
+// 		"dia_semana": "Martes",
+// 		"atiende": "si",
+// 		"horario_inicio": "10:00:00",
+// 		"horario_fin": "17:00:00",
+// 		"duracion_turno": "00:30:00",
+// 		"DoctorTypeId": 1
+// 	},
+// 	{
+// 		"id": 4,
+// 		"dia_semana": "Miércoles",
+// 		"atiende": "no",
+// 		"horario_inicio": null,
+// 		"horario_fin": null,
+// 		"duracion_turno": null,
+// 		"DoctorTypeId": 1
+// 	},
+// 	{
+// 		"id": 5,
+// 		"dia_semana": "Jueves",
+// 		"atiende": "si",
+// 		"horario_inicio": "09:00:00",
+// 		"horario_fin": "16:00:00",
+// 		"duracion_turno": "00:30:00",
+// 		"DoctorTypeId": 1
+// 	},
+// 	{
+// 		"id": 6,
+// 		"dia_semana": "Viernes",
+// 		"atiende": "no",
+// 		"horario_inicio": null,
+// 		"horario_fin": null,
+// 		"duracion_turno": null,
+// 		"DoctorTypeId": 1
+// 	},
+// 	{
+// 		"id": 7,
+// 		"dia_semana": "Sábado",
+// 		"atiende": "si",
+// 		"horario_inicio": "10:00:00",
+// 		"horario_fin": "17:00:00",
+// 		"duracion_turno": "00:30:00",
+// 		"DoctorTypeId": 1
+// 	}
+// ]
 
 
 // agenda = [
