@@ -28,7 +28,7 @@ const AboutUs = () => {
       }}
     >
       {members.map((member) => (
-        <Card sx={{padding:'20px', margin:'0'}}>
+        <Card key={member.id} sx={{padding:'20px', margin:'0'}}>
           <CardHeader
             avatar={
               <Avatar
