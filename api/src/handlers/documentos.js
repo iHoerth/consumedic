@@ -5,8 +5,10 @@ const { createDocuments } = require("../controllers/documentos/createDocuments")
 
 
 const getDocumentos = async (req, res) =>{
-    const {idHistorialMedico, idPaciente, idMedico, idCita} = req.body;
     try {
+        const {idHistorialMedico, idPaciente, idMedico, idCita} = req.body;
+        if(!idHistorialMedico || !idPaciente || !idMedico || !idCita) throw new Error("Faltan datos para buscar documentos")
+        
         const result = await getDocuments(idHistorialMedico, idPaciente, idMedico, idCita)
         res.status(200).json(result);
     } catch (error) {
@@ -16,8 +18,10 @@ const getDocumentos = async (req, res) =>{
 
 
 const postDocumentos = async (req, res) => {
-    const { idHistorialMedico, idPaciente, idMedico, idCita, documento } = req.body;
     try {
+        const { idHistorialMedico, idPaciente, idMedico, idCita, documento } = req.body;
+        if(!idHistorialMedico || !idPaciente || !idMedico || !idCita || !documento) throw new Error("Faltan datos para crear documentos")
+
         const result = await createDocuments(idHistorialMedico, idPaciente, idMedico, idCita, documento)
         res.status(200).json(result);
     } catch (error) {

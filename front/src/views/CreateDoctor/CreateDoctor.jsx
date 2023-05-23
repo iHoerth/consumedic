@@ -10,7 +10,7 @@ import TextField from "@mui/material/TextField";
 import imagen8 from "../../assets/Img/8.jpg";
 import NavBar from "../../components/NavBar/NavBar";
 import { Container, Paper, Typography, Autocomplete } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Context, UtilitiesContext } from "../../context/ContextProvider";
 import { FormHelperText } from "@mui/material";
 import Footer from "../../components/Footer/Footer";
@@ -46,6 +46,8 @@ const CreateDoctor = () => {
   const doctor = useContext(Context)[0];
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const { createDoctor, doctorDetail } = doctor;
+  const { loginDoctor } = useContext(Context);
+  const location = useLocation();
 
   const [form, setForm] = useState({
     dni: "",
@@ -253,6 +255,17 @@ const CreateDoctor = () => {
     validarForm({ ...form, [property]: values });
   };
 
+  useEffect(() => {
+    if (location.state) {
+      setForm({
+        ...form,
+        nombre: location.state.givenName,
+        apellido: location.state.familyName,
+        email: location.state.email,
+      });
+    }
+  }, [location?.state]);
+
   return (
     <>
       <NavBar></NavBar>
@@ -287,7 +300,6 @@ const CreateDoctor = () => {
         >
           <Grid container spacing={2}>
             <Title>Crear Usuario Profesional</Title>
-            
 
             <Grid item xs={12} sm={6}>
               <TextField
@@ -341,7 +353,7 @@ const CreateDoctor = () => {
                   height: "90px",
                   width: "250px",
                 }}
-                />
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField

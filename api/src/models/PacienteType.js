@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "PacienteType",
+    'PacienteType',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -24,7 +24,6 @@ module.exports = (sequelize) => {
       },
       telefono: {
         type: DataTypes.STRING,
-        allowNull: false,
         // unique: true,
       },
       nombre: {
@@ -42,8 +41,8 @@ module.exports = (sequelize) => {
       },
       status: {
         type: DataTypes.ENUM,
-        values: ["active", "deleted"],
-        defaultValue: "active",
+        values: ['active', 'deleted', 'incomplete'],
+        defaultValue: 'active',
       },
     },
     {

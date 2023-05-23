@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import axios from "axios";
 import useLocalStorage from "../helpers/useLocalStorage";
+import { useNavigate } from "react-router-dom";
 
 // import {
 //   URL_PATIENTS,
@@ -20,6 +21,7 @@ const URL_PERFILMEDICO = process.env.REACT_APP_URL_PERFILMEDICO;
 const URL_MAIL = process.env.REACT_APP_URL_MAIL;
 const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA;
 const URL_TURNOS = process.env.REACT_APP_URL_TURNOS;
+const URL_APPOINTMENTS = process.env.REACT_APP_URL_APPOINTMENTS;
 const URL_PERFILPACIENTE = process.env.REACT_APP_URL_PERFILPACIENTE;
 
 export const Context = createContext([]);
@@ -29,6 +31,8 @@ export const FilterContext = createContext([]);
 export const SessionContext = createContext([]);
 
 const ContextProvider = ({ children }) => {
+  const navigate = useNavigate();
+  console.log(URL_DOCTORS);
   const [loading, setLoading] = useState(false);
 
   const [session, setSession] = useLocalStorage("loggedUser", {
@@ -96,20 +100,27 @@ const ContextProvider = ({ children }) => {
       }));
     },
     loginDoctor: async (loginData) => {
-      try {
-        const sessionData = (
-          await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)
-        ).data;
-        const doctorData = await doctorsData.fetchDoctorByEmail(
-          loginData.email
-        );
-
-        setSession({ ...sessionData, email: loginData.email });
-        console.log({ sessionData, doctorData });
-        return { sessionData, doctorData };
-      } catch (error) {
-        console.log(error.message, "TRY CATCH CONTEXT");
-      }
+      // try {
+      const sessionData = (
+        await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)
+      ).data;
+      const doctorData = await doctorsData.fetchDoctorByEmail(
+        loginData.email,
+        loginData.nombre,
+        loginData.apellido
+      );
+      console.log(doctorData);
+      setSession({
+        ...sessionData,
+        email: loginData.email,
+        nombre: loginData.nombre,
+        apellido: loginData.apellido,
+      });
+      console.log({ sessionData, doctorData });
+      return { sessionData, doctorData };
+      // } catch (error) {
+      //   console.log(error.message, "TRY CATCH CONTEXT");
+      // }
     },
     putDoctor: async (doctorNewDetails) => {
       console.log(doctorNewDetails);
@@ -119,6 +130,7 @@ const ContextProvider = ({ children }) => {
         ...prevState,
         doctorDetail: { ...data },
       }));
+      return data;
     },
   });
 
@@ -169,18 +181,62 @@ const ContextProvider = ({ children }) => {
       }
     },
     loginPatient: async (loginData) => {
-      try {
+      if (loginData.token) {
+        console.log("** LOGIN DATA **", loginData);
+        setSession({
+          email: loginData.email,
+          token: loginData.token,
+          isDoctor: false,
+        });
+
+        axios
+          .get(`${URL_PATIENTS}?email=${loginData.email}`)
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => {
+            if (error.response && error.response.status === 400) {
+              console.log("EN EL CATCH DEL GET BY EMAIL");
+
+              patientsData
+                .createPatient({
+                  loggedFromGoogle: loginData.loggedFromGoogle,
+                  email: loginData.email,
+                  nombre: loginData.nombre,
+                  apellido: loginData.apellido,
+                })
+                .then((newPatient) => {
+                  return newPatient;
+                })
+                .catch((error) => {
+                  console.log("Error al crear el nuevo paciente:", error);
+                  // Manejar el error al crear el nuevo paciente
+                });
+            } else {
+              console.log("Error en la solicitud GET:", error);
+              // Manejar otros errores de solicitud
+            }
+          });
+      } else {
         const sessionData = (
           await axios.post(`${URL_PATIENTS}/login`, loginData)
         ).data;
-
+        console.log(loginData.email, `*** CONTEXT ***`);
         const patientData = await patientsData.fetchPatientByEmail(
-          loginData.email
+          loginData.email,
+          loginData.nombre,
+          loginData.apellido
         );
-        setSession({ ...sessionData, email: loginData.email });
-
+        setSession({
+          ...sessionData,
+          email: loginData.email,
+          nombre: loginData.nombre,
+          apellido: loginData.apellido,
+          token: loginData.tokenId,
+        });
+        console.log({ sessionData, patientData });
         return { sessionData, patientData };
-      } catch (error) {}
+      }
     },
   });
 
@@ -201,7 +257,7 @@ const ContextProvider = ({ children }) => {
   const [panelMedico, setPanelMedico] = useState({
     pacientes: [],
     pacienteHistorial: {},
-    turnos: [],
+    turnos: {},
     vista: 0,
 
     fetchPacientes: async (id) => {
@@ -222,7 +278,7 @@ const ContextProvider = ({ children }) => {
       }));
     },
     fetchTurnos: async (id) => {
-      const turnosData = (await axios(`${URL_TURNOS}/doctor/${id}`)).data;
+      const turnosData = (await axios(`${URL_APPOINTMENTS}/doctor/${id}`)).data;
       setPanelMedico((prevState) => ({
         ...prevState,
         turnos: turnosData,
@@ -286,6 +342,26 @@ const ContextProvider = ({ children }) => {
     },
   });
 
+  const [panelAdmin, setPanelAdmin] = useState({
+    admin: {},
+    vista: 0,
+    pacientes: [],
+    medicos: [],
+    email: 0,
+    setVista: (vista) => {
+      setPanelAdmin((prevState) => ({
+        ...prevState,
+        vista: vista,
+      }));
+    },
+    setEmail: (email) => {
+      setPanelAdmin((prevState) => ({
+        ...prevState,
+        email: email,
+      }));
+    },
+  });
+
   return (
     <>
       <LoadingContext.Provider value={[loading, setLoading]}>
@@ -293,12 +369,13 @@ const ContextProvider = ({ children }) => {
           <FilterContext.Provider value={[selectedFilters, setSelectedFilters]}>
             <Context.Provider
               value={[
-                doctorsData,
-                patientsData,
-                { session, setSession },
-                panelMedico,
-                appointment,
-                panelPaciente,
+                doctorsData, //[0]
+                patientsData, //[1]
+                { session, setSession }, //[2]
+                panelMedico, //[3]
+                appointment, //[4]
+                panelPaciente, //[5]
+                panelAdmin, // [6]
               ]}
             >
               {children}

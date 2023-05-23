@@ -4,6 +4,7 @@ const getAllDoctorsByPatient = async (id) => {
   const citas = await Cita.findAll({
     where: { PacienteTypeId: id },
   });
+  if(!citas) throw new Error (`El paciente con id: ${id} no tiene citas registradas por lo que no tiene Doctores relacionados`)
 
   let doctors = new Set();
 
@@ -15,7 +16,7 @@ const getAllDoctorsByPatient = async (id) => {
     return a - b;
   }
   doctors.sort(compareNumbers);
-  console.log(doctors);
+  
   let doctorDetails = [];
     for(let i=0; i < doctors.length;i++){
         const doctor = await DoctorType.findOne({ 
@@ -37,7 +38,6 @@ const getAllDoctorsByPatient = async (id) => {
               },
             ]
          });
-
         doctorDetails.push(doctor)
     }
     return doctorDetails;

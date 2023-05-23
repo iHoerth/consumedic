@@ -15,7 +15,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import { Button, Box, Typography, Divider, TextField, Avatar, Autocomplete } from '@mui/material';
+import { Button, Box, Typography, Divider, TextField, Avatar, Autocomplete, Snackbar, Alert, AlertTitle, FormHelperText } from '@mui/material';
 
 import Loading from "../Loading/Loading";
 
@@ -32,11 +32,15 @@ const EditarPerfil = ({doctorDetail1}) => {
     const {putDoctor, doctorDetail,fetchDoctorByEmail} = useContext(Context)[0];
     const [loading, setLoading] = useState(true);
     const [openEspecialidades, setOpenEspecialidades] = useState(false)
+    const [espe,setEspe]=useState(true)
     const [openObrasSociales, setOpenObrasSociales] = useState(false)
+    const [os, setOs]=useState(true)
     const [openImagen, setOpenImagen]=useState(false)
     const [fileName, setFileName] = useState("")
     const [files64, setFiles64]=useState()
-
+    const [snack, setSnack]=useState(false)
+    const {vista, setVista} = useContext(Context)[3];
+    let respuesta=0;
     useEffect(() => {
        if(!socialSecurity.length && !specialties.length){
         const search = async () => {
@@ -48,7 +52,7 @@ const EditarPerfil = ({doctorDetail1}) => {
         setLoading(false);
        }
 
-    }, [loading, socialSecurity,specialties,doctorDetail]);
+    }, [loading, socialSecurity,specialties,doctorDetail, respuesta]);
 
     //console.log(doctorDetail1);
 
@@ -70,6 +74,70 @@ const EditarPerfil = ({doctorDetail1}) => {
         obrasSociales: ObraSocials,
         Descripcion: Descripcion
     })
+    const [error, setError] = useState({
+        nombre: null,
+        apellido: null,
+        dni: null,
+        direccion: null,
+        telefono: null,
+        titulo: null,
+        precio: null,
+        especialidades: null,
+        obrasSociales: null,
+        imagen: null,
+        Descripcion: null,
+      });
+
+      function validarForm(datos) {
+        const errors = {};
+    
+        if (!datos.nombre) {
+          errors.nombre = "El campo nombre es requerido";
+        }
+    
+        if (!datos.apellido) {
+          errors.apellido = "El campo apellido es requerido";
+        }
+    
+        if (!datos.telefono) {
+          errors.telefono = "El campo teléfono es requerido";
+        } 
+        if (!/^[0-9]*$/.test(datos.telefono)) {
+            errors.telefono = "Solo números";
+        }
+    
+        if (!datos.dni) {
+          errors.dni = "El campo número de documento es requerido";
+        }
+
+        if(!datos.Descripcion){
+            errors.Descripcion="El campo descripción es requerido"
+        }
+    
+        if (!datos.titulo) {
+          errors.titulo = "El titulo universitario es requerido";
+        }
+        if (!datos.direccion) {
+          errors.direccion = "La direccion donde atiente es requerido";
+        }
+        if (!datos.imagen) {
+          errors.imagen = "La foto de la perfil es requerida";
+        }
+        if (!datos.especialidades) {
+          errors.especialidades = "El campo especialidad es requerido";
+        }
+        if (!datos.obrasSociales) {
+          errors.obrasSociales = "El campo obra social es requerido";
+        }
+        if (!datos.precio) {
+          errors.precio = "El precio de la consulta es requerido";
+        }
+        if (!/^[0-9]*$/.test(datos.precio)) {
+            errors.precio = "Solo números";
+        }
+        setError(errors);
+      }
+
     let especialidadesString = datos.especialidades.map(esp=> esp.name)
     especialidadesString=especialidadesString.join(", ")
     
@@ -99,27 +167,28 @@ const EditarPerfil = ({doctorDetail1}) => {
           ...datos,
           [property]: value,
         });
+        validarForm({ ...datos, [property]: value });
     };
     const handleEspecialidad = (selectedOptionsE) => {
         const property = "especialidades";
         const values = selectedOptionsE;
-        console.log(property);
-        console.log(values);
+        if(values) setEspe(false)
         setDatos({
           ...datos,
           [property]: values,
         });
+        validarForm({ ...datos, [property]: values });
       };
 
       const handleObrasSociales = (selectedOptionsE) => {
         const property = "obrasSociales";
         const values = selectedOptionsE;
-        console.log(property);
-        console.log(values);
+        if(values) setOs(false)
         setDatos({
           ...datos,
           [property]: values,
         });
+        validarForm({ ...datos, [property]: values });
       };
 
     const handleClose = (event)=>{
@@ -138,6 +207,8 @@ const EditarPerfil = ({doctorDetail1}) => {
         setOpenObrasSociales(false)
         setOpenImagen(false)
         setFileName("")
+        setOs(true)
+        setEspe(true)
 
     }
 
@@ -159,12 +230,14 @@ const EditarPerfil = ({doctorDetail1}) => {
                 ...datos,
                 [property]: values,
             });
+            validarForm({ ...datos, [property]: values });
         };
     }
 
     const handleSubmit = async () => {
         await putDoctor(datos)
-        await fetchDoctorByEmail(datos.email)
+        respuesta = await fetchDoctorByEmail(datos.email)
+        setSnack(true)    
     }
    
     if(loading) return (<Loading />)
@@ -172,25 +245,83 @@ const EditarPerfil = ({doctorDetail1}) => {
         return (  
             
             <>
+            <Snackbar
+                open={snack}
+                autoHideDuration={1500}
+                onClose={()=>setSnack(false)}
+            >
+                <Alert severity="success" variant="filled">
+                    <AlertTitle>Mensaje Exitoso</AlertTitle>
+                    Los cambios de su Perfil han sido suscriptos
+                </Alert>
+            </Snackbar>
             <Stack alignItems="center">
                 <Typography sx={{fontSize:"25px", fontWeight:"500", mb:"15px"}}>Editar los datos de Perfil</Typography>
                 <Stack direction="row" spacing={5} justifyContent="space-around">
                     <Stack>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}>Nombre:</Typography>
-                            <TextField size="small" value={datos.nombre} name="nombre" onChange={handleChange}></TextField>
+                            <TextField size="small" value={datos.nombre} name="nombre" onChange={handleChange}
+                                helperText={
+                                    error.nombre ? (
+                                    <Typography
+                                        variant="inherit"
+                                        color="error"
+                                        style={{ maxWidth: "200px" }}
+                                    >
+                                        {error.nombre}
+                                    </Typography>
+                                    ) : null
+                                }
+                            ></TextField>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}>Apellido:</Typography>
-                            <TextField size="small" value={datos.apellido} name="apellido" onChange={handleChange}></TextField>
+                            <TextField size="small" value={datos.apellido} name="apellido" onChange={handleChange}
+                                helperText={
+                                    error.apellido ? (
+                                      <Typography
+                                        variant="inherit"
+                                        color="error"
+                                        style={{ maxWidth: "200px" }}
+                                      >
+                                        {error.apellido}
+                                      </Typography>
+                                    ) : null
+                                  }
+                            ></TextField>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}  >D.N.I.:</Typography>
-                            <TextField size="small" value={datos.dni} name="dni" onChange={handleChange}></TextField>
+                            <TextField size="small" value={datos.dni} name="dni" onChange={handleChange}
+                                helperText={
+                                    error.dni ? (
+                                      <Typography
+                                        variant="inherit"
+                                        color="error"
+                                        style={{ maxWidth: "200px" }}
+                                      >
+                                        {error.dni}
+                                      </Typography>
+                                    ) : null
+                                  }
+                            ></TextField>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}  >Dirección:</Typography>
-                            <TextField size="small" value={datos.direccion} name="direccion" onChange={handleChange}></TextField>
+                            <TextField size="small" value={datos.direccion} name="direccion" onChange={handleChange}
+                                helperText={
+                                    error.direccion ? (
+                                      <Typography
+                                        variant="inherit"
+                                        color="error"
+                                        style={{ maxWidth: "200px" }}
+                                      >
+                                        {error.direccion}
+                                      </Typography>
+                                    ) : null
+                                  }
+                            ></TextField>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}>Email:</Typography>
@@ -198,27 +329,87 @@ const EditarPerfil = ({doctorDetail1}) => {
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}  >Teléfono:</Typography>
-                            <TextField size="small" value={datos.telefono} name="telefono" onChange={handleChange}></TextField>
+                            <TextField size="small" value={datos.telefono} name="telefono" onChange={handleChange}
+                                helperText={
+                                    error.telefono ? (
+                                      <Typography
+                                        variant="inherit"
+                                        color="error"
+                                        style={{ maxWidth: "200px" }}
+                                      >
+                                        {error.telefono}
+                                      </Typography>
+                                    ) : null
+                                  }
+                            ></TextField>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}} >Título:</Typography>
-                            <TextField size="small" value={datos.titulo} name="titulo" onChange={handleChange} ></TextField>
+                            <TextField size="small" value={datos.titulo} name="titulo" onChange={handleChange}
+                                helperText={
+                                    error.titulo ? (
+                                      <Typography
+                                        variant="inherit"
+                                        color="error"
+                                        style={{ maxWidth: "200px" }}
+                                      >
+                                        {error.titulo}
+                                      </Typography>
+                                    ) : null
+                                  }
+                            ></TextField>
                         </Box>
                     </Stack>
                     <Divider orientation="vertical" flexItem/>
                     <Stack>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}>Valor de Consulta:</Typography>
-                            <TextField size="small" value={datos.precio}  name="precio" onChange={handleChange}></TextField>
+                            <TextField size="small" value={datos.precio}  name="precio" onChange={handleChange}
+                                helperText={
+                                    error.precio ? (
+                                      <Typography
+                                        variant="inherit"
+                                        color="error"
+                                        style={{ maxWidth: "200px" }}
+                                      >
+                                        {error.precio}
+                                      </Typography>
+                                    ) : null
+                                  }
+                            ></TextField>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}>Especialidades:</Typography>   
-                            <TextField size="small" value={especialidadesString} disabled></TextField>
+                            <TextField size="small" value={especialidadesString} disabled
+                                helperText={
+                                    error.especialidades ? (
+                                      <Typography
+                                        variant="inherit"
+                                        color="error"
+                                        style={{ maxWidth: "200px" }}
+                                      >
+                                        {error.especialidades}
+                                      </Typography>
+                                    ) : null
+                                  }
+                            ></TextField>
                             <Button onClick={handleClick} name="especialidades" variant="contained" sx={{ml:"10px"}} size="small" startIcon={<EditIcon/>}>Editar</Button>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}>Obras Sociales:</Typography>
-                            <TextField size="small" value={obrasSocialesString} disabled></TextField>
+                            <TextField size="small" value={obrasSocialesString} disabled
+                                helperText={
+                                    error.obrasSociales ? (
+                                      <Typography
+                                        variant="inherit"
+                                        color="error"
+                                        style={{ maxWidth: "200px" }}
+                                      >
+                                        {error.obrasSociales}
+                                      </Typography>
+                                    ) : null
+                                  }
+                            ></TextField>
                             <Button onClick={handleClick} name="obrasSociales" variant="contained" sx={{ml:"10px"}} size="small" startIcon={<EditIcon/>}>Editar</Button>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
@@ -228,11 +419,27 @@ const EditarPerfil = ({doctorDetail1}) => {
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}} >Descripción:</Typography>
-                            <TextField  value={datos.Descripcion} name="Descripcion" onChange={handleChange} multiline fullWidth  rows={3}></TextField>
+                            <TextField  value={datos.Descripcion} name="Descripcion" onChange={handleChange} multiline fullWidth  rows={3}
+                                helperText={
+                                    error.Descripcion ? (
+                                      <Typography
+                                        variant="inherit"
+                                        color="error"
+                                        style={{ maxWidth: "200px" }}
+                                      >
+                                        {error.Descripcion}
+                                      </Typography>
+                                    ) : null
+                                  }
+                            ></TextField>
                         </Box>
                     </Stack>
                 </Stack>
-                <Button variant="contained" sx={{width:"200px", mt:"30px", mr:"80px"}} onClick={handleSubmit}>Guardar Cambios</Button>
+                <Button variant="contained" sx={{width:"200px", mt:"30px", mr:"80px"}} onClick={handleSubmit}
+                    disabled={
+                        (error.nombre||error.apellido||error.dni||error.direccion||error.telefono||error.titulo||error.precio||error.especialidades||error.obrasSociales||error.imagen||error.Descripcion)&&true
+                    }
+                >Guardar Cambios</Button>
             </Stack>
             <Dialog open={openEspecialidades} onClose={handleClose} fullWidth="true">
                 <DialogTitle>Editar Especialidades</DialogTitle>
@@ -275,7 +482,7 @@ const EditarPerfil = ({doctorDetail1}) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancelar</Button>
-                    <Button onClick={handleClose} name="registrarEspecialidades" variant="contained">Registrar</Button>
+                    <Button onClick={handleClose} name="registrarEspecialidades" variant="contained" disabled={espe}>Registrar</Button>
                 </DialogActions>
             </Dialog>
             <Dialog open={openObrasSociales} onClose={handleClose} fullWidth="true">
@@ -309,7 +516,7 @@ const EditarPerfil = ({doctorDetail1}) => {
                                 id={option.id}
                                 value={option.nombre}
                                 >
-                            {option.nombre}
+                                    {option.nombre}
                         </li>
                         )}
                         onChange={(selectedOptionsE, value) =>
@@ -319,7 +526,7 @@ const EditarPerfil = ({doctorDetail1}) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancelar</Button>
-                    <Button onClick={handleClose} name="registrarObrasSociales" variant="contained">Registrar</Button>
+                    <Button onClick={handleClose} name="registrarObrasSociales" variant="contained" disabled={os}>Registrar</Button>
                 </DialogActions>
             </Dialog>
             <Dialog open={openImagen} onClose={handleClose}>
@@ -351,7 +558,7 @@ const EditarPerfil = ({doctorDetail1}) => {
                 <Typography sx={{ml:"38%", mb:"10px"}}>{fileName}</Typography>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancelar</Button>
-                    <Button name="documentos" variant="contained" onClick={handleClose}>Registrar</Button>
+                    <Button name="documentos" variant="contained" onClick={handleClose} disabled={fileName?false:true}>Registrar</Button>
                 </DialogActions>
             </Dialog>
         </>

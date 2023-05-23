@@ -5,6 +5,7 @@ const getAllDoctors = async () => {
         where: { status: 'active'},
         include: {all: true}
     });
+    
     return doctors;
 }
 

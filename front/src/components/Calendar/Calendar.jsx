@@ -78,7 +78,8 @@ const Calendar = ({id, calendar}) => {
             height: "300px"
           }),
           ...(button==="Mostrar menos horas" && {
-            height: "560px"
+            height: "fit-content",
+            overflowY: "visible"
           })
         }}>
 

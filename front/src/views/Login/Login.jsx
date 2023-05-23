@@ -1,16 +1,8 @@
-import {useEffect, useState,useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
-import {
-  Container,
-  Paper,
-  TextField,
-  Box,
-  Button,
-  Typography,
-  useTheme
-} from '@mui/material';
+import { Container, Paper, TextField, Box, Button, Typography, useTheme } from '@mui/material';
 import { Google } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +22,7 @@ const Userlogin = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({});
-  
+
   //estados de email y contraseña
   const [localEmail, setLocalEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
@@ -95,12 +87,44 @@ const Userlogin = () => {
   }, [patientDetail]);
 
   const onSuccess = (response) => {
-    setUser(response.profileObj);
-    loginPatient({ email: response.profileObj.email, tokenId: response.tokenId }).catch(
-      (err) => {
-        console.error(err);
-      }
-    );
+    console.log(response);
+    try {
+      setUser(response.profileObj);
+      loginPatient({
+        loggedFromGoogle: true,
+        email: response.profileObj.email,
+        token: response.tokenId,
+        nombre: response.profileObj.givenName,
+        apellido: response.profileObj.familyName,
+      });
+    } catch (e) {
+      alert(e.message);
+    }
+    // setUser(response.profileObj);
+    // loginPatient({
+    //   email: response.profileObj.email,
+    //   token: response.tokenId,
+    // }).catch((err) => {
+    //   if (err?.response?.data?.message == 'Patient not found') {
+    //     navigate('/create', { state: response.profileObj, replace: true });
+    //   }
+    //   console.error(err);
+    // });
+    // console.log(response);
+    // setUser(response.profileObj);
+    // loginDoctor({
+    //   email: response.profileObj.email,
+    //   token: response.tokenId,
+    // }).catch((err) => {
+    //   if (err?.response?.data?.message == 'Doctor not found') {
+    //     navigate('/createDoctor', {
+    //       state: response.profileObj,
+    //       replace: true,
+    //     });
+    //   }
+
+    //   console.error(err);
+    // });
   };
 
   const onFailure = () => {
