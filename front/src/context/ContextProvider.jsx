@@ -182,8 +182,16 @@ const ContextProvider = ({ children }) => {
         console.log('** LOGIN DATA **', loginData);
         setSession({ email: loginData.email, token: loginData.token, isDoctor: false });
         axios.get(`${URL_PATIENTS}?email=${loginData.email}`).catch((e) => {
-          console.log('EN EL CATCH DEL GET BY EMAIL')
-          return patientsData.createPatient(loginData.email);
+          console.log('EN EL CATCH DEL GET BY EMAIL');
+          return patientsData.createPatient({
+            dni: '',
+            email: loginData.email,
+            password: '',
+            telefono: '',
+            nombre: '',
+            apellido: '',
+            idObraSocial: '',
+          });
         });
         return loginData;
       }
