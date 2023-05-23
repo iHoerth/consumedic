@@ -32,9 +32,9 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        bgcolor: theme.palette.primary.light,
+        bgcolor: theme.palette.primary.main,
         width: "100%",
-        height: "20vh",
+        height: "30vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -46,17 +46,27 @@ const Footer = () => {
           p: 2,
           mb: 1,
           width: "100%",
-          bgcolor: theme.palette.primary.light,
+          bgcolor: theme.palette.primary.main,
         }}
       >
         <BottomNavigation
           value={currentPage}
           onChange={handleNavigation}
           sx={{
-            bgcolor: theme.palette.primary.light,
-            color: "white",
+            bgcolor: theme.palette.primary.main,
           }}
         >
+          <BottomNavigationAction
+            label="Incio"
+            icon={
+              <Home
+                sx={{
+                  color: "white",
+                }}
+              />
+            }
+            value="home"
+          />
           <BottomNavigationAction
             label="Sobre Nosotros"
             icon={
@@ -114,7 +124,7 @@ const Footer = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
-          bgcolor: theme.palette.primary.light,
+          bgcolor: theme.palette.primary.main,
         }}
       >
         <NavLink to="https://www.facebook.com" target="_blank">
