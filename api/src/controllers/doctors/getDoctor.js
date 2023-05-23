@@ -1,5 +1,6 @@
 const {DoctorType}= require("../../db")
 const {getDoctorCalendar}=require("../appointments/getDoctorCalendar")
+const {getHorariosById}=require("../horarios/getHorariosById")
 
 const getDoctor = async (email) => {
     const doctor = await DoctorType.findOne({
@@ -13,6 +14,10 @@ const getDoctor = async (email) => {
     }
     const calendar = await getDoctorCalendar(doctor.id);
     doctor.dataValues.calendar=calendar;
+    
+    const agenda = await getHorariosById(doctor.id)
+    doctor.dataValues.agenda = agenda;
+    
     return doctor;
 }
 

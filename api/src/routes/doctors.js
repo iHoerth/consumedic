@@ -11,6 +11,8 @@ const {
 
 const doctorsRouter = Router();
 
+
+
 // GET
 doctorsRouter.get("/", getDoctors); // tener en cuenta el query by ?name=....
 doctorsRouter.get("/:id", getDoctorsById);

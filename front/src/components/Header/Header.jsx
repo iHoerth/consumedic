@@ -32,14 +32,7 @@ const Header = () => {
       </CardContent>
 
       <CardActions>
-        <Button variant="contained" sx={{ gap: 1, color: 'white' }}>
-          <VideocamIcon />
-          En linea
-        </Button>
-        <Button variant="contained" sx={{ gap: 1, color: 'white' }}>
-          <ApartmentIcon />
-          Presencial
-        </Button>
+
       </CardActions>
     </Card>
   );
