@@ -20,6 +20,7 @@ import {
   RateReview,
 } from "@mui/icons-material";
 
+
 const preventDefault = (event) => event.preventDefault();
 
 const Footer = () => {
@@ -28,7 +29,19 @@ const Footer = () => {
 
   const handleNavigation = (event, page) => {
     setCurrentPage(page);
+    if (page === "about") {
+      handleScrollToTop();
+    }
   };
+
+  const handleScrollToTop = () => {
+    if (currentPage !== "about") {
+      const windowHeight = window.innerHeight; // Altura de la ventana del navegador
+      const scrollTo = windowHeight * 1.5; // Valor de desplazamiento personalizado (en este caso, 40% de la altura de la ventana)
+      window.scrollTo({ top: scrollTo, behavior: "smooth" });
+    }
+  };
+
   return (
     <Box
       sx={{
