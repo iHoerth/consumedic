@@ -142,7 +142,7 @@ const Footer = () => {
           bgcolor: theme.palette.primary.main,
         }}
       >
-        <NavLink to="https://www.facebook.com" target="_blank">
+        <NavLink to="https://www.facebook.com/profile.php?id=100092882291994" target="_blank">
           <Facebook
             sx={{
               mx: 1,
@@ -164,7 +164,7 @@ const Footer = () => {
             }}
           />
         </NavLink>
-        <NavLink to="https://www.instagram.com" target="_blank">
+        <NavLink to="https://www.instagram.com/pf.consumedic/" target="_blank">
           <Instagram
             sx={{
               mx: 1,
