@@ -12,7 +12,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography, Snackbar, Alert, AlertTitle, } from '@mui/material';
 import {Button} from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 
@@ -21,48 +21,138 @@ import axios from "axios";
 const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA 
 
 const ConfigAgenda = ({doctorDetail}) => {
-    
+  const [snack, setSnack]=useState(false)
+  let check = false;
+  let horario_inicio="00:00:00"
+  let horario_fin="00:00:00"
+  let duracion_turno="00:00:00"
+  let dia={}
+
     //Lunes
-    const [check10, setCheck10] = useState(true);
-    const [value11, setValue11] = useState(dayjs('2022-04-17T08:00'));
-    const [value12, setValue12] = useState(dayjs('2022-04-17T18:00'));
-    const [value13, setValue13] = useState(dayjs('2022-04-17T00:30'));    
+    dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Lunes")
+    if(dia.atiende==="si"){
+      check=true
+      horario_inicio=dia.horario_inicio.slice(0,-2)
+      horario_fin=dia.horario_fin.slice(0,-2)
+      duracion_turno=dia.duracion_turno.slice(0,-2)
+    } else {
+      check=false
+      horario_inicio="00:00:00"
+      horario_fin="00:00:00"
+      duracion_turno="00:00:00"
+    }   
+    const [check10, setCheck10] = useState(check);
+    const [value11, setValue11] = useState(dayjs(`2022-04-17T${horario_inicio}`));
+    const [value12, setValue12] = useState(dayjs(`2022-04-17T${horario_fin}`));
+    const [value13, setValue13] = useState(dayjs(`2022-04-17T${duracion_turno}`));    
 
     //Martes
-    const [check20, setCheck20] = useState(true);
-    const [value21, setValue21] = useState(dayjs('2022-04-17T08:00'));
-    const [value22, setValue22] = useState(dayjs('2022-04-17T18:00'));
-    const [value23, setValue23] = useState(dayjs('2022-04-17T00:30'));    
+    dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Martes")
+    if(dia.atiende==="si"){
+      check=true
+      horario_inicio=dia.horario_inicio.slice(0,-2)
+      horario_fin=dia.horario_fin.slice(0,-2)
+      duracion_turno=dia.duracion_turno.slice(0,-2)
+    } else {
+      check=false
+      horario_inicio="00:00:00"
+      horario_fin="00:00:00"
+      duracion_turno="00:00:00"
+    }   
+    const [check20, setCheck20] = useState(check);
+    const [value21, setValue21] = useState(dayjs(`2022-04-17T${horario_inicio}`));
+    const [value22, setValue22] = useState(dayjs(`2022-04-17T${horario_fin}`));
+    const [value23, setValue23] = useState(dayjs(`2022-04-17T${duracion_turno}`));  
     
     //Miercoles
-    const [check30, setCheck30] = useState(true);
-    const [value31, setValue31] = useState(dayjs('2022-04-17T08:00'));
-    const [value32, setValue32] = useState(dayjs('2022-04-17T18:00'));
-    const [value33, setValue33] = useState(dayjs('2022-04-17T00:30')); 
+    dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Miércoles")
+    if(dia.atiende==="si"){
+      check=true
+      horario_inicio=dia.horario_inicio.slice(0,-2)
+      horario_fin=dia.horario_fin.slice(0,-2)
+      duracion_turno=dia.duracion_turno.slice(0,-2)
+    } else {
+      check=false
+      horario_inicio="00:00:00"
+      horario_fin="00:00:00"
+      duracion_turno="00:00:00"
+    }   
+    const [check30, setCheck30] = useState(check);
+    const [value31, setValue31] = useState(dayjs(`2022-04-17T${horario_inicio}`));
+    const [value32, setValue32] = useState(dayjs(`2022-04-17T${horario_fin}`));
+    const [value33, setValue33] = useState(dayjs(`2022-04-17T${duracion_turno}`)); 
 
     //Jueves
-    const [check40, setCheck40] = useState(true);
-    const [value41, setValue41] = useState(dayjs('2022-04-17T08:00'));
-    const [value42, setValue42] = useState(dayjs('2022-04-17T18:00'));
-    const [value43, setValue43] = useState(dayjs('2022-04-17T00:30')); 
+    dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Jueves")
+    if(dia.atiende==="si"){
+      check=true
+      horario_inicio=dia.horario_inicio.slice(0,-2)
+      horario_fin=dia.horario_fin.slice(0,-2)
+      duracion_turno=dia.duracion_turno.slice(0,-2)
+    } else {
+      check=false
+      horario_inicio="00:00:00"
+      horario_fin="00:00:00"
+      duracion_turno="00:00:00"
+    }   
+    const [check40, setCheck40] = useState(check);
+    const [value41, setValue41] = useState(dayjs(`2022-04-17T${horario_inicio}`));
+    const [value42, setValue42] = useState(dayjs(`2022-04-17T${horario_fin}`));
+    const [value43, setValue43] = useState(dayjs(`2022-04-17T${duracion_turno}`)); 
 
     //Viernes
-    const [check50, setCheck50] = useState(true);
-    const [value51, setValue51] = useState(dayjs('2022-04-17T08:00'));
-    const [value52, setValue52] = useState(dayjs('2022-04-17T18:00'));
-    const [value53, setValue53] = useState(dayjs('2022-04-17T00:30')); 
+    dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Viernes")
+    if(dia.atiende==="si"){
+      check=true
+      horario_inicio=dia.horario_inicio.slice(0,-2)
+      horario_fin=dia.horario_fin.slice(0,-2)
+      duracion_turno=dia.duracion_turno.slice(0,-2)
+    } else {
+      check=false
+      horario_inicio="00:00:00"
+      horario_fin="00:00:00"
+      duracion_turno="00:00:00"
+    }   
+    const [check50, setCheck50] = useState(check);
+    const [value51, setValue51] = useState(dayjs(`2022-04-17T${horario_inicio}`));
+    const [value52, setValue52] = useState(dayjs(`2022-04-17T${horario_fin}`));
+    const [value53, setValue53] = useState(dayjs(`2022-04-17T${duracion_turno}`));  
 
     //Sabado
-    const [check60, setCheck60] = useState(true);
-    const [value61, setValue61] = useState(dayjs('2022-04-17T08:00'));
-    const [value62, setValue62] = useState(dayjs('2022-04-17T12:00'));
-    const [value63, setValue63] = useState(dayjs('2022-04-17T00:30')); 
+    dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Sábado")
+    if(dia.atiende==="si"){
+      check=true
+      horario_inicio=dia.horario_inicio.slice(0,-2)
+      horario_fin=dia.horario_fin.slice(0,-2)
+      duracion_turno=dia.duracion_turno.slice(0,-2)
+    } else {
+      check=false
+      horario_inicio="00:00:00"
+      horario_fin="00:00:00"
+      duracion_turno="00:00:00"
+    }   
+    const [check60, setCheck60] = useState(check);
+    const [value61, setValue61] = useState(dayjs(`2022-04-17T${horario_inicio}`));
+    const [value62, setValue62] = useState(dayjs(`2022-04-17T${horario_fin}`));
+    const [value63, setValue63] = useState(dayjs(`2022-04-17T${duracion_turno}`)); 
     
     //Domingo
-    const [check70, setCheck70] = useState(false);
-    const [value71, setValue71] = useState(dayjs('2022-04-17T08:00'));
-    const [value72, setValue72] = useState(dayjs('2022-04-17T18:00'));
-    const [value73, setValue73] = useState(dayjs('2022-04-17T00:30'));
+    dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Domingo")
+    if(dia.atiende==="si"){
+      check=true
+      horario_inicio=dia.horario_inicio.slice(0,-2)
+      horario_fin=dia.horario_fin.slice(0,-2)
+      duracion_turno=dia.duracion_turno.slice(0,-2)
+    } else {
+      check=false
+      horario_inicio="00:00:00"
+      horario_fin="00:00:00"
+      duracion_turno="00:00:00"
+    }   
+    const [check70, setCheck70] = useState(check);
+    const [value71, setValue71] = useState(dayjs(`2022-04-17T${horario_inicio}`));
+    const [value72, setValue72] = useState(dayjs(`2022-04-17T${horario_fin}`));
+    const [value73, setValue73] = useState(dayjs(`2022-04-17T${duracion_turno}`)); 
 
     const handleChange = (event) => {
         let id = Number(event.target.id);
@@ -129,6 +219,7 @@ const ConfigAgenda = ({doctorDetail}) => {
         const agenda = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
         const id = doctorDetail.id;
         postAgenda(agenda, id)
+        setSnack(true)
     }
     const postAgenda = async (agenda, id) => {
         try {
@@ -140,15 +231,19 @@ const ConfigAgenda = ({doctorDetail}) => {
     }
 
 
-  // if(doctorDetail.calendar.length>0){
-  //   return ( 
-  //     <>
-  //       <Typography>Ya tiene configurada una agenda</Typography>
-  //     </>
-  //   )
-  // }
+  
   return (
     <>
+    <Snackbar
+                open={snack}
+                autoHideDuration={1500}
+                onClose={()=>setSnack(false)}
+            >
+                <Alert severity="success" variant="filled">
+                    <AlertTitle>Mensaje Exitoso</AlertTitle>
+                    Los cambios en su Agenda han sido suscriptos
+                </Alert>
+            </Snackbar>
     <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
         <Typography style={{fontSize:"larger", fontWeight:"600"}}>Configure sus Días y Horarios de Atención</Typography>
     </Box>
