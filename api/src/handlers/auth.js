@@ -1,11 +1,11 @@
-require("dotenv").config();
+require('dotenv').config();
 const { GOOGLE_CLIENT_ID, SECRET_KEY } = process.env;
 
-const { DoctorType, PacienteType } = require("../db");
+const { DoctorType, PacienteType } = require('../db');
 
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require("google-auth-library");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
 
 // Configura el cliente de autenticación de Google
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
@@ -17,13 +17,13 @@ function generateToken(user) {
     email: user.email,
     isDoctor: user.isDoctor,
   };
-  return jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" }); // Cambia 'secret_key' por tu propia clave secreta y ajusta la expiración según tus necesidades
+  return jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' }); // Cambia 'secret_key' por tu propia clave secreta y ajusta la expiración según tus necesidades
 }
 
 // Controlador para el login de doctor
 async function loginDoctor(req, res) {
   const { email, password, tokenId } = req.body; // email, password, token
-  console.log("loginDoctor");
+  console.log('loginDoctor');
   try {
     if (tokenId) {
       // Verificar el token de Google
@@ -40,7 +40,8 @@ async function loginDoctor(req, res) {
         where: { email: googleEmail },
       }); // googleEmail
       if (!doctor) {
-        return res.status(404).json({ message: "Doctor not found" });
+        // await
+        return res.status(404).json({ message: 'Doctor not found' });
       }
       // Verificar la contraseña
       // const isMatch = await bcrypt.compare(password, doctor.password);
@@ -57,14 +58,14 @@ async function loginDoctor(req, res) {
       const doctor = await DoctorType.findOne({ where: { email: email } });
 
       if (!doctor) {
-        return res.status(404).json({ message: "doctor not found" });
+        return res.status(404).json({ message: 'doctor not found' });
       }
       //aca se compara la contraseña, pero si uno inicia sesion con goolge no hace falta enviar la contraseña
       // Verificar la contraseña
       const isMatch = await bcrypt.compare(password, doctor.password);
 
       if (!isMatch) {
-        return res.status(401).json({ message: "Invalid credentials" });
+        return res.status(401).json({ message: 'Invalid credentials' });
       }
 
       // Generar el token JWT y enviarlo en la respuesta
@@ -73,7 +74,7 @@ async function loginDoctor(req, res) {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 }
 
@@ -81,10 +82,9 @@ async function loginDoctor(req, res) {
 async function loginPatient(req, res) {
   //aca recibis como token
   const { email, password, tokenId } = req.body; // email, password, token
-  console.log(tokenId, " - ", req.body);
+  console.log(tokenId, ' - ', req.body);
   try {
     if (tokenId) {
-      console.log("acaaaaaa");
       // Verificar el token de Google
       const ticket = await client.verifyIdToken({
         idToken: tokenId,
@@ -100,7 +100,8 @@ async function loginPatient(req, res) {
       }); // googleEmail
 
       if (!patient) {
-        return res.status(404).json({ message: "Patient not found" });
+        const newPatient = await PacienteType.create({ email: googleEmail });
+        return res.status(404).json({ message: 'Patient not found' });
       }
       //aca se compara la contraseña, pero si uno inicia sesion con goolge no hace falta enviar la contraseña
       // Verificar la contraseña
@@ -115,7 +116,7 @@ async function loginPatient(req, res) {
       res.json({ token, isDoctor: false });
     } else {
       //mientras le podes poner asi para que responda si o si algo
-      console.log("aqqqqquuuiiiii");
+      console.log('aqqqqquuuiiiii');
 
       // Buscar al paciente por su email en la base de datos
       const patient = await PacienteType.findOne({
@@ -123,14 +124,14 @@ async function loginPatient(req, res) {
       }); // googleEmail
 
       if (!patient) {
-        return res.status(404).json({ message: "Patient not found" });
+        return res.status(404).json({ message: 'Patient not found' });
       }
       //aca se compara la contraseña, pero si uno inicia sesion con goolge no hace falta enviar la contraseña
       // Verificar la contraseña
       const isMatch = await bcrypt.compare(password, patient.password);
 
       if (!isMatch) {
-        return res.status(401).json({ message: "Invalid credentials" });
+        return res.status(401).json({ message: 'Invalid credentials' });
       }
 
       // Generar el token JWT y enviarlo en la respuesta
@@ -139,7 +140,7 @@ async function loginPatient(req, res) {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 }
 
