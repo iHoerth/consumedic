@@ -6,19 +6,26 @@ const {
   getPatientsById,
   postPatient,
   putPatient,
+  getSoftDeletedPatients,
+  restorePatients,
+  deletePatients,
 } = require("../handlers/patients");
 
 const patientsRouter = Router();
 
 // GET
 patientsRouter.get("/", getPatients); // tener en cuenta el query by ?name=....
+patientsRouter.get("/softDeleted", getSoftDeletedPatients);
 patientsRouter.get("/:id", getPatientsById);
-
 // POST
 patientsRouter.post("/", postPatient);
 patientsRouter.post("/login", loginPatient);
 
 //PUT
 patientsRouter.put("/", putPatient);
+patientsRouter.put("/restore/:id", restorePatients);
+
+//DELETE
+patientsRouter.delete("/:id", deletePatients);
 
 module.exports = patientsRouter;
