@@ -31,17 +31,22 @@ const PatientData = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: "100px", mb: "40px" }}>
-      <Box sx={{ height: "85vh" }}>
+    <Container maxWidth="sm" sx={{ mb: "40px" }}>
+      <Box sx={{ height: "55vh" }}>
         <Stack
           direction="row"
-          sx={{ border: "1px solid", borderColor: "#bababa" }}
+          sx={{
+            border: "1px solid",
+            borderColor: "#bababa",
+            height: "60vh",
+            width: "125%",
+          }}
           divider={<Divider orientation="vertical" flexItem />}
         >
           <Box
             sx={{
-              height: "88vh",
-              width: "150px",
+              height: "60vh",
+              width: "200px",
               backgroundColor: theme.palette.primary.main,
             }}
           >
@@ -60,7 +65,7 @@ const PatientData = () => {
                       fontSize: "20px",
                       fontWeight: "500",
                     }}
-                    sx={{ m: "0px" }}
+                    sx={{ m: "0px", color: "white", padding: "10px" }}
                     primary="Mis Medicos"
                     onClick={handleClick}
                   />
@@ -70,16 +75,23 @@ const PatientData = () => {
               <Divider />
               <ListItemButton>
                 <ListItemText
-                  primaryTypographyProps={{ fontSize: "15px" }}
-                  sx={{ m: "0px" }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "500",
+                  }}
+                  sx={{ m: "0px", color: "white", padding: "10px" }}
                   primary="Mis Citas"
                   onClick={handleClick}
                 />
               </ListItemButton>
+              <Divider />
               <ListItemButton>
                 <ListItemText
-                  primaryTypographyProps={{ fontSize: "15px" }}
-                  sx={{ m: "0px" }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "500",
+                  }}
+                  sx={{ m: "0px", color: "white", padding: "10px" }}
                   primary="Mis documentos"
                   onClick={handleClick}
                 />

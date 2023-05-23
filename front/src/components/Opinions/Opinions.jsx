@@ -24,7 +24,6 @@ export default function TextMobileStepper({ opinions }) {
 
   return (
     <Box
-      container
       sx={{
         display: "flex",
         flexDirection: "column",

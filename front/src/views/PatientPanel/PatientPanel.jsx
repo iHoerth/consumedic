@@ -33,6 +33,7 @@ const PatientPanel = () => {
           flexDirection: "row",
           justifyContent: "center",
           pb: "25px",
+          pt: "85px",
         }}
       >
         <Panel />

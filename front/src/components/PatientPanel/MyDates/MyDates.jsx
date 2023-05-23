@@ -120,7 +120,7 @@ const MyDates = () => {
               columns={columns}
               pageSize={5}
               checkboxSelection
-              // id={patientDetail.id && patientDetail.id}
+              rowsPerPageOptions={[5, 10, 20]}
             />
           )}
         </Box>

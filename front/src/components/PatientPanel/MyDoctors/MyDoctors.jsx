@@ -304,6 +304,7 @@ const MyDoctors = () => {
                 columns={columns}
                 pageSize={5}
                 checkboxSelection
+                rowsPerPageOptions={[5, 10, 20]}
               />
             </>
           )}
