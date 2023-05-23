@@ -6,9 +6,6 @@ const getAppointmentsByDoctor = async (idDoctor)=>{
         let appointments = await Cita.findAll({
             where: { DoctorTypeId: idDoctor },
         })
-        if(!appointments.length){
-            throw new Error("No hay turnos registrados")
-        }
         for(i=0; i<appointments.length;i++){
             const paciente = await PacienteType.findOne({ 
                 where: { 

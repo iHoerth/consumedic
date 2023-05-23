@@ -27,6 +27,7 @@ import { styled } from "@mui/material/styles";
 
 
 const EditarPerfil = ({doctorDetail1}) => {
+    const { session } = useContext(Context)[2];
     const {id, nombre, Descripcion, apellido, direccion, dni, email, imagen, precio, telefono, titulo, Especialidads, ObraSocials} = doctorDetail1
     const { socialSecurity, specialties, fetchUtilities } = useContext(UtilitiesContext);
     const {putDoctor, doctorDetail,fetchDoctorByEmail} = useContext(Context)[0];
@@ -52,7 +53,17 @@ const EditarPerfil = ({doctorDetail1}) => {
         setLoading(false);
        }
 
-    }, [loading, socialSecurity,specialties,doctorDetail, respuesta]);
+    }, [loading, socialSecurity,specialties]);
+    
+
+    useEffect(()=>{
+      if(vista===1){
+        const search = async () => {
+          await fetchDoctorByEmail(session.email);
+        };
+        search();
+      }
+    },[snack])
 
     //console.log(doctorDetail1);
 
@@ -183,6 +194,7 @@ const EditarPerfil = ({doctorDetail1}) => {
       const handleObrasSociales = (selectedOptionsE) => {
         const property = "obrasSociales";
         const values = selectedOptionsE;
+        console.log(selectedOptionsE);
         if(values) setOs(false)
         setDatos({
           ...datos,
@@ -235,8 +247,8 @@ const EditarPerfil = ({doctorDetail1}) => {
     }
 
     const handleSubmit = async () => {
+        console.log(datos);
         await putDoctor(datos)
-        respuesta = await fetchDoctorByEmail(datos.email)
         setSnack(true)    
     }
    

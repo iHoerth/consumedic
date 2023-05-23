@@ -13,6 +13,7 @@ import {
   Typography,
   CardActions,
   Button,
+  Divider,
 } from "@mui/material";
 
 const Panel = () => {
@@ -37,25 +38,29 @@ const Panel = () => {
   return (
     <>
       <Box
-        container
         sx={{
           padding: "30px",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
+          justifyContent: "normal",
           alignItems: "stretch",
           height: "55rem",
           borderRadius: "10px",
           width: "80%",
-          mt: "135px",
+          paddingTop: "150px",
         }}
       >
-        <Box sx={{ padding: "10px" }}>
+        <Box sx={{}}>
           <Card
             sx={{
               width: "100%",
               bgcolor: theme.palette.primary.main,
               color: "white",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              padding: "10px",
+              mb: "10px",
             }}
           >
             <CardHeader
@@ -65,6 +70,56 @@ const Panel = () => {
                 color: "white",
               }}
             />
+            <Card
+              sx={{
+                width: "25%",
+                height: "20vh",
+                marginRight: "10px",
+                borderRadius: "10px",
+              }}
+            >
+              <CardContent
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  marginTop: "10px",
+                  padding: "10px",
+                }}
+              >
+                <Typography
+                  sx={{
+                    padding: "10px",
+                    borderRadius: "10px",
+                    bgcolor: theme.palette.primary.main,
+                    width: "100%",
+                  }}
+                  color="white"
+                >
+                  Datos Personales
+                </Typography>
+                <Box
+                  sx={{
+                    marginTop: "20px",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
+                    {nombre + " " + apellido}
+                  </Typography>
+                  <Divider orientation="vertical" flexItem />
+                  <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
+                    Dni: {dni}
+                  </Typography>
+                  <Divider orientation="vertical" flexItem />
+                  <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
+                    Telefono: {telefono}
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
           </Card>
         </Box>
         <Box
@@ -75,55 +130,7 @@ const Panel = () => {
             alignItems: "flex-start",
           }}
         >
-          <Card
-            sx={{
-              width: "20%",
-              height: "80vh",
-              marginRight: "10px",
-              borderRadius: "10px",
-            }}
-          >
-            <CardContent
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                marginTop: "10px",
-                padding: "10px",
-              }}
-            >
-              <Typography
-                sx={{
-                  padding: "10px",
-                  borderRadius: "10px",
-                  bgcolor: theme.palette.primary.main,
-                  width: "100%",
-                }}
-                color="white"
-              >
-                Datos Personales
-              </Typography>
-              <Box
-                sx={{
-                  marginTop: "20px",
-                }}
-              >
-                <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
-                  {nombre + " " + apellido}
-                </Typography>
-                <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
-                  Dni: {dni}
-                </Typography>
-                <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
-                  Telefono: {telefono}
-                </Typography>
-              </Box>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Editar</Button>
-            </CardActions>
-          </Card>
-          <Box sx={{ width: "80%" }}>
+          <Box sx={{ width: "100%" }}>
             <PatientData />
           </Box>
         </Box>

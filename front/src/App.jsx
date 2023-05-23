@@ -19,6 +19,7 @@ import CreateDoctor from './views/CreateDoctor/CreateDoctor';
 import LoginDoctor from './views/LoginDoctor/LoginDoctor';
 import Error404 from './components/Error404/Error404';
 import Loading from './components/Loading/Loading';
+import Admin from './views/Panel Admin/Admin';
 
 const App = () => {
   const { fetchUtilities } = useContext(UtilitiesContext);
@@ -48,6 +49,8 @@ const App = () => {
               <Route path="/detail/:id" element={<DoctorDetail />} />
               <Route path="/turno/:id/:fecha/:hora/:estado/:comentario" element={<Appointment />} />
 
+              <Route path="/admin" element={<Admin/>} />
+
               <Route path="/login" element={<Navigate replace to={"/perfilMedico"} />} />
               <Route path="/loginDoctor" element={<Navigate replace to={"/perfilMedico"} />} />
               <Route path="/create" element={<Navigate replace to={"/perfilMedico"} />} />
@@ -64,6 +67,8 @@ const App = () => {
               <Route path="/search" element={<DoctorsList />} />
               <Route path="/detail/:id" element={<DoctorDetail />} />
               <Route path="/turno/:id/:fecha/:hora/:estado/:comentario" element={<Appointment />}  />
+
+              <Route path="/admin" element={<Admin/>} />
 
               <Route path="/login" element={<Navigate replace to={"/patientpanel"} />} />
               <Route path="/loginDoctor" element={<Navigate replace to={"/patientpanel"} />} />
