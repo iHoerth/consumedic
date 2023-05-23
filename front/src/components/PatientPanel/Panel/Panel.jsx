@@ -49,7 +49,7 @@ const Panel = () => {
           width: "80%",
         }}
       >
-        <Box sx={{ padding: "10px" }}>
+        <Box sx={{}}>
           <Card
             sx={{
               width: "100%",
@@ -57,8 +57,9 @@ const Panel = () => {
               color: "white",
               display: "flex",
               flexDirection: "row",
-              justifyContent: "space-around",
+              justifyContent: "space-between",
               padding: "10px",
+              mb: "10px",
             }}
           >
             <CardHeader

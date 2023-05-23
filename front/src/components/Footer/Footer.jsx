@@ -54,38 +54,53 @@ const Footer = () => {
           onChange={handleNavigation}
           sx={{
             bgcolor: theme.palette.primary.light,
+            color: "white",
           }}
         >
           <BottomNavigationAction
-            label="Home"
-            icon={<Home />}
-            value="home"
-            
-          />
-          <BottomNavigationAction
-            label="About"
-            icon={<Info />}
+            label="Sobre Nosotros"
+            icon={
+              <Info
+                sx={{
+                  color: "white",
+                }}
+              />
+            }
             value="about"
-            
           />
           <BottomNavigationAction
-            label="Team"
-            icon={<People />}
+            label="Equipo"
+            icon={
+              <People
+                sx={{
+                  color: "white",
+                }}
+              />
+            }
             value="team"
-            
           />
           <BottomNavigationAction
-            label="Testimonials"
-            icon={<Comment />}
+            label="Testimonios"
+            icon={
+              <Comment
+                sx={{
+                  color: "white",
+                }}
+              />
+            }
             value="testimonials"
-            
           />
           <a href="/login" target="_blank" rel="noopener noreferrer">
             <BottomNavigationAction
               label="Login"
-              icon={<Lock />}
+              icon={
+                <Lock
+                  sx={{
+                    color: "white",
+                  }}
+                />
+              }
               value="login"
-              
             />
           </a>
         </BottomNavigation>
@@ -106,7 +121,7 @@ const Footer = () => {
           <Facebook
             sx={{
               mx: 1,
-              color: "#212121",
+              color: "white",
               fontSize: "30px",
               ml: "30px",
               mr: "30px",
@@ -117,7 +132,7 @@ const Footer = () => {
           <Twitter
             sx={{
               mx: 1,
-              color: "#212121",
+              color: "white",
               fontSize: "30px",
               ml: "30px",
               mr: "30px",
@@ -128,7 +143,7 @@ const Footer = () => {
           <Instagram
             sx={{
               mx: 1,
-              color: "#212121",
+              color: "white",
               fontSize: "30px",
               ml: "30px",
               mr: "30px",
@@ -145,7 +160,7 @@ const Footer = () => {
           justifyContent: "center",
         }}
       >
-        <Typography variant="body2" align="center">
+        <Typography variant="body2" align="center" color="white">
           {`Copyright © ${new Date().getFullYear()}
           Consumedic. Encontrá tu especialista y pedí turno`}
         </Typography>
