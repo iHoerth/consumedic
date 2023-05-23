@@ -413,7 +413,7 @@ const createFakeData = async () => {
   }
 
   // Crear 10 Opinion
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 1001; i++) {
     const idMedico = Math.ceil(Math.random() * docsAndPatients);
     const idPaciente = Math.ceil(Math.random() * docsAndPatients);
     const newPacient = await db.PacienteType.findByPk(idPaciente);

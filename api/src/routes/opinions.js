@@ -6,7 +6,7 @@ const {
     postOpinion
 } =  require ("../handlers/opinions")
 
-const opinionsRouter = Router();
+const opinionsRouter = Router(); 
 
 // GET
 opinionsRouter.get("/", getOpinions); // tener en cuenta el query by ?name=....
