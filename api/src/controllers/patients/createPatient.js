@@ -1,6 +1,6 @@
 const {PacienteType, ObraSocial}= require("../../db")
 
-const createPatient = async (dni, email, hashedPassword, telefono, nombre, apellido, idObraSocial) => {
+const createPatient = async (dni, email, hashedPassword, telefono, nombre, apellido, idObraSocial, status) => {
     const newObraSocial = await ObraSocial.findByPk(idObraSocial);
     
     const newPatient = await PacienteType.create({
@@ -10,7 +10,8 @@ const createPatient = async (dni, email, hashedPassword, telefono, nombre, apell
         telefono,
         nombre,
         apellido,
-        ObraSocialId: newObraSocial.id
+        ObraSocialId: newObraSocial?.id,
+        status,
     })
     //! DEVOLVER JWTOKEN
     newPatient.password="";

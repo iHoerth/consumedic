@@ -181,37 +181,53 @@ const ContextProvider = ({ children }) => {
       if (loginData.token) {
         console.log('** LOGIN DATA **', loginData);
         setSession({ email: loginData.email, token: loginData.token, isDoctor: false });
-        axios.get(`${URL_PATIENTS}?email=${loginData.email}`).catch((e) => {
-          console.log('EN EL CATCH DEL GET BY EMAIL');
-          return patientsData.createPatient({
-            dni: '',
-            email: loginData.email,
-            password: '',
-            telefono: '',
-            nombre: '',
-            apellido: '',
-            idObraSocial: '',
-          });
-        });
-        return loginData;
-      }
 
-      const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData)).data;
-      console.log(loginData.email, `*** CONTEXT ***`);
-      const patientData = await patientsData.fetchPatientByEmail(
-        loginData.email,
-        loginData.nombre,
-        loginData.apellido
-      );
-      setSession({
-        ...sessionData,
-        email: loginData.email,
-        nombre: loginData.nombre,
-        apellido: loginData.apellido,
-        token: loginData.tokenId,
-      });
-      console.log({ sessionData, patientData });
-      return { sessionData, patientData };
+        axios
+          .get(`${URL_PATIENTS}?email=${loginData.email}`)
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => {
+            if (error.response && error.response.status === 400) {
+              console.log('EN EL CATCH DEL GET BY EMAIL');
+
+              patientsData
+                .createPatient({
+                  loggedFromGoogle: loginData.loggedFromGoogle,
+                  email: loginData.email,
+                  nombre: loginData.nombre,
+                  apellido: loginData.apellido,
+                })
+                .then((newPatient) => {
+                  return newPatient;
+                })
+                .catch((error) => {
+                  console.log('Error al crear el nuevo paciente:', error);
+                  // Manejar el error al crear el nuevo paciente
+                });
+            } else {
+              console.log('Error en la solicitud GET:', error);
+              // Manejar otros errores de solicitud
+            }
+          });
+      } else {
+        const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData)).data;
+        console.log(loginData.email, `*** CONTEXT ***`);
+        const patientData = await patientsData.fetchPatientByEmail(
+          loginData.email,
+          loginData.nombre,
+          loginData.apellido
+        );
+        setSession({
+          ...sessionData,
+          email: loginData.email,
+          nombre: loginData.nombre,
+          apellido: loginData.apellido,
+          token: loginData.tokenId,
+        });
+        console.log({ sessionData, patientData });
+        return { sessionData, patientData };
+      }
     },
   });
 

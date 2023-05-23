@@ -87,11 +87,15 @@ const Userlogin = () => {
   }, [patientDetail]);
 
   const onSuccess = (response) => {
+    console.log(response);
     try {
       setUser(response.profileObj);
       loginPatient({
+        loggedFromGoogle: true,
         email: response.profileObj.email,
         token: response.tokenId,
+        nombre: response.profileObj.givenName,
+        apellido: response.profileObj.familyName,
       });
     } catch (e) {
       alert(e.message);
