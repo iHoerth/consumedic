@@ -12,22 +12,22 @@ const PatientPanel = () => {
   const [loading, setLoading] = useState(true);
   console.log('patientDetail.email', patientDetail.email);
 
-  useEffect(() => {
-    if (session.email && !patientDetail.email) {
-      setLoading(true);
-      fetchPatientByEmail(session.email).then(() => {
-        setLoading(false);
-      });
-      setLoading(false);
-    } else {
-      setLoading(false);
-    }
-  }, [loading, patientDetail]);
+  // useEffect(() => {
+  //   if (session.email && !patientDetail.email) {
+  //     setLoading(true);
+  //     fetchPatientByEmail(session.email).then(() => {
+  //       setLoading(false);
+  //     });
+  //     setLoading(false);
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // }, [loading, patientDetail]);
 
-
   useEffect(() => {
-    fetchPatientByEmail(session.email)
-  },[])
+    setLoading(true);
+    session.email && fetchPatientByEmail(session.email).then(() => setLoading(false));
+  }, [session.email]);
 
   return (
     <>

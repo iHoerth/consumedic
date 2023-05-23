@@ -100,7 +100,7 @@ async function loginPatient(req, res) {
       }); // googleEmail
 
       if (!patient) {
-        const newPatient = await PacienteType.create({ email: googleEmail });
+        // const newPatient = await PacienteType.create({ email: googleEmail });
         return res.status(404).json({ message: 'Patient not found' });
       }
       //aca se compara la contraseña, pero si uno inicia sesion con goolge no hace falta enviar la contraseña
