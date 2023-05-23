@@ -24,24 +24,6 @@ const MyDates = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "nombre",
-      headerName: "Nombre",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "apellido",
-      headerName: "Apellido",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "especialidad",
-      headerName: "Especialidad",
-      width: 150,
-      editable: true,
-    },
-    {
       field: "fecha",
       headerName: "Fecha",
       width: 150,
@@ -53,6 +35,32 @@ const MyDates = () => {
       width: 150,
       editable: true,
     },
+    {
+      field: "imagen",
+      headerName: "Foto",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "nombre",
+      headerName: "Nombre",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "apellido",
+      headerName: "Apellido",
+      width: 150,
+
+      editable: true,
+    },
+    {
+      field: "especialidad",
+      headerName: "Especialidad",
+      width: 150,
+      editable: true,
+    },
+
     {
       field: "descripcion",
       headerName: "Descripcion",
@@ -85,7 +93,9 @@ const MyDates = () => {
       cita.descripcion ? cita.descripcion : "No hay descripción"
     );
     const respuestasMedico = citas.map((cita) =>
-      cita.respuestaMedico ? cita.respuestaMedico : "No informe medico médico"
+      cita.respuestaMedico
+        ? cita.respuestaMedico
+        : "No hay informe medico médico"
     );
 
     const especialidadName = especialidades.map(
@@ -93,6 +103,7 @@ const MyDates = () => {
     );
     return {
       id: item.id,
+      imagen: item.imagen,
       apellido: item.apellido,
       nombre: item.nombre,
       especialidad: especialidadName,
@@ -105,13 +116,14 @@ const MyDates = () => {
 
   return (
     <>
+      <Box>Este es tu historial de citas</Box>
       {loading ? (
-        <div>CARGANDO</div>
+        <div>Cargando</div>
       ) : (
         <Box sx={{ height: 400, width: "100%" }}>
           {!informacion.length ? (
             <>
-              <Skeleton>NO HAY INFO CRACK</Skeleton>
+              <Skeleton>No datos para mostar</Skeleton>
             </>
           ) : (
             <DataGrid
