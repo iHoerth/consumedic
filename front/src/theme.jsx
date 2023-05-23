@@ -29,6 +29,10 @@ const theme = createTheme({
     fontFamily: `'Poppins', "Roboto", "Helvetica", "Arial", 'sans-serif'`,
   },
 
+  heights: {
+    homeSection: 720
+  },
+
   components: {
     MuiAutocomplete: {
       styleOverrides: {
@@ -39,5 +43,5 @@ const theme = createTheme({
     },
   },
 });
-
+console.log(theme)
 export default theme;
