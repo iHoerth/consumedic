@@ -1,16 +1,23 @@
 import React from "react";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Grid, Box, AvatarGroup } from "@mui/material";
+import { Grid, Box, AvatarGroup, useMediaQuery } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import Opinions from "../../Opinions/Opinions";
+import Opinions from "../Opinions/Opinions";
 import { useTheme } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
-import { Context } from "../../../context/ContextProvider";
+import { Context } from "../../context/ContextProvider";
 
 const Profile = ({ doctorDetail }) => {
   const theme = useTheme();
-  const { nombre, apellido, direccion, Especialidads, imagen } = doctorDetail;
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('tablet'));
+
+  const { nombre, apellido, direccion, Especialidads, imagen, Descripcion } = doctorDetail;
+  console.log(doctorDetail);
+  const especialidades = [];
+  doctorDetail.Especialidads.map(espe=>especialidades.push(espe.name))
+  especialidades.join(", ")
+
   const {
     pacientes,
     pacienteHistorial,
@@ -18,66 +25,100 @@ const Profile = ({ doctorDetail }) => {
     fetchPacienteHistorial,
   } = useContext(Context)[3];
 
-  const opinions = [
-    {
-      name: "John Doe",
-      text: "Excelente servicio. Muy recomendado.",
-      stars: 5,
-      img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-    },
-    {
-      name: "Jane Smith",
-      text: "Buen trato y atención al paciente.",
-      stars: 4,
-      img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-    },
-    {
-      name: "Michael Johnson",
-      text: "No quedé satisfecho con la atención recibida.",
-      stars: 2,
-      img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-    },
-    {
-      name: "John Doe",
-      text: "Excelente servicio. Muy recomendado.",
-      stars: 5,
-      img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-    },
-    {
-      name: "Jane Smith",
-      text: "Buen trato y atención al paciente.",
-      stars: 4,
-      img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-    },
-    {
-      name: "Michael Johnson",
-      text: "No quedé satisfecho con la atención recibida.",
-      stars: 2,
-      img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-    },
-  ];
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        width: "100%",
-        height: "45rem",
-      }}
-    >
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          pb: "10px",
-        }}
-      >
-        <CardContent
-          sx={{
-            bgcolor: theme.palette.primary.main,
+    <>
+    <Box sx={{position:"relative"}}>
+      <Box sx={{
+        backgroundColor: theme.palette.primary.light,
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems:'center',
+        pt:"10px",
+        pb:"20px",
+        borderRadius:"10px 10px 0px 0px"
+      }}>
+        <Box sx={{flexDirection:"column", ml:"15px"}}>
+          <Avatar alt={`${nombre} ${apellido}`} src={imagen} 
+            sx={{
+              width: isMobile ? '20vw' : '15vw', 
+              minWidth:"100px",
+              minHeight:"100px",
+              height: isMobile ? '20vw' : '15vw',
+            }}/>
+        </Box>
+        <Box sx={{flexDirection:"column", mr:"15px", textAlign:"right"}}>
+          <Typography variant={isMobile ? "h6" : "h4"} sx={{textAlign:"right"}}>{nombre} {apellido}</Typography>
+          <Typography variant={isMobile ? "body2" : "subtitle1"} sx={{textAlign:"right"}}>{especialidades}</Typography>
+          <Typography variant={isMobile ? "body4" : "subtitle2"} sx={{textAlign:"right"}}>{Descripcion}</Typography>
+        </Box>
+      </Box>
+    </Box>
+    </>
+  );
+};
+export default Profile;
+
+// const opinions = [
+//   {
+//     name: "John Doe",
+//     text: "Excelente servicio. Muy recomendado.",
+//     stars: 5,
+//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
+//   },
+//   {
+//     name: "Jane Smith",
+//     text: "Buen trato y atención al paciente.",
+//     stars: 4,
+//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
+//   },
+//   {
+//     name: "Michael Johnson",
+//     text: "No quedé satisfecho con la atención recibida.",
+//     stars: 2,
+//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
+//   },
+//   {
+//     name: "John Doe",
+//     text: "Excelente servicio. Muy recomendado.",
+//     stars: 5,
+//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
+//   },
+//   {
+//     name: "Jane Smith",
+//     text: "Buen trato y atención al paciente.",
+//     stars: 4,
+//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
+//   },
+//   {
+//     name: "Michael Johnson",
+//     text: "No quedé satisfecho con la atención recibida.",
+//     stars: 2,
+//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
+//   },
+// ];
+
+{/* <Box
+sx={{
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  width: "100%",
+  height: "45rem",
+}}
+>
+<Box
+sx={{
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  pb: "10px",
+}}
+>
+<CardContent
+sx={{
+  bgcolor: theme.palette.primary.main,
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
@@ -186,7 +227,4 @@ const Profile = ({ doctorDetail }) => {
           <Opinions opinions={opinions} />
         </Grid>
       </Box>
-    </Box>
-  );
-};
-export default Profile;
+    </Box> */}
