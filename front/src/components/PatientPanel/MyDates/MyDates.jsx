@@ -108,7 +108,7 @@ const MyDates = () => {
       {loading ? (
         <div>CARGANDO</div>
       ) : (
-        <Box sx={{ height: 400, width: "250%" }}>
+        <Box sx={{ height: 400, width: "100%" }}>
           {!informacion.length ? (
             <>
               <Skeleton>NO HAY INFO CRACK</Skeleton>

@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { Stack, Divider } from "@mui/material";
+import { Stack, Divider, Card } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -31,7 +31,7 @@ const PatientData = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mb: "40px" }}>
+    <Card maxWidth="sm" sx={{ mb: "40px" }}>
       <Box sx={{ height: "55vh" }}>
         <Stack
           direction="row"
@@ -39,7 +39,7 @@ const PatientData = () => {
             border: "1px solid",
             borderColor: "#bababa",
             height: "60vh",
-            width: "125%",
+            width: "100%",
           }}
           divider={<Divider orientation="vertical" flexItem />}
         >
@@ -116,7 +116,7 @@ const PatientData = () => {
           </Box>
         </Stack>
       </Box>
-    </Container>
+    </Card>
   );
 };
 

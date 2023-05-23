@@ -131,7 +131,7 @@ const Panel = () => {
             alignItems: "flex-start",
           }}
         >
-          <Box sx={{ width: "80%" }}>
+          <Box sx={{ width: "100%" }}>
             <PatientData />
           </Box>
         </Box>
