@@ -24,16 +24,16 @@ module.exports = (sequelize) => {
       },
       telefono: {
         type: DataTypes.STRING,
-        allowNull: false,
+        // allowNull: false,
         // unique: true,
       },
       nombre: {
         type: DataTypes.STRING,
-        allowNull: false,
+        // allowNull: false,
       },
       apellido: {
         type: DataTypes.STRING,
-        allowNull: false,
+        // allowNull: false,
       },
       isDoctor: {
         type: DataTypes.BOOLEAN,
