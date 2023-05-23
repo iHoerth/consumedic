@@ -229,7 +229,7 @@ const ContextProvider = ({ children }) => {
   const [panelMedico, setPanelMedico] = useState({
     pacientes: [],
     pacienteHistorial: {},
-    turnos: [],
+    turnos: {},
     vista: 0,
 
     fetchPacientes: async (id) => {

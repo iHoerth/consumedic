@@ -15,7 +15,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, Box, Typography } from '@mui/material';
+import { Button, Box, Typography, Snackbar, Alert, AlertTitle} from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
@@ -38,10 +38,12 @@ const HistorialPaciente = () => {
     const [imagen, setImagen] = useState("")
     const [fileName, setFileName] = useState("")
     const [title, setTitle] = useState("")
+    const [snackRespuesta, setSnackRespuesta]=useState(false)
+    const [snackDocumento, setSnackDocumento]=useState(false)
 
 
-    const [files64, setFiles64]=useState()
-    const [respuesta, setRespuesta]=useState()
+    const [files64, setFiles64]=useState("")
+    const [respuesta, setRespuesta]=useState("")
     const [currentCita,setCurrentCita]=useState(0)
 
     useEffect(() => {
@@ -77,9 +79,11 @@ const HistorialPaciente = () => {
         console.log(idCita);
         if(name==="respuesta"){
             postRespuestaCita(idCita, respuesta)
+            setSnackRespuesta(true)
         }
         if(name==="documentos"){
             postDocumentosCita(idCita,files64, pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId, title)
+            setSnackDocumento(true)
         }
         fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
         setOpenResponse(false)
@@ -122,9 +126,14 @@ const HistorialPaciente = () => {
     }
 
     return ( 
-        <>
+        <>  
             <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
-                <Typography style={{fontSize:"larger", fontWeight:"600"}}>Historial Médico del Paciente</Typography>
+                <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
+                    <Typography style={{fontSize:"larger", fontWeight:"600"}}>Historial Médico del Paciente</Typography>
+                </Box>
+                <Box sx={{position:"absolute",  right:"10%", mb: "15px"}}>
+                    <Button onClick={handleClickBack} style={{width:"200px"}} variant="contained" size="small">Volver a Pacientes</Button>
+                </Box>
             </Box>
             <Divider/>
             <List style={{display: "flex", flexDirection:"row", padding: 0, justifyContent:"center", alignItems:"center"}}>
@@ -153,10 +162,7 @@ const HistorialPaciente = () => {
                     <ListItemText secondary="Correo Electrónico" primary={`${pacienteHistorial.paciente.email}`}/>
                 </ListItem>
             </List>
-            <Divider/>
-            <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"20px 0 20px 0"}}>
-                <Button onClick={handleClickBack} style={{width:"200px"}} variant="outlined" size="small">Volver a Pacientes</Button>
-            </Box>
+            
             <Divider/>
             <TableContainer component={Paper}>
                 <Table>
@@ -202,7 +208,7 @@ const HistorialPaciente = () => {
                                             size="small" 
                                             name="respuesta"
                                         >
-                                            Dar Respuesta
+                                            {cita.respuestaMedico===null ? "Dar Respuesta" : "Editar Respuesta"}
                                         </Button>
                                         <Button 
                                             id={cita.id} 
@@ -232,7 +238,7 @@ const HistorialPaciente = () => {
                                             />
                                         <DialogActions>
                                             <Button onClick={handleClose}>Cancelar</Button>
-                                            <Button id={cita.id} name="respuesta" variant="contained" onClick={handleClose}>Registrar</Button>
+                                            <Button id={cita.id} name="respuesta" variant="contained" onClick={handleClose} disabled={respuesta==="" ? true : false}>Registrar</Button>
                                         </DialogActions>
                                         </Dialog>
                                         <Dialog open={openDocuments} onClose={handleClose}>
@@ -280,7 +286,7 @@ const HistorialPaciente = () => {
                                             <Typography sx={{ml:"38%", mb:"10px"}}>{fileName}</Typography>
                                             <DialogActions>
                                                 <Button onClick={handleClose}>Cancelar</Button>
-                                                <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose}>Registrar</Button>
+                                                <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose} disabled={title===""? true :(files64===""?true:false)}>Registrar</Button>
                                             </DialogActions>
                                         </Dialog>
                                     </TableCell>
@@ -289,7 +295,27 @@ const HistorialPaciente = () => {
                             ))}
                     </TableBody>
                 </Table>
-            </TableContainer>           
+            </TableContainer> 
+            <Snackbar
+                open={snackDocumento}
+                autoHideDuration={1500}
+                onClose={()=>setSnackDocumento(false)}
+            >
+                <Alert severity="success" variant="filled">
+                    <AlertTitle>Mensaje Exitoso</AlertTitle>
+                    Su documento ha sido registrado
+                </Alert>
+            </Snackbar>       
+            <Snackbar
+                open={snackRespuesta}
+                autoHideDuration={1500}
+                onClose={()=>setSnackRespuesta(false)}
+            >
+                <Alert severity="success" variant="filled">
+                    <AlertTitle>Mensaje Exitoso</AlertTitle>
+                    Su Respuesta ha sido registrada
+                </Alert>
+            </Snackbar>   
         </>
     )
 }
