@@ -3,7 +3,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import Loading from "../../components/Loading/Loading";
 import ConfigAgenda from "../../components/DoctorDashboard/ConfigAgenda";
-import Profile from "../../components/DoctorDashboard/Profile/Profile";
+import Profile from "../../components/DoctorDashboard/Profile";
 import Pacientes from "../../components/DoctorDashboard/Pacientes";
 import { useTheme } from "@mui/material";
 
@@ -26,6 +26,7 @@ const DoctorDashboard = () => {
   const {turnos} = useContext(Context)[3];
   const {pacienteHistorial, pacientes} = useContext(Context)[3];
   const { fetchDoctorByEmail, doctorDetail } = useContext(Context)[0];
+  const {id, nombre, Descripcion, apellido, direccion, dni, email, imagen, precio, telefono, titulo, Especialidads, ObraSocials} = doctorDetail
   const { vista, setVista} = useContext(Context)[3];
   const [loading, setLoading] = useState(true);
 
@@ -41,7 +42,8 @@ const DoctorDashboard = () => {
     }
     console.log(loading);
   }, [loading, doctorDetail, turnos, pacientes, pacienteHistorial]);
-  console.log(doctorDetail);
+  // console.log(doctorDetail);
+  
 
   const views = [
     "Mi Perfil",
@@ -63,11 +65,11 @@ const DoctorDashboard = () => {
   return (
     <>
       <NavBar />
-      <Container maxWidth="sm" sx={{ mt: "100px", mb: "40px" }}>
+      <Container maxWidth="sm" sx={{ mt: "100px", mb: "40px"}}>
         <Box sx={{ height: "85vh" }}>
           <Stack
             direction="row"
-            sx={{ border: "1px solid", borderColor: "#bababa" }}
+            sx={{ border: "1px solid", borderColor: "#bababa", borderRadius:"10px" }}
             divider={<Divider orientation="vertical" flexItem />}
           >
             <Box
@@ -75,6 +77,7 @@ const DoctorDashboard = () => {
                 height: "88vh",
                 width: "150px",
                 backgroundColor: theme.palette.primary.main,
+                borderRadius:"10px 0px 0px 10px"
               }}
             >
               <List
@@ -82,6 +85,7 @@ const DoctorDashboard = () => {
                   width: "100%",
                   maxWidth: 360,
                   backgroundColor: theme.palette.primary.main,
+                  borderRadius:"10px 0px 0px 0px"
                 }}
                 component="nav"
                 aria-labelledby="list-subheader"

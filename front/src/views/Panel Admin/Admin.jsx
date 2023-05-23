@@ -3,7 +3,6 @@ import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import Loading from "../../components/Loading/Loading";
 import ConfigAgenda from "../../components/DoctorDashboard/ConfigAgenda";
-import Profile from "../../components/DoctorDashboard/Profile/Profile";
 import Pacientes from "../../components/DoctorDashboard/Pacientes";
 
 import EditarPacientes from "../../components/Panel Admin/EditarPacientes";

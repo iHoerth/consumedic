@@ -19,6 +19,7 @@ import { Context } from '../../context/ContextProvider';
 import Loading from '../../components/Loading/Loading';
 
 const Home = () => {
+  const theme = useTheme();
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const { fetchDoctors, doctors } = useContext(Context)[0];
@@ -33,7 +34,6 @@ const Home = () => {
   const handleClose = () => setModalOpen(false);
 
   const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-  const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
 
   const handleStepChange = (step) => {
@@ -113,7 +113,7 @@ const Home = () => {
             justifyContent: 'center',
             alignItems: 'center',
             gap: '20px',
-            height: '70vh',
+            height: theme.heights.homeSection,
             // pb: '120px',
           }}
         >
@@ -127,7 +127,7 @@ const Home = () => {
             width: '100%',
             display: 'grid',
             placeItems: 'center',
-            height: '80vh',
+            height: theme.heights.homeSection,
             gap: '40px',
             padding: '60px',
           }}

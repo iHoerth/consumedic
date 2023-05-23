@@ -16,7 +16,7 @@ import Stack from '@mui/material/Stack';
 import LocationOnSharpIcon from '@mui/icons-material/LocationOnSharp';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { NavLink } from 'react-router-dom';
-import { Box, Grid, useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { useState, useEffect } from 'react';
 
