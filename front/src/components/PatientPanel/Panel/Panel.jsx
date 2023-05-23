@@ -47,6 +47,7 @@ const Panel = () => {
           height: "55rem",
           borderRadius: "10px",
           width: "80%",
+          paddingTop: "150px",
         }}
       >
         <Box sx={{}}>
@@ -118,9 +119,6 @@ const Panel = () => {
                   </Typography>
                 </Box>
               </CardContent>
-              <CardActions>
-                <Button size="small">Editar</Button>
-              </CardActions>
             </Card>
           </Card>
         </Box>
