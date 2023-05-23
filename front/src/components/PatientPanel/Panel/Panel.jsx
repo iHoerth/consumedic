@@ -78,7 +78,7 @@ const Panel = () => {
           <Card
             sx={{
               width: "20%",
-              height: "80vh",
+              height: "20vh",
               marginRight: "10px",
               borderRadius: "10px",
             }}
