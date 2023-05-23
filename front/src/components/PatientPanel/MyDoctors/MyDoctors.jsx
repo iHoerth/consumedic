@@ -151,7 +151,7 @@ const MyDoctors = () => {
   console.log("informacion", informacion);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    //{ field: "id", headerName: "ID", width: 90 },
     {
       field: "nombre",
       headerName: "Nombre",
@@ -197,7 +197,7 @@ const MyDoctors = () => {
     {
       field: "eliminar",
       headerName: "Eliminar",
-      width: 120,
+      width: 150,
       editable: false,
       renderCell: (params) => (
         <button onClick={() => handleDelete(params.row.id)}>Eliminar</button>
@@ -259,13 +259,14 @@ const MyDoctors = () => {
 
   return (
     <>
+      <Box>Estos son los doctores consultados</Box>
       {loading ? (
-        <div>CARGANDO</div>
+        <div>Cargando</div>
       ) : (
         <Box sx={{ height: 400, width: "100%" }}>
           {!informacion.length ? (
             <>
-              <Skeleton>NO HAY INFO CRACK</Skeleton>
+              <Skeleton>No datos para mostar</Skeleton>
             </>
           ) : (
             <>
