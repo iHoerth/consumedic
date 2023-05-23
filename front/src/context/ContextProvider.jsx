@@ -325,6 +325,24 @@ const ContextProvider = ({ children }) => {
     },
   });
 
+  const [panelAdmin, setPanelAdmin] = useState({
+    admin: {},
+    vista: 0,
+    pacientes:[],
+    medicos:[],
+    email:0,
+    setVista: (vista) => {
+      setPanelAdmin((prevState) => ({
+        ...prevState,
+        vista: vista,
+      }))},
+    setEmail: (email)=>{
+      setPanelAdmin((prevState) => ({
+        ...prevState,
+        email: email,
+      }))},
+    })
+
   return (
     <>
       <LoadingContext.Provider value={[loading, setLoading]}>
@@ -338,6 +356,7 @@ const ContextProvider = ({ children }) => {
                 panelMedico, //[3]
                 appointment, //[4]
                 panelPaciente, //[5]
+                panelAdmin, // [6]
               ]}
             >
               {children}

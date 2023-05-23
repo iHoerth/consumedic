@@ -55,9 +55,9 @@ server.post('/turno', (req, res) => {
   let preference = {
     //urls donde te redirige en cada caso, pago exitoso, pendiente y fallo, x razon
     back_urls: {
-      success: `${mp_success}`,
+      success: `${mp_success}/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/aprobado/${dataPreferences.comentario}`,
       // pending: `http://localhost:3000/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/pendiente/`,
-      failure: `${mp_failure}`,
+      failure: `${mp_failure}/turno/${dataPreferences.idDoctor}/${dataPreferences.fechaCita}/${dataPreferences.horaCita}/rechazado/0`,
     },
     items: [
       {
