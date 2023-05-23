@@ -31,6 +31,8 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 const HistorialPaciente = () => {
     const {pacienteHistorial, setVista, postDocumentosCita, postRespuestaCita,fetchPacienteHistorial} = useContext(Context)[3];
+    const {doctorDetail, fetchDoctorByEmail} = useContext(Context)[0];
+    const { session } = useContext(Context)[2];
     const [loading, setLoading] = useState(true);
     const [openResponse, setOpenResponse] = useState(false)
     const [openDocuments, setOpenDocuments] = useState(false)
@@ -50,12 +52,16 @@ const HistorialPaciente = () => {
         if (pacienteHistorial){
           setLoading(false);
         }
+        else{
+            fetchDoctorByEmail(session.email)
+        }
         console.log(pacienteHistorial);
     }, [loading, pacienteHistorial]);
 
     useEffect(() => {
         fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
-    }, [openResponse,openDocuments, imagen, files64,]);
+        
+    }, [openResponse,openDocuments, imagen, files64, snackDocumento]);
 
     const handleClickBack = async () =>{
         setVista(6) 
@@ -92,6 +98,10 @@ const HistorialPaciente = () => {
         setImagen("")
         setFileName("")
         setCurrentCita(0)
+        setFiles64("")
+        setRespuesta("")
+        fetchDoctorByEmail(doctorDetail.email)
+        fetchDoctorByEmail(session.email)
 
     }
 
