@@ -16,8 +16,8 @@ const NavBar = ({ component, variant,text, type }) => {
   const { session, setSession } = useContext(Context)[2];
   const navigate = useNavigate();
   const theme = useTheme();
-  const screenSizeSmall = useMediaQuery(theme.breakpoints.down('tablet'));
   const { values } = theme.breakpoints;
+  const screenSizeSmall = useMediaQuery(theme.breakpoints.down('tablet'));
 
   const navLinksArray = [
     {

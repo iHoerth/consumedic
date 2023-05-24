@@ -15,20 +15,48 @@ const AboutUs = () => {
   const theme = useTheme();
   return (
     <Box
-      component="span"
+      component="div"
       sx={{
-        width: '1340px',
-        mt: 20,
-        mb: 20,
-        height: 'auto',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, minmax(Min(400px), 1fr))',
+        minHeight: theme.heights.homeSection,
+        width: '100%',
+        p: 4,
+        border: '1px solid black',
+        flexWrap: 'wrap',
+        display: {
+          mobile: 'flex',
+          tablet: 'grid',
+          laptop: 'grid',
+          desktop: 'grid',
+        },
+        gap: {
+          mobile: '40px 20px',
+          tablet: '40px 20px',
+          laptop: '40px 20px',
+          desktop: '40px 20px',
+        },
+        gridTemplateColumns: {
+          mobile: 'repeat(2, minmax(Min(340px), 1fr))',
+          tablet: 'repeat(2, minmax(Min(340px), 1fr))',
+          laptop: 'repeat(2, minmax(Min(340px), 1fr))',
+          desktop: 'repeat(3, minmax(Min(340px), 1fr))',
+        },
         placeItems: 'center',
-        gap: '80px 0px',
       }}
     >
       {members.map((member) => (
-        <Card sx={{padding:'20px', margin:'0'}}>
+        <Card
+          key={member.id}
+          sx={{
+            width: {
+              mobile: '100%',
+              tablet: '100%',
+              laptop: '360px',
+              desktop: '360px',
+            },
+            padding: 2,
+            height: 'auto',
+          }}
+        >
           <CardHeader
             avatar={
               <Avatar
@@ -44,17 +72,37 @@ const AboutUs = () => {
             }
             title={
               <>
-                <Typography variant="h5">{member.name}</Typography>
-                <Typography variant='h7'>{member.role}</Typography>
+                <Typography sx={{ display: 'flex', width: '20px' }} variant="h6">
+                  {member.name}
+                </Typography>
+                <Typography variant="h7">{member.role}</Typography>
               </>
             }
           />
-          <CardContent>
-            <Typography sx={{width:400, h:400, fontSize: 14,}}>{member.description}</Typography>
+          <CardContent
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+            }}
+          >
+            <Typography sx={{ width: 200, h: 200, fontSize: 14 }}>{member.description}</Typography>
           </CardContent>
-          <CardActions sx={{display:'flex', flexDirection:'column'}}>
-            <Link sx={{fontSize: 16}}>{member.linkedin}</Link>
-            <Link sx={{fontSize: 16}}>{member.github}</Link>
+          <CardActions
+            sx={{
+              mt: 2,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+            }}
+          >
+            <Link href={member.linkedin} sx={{ fontSize: 12, textAlign: 'start' }}>
+              <Typography>LINKEDIN</Typography>
+            </Link>
+            <Link href={member.github} sx={{ fontSize: 12, textAlign: 'start' }}>
+              <Typography>GITHUB</Typography>
+            </Link>
           </CardActions>
         </Card>
       ))}

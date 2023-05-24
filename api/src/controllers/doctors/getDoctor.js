@@ -7,9 +7,9 @@ const getDoctor = async (email) => {
         where: {
             email: email
         },
-        include: {all: true}
+        include: {all: true},
     });
-    if(!doctor.id){
+    if(!doctor){
         throw new Error(`No se encontró el doctor con el email: ${email}`);
     }
     const calendar = await getDoctorCalendar(doctor.id);

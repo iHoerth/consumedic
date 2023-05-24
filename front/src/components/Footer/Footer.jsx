@@ -48,7 +48,6 @@ const Footer = () => {
       sx={{
         bgcolor: theme.palette.primary.main,
         width: '100%',
-        height: '30vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -57,8 +56,7 @@ const Footer = () => {
     >
       <Box
         sx={{
-          p: 2,
-          mb: 1,
+          p: 1,
           width: '100%',
           bgcolor: theme.palette.primary.main,
         }}
@@ -72,9 +70,13 @@ const Footer = () => {
         >
           <BottomNavigationAction
             label="Incio"
+            color='white'
+            showLabel='true'
             icon={
               <Home
                 sx={{
+                  width: 24,
+                  height: 24,
                   color: 'white',
                 }}
               />
@@ -87,6 +89,8 @@ const Footer = () => {
             icon={
               <Info
                 sx={{
+                  width: 22,
+                  height: 22,
                   color: 'white',
                 }}
               />
@@ -98,6 +102,8 @@ const Footer = () => {
             icon={
               <Comment
                 sx={{
+                  width: 22,
+                  height: 22,
                   color: 'white',
                 }}
               />
@@ -109,6 +115,8 @@ const Footer = () => {
             icon={
               <People
                 sx={{
+                  width: 22,
+                  height: 22,
                   color: 'white',
                 }}
               />
@@ -121,6 +129,8 @@ const Footer = () => {
               icon={
                 <Lock
                   sx={{
+                    width: 22,
+                    height: 22,
                     color: 'white',
                   }}
                 />
@@ -132,9 +142,6 @@ const Footer = () => {
       </Box>
       <Box
         sx={{
-          bgcolor: '#212121',
-          // p: 2,
-          // mb: 1,
           width: '100%',
           display: 'flex',
           flexDirection: 'row',
@@ -148,7 +155,7 @@ const Footer = () => {
               mx: 1,
               color: 'white',
               fontSize: '30px',
-              ml: '30px',
+              ml: '20px',
               mr: '30px',
             }}
           />

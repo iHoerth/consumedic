@@ -1,11 +1,11 @@
-const {Opinion, PacienteType}= require("../../db")
+const {Opinion, PacienteType, DoctorType}= require("../../db")
 
-const getOpinionsByDoctor = async (id) => {
+const getOpinionsByPaciente = async (id) => {
     const opinions = await Opinion.findAll({
-        where: {DoctorTypeId: id}, 
+        where: {PacienteTypeId: id}, 
         include: [
             {
-                model: PacienteType,
+                model: DoctorType,
                 attributes: {
                     exclude: ["password"]
                 }
@@ -15,4 +15,4 @@ const getOpinionsByDoctor = async (id) => {
     return opinions;
 }
 
-module.exports = { getOpinionsByDoctor };
+module.exports = { getOpinionsByPaciente };

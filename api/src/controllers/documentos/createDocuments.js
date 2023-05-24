@@ -1,12 +1,12 @@
 const {Documento}= require("../../db")
 
-const createDocuments = async (idHistorialMedico, idPaciente, idMedico, idCita, documento)=>{
+const createDocuments = async (idCita, imagenCloudinary, idMedico, idPaciente, titulo)=>{
         const newDocumento = await Documento.create({
-            documento: documento,
+            documento: imagenCloudinary,
             DoctorTypeId: idMedico,
             PacienteTypeId: idPaciente,
-            HistorialMedicoId: idHistorialMedico,
-            CitumId: idCita            
+            CitumId: idCita,
+            titulo: titulo
     })
     return newDocumento;
 }

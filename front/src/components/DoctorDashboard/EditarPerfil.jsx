@@ -75,6 +75,7 @@ const EditarPerfil = ({doctorDetail1}) => {
         dni: dni,
         email: email,
         prevImagen: imagen,
+        oldImagen: imagen,
         imagen: imagen,
         precio: precio,
         telefono: telefono,
