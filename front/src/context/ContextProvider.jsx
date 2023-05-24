@@ -24,8 +24,7 @@ const URL_TURNOS = process.env.REACT_APP_URL_TURNOS;
 const URL_APPOINTMENTS = process.env.REACT_APP_URL_APPOINTMENTS;
 const URL_PERFILPACIENTE = process.env.REACT_APP_URL_PERFILPACIENTE;
 const URL_DOCUMENTOS = process.env.REACT_APP_URL_DOCUMENTOS;
-const URL_OPINIONS = process.env.REACT_APP_URL_OPINIONS
-
+const URL_OPINIONS = process.env.REACT_APP_URL_OPINIONS;
 
 export const Context = createContext([]);
 export const UtilitiesContext = createContext([]);
@@ -55,7 +54,7 @@ const ContextProvider = ({ children }) => {
     doctors: [],
     doctorDetail: {},
     filteredDoctors: [],
-    doctorOpinions:[],
+    doctorOpinions: [],
     fetchDoctors: async () => {
       const response = await axios(URL_DOCTORS);
       const data = await response.data;
@@ -136,19 +135,20 @@ const ContextProvider = ({ children }) => {
       }));
       return data;
     },
-    fetchOpinions: async (id) =>{
-      const data = (await axios.get(`${URL_OPINIONS}/${id}`)).data
+    fetchOpinions: async (id) => {
+      const data = (await axios.get(`${URL_OPINIONS}/${id}`)).data;
       setDoctorsData((prevState) => ({
         ...prevState,
-        doctorOpinions: [ ...data ],
+        doctorOpinions: [...data],
       }));
-    }
+    },
   });
 
   const [patientsData, setPatientsData] = useState({
     patients: [],
     patientDetail: {},
     filteredPatients: [],
+    opinions: [],
     fetchPatients: async () => {
       try {
         const data = (await axios(URL_PATIENTS)).data;
@@ -247,6 +247,15 @@ const ContextProvider = ({ children }) => {
         });
         console.log({ sessionData, patientData });
         return { sessionData, patientData };
+      }
+    },
+
+    postOpinions: async (newOpinion) => {
+      try {
+        const data = (await axios.post(`${URL_OPINIONS}`, newOpinion)).data;
+        return data;
+      } catch (error) {
+        console.log(error);
       }
     },
   });
@@ -351,7 +360,13 @@ const ContextProvider = ({ children }) => {
         informacion: [...pacientesData],
       }));
     },
-    postDocumentosCita: async (idCita,files64,idMedico,idPaciente,titulo) => {
+    postDocumentosCita: async (
+      idCita,
+      files64,
+      idMedico,
+      idPaciente,
+      titulo
+    ) => {
       await axios.post(`${URL_DOCUMENTOS}`, {
         idCita,
         files64,
