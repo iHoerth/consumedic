@@ -16,7 +16,12 @@ const Header = () => {
       sx={{
         bgcolor: theme.palette.secondary.main,
         opacity: '0.96',
-        width: '700px',
+        width: {
+          mobile: '100%',
+          tablet: '100%',
+          laptop: 700,
+          desktop: 700,
+        },
         p: '20px',
       }}
     >
@@ -31,9 +36,7 @@ const Header = () => {
         </Typography>
       </CardContent>
 
-      <CardActions>
-
-      </CardActions>
+      <CardActions></CardActions>
     </Card>
   );
 };
