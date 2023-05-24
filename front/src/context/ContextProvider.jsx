@@ -23,6 +23,8 @@ const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA;
 const URL_TURNOS = process.env.REACT_APP_URL_TURNOS;
 const URL_APPOINTMENTS = process.env.REACT_APP_URL_APPOINTMENTS;
 const URL_PERFILPACIENTE = process.env.REACT_APP_URL_PERFILPACIENTE;
+const URL_DOCUMENTOS = process.env.REACT_APP_URL_DOCUMENTOS;
+
 
 export const Context = createContext([]);
 export const UtilitiesContext = createContext([]);
@@ -339,6 +341,15 @@ const ContextProvider = ({ children }) => {
         ...prevState,
         informacion: [...pacientesData],
       }));
+    },
+    postDocumentosCita: async (idCita,files64,idMedico,idPaciente,titulo) => {
+      await axios.post(`${URL_DOCUMENTOS}`, {
+        idCita,
+        files64,
+        idMedico,
+        idPaciente,
+        titulo,
+      });
     },
   });
 

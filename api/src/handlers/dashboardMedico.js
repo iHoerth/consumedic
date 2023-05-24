@@ -48,7 +48,7 @@ const postDoctorDocument = async (req,res)=>{
         if(!idCita || !files64 || !idMedico || !idPaciente || !titulo) throw new Error("faltan datos; Debe proporcionar: idCita, archivo en base 64, idMedico, idPaciente y Titulo del archivo")
 
         const cloudinaryResult = await cloudinary.uploader.upload(files64, {
-            folder: "Documents",
+            folder: "Documentos Medicos",
         })
         if(!cloudinaryResult) throw new Error("Error en la carga del archivo a Cloudinary")
 
