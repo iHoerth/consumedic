@@ -1,6 +1,10 @@
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../../../context/ContextProvider";
 import { DataGrid } from "@material-ui/data-grid";
+import { Icon } from "@mui/material";
+import { Edit as EditIcon } from "@mui/icons-material";
+import { useTheme } from "@mui/material";
+import { CheckCircle } from "@mui/icons-material";
 import {
   Box,
   Skeleton,
@@ -12,9 +16,6 @@ import {
   Avatar,
   Typography,
 } from "@mui/material";
-import { Icon } from "@mui/material";
-import { Edit as EditIcon } from "@mui/icons-material";
-import { useTheme } from "@mui/material";
 
 const MyDoctors = () => {
   const theme = useTheme();
@@ -22,12 +23,13 @@ const MyDoctors = () => {
   const { opinions, postOpinions, patientDetail } = useContext(Context)[1];
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [infoData, setInfoData] = useState([]);
+  const [opinionsSent, setOpinionsSent] = useState({});
   const [opinionText, setOpinionText] = useState({
     opinion: "",
-    rating: 0, // Valor inicial de rating
+    rating: 0,
   });
-  const [selectedId, setSelectedId] = useState(null); // Nuevo estado para almacenar el ID del doctor seleccionado
-  const [infoData, setInfoData] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -39,6 +41,22 @@ const MyDoctors = () => {
       setLoading(false);
     }
   }, [patientDetail.id]);
+
+  const direccion = informacion.map((item) => {
+    if (item.id === selectedId) {
+      return item.direccion;
+    }
+    return null;
+  });
+
+  let ubicacion = null;
+
+  direccion.forEach((valor) => {
+    if (valor !== null) {
+      ubicacion = valor;
+      return;
+    }
+  });
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -79,10 +97,14 @@ const MyDoctors = () => {
       editable: true,
       renderCell: (params) => (
         <Icon>
-          <EditIcon
-            variant="contained"
-            onClick={() => handleOpenModal(params.row.id)}
-          />
+          {opinionsSent[params.row.id] ? (
+            <CheckCircle color="primary" />
+          ) : (
+            <EditIcon
+              variant="contained"
+              onClick={() => handleOpenModal(params.row.id)}
+            />
+          )}
         </Icon>
       ),
     },
@@ -139,22 +161,35 @@ const MyDoctors = () => {
     handleCloseModal();
     setOpinionText({});
 
-    const ubicacion = informacion.direccion;
     const puntaje = opinionText.rating;
     const mensaje = opinionText.opinion;
     const idMedico = selectedId;
     const idPaciente = patientDetail.id;
-    postOpinions({ ubicacion, puntaje, mensaje, idMedico, idPaciente })
-      .then((data) => {
-        alert(data.message);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+
+    if (
+      opinionText.rating === 0 ||
+      !opinionText.opinion ||
+      opinionText.opinion.trim() === ""
+    ) {
+      alert("Por favor, complete todos los campos");
+      return;
+    } else if (opinionsSent[selectedId]) {
+      alert("Ya has enviado una opinión a este médico.");
+      return;
+    } else {
+      postOpinions({ ubicacion, puntaje, mensaje, idMedico, idPaciente })
+        .then((data) => {
+          alert(data.message);
+          setOpinionsSent((prevOpinionsSent) => ({
+            ...prevOpinionsSent,
+            [selectedId]: true,
+          }));
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
   };
-  console.log("informacionData", informacionData);
-  console.log("infoData", infoData);
-  console.log("opinionText", opinionText);
 
   return (
     <>
@@ -181,6 +216,9 @@ const MyDoctors = () => {
                     border: "2px solid #000",
                     boxShadow: 24,
                     p: 4,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                 >
                   <Paper
@@ -246,13 +284,19 @@ const MyDoctors = () => {
                     }
                     fullWidth
                   />
-
                   <Button
-                    variant="contained"
                     type="submit"
+                    variant="contained"
                     onClick={handleAddOpinion}
+                    style={{
+                      padding: "8px",
+                      margin: "20px",
+                      color: "white",
+                      backgroundColor: theme.palette.primary.main,
+                      borderRadius: "10px",
+                    }}
                   >
-                    Agregar Opinión
+                    Agregar opinion
                   </Button>
                 </Box>
               </Modal>

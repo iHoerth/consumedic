@@ -244,7 +244,6 @@ const ContextProvider = ({ children }) => {
     postOpinions: async (newOpinion) => {
       try {
         const data = (await axios.post(`${URL_OPINIONS}`, newOpinion)).data;
-        console.log("dataNueva", data);
         return data;
       } catch (error) {
         console.log(error);
