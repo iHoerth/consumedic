@@ -23,6 +23,7 @@ const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA;
 const URL_TURNOS = process.env.REACT_APP_URL_TURNOS;
 const URL_APPOINTMENTS = process.env.REACT_APP_URL_APPOINTMENTS;
 const URL_PERFILPACIENTE = process.env.REACT_APP_URL_PERFILPACIENTE;
+const URL_OPINIONS = process.env.REACT_APP_URL_OPINIONS;
 
 export const Context = createContext([]);
 export const UtilitiesContext = createContext([]);
@@ -138,6 +139,7 @@ const ContextProvider = ({ children }) => {
     patients: [],
     patientDetail: {},
     filteredPatients: [],
+    opinions: [],
     fetchPatients: async () => {
       try {
         const data = (await axios(URL_PATIENTS)).data;
@@ -236,6 +238,16 @@ const ContextProvider = ({ children }) => {
         });
         console.log({ sessionData, patientData });
         return { sessionData, patientData };
+      }
+    },
+
+    postOpinions: async (newOpinion) => {
+      try {
+        const data = (await axios.post(`${URL_OPINIONS}`, newOpinion)).data;
+        console.log("dataNueva", data);
+        return data;
+      } catch (error) {
+        console.log(error);
       }
     },
   });
