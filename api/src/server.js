@@ -18,7 +18,7 @@ server.use(morgan("dev"));
 
 server.use("/", routes);
 
-conn.sync({ force: true }).then(async () => {
+conn.sync({ force: false }).then(async () => {
   console.log("Database connected");
   server.listen(port, () => {
     console.log("Server raised on port " + port);
