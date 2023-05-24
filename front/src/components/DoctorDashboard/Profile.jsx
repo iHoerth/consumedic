@@ -73,7 +73,7 @@ const Profile = ({ doctorDetail }) => {
     <>
     <Box>
       <Box sx={{
-        backgroundColor: theme.palette.primary.light,
+        backgroundColor: theme.palette.primary.main,
         display:"flex",
         flexDirection:"row",
         justifyContent:"space-between",
@@ -92,12 +92,12 @@ const Profile = ({ doctorDetail }) => {
             }}/>
         </Box>
         <Box sx={{flexDirection:"column", mr:"15px", textAlign:"right", alignItems:"start"}}>
-          <Typography variant={isMobile ? "h6" : "h4"} sx={{textAlign:"right"}}>{nombre} {apellido}</Typography>
-          <Typography variant={isMobile ? "body2" : "subtitle1"} sx={{textAlign:"right"}}>{especialidades}</Typography>
-          <Typography variant={isMobile ? "body4" : "subtitle2"} sx={{textAlign:"right"}}>{Descripcion}</Typography>
+          <Typography variant={isMobile ? "h6" : "h4"} sx={{textAlign:"right", color:"white"}}>{nombre} {apellido}</Typography>
+          <Typography variant={isMobile ? "body2" : "subtitle1"} sx={{textAlign:"right", color:"white"}}>{especialidades}</Typography>
+          <Typography variant={isMobile ? "body4" : "subtitle2"} sx={{textAlign:"right", color:"white"}}>{Descripcion}</Typography>
         </Box>
       </Box>
-      <Box  sx={{display:"flex", justifyContent:"space-evenly"}}>
+      <Box  sx={{display:"flex", justifyContent:"space-between"}}>
           <Box 
             sx={{ 
               mt:"10px", 
@@ -233,7 +233,7 @@ const Profile = ({ doctorDetail }) => {
             sx={{
               display: "flex",flexDirection: "column",alignItems: "flex-start",
               border: "solid 1px", width: "500px",justifyContent:"center",
-              mt:"30px", p:"10px"
+              mt:"30px", p:"10px", borderRadius:"10px"
             }}
           >
             <Typography sx={{}}>Opiniones de Pacientes</Typography>
