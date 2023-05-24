@@ -1,7 +1,7 @@
 import React from "react";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Grid, Box, useMediaQuery, Rating } from "@mui/material";
+import { Grid, Box, useMediaQuery, Rating, Divider } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import PaidIcon from '@mui/icons-material/Paid';
@@ -18,6 +18,7 @@ import Avatar from "@mui/material/Avatar";
 import { useTheme } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/ContextProvider";
+import { blue, green, lightGreen } from "@mui/material/colors";
 
 const Profile = ({ doctorDetail }) => {
   const theme = useTheme();
@@ -28,10 +29,12 @@ const Profile = ({ doctorDetail }) => {
   const especialidades = [];
   doctorDetail.Especialidads.map(espe=>especialidades.push(espe.name))
   especialidades.join(", ")
-  const {pacientes, turnos,fetchPacientes,fetchTurnos,} = useContext(Context)[3];
+  const {pacientes, turnos,fetchPacientes,fetchTurnos} = useContext(Context)[3];
+  const {doctorOpinions, fetchOpinions} = useContext(Context)[0];
 
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = Opinions.length;
+  const maxSteps = doctorOpinions.length;
+  
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -43,9 +46,21 @@ const Profile = ({ doctorDetail }) => {
 
 
   useEffect(()=>{
+    if(doctorOpinions.length===0){
+      const search = async () =>{
+        await fetchOpinions(id);  
+      }
+      search()
+    }
     fetchPacientes(id);
     fetchTurnos(id);
+    fetchOpinions(id);
   },[])
+ console.log(doctorOpinions);
+  console.log(maxSteps);
+  
+ 
+
 
   let cantTurnos = 0;
   if(turnos.viejosTurnos){
@@ -228,252 +243,76 @@ const Profile = ({ doctorDetail }) => {
             </Box>
           </Box>
       </Box>
-      <Box sx={{display: "flex",justifyContent:"center", alignItems:"center"}}>
-          <Box
-            sx={{
-              display: "flex",flexDirection: "column",alignItems: "flex-start",
-              border: "solid 1px", width: "500px",justifyContent:"center",
-              mt:"30px", p:"10px", borderRadius:"10px"
-            }}
-          >
-            <Typography sx={{}}>Opiniones de Pacientes</Typography>
-            <Paper
-              square
-              elevation={0}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                height: 30,
-                pl: 2,
-                bgcolor: theme.palette.primary.light,
-                borderRadius: "5px",
-                p: "25px",
-                width: "100%",
-              }}
-            >
-              <Typography sx={{color: "white",pl: "30px",}}>{Opinions[activeStep].PacienteTypeId}</Typography>
-            </Paper>
-            <Box component="fieldset" mb={1} borderColor="transparent">
-              <Rating name="stars" sx={{ color: theme.palette.primary.main }}
-                value={Opinions[activeStep].puntaje}
-                readOnly
-              />
-            </Box>
+      {doctorOpinions.length === 0 ? null :
+        <Box sx={{display: "flex",justifyContent:"center", alignItems:"center"}}>
             <Box
               sx={{
-                width: "100%",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-                pb: "30px",
+                display: "flex",flexDirection: "column",alignItems: "center",
+                width: "500px",justifyContent:"center",
+                mt:"30px", borderRadius:"10px", textAlign:"center"
               }}
             >
-              {Opinions[activeStep].mensaje}
-            </Box>
-            <MobileStepper
-              variant="text"
-              opinions={maxSteps}
-              position="static"
-              activeStep={activeStep}
-              nextButton={
-                <Button
-                  size="small"
-                  onClick={handleNext}
-                  disabled={activeStep === maxSteps - 1}
+              <Box sx={{border:"1px solid", p:"5px", borderRadius:"5px", width:"80%",justifyContent:"center", alignItems:"center"}}>
+                <Typography variant="h6"sx={{textAlign:"center", color:"#4b4b4b"}}>Opiniones de Pacientes</Typography>
+                <Box sx={{bgcolor: theme.palette.primary.light, borderRadius:"5px"}}>
+                  <Typography variant="h6" sx={{color: "white",}}>{doctorOpinions[activeStep].PacienteType.nombre} {doctorOpinions[activeStep].PacienteType.apellido}</Typography>
+                </Box>
+                <Box component="fieldset" mb={1} borderColor="transparent">
+                  <Rating name="stars" sx={{ color: theme.palette.primary.main }}
+                    value={doctorOpinions[activeStep].puntaje}
+                    readOnly
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    width: "100%",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    pb: "30px",
+                  }}
                 >
-                  Siguiente
-                  {theme.direction === "rtl" ? (
-                    <KeyboardArrowLeft />
-                  ) : (
-                    <KeyboardArrowRight />
-                  )}
-                </Button>
-              }
-              backButton={
-                <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                  {theme.direction === "rtl" ? (
-                    <KeyboardArrowRight />
-                  ) : (
-                    <KeyboardArrowLeft />
-                  )}
-                  Atras
-                </Button>
-              }
-            />
-        </Box>
-      </Box>      
+                  {doctorOpinions[activeStep].mensaje}
+                </Box>
+                <Divider />
+                <Box sx={{backgroundColor:"#8f8f8f"}}>
+                <MobileStepper
+                  variant="text"
+                  steps={maxSteps}
+                  position="static"
+                  activeStep={activeStep}
+                  nextButton={
+                    <Button
+                      size="small"
+                      onClick={handleNext}
+                      disabled={activeStep === maxSteps - 1}
+                    >
+                      Next
+                      {theme.direction === 'rtl' ? (
+                        <KeyboardArrowLeft />
+                      ) : (
+                        <KeyboardArrowRight />
+                      )}
+                    </Button>
+                  }
+                  backButton={
+                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                      {theme.direction === 'rtl' ? (
+                        <KeyboardArrowRight />
+                      ) : (
+                        <KeyboardArrowLeft />
+                      )}
+                      Back
+                    </Button>
+                  }
+                />
+                </Box>
+              </Box>
+          </Box>
+        </Box>      
+      }
     </Box>
     </>
   );
 };
 export default Profile;
-
-// const opinions = [
-//   {
-//     name: "John Doe",
-//     text: "Excelente servicio. Muy recomendado.",
-//     stars: 5,
-//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-//   },
-//   {
-//     name: "Jane Smith",
-//     text: "Buen trato y atención al paciente.",
-//     stars: 4,
-//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-//   },
-//   {
-//     name: "Michael Johnson",
-//     text: "No quedé satisfecho con la atención recibida.",
-//     stars: 2,
-//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-//   },
-//   {
-//     name: "John Doe",
-//     text: "Excelente servicio. Muy recomendado.",
-//     stars: 5,
-//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-//   },
-//   {
-//     name: "Jane Smith",
-//     text: "Buen trato y atención al paciente.",
-//     stars: 4,
-//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-//   },
-//   {
-//     name: "Michael Johnson",
-//     text: "No quedé satisfecho con la atención recibida.",
-//     stars: 2,
-//     img: "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg",
-//   },
-// ];
-
-{/* <Box
-sx={{
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  width: "100%",
-  height: "45rem",
-}}
->
-<Box
-sx={{
-  width: "100%",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  pb: "10px",
-}}
->
-<CardContent
-sx={{
-  bgcolor: theme.palette.primary.main,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "20px",
-            width: "95%",
-            borderRadius: "10px",
-          }}
-        >
-          <Avatar
-            alt="Remy Sharp"
-            src={imagen}
-            sx={{
-              width: 200,
-              height: 200,
-            }}
-          />
-          <Box
-            container
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              backgroundColor: "white",
-              width: "50%",
-              borderRadius: "5px",
-              padding: "10px",
-            }}
-          >
-            <Grid item xs>
-              <Typography gutterBottom variant="h4" component="div">
-                Hola Dr. {nombre + " " + apellido}
-              </Typography>
-              <Typography color="text.secondary" variant="body2">
-                Aqui puede ver todos sus datos.
-              </Typography>
-            </Grid>
-          </Box>
-        </CardContent>
-      </Box>
-      <Box
-        container
-        sx={{
-          display: "flex",
-          width: "90%",
-        }}
-      >
-        <Grid
-          container
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            pb: "20px",
-          }}
-        >
-          <Typography gutterBottom variant="h5" component="div">
-            {nombre + " " + apellido}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{
-              pb: "1px",
-            }}
-          >
-            {doctorDetail.Especialidads?.length &&
-              doctorDetail.Especialidads.map((item, index) => (
-                <span key={index}>{item.name}</span>
-              ))}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {direccion}
-          </Typography>
-        </Grid>
-        <Grid
-          container
-          sx={{
-            display: "flex",
-          }}
-        >
-          <Typography variant="body2" color="text.secondary">
-            Total pascientes
-            <AvatarGroup total={pacientes.length}>
-              <Avatar
-                alt="Remy Sharp"
-                src="https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg"
-              />
-              <Avatar
-                alt="Travis Howard"
-                src="https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg"
-              />
-              <Avatar
-                alt="Agnes Walker"
-                src="https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg"
-              />
-              <Avatar
-                alt="Trevor Henderson"
-                src="https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg"
-              />
-            </AvatarGroup>
-          </Typography>
-        </Grid>
-      </Box>
-      <Box sx={{ width: "30%", mt: "40px" }}>
-        <Grid container>
-          <Opinions opinions={opinions} />
-        </Grid>
-      </Box>
-    </Box> */}

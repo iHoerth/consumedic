@@ -24,6 +24,7 @@ const URL_TURNOS = process.env.REACT_APP_URL_TURNOS;
 const URL_APPOINTMENTS = process.env.REACT_APP_URL_APPOINTMENTS;
 const URL_PERFILPACIENTE = process.env.REACT_APP_URL_PERFILPACIENTE;
 const URL_DOCUMENTOS = process.env.REACT_APP_URL_DOCUMENTOS;
+const URL_OPINIONS = process.env.REACT_APP_URL_OPINIONS
 
 
 export const Context = createContext([]);
@@ -54,6 +55,7 @@ const ContextProvider = ({ children }) => {
     doctors: [],
     doctorDetail: {},
     filteredDoctors: [],
+    doctorOpinions:[],
     fetchDoctors: async () => {
       const response = await axios(URL_DOCTORS);
       const data = await response.data;
@@ -134,6 +136,13 @@ const ContextProvider = ({ children }) => {
       }));
       return data;
     },
+    fetchOpinions: async (id) =>{
+      const data = (await axios.get(`${URL_OPINIONS}/${id}`)).data
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        doctorOpinions: [ ...data ],
+      }));
+    }
   });
 
   const [patientsData, setPatientsData] = useState({

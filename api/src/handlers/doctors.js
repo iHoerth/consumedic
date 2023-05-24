@@ -137,18 +137,20 @@ const putDoctorEdit = async (req, res) => {
     const doctorNewDetails = req.body;
     if (!doctorNewDetails) throw new Error("No se han recibido Datos");
 
-    const cloudinaryResult = await cloudinary.uploader.upload(
-      doctorNewDetails.imagen,
-      {
-        folder: "Doctors",
-        width: 300,
-        crop: "scale",
-      }
-    );
-    if (!cloudinaryResult)
-      throw new Error("Error en la carga del archivo a Cloudinary");
-    const imagenCloudinary = cloudinaryResult.secure_url;
-    doctorNewDetails.imagen = imagenCloudinary;
+    if(doctorNewDetails.imagen!=doctorNewDetails.oldImagen){
+      const cloudinaryResult = await cloudinary.uploader.upload(
+        doctorNewDetails.imagen,
+        {
+          folder: "Doctors",
+          width: 300,
+          crop: "scale",
+        }
+      );
+      if (!cloudinaryResult)
+        throw new Error("Error en la carga del archivo a Cloudinary");
+      const imagenCloudinary = cloudinaryResult.secure_url;
+      doctorNewDetails.imagen = imagenCloudinary;
+    }
 
     const result = await modifyProfileDoctor(doctorNewDetails);
     res.status(200).json(result);
