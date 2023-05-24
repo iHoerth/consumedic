@@ -20,6 +20,7 @@ import Loading from '../../components/Loading/Loading';
 
 const Home = () => {
   const theme = useTheme();
+  const { values } = theme.breakpoints;
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const { fetchDoctors, doctors } = useContext(Context)[0];
@@ -121,39 +122,57 @@ const Home = () => {
           <SearchBar handleSearch={handleSearch} />
         </Box>
 
-        <Box //cuadro grande
-          component="span"
+        <Box
+          component="div"
           sx={{
+            minHeight: theme.heights.homeSection,
             width: '100%',
-            display: 'grid',
+            margin: 0,
+            boxSizing: 'border-box',
+            padding: 0,
+            border: '1px solid black',
+            flexWrap: 'wrap',
+            display: {
+              mobile: 'flex',
+              tablet: 'flex',
+              laptop: 'grid',
+              desktop: 'grid',
+            },
+            gap: {
+              mobile: '50px',
+              tablet: '50px',
+              laptop: '100px 120px',
+              desktop: '100px 120px',
+            },
+            gridTemplateColumns: 'repeat(2, minmax(Min(400px), 1fr))',
             placeItems: 'center',
-            height: theme.heights.homeSection,
-            gap: '40px',
             padding: '60px',
           }}
         >
-          <Box
-            component="span"
-            sx={{
-              width: 'auto',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, minmax(Min(400px), 1fr))',
-              placeItems: 'center',
-              gap: '100px 340px',
-              padding: '60px',
-            }}
-          >
-            {homeCards.map((text, index) => (
-              <Card sx={{ width: 400, height: 260, display: 'grid', placeItems: 'center' }} key={`homeCards${index}`}>
-                <CardContent>
-                  <Typography sx={{ fontSize: 16 }} gutterBottom>
-                    {text.title}
-                  </Typography>
-                  <Typography sx={{ fontSize: 14, wordSpacing: '0.2rem' }}>{text.body}</Typography>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
+          {homeCards.map((text, index) => (
+            <Card
+              sx={{
+                width: {
+                  mobile: '100%',
+                  tablet: '100%',
+                  laptop: 360,
+                  desktop: 360,
+                },
+                padding: 2,
+                height: 260,
+                display: 'grid',
+                placeItems: 'center',
+              }}
+              key={`homeCards${index}`}
+            >
+              <CardContent>
+                <Typography sx={{ fontSize: 16 }} gutterBottom>
+                  {text.title}
+                </Typography>
+                <Typography sx={{ fontSize: 14, wordSpacing: '0.2rem' }}>{text.body}</Typography>
+              </CardContent>
+            </Card>
+          ))}
         </Box>
 
         <AboutUs />
