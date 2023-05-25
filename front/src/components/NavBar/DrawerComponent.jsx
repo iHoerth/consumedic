@@ -10,7 +10,7 @@ import {
 
 import MenuIcon from '@mui/icons-material/Menu';
 
-const DrawerComponent = ({ navLinksArray }) => {
+const DrawerComponent = ({ navLinksArray, scrolled }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const DRAWER_ANCHOR = 'right';
 
@@ -34,7 +34,7 @@ const DrawerComponent = ({ navLinksArray }) => {
       </Drawer>
 
       <IconButton size='large' onClick={() => setOpenDrawer(!openDrawer)}>
-        <MenuIcon sx={{transform:'scale(1.2)', color:'white'}}></MenuIcon>
+        <MenuIcon sx={{transform:'scale(1.2)', color: scrolled ? 'white' : 'black' }}></MenuIcon>
       </IconButton>
     </>
   );

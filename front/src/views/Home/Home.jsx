@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { autoPlay } from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 
-import { Box, Card, CardContent, Modal, Typography, useMediaQuery } from '@mui/material';
+import { Box, Grid, Card, CardContent, Modal, Typography, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 import NavBar from '../../components/NavBar/NavBar';
@@ -44,68 +44,35 @@ const Home = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <div>
+    <Box
+      component="div"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        height: 'auto',
+      }}
+    >
       <Modal open={modalOpen} onClose={handleClose}>
         <>
           <Loading />
         </>
       </Modal>
       <NavBar />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          overflow: 'hidden',
-          height: '100vh',
-        }}
-      >
-        <AutoPlaySwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={activeStep}
-          onChangeIndex={handleStepChange}
-          enableMouseEvents
-          interval={6000}
-        >
-          {bannerImages.map((step, index) => (
-            <div
-              style={{
-                overflow: 'hidden',
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'center',
-                height: '100vh',
-              }}
-              key={step.imgPath}
-            >
-              {Math.abs(activeStep - index) <= 2 ? (
-                <Box
-                  component="img"
-                  sx={{
-                    position: 'relative',
-                    display: 'flex',
-                    width: '100%',
-                    height: '800px',
-                    mt: '0px',
-                    // mb: '500px',
-                    objectFit: 'cover',
-                  }}
-                  src={step.imgPath}
-                  alt={step.label}
-                />
-              ) : null}
-            </div>
-          ))}
-        </AutoPlaySwipeableViews>
-      </div>
       <Box
+        component="div"
         sx={{
-          position: 'absolute',
-          top: '40px',
-          margin: '0 auto',
-          width: '100%',
+          backgroundImage: `url(${bannerImages[0].imgPath})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          position: 'relative',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          width: '100%',
+          height: 'auto',
+          height: theme.heights.homeSection,
+          objectFit: 'cover',
         }}
       >
         <Box
@@ -116,56 +83,35 @@ const Home = () => {
             alignItems: 'center',
             gap: '20px',
             height: theme.heights.homeSection,
-            // pb: '120px',
-            p:2,
-            mt: 2,
+            p: 2,
           }}
         >
           <Header />
           <SearchBar handleSearch={handleSearch} />
         </Box>
+      </Box>
 
-        <Box
-          component="div"
-          sx={{
-            minHeight: theme.heights.homeSection,
-            width: '100%',
-            margin: 0,
-            boxSizing: 'border-box',
-            padding: 0,
-            flexWrap: 'wrap',
-            display: {
-              mobile: 'flex',
-              tablet: 'flex',
-              laptop: 'grid',
-              desktop: 'grid',
-            },
-            gap: {
-              mobile: '50px',
-              tablet: '50px',
-              laptop: '100px 120px',
-              desktop: '100px 120px',
-            },
-            gridTemplateColumns: 'repeat(2, minmax(Min(400px), 1fr))',
-            placeItems: 'center',
-            padding: '60px',
-          }}
-        >
-          {homeCards.map((text, index) => (
+      <Grid
+        mt={1}
+        container
+        spacing={2}
+        sx={{
+          minHeight: theme.heights.homeSection / 2,
+          justifyContent: 'center',
+          padding: '20px',
+        }}
+      >
+        {homeCards.map((text, index) => (
+          <Grid item mobile={12} tablet={6} laptop={6} desktop={3} key={`homeCards${index}`}>
             <Card
               sx={{
-                width: {
-                  mobile: '100%',
-                  tablet: '100%',
-                  laptop: 360,
-                  desktop: 360,
-                },
-                padding: 2,
-                height: 260,
-                display: 'grid',
-                placeItems: 'center',
+                height: 180,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: '10px',
               }}
-              key={`homeCards${index}`}
             >
               <CardContent>
                 <Typography sx={{ fontSize: 16 }} gutterBottom>
@@ -174,13 +120,14 @@ const Home = () => {
                 <Typography sx={{ fontSize: 14, wordSpacing: '0.2rem' }}>{text.body}</Typography>
               </CardContent>
             </Card>
-          ))}
-        </Box>
+          </Grid>
+        ))}
+      </Grid>
 
-        <AboutUs />
-        <Footer />
-      </Box>
-    </div>
+      <AboutUs />
+
+      <Footer />
+    </Box>
   );
 };
 
