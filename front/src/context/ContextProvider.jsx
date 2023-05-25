@@ -195,6 +195,10 @@ const ContextProvider = ({ children }) => {
     patientDetail: {},
     filteredPatients: [],
     opinions: [],
+    snackOk: false,
+    snackOkMensaje: "",
+    snackFail: false,
+    snackFailMensaje: "",
     fetchPatients: async () => {
       try {
         const data = (await axios(URL_PATIENTS)).data;
@@ -254,6 +258,30 @@ const ContextProvider = ({ children }) => {
       } catch (error) {
         console.log(error);
       }
+    },
+    setSnackOk: (dato) => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        snackOk: dato,
+      }));
+    },
+    setSnackOkMensaje: (dato) => {
+      setPatientsData((prevState) => ({
+        ...prevState,
+        snackOkMensaje: dato,
+      }));
+    },
+    setSnackFail: (dato) => {
+      setPatientsData((prevState) => ({
+        ...prevState,
+        snackFail: dato,
+      }));
+    },
+    setSnackFailMensaje: (dato) => {
+      setPatientsData((prevState) => ({
+        ...prevState,
+        snackFailMensaje: dato,
+      }));
     },
     // deletePatient: async (patientId) => {
     //   try {
