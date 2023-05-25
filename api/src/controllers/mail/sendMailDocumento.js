@@ -1,6 +1,6 @@
 const nodeMailer = require("nodemailer");
 
-const createMail = async (name, emailRecibe, message, emailEscribe, subject) => {
+const sendMailDocumento = async (nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectDocumento, messageDocumento, title) => {
   let transporter = nodeMailer.createTransport({
     service: "gmail",
     auth: {
@@ -13,7 +13,7 @@ const createMail = async (name, emailRecibe, message, emailEscribe, subject) => 
   let mailMsg = {
     from: process.env.EMAIL,
     to: emailRecibe,
-    subject: subject,
+    subject: subjectDocumento,
     html: `
     <html>
     <head>
@@ -70,13 +70,12 @@ const createMail = async (name, emailRecibe, message, emailEscribe, subject) => 
         <div class="banner">
             <h1 class="titulo">CONSUMEDIC</h1>
         </div>
-        <p>Hola soy ${name}!</p>
-        <p>Te contacto desde la plataforma de Consumedic</p>
-        <p>Para consultarte lo siguiente:</p>
+        <p>Lo contactamos de la plataforma de Consumedic</p>
+        <p>El motivo de este correo es comentarle lo siguiente: </p>
         <div class="datos">
-            <p class="message">${message}</p>
+            <p class="message">${messageDocumento} "${title}"</p>
         </div>
-        <p>Podrás responderme a: ${emailEscribe}.</p>
+        <p>Podrás consultarle al Médico al siguiente correo electrónico: ${emailEscribe}.</p>
       </div>
     </body>
   </html>
@@ -93,4 +92,4 @@ const createMail = async (name, emailRecibe, message, emailEscribe, subject) => 
   });
 };
 
-module.exports = { createMail };
+module.exports = { sendMailDocumento };
