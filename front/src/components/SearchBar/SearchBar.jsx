@@ -9,32 +9,58 @@ import theme from '../../theme';
 
 const SearchBar = ({ handleSearch }) => {
   const theme = useTheme();
+  const { values } = theme.breakpoints;
+
   return (
     <AppBar
       color="secondary"
       position="static"
-      style={{ width: '700px', padding: '20px 0 20px 0px' }}
+      sx={{
+        bgcolor: theme.palette.secondary.main,
+        opacity: '0.96',
+        width: {
+          mobile: '100%',
+          tablet: 700,
+          laptop: 700,
+          desktop: 700,
+        },
+        p: '20px',
+
+      }}
     >
-      <Toolbar sx={{ gap: '20px' }}>
+      <Toolbar
+        sx={{
+          flexDirection: {
+            mobile: 'column',
+            tablet: 'row',
+            laptop: 'row',
+            desktop: 'row',
+          },
+          gap: '20px',
+        }}
+      >
         <Filter />
         {/* <NavLink to="/search"> */}
 
-        <Box onClick={() => handleSearch()}
+        <Box
+          onClick={() => handleSearch()}
           sx={{
-            width: '140px',
-            height: '53px',
+            width: '100%',
             backgroundColor: theme.palette.primary.main,
             display: 'flex',
+            flex:1,
             alignItems: 'center',
+            justifyContent: 'center',
             borderRadius: '3px',
             boxShadow: 'none', // Establece la sombra inicialmente como "none"
             transition: 'box-shadow 0.3s ease', // Añade una transición suave a la sombra
             '&:hover': {
               boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.5)', // Define la sombra al hacer hover
             },
-          }}>
-          <Button>
-            <Typography color='white'>Buscar</Typography>
+          }}
+        >
+          <Button sx={{height:'54px', }}>
+            <Typography color="white">Buscar</Typography>
           </Button>
           <IconButton aria-label="search" color="blue">
             <SearchIcon sx={{ color: 'white' }} />
