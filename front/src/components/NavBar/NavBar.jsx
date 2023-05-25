@@ -115,7 +115,7 @@ const NavBar = ({ component, variant,text, type }) => {
             </Typography>
           </Box>
           {screenSizeSmall ? (
-            <DrawerComponent navLinksArray={navLinksArray} />
+            <DrawerComponent navLinksArray={navLinksArray} scrolled={scrolled}/>
           ) : (
             <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
               <Button color="inherit" href={navLinksArray[0].path} sx={{ padding: 2 }}>
