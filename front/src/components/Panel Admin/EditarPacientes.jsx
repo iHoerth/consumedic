@@ -49,13 +49,19 @@ const EditarPacientes = () => {
     const email = event.target.id;
     fetchPatientByEmail(email);
     setEmail(email);
-    setVista(10);
+    setVista(3);
   };
 
-  const handleDelete = async (event) => {
-    const email = event.target.id;
-    await deletePatient(email);
-    await fetchPatients(); // Obtener la lista actualizada de pacientes
+  const handleClickDelete = (id) => {
+    deletePatient(id)
+      .then(() => {
+        // Eliminación exitosa, actualizar la lista de pacientes
+        fetchPatients();
+      })
+      .catch((error) => {
+        console.log("Error al eliminar el paciente:", error);
+        // Manejar el error de eliminación del paciente
+      });
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -81,7 +87,11 @@ const EditarPacientes = () => {
         }}
       >
         <Typography
-          style={{ fontSize: "larger", fontWeight: "600", backgroundColor: "#009BFF" }}
+          style={{
+            fontSize: "larger",
+            fontWeight: "600",
+            backgroundColor: "#009BFF",
+          }}
         >
           Listado de Pacientes
         </Typography>
@@ -144,7 +154,15 @@ const EditarPacientes = () => {
                     >
                       Acceder
                     </Button>
-                   
+                    <Button
+                      id={paciente.id}
+                      onClick={() => handleClickDelete(paciente.id)}
+                      variant="outlined"
+                      color="warning"
+                      size="small"
+                    >
+                      X
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -152,7 +170,6 @@ const EditarPacientes = () => {
           </Table>
         </TableContainer>
 
-      
         <Box
           display="flex"
           justifyContent="center"
