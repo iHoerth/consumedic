@@ -21,6 +21,7 @@ import HistorialPaciente from "../../components/DoctorDashboard/HistorialPacient
 import Turnos from "../../components/DoctorDashboard/Turnos";
 import EditarPerfil from "../../components/DoctorDashboard/EditarPerfil";
 import DetallePaciente from "../../components/Panel Admin/DetallePaciente";
+import EditarDoctores from "../../components/Panel Admin/EditarDoctores";
 
 const Admin = () => {
   const theme = useTheme();
@@ -123,9 +124,9 @@ const Admin = () => {
               ) : (
                 <>
                   {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
-                  { vista === 0 ? "Admin General" : 
+                  { vista === 0 ? "Admin General  A PENSARRR" : 
                     (vista===1 ? <EditarPacientes /> : 
-                    (vista === 2 ? "Editar Doctores" : 
+                    (vista === 2 ? <EditarDoctores /> : 
                     (vista===10 ? <DetallePaciente /> : 
                     null)))}
                 </>

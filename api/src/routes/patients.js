@@ -23,9 +23,14 @@ patientsRouter.post("/login", loginPatient);
 
 //PUT
 patientsRouter.put("/", putPatient);
+
 patientsRouter.put("/restore/:id", restorePatients);
 
 //DELETE
 patientsRouter.delete("/:id", deletePatients);
+
+//! esta es nueva
+// DELETE
+patientsRouter.delete("/detail/:id", deletePatients); // Ruta para eliminar un paciente por ID
 
 module.exports = patientsRouter;
