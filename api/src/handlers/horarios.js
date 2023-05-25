@@ -1,6 +1,6 @@
 const { createHorarios } = require("../controllers/horarios/createHorarios")
 const { getHorariosById } = require("../controllers/horarios/getHorariosById")
-
+const { createFirstHorarios } = require("../controllers/horarios/createFirstHorarios")
 const { createHorariosBulk } = require("../controllers/horarios/createHorariosBulk")
 
 
@@ -28,6 +28,17 @@ const postHorarios = async (req, res) => {
     }
 }
 
+const postFirstHorarios = async (req, res) => {
+    try {
+        const { idMedico } = req.body;
+        if(!idMedico ) throw new Error("Debe proporcionar idMedico para publicar la misma")
+        const result = await createFirstHorarios(idMedico)
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json({message: error.message});
+    }
+}
+
 const postHorariosBulk = async (req, res) => {
     try {
         const {agenda, id} = req.body;
@@ -42,6 +53,7 @@ const postHorariosBulk = async (req, res) => {
 module.exports = {
     postHorarios,
     getHorariosId,
-    postHorariosBulk
+    postHorariosBulk,
+    postFirstHorarios
 }
 

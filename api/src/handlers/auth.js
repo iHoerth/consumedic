@@ -41,7 +41,7 @@ async function loginDoctor(req, res) {
       }); // googleEmail
       if (!doctor) {
         // await
-        return res.status(404).json({ message: 'Doctor not found' });
+        return res.status(400).json({ message: 'No se encuentra registro con ese correo electronico' });
       }
       // Verificar la contraseña
       // const isMatch = await bcrypt.compare(password, doctor.password);
@@ -58,14 +58,14 @@ async function loginDoctor(req, res) {
       const doctor = await DoctorType.findOne({ where: { email: email } });
 
       if (!doctor) {
-        return res.status(404).json({ message: 'doctor not found' });
+        return res.status(400).json({ message: 'No se encuentra registro con ese correo electronico' });
       }
       //aca se compara la contraseña, pero si uno inicia sesion con goolge no hace falta enviar la contraseña
       // Verificar la contraseña
       const isMatch = await bcrypt.compare(password, doctor.password);
 
       if (!isMatch) {
-        return res.status(401).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ message: 'Credenciales Inválidas' });
       }
 
       // Generar el token JWT y enviarlo en la respuesta
@@ -74,7 +74,7 @@ async function loginDoctor(req, res) {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error del Servidor' });
   }
 }
 
@@ -101,7 +101,7 @@ async function loginPatient(req, res) {
 
       if (!patient) {
         // const newPatient = await PacienteType.create({ email: googleEmail });
-        return res.status(404).json({ message: 'Patient not found' });
+        return res.status(400).json({ message: 'No se encuentra registro con ese correo electronico' });
       }
       //aca se compara la contraseña, pero si uno inicia sesion con goolge no hace falta enviar la contraseña
       // Verificar la contraseña
@@ -124,14 +124,14 @@ async function loginPatient(req, res) {
       }); // googleEmail
 
       if (!patient) {
-        return res.status(404).json({ message: 'Patient not found' });
+        return res.status(400).json({ message: 'No se encuentra registro con ese correo electronico' });
       }
       //aca se compara la contraseña, pero si uno inicia sesion con goolge no hace falta enviar la contraseña
       // Verificar la contraseña
       const isMatch = await bcrypt.compare(password, patient.password);
 
       if (!isMatch) {
-        return res.status(401).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ message: 'Credenciales Inválidas' });
       }
 
       // Generar el token JWT y enviarlo en la respuesta
@@ -140,7 +140,7 @@ async function loginPatient(req, res) {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error del Servidor' });
   }
 }
 
