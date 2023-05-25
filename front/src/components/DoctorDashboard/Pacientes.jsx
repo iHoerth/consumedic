@@ -14,6 +14,8 @@ import { Button, Box, Typography, Divider } from '@mui/material';
 
 const Pacientes = ({id}) => {
     const { pacientes, pacienteHistorial, fetchPacientes, fetchPacienteHistorial,setVista} = useContext(Context)[3];
+    const {fetchPatientById } = useContext(Context)[1];
+    const {fetchDoctorById} = useContext(Context)[0];
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -34,6 +36,8 @@ const Pacientes = ({id}) => {
         const idPaciente = Number(event.target.id);
         const idMedico = id
         await fetchPacienteHistorial(idMedico,idPaciente)
+        await fetchPatientById(idPaciente)
+        await fetchDoctorById(idMedico)
         setVista(10)
     }
     

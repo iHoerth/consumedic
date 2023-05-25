@@ -172,6 +172,24 @@ const ContextProvider = ({ children }) => {
         console.log(error);
       }
     },
+    fetchPatientById: async (id) => {
+      try {
+        const data = (await axios(`${URL_PATIENTS}/${id}`)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          patientDetail: { ...data },
+        }));
+        return { ...data };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    cleanDetailPaciente: async () => {
+      setPatientsData((prevState) => ({
+        ...prevState,
+        patientDetail: {},
+      }));
+    },
     createPatient: async (newPatient) => {
       try {
         const data = (await axios.post(`${URL_PATIENTS}`, newPatient)).data;
@@ -405,6 +423,58 @@ const ContextProvider = ({ children }) => {
     },
   });
 
+  const [mailer, setMailer] = useState({
+    mailDoctor:"",
+    mailPaciente:"",
+    modal: false,
+    snackOk: false,
+    snackOkMensaje:"",
+    snackFail: false,
+    snackFailMensaje: "",
+    setMailDoctor: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        mailDoctor: dato,
+      }));
+    },
+    setMailPaciente: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        mailPaciente: dato,
+      }));
+    },
+    setModal: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        modal: dato,
+      }));
+    },
+    setSnackOk: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        snackOk: dato,
+      }));
+    },
+    setSnackOkMensaje: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        snackOkMensaje: dato,
+      }));
+    },
+    setSnackFail: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        snackFail: dato,
+      }));
+    },
+    setSnackFailMensaje: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        snackFailMensaje: dato,
+      }));
+    },
+  });
+
   return (
     <>
       <LoadingContext.Provider value={[loading, setLoading]}>
@@ -419,6 +489,7 @@ const ContextProvider = ({ children }) => {
                 appointment, //[4]
                 panelPaciente, //[5]
                 panelAdmin, // [6]
+                mailer, //[7]
               ]}
             >
               {children}
