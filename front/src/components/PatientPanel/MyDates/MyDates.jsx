@@ -36,12 +36,6 @@ const MyDates = () => {
       editable: true,
     },
     {
-      field: "imagen",
-      headerName: "Foto",
-      width: 150,
-      editable: true,
-    },
-    {
       field: "nombre",
       headerName: "Nombre",
       width: 150,
@@ -103,7 +97,6 @@ const MyDates = () => {
     );
     return {
       id: item.id,
-      imagen: item.imagen,
       apellido: item.apellido,
       nombre: item.nombre,
       especialidad: especialidadName,

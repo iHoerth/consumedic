@@ -36,7 +36,7 @@ server.post("/turno", (req, res) => {
   // res.status(200).send('ok');
 
   const dataPreferences = req.body;
-  console.log('cita: '+dataPreferences);
+  console.log("cita: " + dataPreferences);
 
   // Crea un objeto de preferencia
   let preference = {

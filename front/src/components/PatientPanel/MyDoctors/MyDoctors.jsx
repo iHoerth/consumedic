@@ -5,6 +5,7 @@ import { Icon } from "@mui/material";
 import { Edit as EditIcon } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Skeleton,
@@ -20,7 +21,8 @@ import {
 const MyDoctors = () => {
   const theme = useTheme();
   const { informacion, fetchPatientData } = useContext(Context)[5];
-  const { opinions, postOpinions, patientDetail } = useContext(Context)[1];
+  const { opinions, getOpinionsByPaciente, postOpinions, patientDetail } =
+    useContext(Context)[1];
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -36,11 +38,21 @@ const MyDoctors = () => {
     fetchPatientData(patientDetail.id).then(() => {
       setLoading(false);
     });
+    getOpinionsByPaciente(patientDetail.id);
 
     if (!!informacion.length) {
       setLoading(false);
     }
   }, [patientDetail.id]);
+
+  useEffect(() => {
+    const opinionsSent = opinions.reduce((acc, opinion) => {
+      const doctorId = opinion.DoctorType.id; // Obtener el valor de doctorId desde DoctorType.id
+      acc[doctorId] = true;
+      return acc;
+    }, {});
+    setOpinionsSent(opinionsSent);
+  }, [opinions]);
 
   const direccion = informacion.map((item) => {
     if (item.id === selectedId) {
@@ -93,14 +105,21 @@ const MyDoctors = () => {
     {
       field: "opinion",
       headerName: "Agregar Opinión",
-      width: 200,
+      width: 180,
       editable: true,
       renderCell: (params) => (
         <Icon>
           {opinionsSent[params.row.id] ? (
-            <CheckCircle color="primary" />
+            <CheckCircle
+              sx={{
+                color: theme.palette.primary.main,
+              }}
+            />
           ) : (
             <EditIcon
+              sx={{
+                color: theme.palette.primary.main,
+              }}
               variant="contained"
               onClick={() => handleOpenModal(params.row.id)}
             />
@@ -113,7 +132,18 @@ const MyDoctors = () => {
       headerName: "Eliminar",
       width: 150,
       editable: false,
-      renderCell: (params) => <button>Eliminar</button>,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          startIcon={
+            <DeleteIcon
+              sx={{
+                color: theme.palette.primary.main,
+              }}
+            />
+          }
+        ></Button>
+      ),
     },
   ];
   //onClick={() => handleDelete(params.row.id)}
