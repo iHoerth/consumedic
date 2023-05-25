@@ -27,7 +27,7 @@ const Profile = ({ doctorDetail }) => {
   const { id, nombre, apellido, direccion, Especialidads, imagen, Descripcion, CardMedia, precio, Opinions } = doctorDetail;
   console.log(doctorDetail);
   const especialidades = [];
-  doctorDetail.Especialidads.map(espe=>especialidades.push(espe.name))
+  Especialidads?.map(espe=>especialidades.push(espe.name))
   especialidades.join(", ")
   const {pacientes, turnos,fetchPacientes,fetchTurnos} = useContext(Context)[3];
   const {doctorOpinions, fetchOpinions} = useContext(Context)[0];
@@ -72,7 +72,7 @@ const Profile = ({ doctorDetail }) => {
   const ingresos = (cantTurnos*precio).toLocaleString()
 
   let puntajesOpinions=[];
-  if(Opinions.length>0){
+  if(Opinions?.length>0){
     Opinions.map(opinion=>puntajesOpinions.push(opinion.puntaje))
   }
   let suma=0;
@@ -80,7 +80,7 @@ const Profile = ({ doctorDetail }) => {
   for(let i=0;i<puntajesOpinions.length;i++){
     suma=suma+puntajesOpinions[i]
   }
-  if(Opinions.length){
+  if(Opinions?.length){
     promedioOpiniones=suma/Opinions.length
   }
 
@@ -212,7 +212,7 @@ const Profile = ({ doctorDetail }) => {
                 <Typography component="div" variant="subtitle1">
                   Opiniones
                 </Typography>
-                <Typography variant="subtitle1">{Opinions.length}</Typography>
+                <Typography variant="subtitle1">{Opinions?.length}</Typography>
               </Box>
             </Box>
           </Box>
