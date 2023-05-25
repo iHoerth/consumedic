@@ -258,6 +258,14 @@ const ContextProvider = ({ children }) => {
         console.log(error);
       }
     },
+
+    getOpinionsByPaciente: async (id) => {
+      const opinionsData = (await axios(`${URL_OPINIONS}/paciente/${id}`)).data;
+      setPatientsData((prevState) => ({
+        ...prevState,
+        opinions: [...opinionsData],
+      }));
+    },
   });
 
   const [utilities, setUtilities] = useState({

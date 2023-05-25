@@ -21,7 +21,8 @@ import {
 const MyDoctors = () => {
   const theme = useTheme();
   const { informacion, fetchPatientData } = useContext(Context)[5];
-  const { opinions, postOpinions, patientDetail } = useContext(Context)[1];
+  const { opinions, getOpinionsByPaciente, postOpinions, patientDetail } =
+    useContext(Context)[1];
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -37,11 +38,21 @@ const MyDoctors = () => {
     fetchPatientData(patientDetail.id).then(() => {
       setLoading(false);
     });
+    getOpinionsByPaciente(patientDetail.id);
 
     if (!!informacion.length) {
       setLoading(false);
     }
   }, [patientDetail.id]);
+
+  useEffect(() => {
+    const opinionsSent = opinions.reduce((acc, opinion) => {
+      const doctorId = opinion.DoctorType.id; // Obtener el valor de doctorId desde DoctorType.id
+      acc[doctorId] = true;
+      return acc;
+    }, {});
+    setOpinionsSent(opinionsSent);
+  }, [opinions]);
 
   const direccion = informacion.map((item) => {
     if (item.id === selectedId) {

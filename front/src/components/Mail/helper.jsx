@@ -1,9 +1,9 @@
 import axios from "axios";
 
-import {URL_MAIL} from '../../helpers/urlVariables'
+import { URL_MAIL } from "../../helpers/urlVariables";
 
 export const sendMail = (data) => {
-  return axios
+  axios
     .post(URL_MAIL, data, {
       headers: {
         Accept: "application/json",
