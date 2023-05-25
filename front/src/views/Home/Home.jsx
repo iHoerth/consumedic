@@ -11,19 +11,16 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import AboutUs from '../../components/AboutUs/AboutUs';
-
 import { bannerImages } from '../../helpers/helpers';
 import { homeCards } from '../../helpers/helpers';
-
 import { Context } from '../../context/ContextProvider';
 import Loading from '../../components/Loading/Loading';
 
 const Home = () => {
   const theme = useTheme();
-  // const { values } = theme.breakpoints;
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
-  const { fetchDoctors, doctors } = useContext(Context)[0];
+  const { fetchDoctors } = useContext(Context)[0];
 
   const handleSearch = () => {
     setModalOpen(true);
@@ -33,15 +30,6 @@ const Home = () => {
     });
   };
   const handleClose = () => setModalOpen(false);
-
-  const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-  const [activeStep, setActiveStep] = useState(0);
-
-  const handleStepChange = (step) => {
-    setActiveStep(step);
-  };
-
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Box
