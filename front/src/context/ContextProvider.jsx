@@ -373,6 +373,15 @@ const ContextProvider = ({ children }) => {
     fetchAppointmentById: async () => {},
 
     setPayedToTrue: async () => {},
+
+    deleteAppointmentById: async (id) => {
+      try {
+        const response = await axios.delete(`${URL_APPOINTMENTS}/${id}`);
+        return response.data;
+      } catch (error) {
+        return error;
+      }
+    },
   });
 
   const [panelPaciente, setPanelPaciente] = useState({
@@ -381,6 +390,7 @@ const ContextProvider = ({ children }) => {
     fetchPatientData: async (id) => {
       const pacientesData = (await axios(`${URL_PERFILPACIENTE}/${id}/doctors`))
         .data;
+
       setPanelPaciente((prevState) => ({
         ...prevState,
         informacion: [...pacientesData],
@@ -424,11 +434,11 @@ const ContextProvider = ({ children }) => {
   });
 
   const [mailer, setMailer] = useState({
-    mailDoctor:"",
-    mailPaciente:"",
+    mailDoctor: "",
+    mailPaciente: "",
     modal: false,
     snackOk: false,
-    snackOkMensaje:"",
+    snackOkMensaje: "",
     snackFail: false,
     snackFailMensaje: "",
     setMailDoctor: (dato) => {

@@ -17,11 +17,6 @@ const Panel = () => {
   const { patientDetail, fetchPatientByEmail } = useContext(Context)[1];
   const { session } = useContext(Context)[2];
   const [loading, setLoading] = useState(true);
-  const { nombre, apellido, email, dni, telefono, ObraSocial } = patientDetail;
-
-  useEffect(() => {
-    fetchPatientByEmail(session.email);
-  }, []);
 
   useEffect(() => {
     patientDetail.id && setLoading(false);
@@ -30,6 +25,8 @@ const Panel = () => {
   if (loading) {
     return <Loading />;
   }
+
+  const { nombre, apellido, email, dni, telefono, ObraSocial } = patientDetail;
 
   return (
     <Box

@@ -21,6 +21,7 @@ import {
 const MyDoctors = () => {
   const theme = useTheme();
   const { informacion, fetchPatientData } = useContext(Context)[5];
+  const { deleteAppointmentById } = useContext(Context)[4];
   const { opinions, getOpinionsByPaciente, postOpinions, patientDetail } =
     useContext(Context)[1];
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,7 @@ const MyDoctors = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [infoData, setInfoData] = useState([]);
   const [opinionsSent, setOpinionsSent] = useState({});
+  const [appointments, setAppointments] = useState([]);
   const [opinionText, setOpinionText] = useState({
     opinion: "",
     rating: 0,
@@ -35,15 +37,16 @@ const MyDoctors = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchPatientData(patientDetail.id).then(() => {
-      setLoading(false);
-    });
+    fetchPatientData(patientDetail.id);
     getOpinionsByPaciente(patientDetail.id);
+  }, [patientDetail.id]);
 
+  useEffect(() => {
     if (!!informacion.length) {
+      setAppointments(informacion);
       setLoading(false);
     }
-  }, [patientDetail.id]);
+  }, [informacion]);
 
   useEffect(() => {
     const opinionsSent = opinions.reduce((acc, opinion) => {
@@ -144,13 +147,18 @@ const MyDoctors = () => {
           }
           onClick={() => {
             handleDelete(params.row.idCita);
-          }} // Llama a la función handleDelete con el ID del doctor
+            setAppointments(
+              appointments.filter(
+                (item) => item.Cita[0].id !== params.row.idCita
+              )
+            );
+          }}
         ></Button>
       ),
     },
   ];
 
-  const informacionData = informacion.map((item) => {
+  const informacionData = appointments.map((item) => {
     const especialidades = item.Especialidads.map((especialidad) => ({
       especialidad: especialidad.name,
     }));
@@ -166,12 +174,12 @@ const MyDoctors = () => {
       nombre: item.nombre,
       telefono: item.telefono,
       email: item.email,
-      opinion: "", // Agregar una propiedad para almacenar la opinión del médico
+      opinion: "",
     };
   });
 
   const handleOpenModal = (doctorId) => {
-    setSelectedId(doctorId); // Guarda el ID del doctor seleccionado en el estado local
+    setSelectedId(doctorId);
     setOpenModal(true);
   };
 
@@ -187,10 +195,8 @@ const MyDoctors = () => {
       return item;
     });
 
-    // Actualiza el estado con la nueva información
     setInfoData(updatedInformacionData);
 
-    // Cierra el modal y reinicia el estado de la opinión
     handleCloseModal();
     setOpinionText({});
 
@@ -225,10 +231,14 @@ const MyDoctors = () => {
   };
 
   const handleDelete = (citaId) => {
-    // Aquí debes implementar la lógica para eliminar el doctor con el ID especificado
-    // Puedes utilizar una función o enviar una solicitud a tu servidor
+    deleteAppointmentById(citaId)
+      .then((data) => {
+        alert(data);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
-  console.log("informacion", informacion);
 
   return (
     <>
@@ -278,7 +288,6 @@ const MyDoctors = () => {
                         return <Avatar src={item.imagen}></Avatar>;
                       }
                     })}
-
                     {informacion.map((item) => {
                       if (item.id === selectedId) {
                         return (
@@ -339,7 +348,6 @@ const MyDoctors = () => {
                   </Button>
                 </Box>
               </Modal>
-
               <DataGrid
                 disableSelectionOnClick
                 rows={informacionData}
