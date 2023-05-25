@@ -19,52 +19,44 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const EditarPacientes = () => {
-  const { patients, fetchPatients, fetchPatientByEmail, deletePatient } =
-    useContext(Context)[1];
+const EditarDoctores = () => {
+  const { doctors, fetchDoctorByEmail } = useContext(Context)[0];
   const { setVista, setEmail } = useContext(Context)[6];
 
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   useEffect(() => {
-    if (patients.length === 0) {
-      fetchPatients();
+    if (doctors.length === 0) {
+      doctors.fetchDoctors();
     } else {
       setLoading(false);
     }
-  }, [patients]);
+  }, [doctors]);
 
   useEffect(() => {
-    const filtered = patients.filter((paciente) =>
-      paciente.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+    // filtro para buscar por nombre
+    const filtered = doctors.filter((doctor) =>
+      doctor.nombre.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    setFilteredPatients(filtered);
-  }, [searchQuery, patients]);
+    setFilteredDoctors(filtered);
+  }, [searchQuery, doctors]);
 
   const handleClick = (event) => {
     const email = event.target.id;
-    fetchPatientByEmail(email);
+    fetchDoctorByEmail(email);
     setEmail(email);
     setVista(10);
   };
 
-  const handleDelete = async (event) => {
-    const email = event.target.id;
-    await deletePatient(email);
-    await fetchPatients(); // Obtener la lista actualizada de pacientes
-  };
-
+  // Lógica para la paginación
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredPatients.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-  const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
+  const currentItems = filteredDoctors.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredDoctors.length / itemsPerPage);
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
@@ -80,10 +72,8 @@ const EditarPacientes = () => {
           padding: "0px 0 10px 0",
         }}
       >
-        <Typography
-          style={{ fontSize: "larger", fontWeight: "600", backgroundColor: "#009BFF" }}
-        >
-          Listado de Pacientes
+        <Typography style={{ fontSize: "larger", fontWeight: "600", backgroundColor: "#009BFF" }}>
+          Listado de Doctores
         </Typography>
       </Box>
       <Divider />
@@ -102,7 +92,7 @@ const EditarPacientes = () => {
             placeholder="Buscar por nombre"
             variant="outlined"
             size="small"
-            sx={{ backgroundColor: "#009BFF" }}
+            sx={{ backgroundColor: "#009BFF" }} // Cambia el color del campo de búsqueda
             InputProps={{
               endAdornment: <SearchIcon />,
             }}
@@ -122,53 +112,55 @@ const EditarPacientes = () => {
                 <TableCell align="left">Nombre y Apellido</TableCell>
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">ID</TableCell>
-                <TableCell align="center">Telefono</TableCell>
-                <TableCell align="center">Acciones</TableCell>
+                <TableCell align="center">Teléfono</TableCell>
+                <TableCell align="center">Ver Detalles</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {currentItems.map((paciente) => (
-                <TableRow key={paciente.id}>
-                  <TableCell align="left">
-                    {paciente.nombre} {paciente.apellido}
-                  </TableCell>
-                  <TableCell align="center">{paciente.email}</TableCell>
-                  <TableCell align="center">{paciente.id}</TableCell>
-                  <TableCell align="center">{paciente.telefono}</TableCell>
-                  <TableCell align="center">
-                    <Button
-                      id={paciente.email}
+{loading ? (
+<TableRow>
+<TableCell colSpan={5} align="center">
+Cargando...
+</TableCell>
+</TableRow>
+) : (
+currentItems.map((doctorDetail) => (
+<TableRow key={doctorDetail.id}>
+<TableCell align="left">{`${doctorDetail.nombre} ${doctorDetail.apellido}`}</TableCell>
+<TableCell align="center">{doctorDetail.email}</TableCell>
+<TableCell align="center">{doctorDetail.id}</TableCell>
+<TableCell align="center">{doctorDetail.telefono}</TableCell>
+<TableCell align="center">
+<Button
+                      id={doctorDetail.email}
                       onClick={handleClick}
                       variant="outlined"
                       size="small"
                     >
                       Acceder
                     </Button>
-                   
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+</TableCell>
+</TableRow>
+))
+)}
+</TableBody>
+</Table>
+</TableContainer>
+{!loading && (
+<Stack direction="row" justifyContent="center" alignItems="center" mt={1}>
+  
+<Pagination
+           count={totalPages}
+           page={currentPage}
+           onChange={handlePageChange}
+           shape="rounded"
+         />
+</Stack>
+)}
 
-      
-        <Box
-          display="flex"
-          justifyContent="center"
-          marginTop="20px"
-          marginBottom="10px"
-        >
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={handlePageChange}
-            size="small"
-          />
-        </Box>
-      </Container>
-    </>
-  );
+</Container>
+</>
+);
 };
 
-export default EditarPacientes;
+export default EditarDoctores;

@@ -238,6 +238,24 @@ const ContextProvider = ({ children }) => {
         console.log(error);
       }
     },
+  deletePatient: async (patientId) => {
+      try {
+        await axios.delete(`${URL_PATIENTS}/${patientId}`);
+        setPatientsData((prevState) => ({
+          ...prevState,
+          patients: prevState.patients.filter(
+            (patient) => patient.id !== patientId
+          ),
+          filteredPatients: prevState.filteredPatients.filter(
+            (patient) => patient.id !== patientId
+          ),
+        }));
+      } catch (error) {
+        console.error("Error deleting patient", error);
+      }
+    },
+
+
     postAppointment: async (datosTurno) => {
       try {
         await axios.post(`${URL_APPOINTMENTS}`, datosTurno);

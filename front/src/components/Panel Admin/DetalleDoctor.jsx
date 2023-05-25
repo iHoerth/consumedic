@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import { Context } from "../../context/ContextProvider";
 import {
   Box,
@@ -18,42 +17,21 @@ import EmailIcon from "@mui/icons-material/Email";
 import KeyIcon from '@mui/icons-material/Key';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Grid3x3Icon from '@mui/icons-material/Grid3x3';
-const DetallePaciente = () => {
-  const { patientDetail, fetchPatientByEmail,fetchPatients,patients,getPatientsById, deletePatients } = useContext(Context)[1];
+const DetalleDoctor = () => {
+  const { doctorDetail, fetchDoctorByEmail,fetchDoctors,doctors } = useContext(Context)[1];
   const { setVista, email } = useContext(Context)[6];
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!patientDetail) {
-      fetchPatientByEmail(email);
+    if (!doctorDetail) {
+        fetchDoctorByEmail(email);
     } else {
       setLoading(false);
     }
-  }, [patientDetail]);
+  }, [doctorDetail]);
 
-  const deletePatient = async (patientId) => {
-    try {
-      // Llamada para eliminar el paciente
-      await axios.delete(`/detail/${patientId}`);
-    } catch (error) {
-      // Manejo de errores en caso de fallo en la eliminación
-      console.error( error);
-      throw new Error("Fallo en eliminar paciente");
-    }
-  };
   
-  const handleDelete = async () => {
-    try {
-      await deletePatient(patientDetail.id);
-      alert("La cuenta se eliminó correctamente");
-      await fetchPatients(); // Llama a la función para obtener la lista actualizada de pacientes
-      setVista(1);
-    } catch (error) {
-      console.log("Error al eliminar el paciente:", error);
-      // Manejar el error al eliminar el paciente
-    }
-  };
 
   return (
     <>
@@ -74,7 +52,7 @@ const DetallePaciente = () => {
           </ListItemAvatar>
           <ListItemText
             secondary="Nombre y Apellido"
-            primary={`${patientDetail.nombre} ${patientDetail.apellido}`}
+            primary={`${doctorDetail.nombre} ${doctorDetail.apellido}`}
           />
         </ListItem>
         <ListItem>
@@ -85,7 +63,7 @@ const DetallePaciente = () => {
           </ListItemAvatar>
           <ListItemText
             secondary="Teléfono"
-            primary={`${patientDetail.telefono}`}
+            primary={`${doctorDetail.telefono}`}
           />
         </ListItem>
         <ListItem>
@@ -96,7 +74,7 @@ const DetallePaciente = () => {
           </ListItemAvatar>
           <ListItemText
             secondary="Correo Electrónico"
-            primary={`${patientDetail.email}`}
+            primary={`${doctorDetail.email}`}
           />
         </ListItem>
 
@@ -108,7 +86,7 @@ const DetallePaciente = () => {
           </ListItemAvatar>
           <ListItemText
             secondary="password"
-            primary={`${patientDetail.password}`}
+            primary={`${doctorDetail.password}`}
           />
         </ListItem>
 
@@ -120,7 +98,7 @@ const DetallePaciente = () => {
           </ListItemAvatar>
           <ListItemText
             secondary="admin?"
-            primary={`${patientDetail.admin}`}
+            primary={`${doctorDetail.admin}`}
           />
         </ListItem>
 
@@ -133,7 +111,7 @@ const DetallePaciente = () => {
           </ListItemAvatar>
           <ListItemText
             secondary="id"
-            primary={`${patientDetail.id}`}
+            primary={`${doctorDetail.id}`}
           />
         </ListItem>
 
@@ -152,9 +130,7 @@ const DetallePaciente = () => {
         >
           Volver
         </Button>
-        <Button variant="outlined" onClick={handleDelete}>
-          Eliminar
-        </Button>
+       
       </Box>
     </>
   );
@@ -163,4 +139,4 @@ const DetallePaciente = () => {
 
 
 
-export default DetallePaciente;
+export default DetalleDoctor;
