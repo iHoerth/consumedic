@@ -5,6 +5,7 @@ import { Icon } from "@mui/material";
 import { Edit as EditIcon } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Skeleton,
@@ -93,14 +94,21 @@ const MyDoctors = () => {
     {
       field: "opinion",
       headerName: "Agregar Opinión",
-      width: 200,
+      width: 180,
       editable: true,
       renderCell: (params) => (
         <Icon>
           {opinionsSent[params.row.id] ? (
-            <CheckCircle color="primary" />
+            <CheckCircle
+              sx={{
+                color: theme.palette.primary.main,
+              }}
+            />
           ) : (
             <EditIcon
+              sx={{
+                color: theme.palette.primary.main,
+              }}
               variant="contained"
               onClick={() => handleOpenModal(params.row.id)}
             />
@@ -113,7 +121,18 @@ const MyDoctors = () => {
       headerName: "Eliminar",
       width: 150,
       editable: false,
-      renderCell: (params) => <button>Eliminar</button>,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          startIcon={
+            <DeleteIcon
+              sx={{
+                color: theme.palette.primary.main,
+              }}
+            />
+          }
+        ></Button>
+      ),
     },
   ];
   //onClick={() => handleDelete(params.row.id)}
