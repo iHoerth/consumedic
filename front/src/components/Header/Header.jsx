@@ -18,11 +18,12 @@ const Header = () => {
         opacity: '0.96',
         width: {
           mobile: '100%',
-          tablet: '100%',
+          tablet: 700,
           laptop: 700,
           desktop: 700,
         },
         p: '20px',
+        height:'auto',
       }}
     >
       <CardContent>
@@ -36,7 +37,6 @@ const Header = () => {
         </Typography>
       </CardContent>
 
-      <CardActions></CardActions>
     </Card>
   );
 };

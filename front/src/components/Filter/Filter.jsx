@@ -61,18 +61,33 @@ const Filter = ({ handlePageChange }) => {
       size="large"
       component="div"
       display="flex"
-      flexDirection="row"
-      justifyContent='center'
+      justifyContent="center"
       gap="20px"
       sx={{
-        width: {
-          desktop: '600px',
+        flex:{
+          mobile: 2,
+          tablet: 4,
+          laptop: 4,
+          desktop: 4,
         },
+        flexDirection: {
+          mobile: 'column',
+          tablet: 'row',
+          laptop: 'row',
+          desktop: 'row',
+        },
+        width: '100%'
       }}
     >
       <Autocomplete
         sx={{
-          width: 240,
+          // width: {
+          //   mobile: '100%',
+          //   tablet: 240,
+          //   laptop: 240,
+          //   desktop: 240,
+          // },
+          flex: 1,
         }}
         disablePortal
         id="combo-box-demo"
@@ -102,7 +117,15 @@ const Filter = ({ handlePageChange }) => {
         }
       />
       <Autocomplete
-        sx={{ width: 240 }}
+        sx={{
+          // width: {
+          //   mobile: '100%',
+          //   tablet: 240,
+          //   laptop: 240,
+          //   desktop: 240,
+          // },
+          flex: 1,
+        }}
         disablePortal
         id="combo-box-demo"
         options={socialSecurity}

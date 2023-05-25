@@ -44,85 +44,56 @@ const Home = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <div>
+    <Box component='div' sx={{ border: '4px solid black',display:'flex', flexDirection:'column'  }}>
       <Modal open={modalOpen} onClose={handleClose}>
         <>
           <Loading />
         </>
       </Modal>
       <NavBar />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          overflow: 'hidden',
-          height: '100vh',
-        }}
-      >
-        <AutoPlaySwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={activeStep}
-          onChangeIndex={handleStepChange}
-          enableMouseEvents
-          interval={6000}
-        >
-          {bannerImages.map((step, index) => (
-            <div
-              style={{
-                overflow: 'hidden',
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'center',
-                height: '100vh',
-              }}
-              key={step.imgPath}
-            >
-              {Math.abs(activeStep - index) <= 2 ? (
-                <Box
-                  component="img"
-                  sx={{
-                    position: 'relative',
-                    display: 'flex',
-                    width: '100%',
-                    height: '800px',
-                    mt: '0px',
-                    // mb: '500px',
-                    objectFit: 'cover',
-                  }}
-                  src={step.imgPath}
-                  alt={step.label}
-                />
-              ) : null}
-            </div>
-          ))}
-        </AutoPlaySwipeableViews>
-      </div>
       <Box
+        component="div"
         sx={{
-          position: 'absolute',
-          top: '40px',
-          margin: '0 auto',
-          width: '100%',
+          backgroundImage: `url(${bannerImages[0].imgPath})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          position: 'relative',
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          width: '100%',
+          height: '900px',
+          objectFit: 'cover',
         }}
+        // src={bannerImages[0].imgPath}
+        src=""
+        alt=""
       >
         <Box
           sx={{
+            // position: 'absolute',
+            top: '20px',
+            margin: '0 auto',
+            width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
             alignItems: 'center',
-            gap: '20px',
-            height: theme.heights.homeSection,
-            // pb: '120px',
-            p:2,
-            mt: 2,
           }}
         >
-          <Header />
-          <SearchBar handleSearch={handleSearch} />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '20px',
+              height: theme.heights.homeSection,
+              // pb: '120px',
+              p: 2,
+            }}
+          >
+            <Header />
+            <SearchBar handleSearch={handleSearch} />
+          </Box>
         </Box>
 
         <Box
@@ -178,9 +149,10 @@ const Home = () => {
         </Box>
 
         <AboutUs />
+
         <Footer />
       </Box>
-    </div>
+    </Box>
   );
 };
 

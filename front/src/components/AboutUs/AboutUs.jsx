@@ -20,7 +20,6 @@ const AboutUs = () => {
         minHeight: theme.heights.homeSection,
         width: '100%',
         p: 4,
-        border: '1px solid black',
         flexWrap: 'wrap',
         display: {
           mobile: 'flex',
@@ -35,8 +34,8 @@ const AboutUs = () => {
           desktop: '40px 20px',
         },
         gridTemplateColumns: {
-          mobile: 'repeat(2, minmax(Min(340px), 1fr))',
-          tablet: 'repeat(2, minmax(Min(340px), 1fr))',
+          mobile: 'repeat(2, minmax(Min(320px), 1fr))',
+          tablet: 'repeat(2, minmax(Min(320px), 1fr))',
           laptop: 'repeat(2, minmax(Min(340px), 1fr))',
           desktop: 'repeat(3, minmax(Min(340px), 1fr))',
         },
@@ -47,7 +46,8 @@ const AboutUs = () => {
         <Card
           key={member.id}
           sx={{
-            width: {
+            maxWidth: '100%',
+            minWidth: {
               mobile: '100%',
               tablet: '100%',
               laptop: '360px',
