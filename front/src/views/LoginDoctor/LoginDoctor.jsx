@@ -28,6 +28,7 @@ const LoginDoctor = () => {
   const navigate = useNavigate();
   const { doctorDetail, loginDoctor } = useContext(Context)[0];
   const {snackOk, snackOkMensaje,setSnackOk,setSnackOkMensaje} = useContext(Context)[0];
+  const {snackFail, snackFailMensaje,setSnackFail,setSnackFailMensaje} = useContext(Context)[0];
 
   const clientID = '508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com';
 
@@ -89,9 +90,9 @@ const LoginDoctor = () => {
   //submit
   function handleLocalSubmit(event) {
     event.preventDefault();
-
     loginDoctor({ email: localEmail, password: localPassword }).catch((err) => {
-      console.error(err);
+      setSnackFail(true)
+      setSnackFailMensaje(err.response.data.message)
     });
   }
 
@@ -131,6 +132,19 @@ const LoginDoctor = () => {
         <Alert severity="success" variant="filled">
           <AlertTitle>Mensaje Exitoso</AlertTitle>
           {snackOkMensaje}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={snackFail}
+        autoHideDuration={2500}
+        onClose={() => {
+          setSnackFail(false);
+          setSnackFailMensaje('');
+        }}
+      >
+        <Alert severity="error" variant="filled">
+          <AlertTitle>Mensaje de Error</AlertTitle>
+          {snackFailMensaje}
         </Alert>
       </Snackbar>
       <Box
@@ -251,6 +265,8 @@ const LoginDoctor = () => {
               color="primary"
               sx={{ width: '100%',mb:1, }}
               onClick={handleLocalSubmit}
+              disabled={localEmail===""&&localPassword===""?true:(emailError||passwordError?true:false)}
+
             >
               Ingresar
             </Button>

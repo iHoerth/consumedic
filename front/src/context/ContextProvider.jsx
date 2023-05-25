@@ -100,6 +100,8 @@ const ContextProvider = ({ children }) => {
       try {
         const response = await axios.post(`${URL_DOCTORS}`, newDoctor);
         const data = await response.data;
+        const idMedico = data.id
+        const horarios = await axios.post(`${URL_POSTAGENDA}/first`,{idMedico})
 
         setDoctorsData((prevState) => ({
           ...prevState,

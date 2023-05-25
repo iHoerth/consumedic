@@ -19,17 +19,11 @@ const Pacientes = ({id}) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!pacientes.length) {
           const search = async () => {
             await fetchPacientes(id)
           }
           search()
-        }
-        else{
-          setLoading(false);
-        }
-        // console.log(pacienteHistorial);
-    }, [loading, pacientes]);
+    }, []);
 
 
     const handleClick = async (event) =>{
@@ -61,7 +55,8 @@ const Pacientes = ({id}) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                            { pacientes.map(paciente => (
+                            { !pacientes?.length ? "No hay turnos para mostrar"
+                             : pacientes.map(paciente => (
                                 <TableRow>
                                     <TableCell align="left">{paciente.nombre} {paciente.apellido}</TableCell>
                                     {/* <TableCell align="center">{paciente.apellido}</TableCell> */}
