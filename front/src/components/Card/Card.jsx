@@ -72,12 +72,7 @@ const Card = ({
       sx={{
         transition: '0.05s',
         borderRadius: 1,
-        width: {
-          mobile: '100vw',
-          tablet: values.tablet,
-          laptop: values.tablet,
-          desktop: 570,
-        },
+        width: '100% ',
         height: 'auto',
         typography: theme.typography,
         display: 'flex',
