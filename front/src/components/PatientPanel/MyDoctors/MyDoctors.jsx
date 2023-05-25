@@ -47,7 +47,7 @@ const MyDoctors = () => {
 
   useEffect(() => {
     const opinionsSent = opinions.reduce((acc, opinion) => {
-      const doctorId = opinion.DoctorType.id; // Obtener el valor de doctorId desde DoctorType.id
+      const doctorId = opinion.DoctorType.id;
       acc[doctorId] = true;
       return acc;
     }, {});
@@ -142,11 +142,13 @@ const MyDoctors = () => {
               }}
             />
           }
+          onClick={() => {
+            handleDelete(params.row.idCita);
+          }} // Llama a la función handleDelete con el ID del doctor
         ></Button>
       ),
     },
   ];
-  //onClick={() => handleDelete(params.row.id)}
 
   const informacionData = informacion.map((item) => {
     const especialidades = item.Especialidads.map((especialidad) => ({
@@ -157,6 +159,7 @@ const MyDoctors = () => {
       (especialidad) => especialidad.especialidad
     );
     return {
+      idCita: item.Cita[0].id,
       id: item.id,
       apellido: item.apellido,
       especialidad: especialidadName,
@@ -220,6 +223,12 @@ const MyDoctors = () => {
         });
     }
   };
+
+  const handleDelete = (citaId) => {
+    // Aquí debes implementar la lógica para eliminar el doctor con el ID especificado
+    // Puedes utilizar una función o enviar una solicitud a tu servidor
+  };
+  console.log("informacion", informacion);
 
   return (
     <>
@@ -292,7 +301,7 @@ const MyDoctors = () => {
                       mb: "20px",
                     }}
                     name="rating"
-                    value={opinionText.rating} // Asignar el valor de rating desde el estado opinionText
+                    value={opinionText.rating}
                     onChange={(event, newValue) =>
                       setOpinionText((prevOpinionText) => ({
                         ...prevOpinionText,
@@ -305,7 +314,7 @@ const MyDoctors = () => {
                     label="Opinión"
                     multiline
                     rows={4}
-                    value={opinionText.opinion} // Asignar el valor de opinion desde el estado opinionText
+                    value={opinionText.opinion}
                     onChange={(e) =>
                       setOpinionText((prevOpinionText) => ({
                         ...prevOpinionText,
