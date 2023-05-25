@@ -24,15 +24,16 @@ const EditarDoctores = () => {
     useContext(Context)[0];
   const { setVista, setEmail } = useContext(Context)[6];
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
+  const [fetched, setfetched] = useState(false);
   useEffect(() => {
-    if (doctors.length === 0) {
-      doctors.fetchDoctors();
+    if (doctors.length === 0 && !fetched) {
+      fetchDoctors();
+      setfetched(true);
     } else {
       setLoading(false);
     }

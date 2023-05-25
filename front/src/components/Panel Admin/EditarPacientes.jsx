@@ -30,9 +30,11 @@ const EditarPacientes = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  const [fetched, setfetched] = useState(false);
   useEffect(() => {
-    if (patients.length === 0) {
+    if (patients.length === 0 && !fetched) {
       fetchPatients();
+      setfetched(true);
     } else {
       setLoading(false);
     }
