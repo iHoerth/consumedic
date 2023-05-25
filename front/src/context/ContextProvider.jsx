@@ -33,8 +33,6 @@ export const FilterContext = createContext([]);
 export const SessionContext = createContext([]);
 
 const ContextProvider = ({ children }) => {
-  const navigate = useNavigate();
-  console.log(URL_DOCTORS);
   const [loading, setLoading] = useState(false);
 
   const [session, setSession] = useLocalStorage("loggedUser", {
@@ -74,12 +72,10 @@ const ContextProvider = ({ children }) => {
     },
     fetchDoctorByEmail: async (email) => {
       const data = (await axios(`${URL_DOCTORS}?email=${email}`)).data;
-      //console.log(data);
       setDoctorsData((prevState) => ({
         ...prevState,
         doctorDetail: { ...data },
       }));
-      //console.log({ ...data });
       return { ...data };
     },
     cleanDetail: async () => {
@@ -103,7 +99,6 @@ const ContextProvider = ({ children }) => {
       }));
     },
     loginDoctor: async (loginData) => {
-      // try {
       const sessionData = (
         await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)
       ).data;
@@ -121,12 +116,8 @@ const ContextProvider = ({ children }) => {
       });
       console.log({ sessionData, doctorData });
       return { sessionData, doctorData };
-      // } catch (error) {
-      //   console.log(error.message, "TRY CATCH CONTEXT");
-      // }
     },
     putDoctor: async (doctorNewDetails) => {
-      console.log(doctorNewDetails);
       const data = await axios.put(`${URL_DOCTORS}/edit`, doctorNewDetails)
         .data;
       setDoctorsData((prevState) => ({
@@ -211,7 +202,6 @@ const ContextProvider = ({ children }) => {
     },
     loginPatient: async (loginData) => {
       if (loginData.token) {
-        console.log("** LOGIN DATA **", loginData);
         setSession({
           email: loginData.email,
           token: loginData.token,
@@ -225,7 +215,6 @@ const ContextProvider = ({ children }) => {
           })
           .catch((error) => {
             if (error.response && error.response.status === 400) {
-              console.log("EN EL CATCH DEL GET BY EMAIL");
 
               patientsData
                 .createPatient({
@@ -238,19 +227,15 @@ const ContextProvider = ({ children }) => {
                   return newPatient;
                 })
                 .catch((error) => {
-                  console.log("Error al crear el nuevo paciente:", error);
-                  // Manejar el error al crear el nuevo paciente
+
                 });
             } else {
-              console.log("Error en la solicitud GET:", error);
-              // Manejar otros errores de solicitud
             }
           });
       } else {
         const sessionData = (
           await axios.post(`${URL_PATIENTS}/login`, loginData)
         ).data;
-        console.log(loginData.email, `*** CONTEXT ***`);
         const patientData = await patientsData.fetchPatientByEmail(
           loginData.email,
           loginData.nombre,
@@ -263,7 +248,6 @@ const ContextProvider = ({ children }) => {
           apellido: loginData.apellido,
           token: loginData.tokenId,
         });
-        console.log({ sessionData, patientData });
         return { sessionData, patientData };
       }
     },
@@ -273,7 +257,6 @@ const ContextProvider = ({ children }) => {
         const data = (await axios.post(`${URL_OPINIONS}`, newOpinion)).data;
         return data;
       } catch (error) {
-        console.log(error);
       }
     },
 
@@ -352,7 +335,6 @@ const ContextProvider = ({ children }) => {
       });
     },
     postRespuestaCita: async (idCita, respuesta) => {
-      console.log(idCita, respuesta);
       await axios.post(`${URL_PERFILMEDICO}/doctor/cita/respuesta`, {
         idCita,
         respuesta,

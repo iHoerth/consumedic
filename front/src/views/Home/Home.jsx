@@ -3,7 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { autoPlay } from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 
-import { Box, Grid, Card, CardContent, Modal, Typography, useMediaQuery } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  Modal,
+  Typography,
+  useMediaQuery,
+  Icon,
+  Divider,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 import NavBar from '../../components/NavBar/NavBar';
@@ -16,11 +26,20 @@ import { homeCards } from '../../helpers/helpers';
 import { Context } from '../../context/ContextProvider';
 import Loading from '../../components/Loading/Loading';
 
+import SearchIcon from '@mui/icons-material/Search';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+
+const iconsArray = [<SearchIcon />, <EventAvailableIcon />, <WatchLaterIcon />, <ThumbUpIcon />];
+
 const Home = () => {
-  const theme = useTheme();
-  const [modalOpen, setModalOpen] = useState(false);
-  const navigate = useNavigate();
   const { fetchDoctors } = useContext(Context)[0];
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const theme = useTheme();
+  const { values } = theme.breakpoints;
+  const navigate = useNavigate();
 
   const handleSearch = () => {
     setModalOpen(true);
@@ -30,7 +49,6 @@ const Home = () => {
     });
   };
   const handleClose = () => setModalOpen(false);
-
   return (
     <Box
       component="div"
@@ -72,13 +90,13 @@ const Home = () => {
             gap: '20px',
             height: theme.heights.homeSection,
             p: 2,
+            minWidth:'260px',
           }}
         >
           <Header />
           <SearchBar handleSearch={handleSearch} />
         </Box>
       </Box>
-
       <Grid
         mt={1}
         container
@@ -87,6 +105,13 @@ const Home = () => {
           minHeight: theme.heights.homeSection / 2,
           justifyContent: 'center',
           padding: '20px',
+          width: {
+            mobile: '99.5%',
+            tablet: '99.5%',
+            laptop: '99.5%',
+            desktop: values.desktop,
+          },
+          alignSelf: 'center',
         }}
       >
         {homeCards.map((text, index) => (
@@ -99,18 +124,37 @@ const Home = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 padding: '10px',
+                minWidth:'210px'
               }}
             >
               <CardContent>
-                <Typography sx={{ fontSize: 16 }} gutterBottom>
-                  {text.title}
-                </Typography>
+                <Box display="flex" flexDirection={'row'} gap={1}>
+                  <Icon color="primary">{iconsArray[index]}</Icon>
+                  <Typography sx={{ fontSize: 16 }} gutterBottom>
+                    {text.title}
+                  </Typography>
+                </Box>
                 <Typography sx={{ fontSize: 14, wordSpacing: '0.2rem' }}>{text.body}</Typography>
               </CardContent>
             </Card>
           </Grid>
         ))}
       </Grid>
+      <Divider
+        sx={{
+          bgcolor: 'lightgray',
+          height: 1,
+          my: 4,
+          width: {
+            mobile: '99%',
+            tablet: '99%',
+            laptop: '99%',
+            desktop: '1120px',
+          },
+          justifySelf: 'center',
+          alignSelf: 'center',
+        }}
+      />
 
       <AboutUs />
 
