@@ -131,7 +131,7 @@ const DetalleDoctor = () => {
       >
         <Button
           variant="outlined"
-          onClick={() => setVista(1)}
+          onClick={() => setVista(2)}
           style={{ marginRight: "10px" }}
         >
           Volver
@@ -142,7 +142,7 @@ const DetalleDoctor = () => {
           variant="outlined"
           onClick={() => {
             handleClickDelete(doctorDetail.id);
-            setVista(1);
+            setVista(2);
           }}
         >
           Eliminar
