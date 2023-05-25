@@ -2,41 +2,51 @@ import React, { useState } from "react";
 import { sendMail } from "./helper";
 import { TextField, Button, Typography, Box } from "@mui/material";
 
-const Mail = () => {
+import {useContext} from "react";
+import { Context } from "../../context/ContextProvider";
+
+const MailMensajeDoctor = ({emailMedico}) => {
+  const {modal, setModal, snackOk, setSnackOk, snackOkMensaje, setSnackOkMensaje, snackFail, setSnackFail, snackFailMensaje, setSnackFailMensaje} = useContext(Context)[7];
   const [values, setValues] = useState({
     name: "",
-    emailMedico: "medicoconsumedic@gmail.com",
-    email: "",
+    emailRecibe: emailMedico,
+    emailEscribe: "",
     message: "",
+    subject:"",
   });
 
-  const { name, email, message, emailMedico } = values;
+  const { name, emailRecibe, message, emailEscribe, subject } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (name === "" || email === "" || message === "") {
+    if (name === "" || emailEscribe === "" || message === "" || subject==="") {
       alert("Por favor, complete todos los campos");
       return;
     } else {
-      sendMail({ name, email, message, emailMedico })
+      console.log(values);
+      sendMail(values)
         .then((data) => {
-          alert(data.message);
+          setSnackOk(true)
+          setSnackOkMensaje(data.message)
           setValues({
             ...values,
             name: "",
-            email: "",
+            emailEscribe: "",
             message: "",
+            subject:""
           });
         })
-
         .catch((error) => {
-          alert(error.message);
+          setSnackFail(true)
+          setSnackFailMensaje(error.message)
         });
+        setModal(false)
     }
   };
 
@@ -53,11 +63,15 @@ const Mail = () => {
       <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
         Escribir mensaje
       </Typography>
+      <Typography variant="body2" component="h2" sx={{ mb: 2 }}>
+        (todos los campos son requeridos)
+      </Typography>
       <TextField
         id="outlined-basic"
         label="Escriba su nombre"
         variant="outlined"
         value={name}
+        required
         onChange={handleChange("name")}
         sx={{ width: "90%", mb: "10px" }}
       />
@@ -65,13 +79,24 @@ const Mail = () => {
         id="outlined-basic"
         label="Dejanos tu email para comunicarnos"
         variant="outlined"
-        value={email}
-        onChange={handleChange("email")}
+        value={emailEscribe}
+        required
+        onChange={handleChange("emailEscribe")}
+        sx={{ width: "90%", mb: "10px" }}
+      />
+      <TextField
+        id="outlined-basic"
+        label="Asunto del Mensaje"
+        variant="outlined"
+        required
+        value={subject}
+        onChange={handleChange("subject")}
         sx={{ width: "90%", mb: "10px" }}
       />
       <TextField
         id="outlined-basic"
         label="Mensaje"
+        required
         variant="outlined"
         value={message}
         onChange={handleChange("message")}
@@ -80,11 +105,11 @@ const Mail = () => {
         rows={3}
       />
 
-      <Button type="submit" variant="contained" color="primary">
+      <Button type="submit" variant="contained" color="primary" disabled={name !== "" ? (emailEscribe !== "" ? (message !== "" ? ( subject!=="" ? false : true):true):true):true}>
         Enviar
       </Button>
     </Box>
   );
 };
 
-export default Mail;
+export default MailMensajeDoctor;

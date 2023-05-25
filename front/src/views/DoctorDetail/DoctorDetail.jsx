@@ -25,12 +25,12 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { NavLink } from "react-router-dom";
-import { useMediaQuery, useTheme, Divider } from "@mui/material";
+import { useMediaQuery, useTheme, Divider, Snackbar, Alert, AlertTitle } from "@mui/material";
 import { Container, Box } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import { Modal } from "@mui/material";
-import Mail from "../../components/Mail/Mail";
+import MailMensajeDoctor from "../../components/Mail/MailMensajeDoctor";
 
 import Calendar from "../../components/Calendar/Calendar";
 
@@ -44,7 +44,7 @@ const StyledRating = styled(Rating)({
 
 const DoctorDetail = () => {
   const theme = useTheme();
-
+  const {modal, setModal, snackOk, setSnackOk, snackOkMensaje, setSnackOkMensaje, snackFail, setSnackFail, snackFailMensaje,setSnackFailMensaje} = useContext(Context)[7];
   const [loading, setLoading] = useState(true);
   const [doctorsData] = useContext(Context);
   const { doctorDetail, fetchDoctorById, cleanDetail } = doctorsData;
@@ -110,7 +110,36 @@ const DoctorDetail = () => {
       }}
     >
       <NavBar />
-
+      <Snackbar
+          open={snackOk}
+          autoHideDuration={1500}
+          onClose={
+            ()=>{
+              setSnackOk(false)
+              setSnackOkMensaje("")
+            }
+          }
+      >
+          <Alert severity="success" variant="filled">
+              <AlertTitle>Mensaje Exitoso</AlertTitle>
+              {snackOkMensaje}
+          </Alert>
+      </Snackbar>       
+      <Snackbar
+          open={snackFail}
+          autoHideDuration={1500}
+          onClose={
+            ()=>{
+              setSnackFail(false)
+              setSnackFailMensaje("")
+            }
+          }
+      >
+          <Alert severity="error" variant="filled">
+              <AlertTitle>Mensaje de Error</AlertTitle>
+              {snackFailMensaje}
+          </Alert>
+      </Snackbar>
       <CardMUI
         sx={{
           typography: theme.typography,
@@ -200,7 +229,7 @@ const DoctorDetail = () => {
                 color="primary"
                 variant="outlined"
                 size="md"
-                onClick={handleOpen}
+                onClick={()=>setModal(true)}
               >
                 <SmsIcon color="primary" />
                 <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
@@ -208,11 +237,11 @@ const DoctorDetail = () => {
                 </Typography>
               </Button>
 
-              <Modal open={open} onClose={handleClose}>
+              <Modal open={modal}>
                 <Box
                   sx={{
                     position: "absolute",
-                    width: "30%",
+                    width: "60%",
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
@@ -222,7 +251,7 @@ const DoctorDetail = () => {
                     outline: "none",
                   }}
                 >
-                  <Mail />
+                  <MailMensajeDoctor emailMedico={doctorDetail.email}/>
                 </Box>
               </Modal>
             </Box>

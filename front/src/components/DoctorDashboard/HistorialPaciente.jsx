@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { Context } from '../../context/ContextProvider';
+import { sendMailDocumento, sendMailRespuesta } from "../Mail/helper";
 
 import { Divider, ListItem, TextField } from "@mui/material";
 import List from "@mui/material/List";
@@ -31,7 +32,9 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 const HistorialPaciente = () => {
     const {pacienteHistorial, setVista, postDocumentosCita, postRespuestaCita,fetchPacienteHistorial} = useContext(Context)[3];
-    const {doctorDetail, fetchDoctorByEmail} = useContext(Context)[0];
+    const {mailDoctor, setMailDoctor, mailPaciente, setMailPaciente, modal, setModal, snackOk, setSnackOk, snackOkMensaje, setSnackOkMensaje, snackFail, setSnackFail, snackFailMensaje,setSnackFailMensaje} = useContext(Context)[7];
+    const {doctorDetail, fetchDoctorByEmail, cleanDetail} = useContext(Context)[0];
+    const {patientDetail, fetchPatientByEmail, cleanDetailPaciente } = useContext(Context)[1];
     const { session } = useContext(Context)[2];
     const [loading, setLoading] = useState(true);
     const [openResponse, setOpenResponse] = useState(false)
@@ -58,6 +61,9 @@ const HistorialPaciente = () => {
         console.log(pacienteHistorial);
     }, [loading, pacienteHistorial]);
 
+    console.log(patientDetail, doctorDetail);
+
+
     useEffect(() => {
         fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
         
@@ -66,6 +72,20 @@ const HistorialPaciente = () => {
     const handleClickBack = async () =>{
         setVista(6) 
     }
+
+    const [values, setValues] = useState({
+        nombreDoctor: doctorDetail.nombre,
+        apellidoDoctor: doctorDetail.apellido,
+        emailRecibe: "consumedicgeneral@gmail.com", //! modificar a "mailPaciente"
+        emailEscribe: mailDoctor,
+        subjectDocumento: `El Doctor ${doctorDetail.nombre} ${doctorDetail.apellido} ha registrado un documento`,
+        messageDocumento: `Estimado ${patientDetail.nombre} ${patientDetail.apellido}:
+        El Doctor ${doctorDetail.nombre} ${doctorDetail.apellido} ha subido un documento al sistema con el titulo `,
+        subjectRespuesta: `El Doctor ${doctorDetail.nombre} ${doctorDetail.apellido} ha registrado un comentario`,
+        messageRespuesta: `Estimado ${patientDetail.nombre} ${patientDetail.apellido}:
+        El Doctor ${doctorDetail.nombre} ${doctorDetail.apellido} ha resgistrado la siguiente respuesta al sistema: ` 
+      });
+      const {nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectRespuesta, messageRespuesta, subjectDocumento, messageDocumento} = values
 
     const handleClickOpen = (event)=>{
         console.log(event.target.id);
@@ -86,10 +106,13 @@ const HistorialPaciente = () => {
         if(name==="respuesta"){
             postRespuestaCita(idCita, respuesta)
             setSnackRespuesta(true)
+            sendMailRespuesta({nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectRespuesta, messageRespuesta, respuesta})
+
         }
         if(name==="documentos"){
             postDocumentosCita(idCita,files64, pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId, title)
             setSnackDocumento(true)
+            sendMailDocumento({nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectDocumento, messageDocumento, title})
         }
         fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
         setOpenResponse(false)
@@ -134,6 +157,8 @@ const HistorialPaciente = () => {
         setOpenImage(true)
         setImagen(event.target.name)
     }
+
+
 
     return ( 
         <>  
