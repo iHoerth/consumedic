@@ -50,7 +50,7 @@ const CreateDoctor = () => {
   const [fileName, setFileName] = useState("") 
   const [open, setOpen] = useState()
   const [form, setForm] = useState({
-    dni: 34141519,
+    dni: "",
     numeroMatricula: "",
     nombre: "",
     apellido: "",
