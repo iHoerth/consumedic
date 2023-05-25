@@ -12,9 +12,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import { Container, Paper, Typography, Autocomplete } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Context, UtilitiesContext } from "../../context/ContextProvider";
-import { FormHelperText } from "@mui/material";
 import Footer from "../../components/Footer/Footer";
-import axios from "axios";
 
 const typrographyError = styled(Typography)({
   fontSize: "8px",

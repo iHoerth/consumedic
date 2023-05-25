@@ -1,9 +1,9 @@
 import React from 'react';
 import { Context } from '../../context/ContextProvider';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useContext, useState } from 'react';
 
-import { TextField, Button, Box, Paper, Typography, Container } from '@mui/material';
+import { Box } from '@mui/material';
 import NavBar from '../../components/NavBar/NavBar';
 import Loading from '../../components/Loading/Loading';
 
@@ -14,9 +14,8 @@ import Rechazado from '../../components/AppointmentViews/Rechazado';
 import Footer from '../../components/Footer/Footer';
 import create31 from '../../assets/Img/create31.jpg';
 
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import { initMercadoPago } from '@mercadopago/sdk-react';
 initMercadoPago('TEST-9e5c4674-d7f9-42bc-9f39-62fe105ad00c');
-// require('dotenv').config();
 
 const Appointment = () => {
   const { patientDetail, fetchPatientByEmail } = useContext(Context)[1];
@@ -58,10 +57,8 @@ const Appointment = () => {
         sx={{
           backgroundImage: `url('${create31}')`,
           backgroundPosition: 'center',
-          // backgroundPositionY: "10%",
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-          // backgroundAttachment: "fixed",
           position: 'relative',
           top: 0,
           left: 0,

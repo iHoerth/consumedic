@@ -42,8 +42,6 @@ const DoctorDashboard = () => {
     }
     console.log(loading);
   }, [loading, doctorDetail, turnos, pacientes, pacienteHistorial]);
-  // console.log(doctorDetail);
-  
 
   const views = [
     "Mi Perfil",
