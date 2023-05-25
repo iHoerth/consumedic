@@ -8,6 +8,9 @@ import {
   Button,
   Typography,
   imageListClasses,
+  Snackbar,
+  Alert, 
+  AlertTitle
 } from '@mui/material';
 import { Google } from '@mui/icons-material';
 import { GoogleLogin } from 'react-google-login';
@@ -24,10 +27,12 @@ import logindoc24 from '../../assets/Img/logindoc24.jpg';
 const LoginDoctor = () => {
   const navigate = useNavigate();
   const { doctorDetail, loginDoctor } = useContext(Context)[0];
+  const {snackOk, snackOkMensaje,setSnackOk,setSnackOkMensaje} = useContext(Context)[0];
 
   const clientID = '508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com';
 
   const [user, setUser] = useState({});
+  const [open, setOpen] = useState(false)
 
   //estados de email y contraseña
   const [localEmail, setLocalEmail] = useState('');
@@ -41,7 +46,7 @@ const LoginDoctor = () => {
 
   //expresion regular para mails
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
+  
   useEffect(() => {
     const start = () => {
       gapi.auth2.init({
@@ -49,6 +54,7 @@ const LoginDoctor = () => {
       });
     };
     gapi.load('client:auth2', start);
+  
   }, []);
 
   //funcion para validar email
@@ -114,6 +120,19 @@ const LoginDoctor = () => {
   return (
     <>
       <NavBar />
+      <Snackbar
+        open={snackOk}
+        autoHideDuration={2500}
+        onClose={() => {
+          setSnackOk(false);
+          setSnackOkMensaje('');
+        }}
+      >
+        <Alert severity="success" variant="filled">
+          <AlertTitle>Mensaje Exitoso</AlertTitle>
+          {snackOkMensaje}
+        </Alert>
+      </Snackbar>
       <Box
         sx={{
           backgroundImage: `url('${logindoc24}')`,
