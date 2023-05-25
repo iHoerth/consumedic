@@ -20,7 +20,8 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 
 const EditarDoctores = () => {
-  const { doctors, fetchDoctorByEmail } = useContext(Context)[0];
+  const { doctors, fetchDoctors, fetchDoctorByEmail, deleteDoctor } =
+    useContext(Context)[0];
   const { setVista, setEmail } = useContext(Context)[6];
 
   const [loading, setLoading] = useState(true);
@@ -49,7 +50,19 @@ const EditarDoctores = () => {
     const email = event.target.id;
     fetchDoctorByEmail(email);
     setEmail(email);
-    setVista(10);
+    setVista(4);
+  };
+
+  const handleClickDelete = (id) => {
+    deleteDoctor(id)
+      .then(() => {
+        // Eliminación exitosa, actualizar la lista de doctores
+        fetchDoctors();
+      })
+      .catch((error) => {
+        console.log("Error al eliminar el doctor:", error);
+        // Manejar el error de eliminación del doctor
+      });
   };
 
   // Lógica para la paginación
@@ -72,7 +85,13 @@ const EditarDoctores = () => {
           padding: "0px 0 10px 0",
         }}
       >
-        <Typography style={{ fontSize: "larger", fontWeight: "600", backgroundColor: "#009BFF" }}>
+        <Typography
+          style={{
+            fontSize: "larger",
+            fontWeight: "600",
+            backgroundColor: "#009BFF",
+          }}
+        >
           Listado de Doctores
         </Typography>
       </Box>
@@ -117,50 +136,62 @@ const EditarDoctores = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-{loading ? (
-<TableRow>
-<TableCell colSpan={5} align="center">
-Cargando...
-</TableCell>
-</TableRow>
-) : (
-currentItems.map((doctorDetail) => (
-<TableRow key={doctorDetail.id}>
-<TableCell align="left">{`${doctorDetail.nombre} ${doctorDetail.apellido}`}</TableCell>
-<TableCell align="center">{doctorDetail.email}</TableCell>
-<TableCell align="center">{doctorDetail.id}</TableCell>
-<TableCell align="center">{doctorDetail.telefono}</TableCell>
-<TableCell align="center">
-<Button
-                      id={doctorDetail.email}
-                      onClick={handleClick}
-                      variant="outlined"
-                      size="small"
-                    >
-                      Acceder
-                    </Button>
-</TableCell>
-</TableRow>
-))
-)}
-</TableBody>
-</Table>
-</TableContainer>
-{!loading && (
-<Stack direction="row" justifyContent="center" alignItems="center" mt={1}>
-  
-<Pagination
-           count={totalPages}
-           page={currentPage}
-           onChange={handlePageChange}
-           shape="rounded"
-         />
-</Stack>
-)}
-
-</Container>
-</>
-);
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={5} align="center">
+                    Cargando...
+                  </TableCell>
+                </TableRow>
+              ) : (
+                currentItems.map((doctor) => (
+                  <TableRow key={doctor.id}>
+                    <TableCell align="left">{`${doctor.nombre} ${doctor.apellido}`}</TableCell>
+                    <TableCell align="center">{doctor.email}</TableCell>
+                    <TableCell align="center">{doctor.id}</TableCell>
+                    <TableCell align="center">{doctor.telefono}</TableCell>
+                    <TableCell align="center">
+                      <Button
+                        id={doctor.email}
+                        onClick={handleClick}
+                        variant="outlined"
+                        size="small"
+                      >
+                        Acceder
+                      </Button>
+                      <Button
+                        id={doctor.id}
+                        onClick={() => handleClickDelete(doctor.id)}
+                        variant="outlined"
+                        color="warning"
+                        size="small"
+                      >
+                        X
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {!loading && (
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            mt={1}
+          >
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              shape="rounded"
+            />
+          </Stack>
+        )}
+      </Container>
+    </>
+  );
 };
 
 export default EditarDoctores;

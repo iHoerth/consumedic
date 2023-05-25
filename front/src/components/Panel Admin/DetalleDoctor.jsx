@@ -7,31 +7,46 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  Typography,
-  Divider,
+  // Typography,
+  // Divider,
   Button,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
-import KeyIcon from '@mui/icons-material/Key';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import Grid3x3Icon from '@mui/icons-material/Grid3x3';
+// import KeyIcon from "@mui/icons-material/Key";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import Grid3x3Icon from "@mui/icons-material/Grid3x3";
+// import { useTheme } from "@emotion/react";
+
 const DetalleDoctor = () => {
-  const { doctorDetail, fetchDoctorByEmail,fetchDoctors,doctors } = useContext(Context)[1];
+  // const theme = useTheme();
+  // const { session } = useContext(Context[2]);
+  const { fetchDoctors, doctorDetail, fetchDoctorByEmail, deleteDoctor } =
+    useContext(Context)[0];
   const { setVista, email } = useContext(Context)[6];
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!doctorDetail) {
-        fetchDoctorByEmail(email);
+      fetchDoctorByEmail(email);
     } else {
       setLoading(false);
     }
   }, [doctorDetail]);
 
-  
+  const handleClickDelete = (id) => {
+    deleteDoctor(id)
+      .then(() => {
+        // Eliminación exitosa, actualizar la lista de pacientes
+        fetchDoctors();
+      })
+      .catch((error) => {
+        console.log("Error al eliminar el doctor:", error);
+        // Manejar el error de eliminación del paciente
+      });
+  };
 
   return (
     <>
@@ -78,7 +93,7 @@ const DetalleDoctor = () => {
           />
         </ListItem>
 
-        <ListItem>
+        {/* <ListItem>
           <ListItemAvatar>
             <Avatar>
               <KeyIcon />
@@ -88,7 +103,7 @@ const DetalleDoctor = () => {
             secondary="password"
             primary={`${doctorDetail.password}`}
           />
-        </ListItem>
+        </ListItem> */}
 
         <ListItem>
           <ListItemAvatar>
@@ -96,12 +111,8 @@ const DetalleDoctor = () => {
               <QuestionMarkIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText
-            secondary="admin?"
-            primary={`${doctorDetail.admin}`}
-          />
+          <ListItemText secondary="admin?" primary={`${doctorDetail.admin}`} />
         </ListItem>
-
 
         <ListItem>
           <ListItemAvatar>
@@ -109,15 +120,10 @@ const DetalleDoctor = () => {
               <Grid3x3Icon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText
-            secondary="id"
-            primary={`${doctorDetail.id}`}
-          />
+          <ListItemText secondary="id" primary={`${doctorDetail.id}`} />
         </ListItem>
-
       </List>
       <Box
-    
         display="flex"
         justifyContent="center"
         marginTop="20px"
@@ -130,13 +136,20 @@ const DetalleDoctor = () => {
         >
           Volver
         </Button>
-       
+
+        <Button
+          id={doctorDetail.id}
+          variant="outlined"
+          onClick={() => {
+            handleClickDelete(doctorDetail.id);
+            setVista(1);
+          }}
+        >
+          Eliminar
+        </Button>
       </Box>
     </>
   );
 };
-
-
-
 
 export default DetalleDoctor;
