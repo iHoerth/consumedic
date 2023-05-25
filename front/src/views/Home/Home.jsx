@@ -90,13 +90,14 @@ const Home = () => {
             gap: '20px',
             height: theme.heights.homeSection,
             p: 2,
-            minWidth:'260px',
+            minWidth: '260px',
           }}
         >
           <Header />
           <SearchBar handleSearch={handleSearch} />
         </Box>
       </Box>
+
       <Grid
         mt={1}
         container
@@ -104,7 +105,7 @@ const Home = () => {
         sx={{
           minHeight: theme.heights.homeSection / 2,
           justifyContent: 'center',
-          padding: '20px',
+          padding: '10px',
           width: {
             mobile: '99.5%',
             tablet: '99.5%',
@@ -112,6 +113,7 @@ const Home = () => {
             desktop: values.desktop,
           },
           alignSelf: 'center',
+          pt: 8,
         }}
       >
         {homeCards.map((text, index) => (
@@ -124,7 +126,7 @@ const Home = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 padding: '10px',
-                minWidth:'210px'
+                minWidth: '210px',
               }}
             >
               <CardContent>
@@ -144,12 +146,12 @@ const Home = () => {
         sx={{
           bgcolor: 'lightgray',
           height: 1,
-          my: 4,
+          mb: 8,
           width: {
             mobile: '99%',
             tablet: '99%',
             laptop: '99%',
-            desktop: '1120px',
+            desktop: values.desktop - 40,
           },
           justifySelf: 'center',
           alignSelf: 'center',

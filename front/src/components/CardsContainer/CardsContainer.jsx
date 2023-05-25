@@ -5,23 +5,26 @@ import { useTheme } from '@mui/material';
 
 const CardsContainer = ({ doctorsInPage }) => {
   const theme = useTheme();
+  const { values } = theme.breakpoints;
   const message = 'No hay medicos con los filtros seleccionados';
 
   const allMedicos = doctorsInPage.length ? (
     <Box
       component="div"
       sx={{
-        display: {
-          mobile: 'flex',
-          tablet: 'flex',
-          laptop: 'flex',
-          desktop: 'grid',
-        },
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gridGap: '8rem',
+        display: 'flex',
+        // gridTemplateColumns: 'repeat(2, 1fr)',
+        // gridGap: '8rem',
         flexDirection: 'column',
         gap: '14px',
         height: 'auto',
+        width: {
+          mobile: '99.5%',
+          tablet: '99.5%',
+          laptop: '99.5%',
+          desktop: values.desktop,
+        },
+        p:1,
       }}
     >
       {/* <div className={style.divCards}> */}

@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { Box, Container } from '@mui/material';
+import { Box, Container, useTheme } from '@mui/material';
 import { Modal } from '@mui/material';
 
 import Home from '../Home/Home';
@@ -10,13 +10,15 @@ import Filter from '../../components/Filter/Filter';
 import Pagination from '../../components/Pagination/Pagination';
 import Footer from '../../components/Footer/Footer';
 import { Context } from '../../context/ContextProvider';
-
 import cards22 from '../../assets/Img/cards22.jpg';
 
 const DoctorsList = () => {
   const [loading, setLoading] = useState(true);
   const { doctors, filteredDoctors } = useContext(Context)[0];
   const [currentPage, setCurrentPage] = useState(1);
+
+  const theme = useTheme();
+  const { values } = theme.breakpoints;
 
   const doctorsPerPage = 15;
   const maxPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
@@ -52,7 +54,6 @@ const DoctorsList = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-  
         }}
       >
         <Box
@@ -64,23 +65,36 @@ const DoctorsList = () => {
             height: '130px',
           }}
         ></Box>
-        <Filter handlePageChange={handlePageChange} />
+        <Box
+          component="div"
+          sx={{
+            width: {
+              mobile: '99.5%',
+              tablet: '99.5%',
+              laptop: '99.5%',
+              desktop: values.desktop,
+            },
+            minWidth: '200px',
+            p: 2,
+          }}
+        >
+          <Filter handlePageChange={handlePageChange} />
+        </Box>
         {loading ? (
           <Loading />
         ) : (
-          <>
-            <CardsContainer
-              doctorsInPage={doctorsInPage}
-              sx={{
-                width: '400px',
-              }}
-            />
+          <Box
+            sx={{
+              width: '100%',
+            }}
+          >
+            <CardsContainer doctorsInPage={doctorsInPage} />
             <Pagination
               maxPages={maxPages}
               page={currentPage}
               handlePageChange={handlePageChange}
             />
-          </>
+          </Box>
         )}
       </Box>
       <Footer />

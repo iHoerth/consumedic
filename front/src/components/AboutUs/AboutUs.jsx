@@ -14,7 +14,7 @@ const AboutUs = () => {
       sx={{
         minHeight: theme.heights.homeSection,
         justifyContent: 'start',
-        padding: 4,
+        padding: '10px',
         width: {
           mobile: '99.5%',
           tablet: '99.5%',
@@ -22,6 +22,7 @@ const AboutUs = () => {
           desktop: values.desktop,
         },
         alignSelf: 'center',
+        mb: 8,
       }}
     >
       {members.map((member) => (
