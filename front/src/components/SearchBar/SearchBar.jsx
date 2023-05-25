@@ -25,7 +25,6 @@ const SearchBar = ({ handleSearch }) => {
           desktop: 700,
         },
         p: '20px',
-
       }}
     >
       <Toolbar

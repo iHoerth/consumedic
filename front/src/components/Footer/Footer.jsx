@@ -23,7 +23,6 @@ const Footer = () => {
 
   const handleNavigation = (event, page) => {
     let newHeight = 0;
-    console.log(page);
     switch (page) {
       case 'home':
         newHeight = 0;

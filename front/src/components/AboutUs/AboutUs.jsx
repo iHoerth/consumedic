@@ -5,18 +5,27 @@ import { useTheme } from '@emotion/react';
 
 const AboutUs = () => {
   const theme = useTheme();
+  const { values } = theme.breakpoints;
+
   return (
     <Grid
       container
-      spacing={2}
+      spacing={4}
       sx={{
         minHeight: theme.heights.homeSection,
-        justifyContent: 'center',
+        justifyContent: 'start',
         padding: 4,
+        width: {
+          mobile: '99.5%',
+          tablet: '99.5%',
+          laptop: '99.5%',
+          desktop: values.desktop,
+        },
+        alignSelf: 'center',
       }}
     >
       {members.map((member) => (
-        <Grid item mobile={12} tablet={6} laptop={6} desktop={4} key={member.id}>
+        <Grid item mobile={12} tablet={6} laptop={6} desktop={6} key={member.id}>
           <Card
             sx={{
               maxWidth: '100%',

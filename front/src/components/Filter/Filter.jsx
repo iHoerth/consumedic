@@ -34,7 +34,6 @@ const Filter = ({ handlePageChange }) => {
     for (const key in FILTER_TYPES) {
       // Itero en las keys de mi Filter types, para buscar en el estado las tuplas.
       // Las que tengan el flag en true, entran y comparan su objeto value contra el del current doc
-      console.log(selectedFilters[FILTER_TYPES[key]], `tupla de filtros`);
       const [flag, value] = selectedFilters[FILTER_TYPES[key]];
       if (flag) {
         newDoctors = newDoctors.filter((doc) =>
@@ -43,7 +42,6 @@ const Filter = ({ handlePageChange }) => {
         );
       }
     }
-    console.log(`NEW FILTER \n`, newDoctors);
     // 'despacho' la accion que setea el nuevo filtro de doctores
     filterDoctors(newDoctors);
     // lo retorno por si llegara a ser necesario
@@ -52,7 +50,6 @@ const Filter = ({ handlePageChange }) => {
 
   useEffect(() => {
     handleNewFilters();
-    console.log(`*USE EFFECT CALL* \n`);
   }, [selectedFilters]);
 
   return (
