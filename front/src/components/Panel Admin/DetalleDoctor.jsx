@@ -100,10 +100,7 @@ const DetalleDoctor = () => {
               <KeyIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText
-            secondary="password"
-            primary={`${doctorDetail.password}`}
-          />
+          <ListItemText secondary="password" primary="****************" />
         </ListItem> 
 
         <ListItem>
@@ -123,7 +120,18 @@ const DetalleDoctor = () => {
           </ListItemAvatar>
           <ListItemText secondary="id" primary={`${doctorDetail.id}`} />
         </ListItem>
+
+        <ListItem>
+  <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center',marginLeft: 'auto', marginRight: '0',marginTop: '-430px' }}>
+    <img src={doctorDetail.imagen} alt="Imagen del doctor" style={{ maxWidth: '100%', marginLeft: 'auto', marginRight: '0' }} />
+  </Box>
+</ListItem>
+
+
+
+            
       </List>
+
       <Box
         display="flex"
         justifyContent="center"

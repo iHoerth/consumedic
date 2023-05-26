@@ -23,7 +23,7 @@ import DetallePaciente from "../../components/Panel Admin/DetallePaciente";
 import EditarDoctores from "../../components/Panel Admin/EditarDoctores";
 import DetalleDoctor from "../../components/Panel Admin/DetalleDoctor";
 import EditarPacientes from "../../components/Panel Admin/EditarPacientes";
-import UsuariosEliminados from "../../components/Panel Admin/UsuariosEliminados";
+
 
 const Admin = () => {
   const theme = useTheme();
@@ -36,7 +36,7 @@ const Admin = () => {
     setLoading(false);
   }, []);
 
-  const views = ["Perfil Admin", "Editar Pacientes", "Editar Doctores","UsuariosEliminados"];
+  const views = ["Perfil Admin", "Editar Pacientes", "Editar Doctores"];
 
   const handleClick = (event) => {
     const index = views.findIndex((el) => el === event.target.innerHTML);
@@ -101,14 +101,7 @@ const Admin = () => {
                     onClick={handleClick}
                   />
                 </ListItemButton>
-                <ListItemButton>
-                  <ListItemText
-                    primaryTypographyProps={{ fontSize: "15px" }}
-                    sx={{ m: "0px" }}
-                    primary="Usuarios Eliminados"
-                    onClick={handleClick}
-                  />
-                </ListItemButton>
+             
                 <Divider />
               </List>
             </Box>
@@ -138,9 +131,8 @@ const Admin = () => {
                     <DetallePaciente />
                   ) : vista === 4 ? (
                     <DetalleDoctor />
-                  ) : vista === 5 ?( 
-                   <UsuariosEliminados />
-                   ): vista === 6 }
+                  ) : vista === 5 }
+                  
                 </>
               )}
             </Box>
