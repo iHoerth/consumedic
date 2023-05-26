@@ -74,7 +74,6 @@ const MyDoctors = () => {
   });
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
       field: "nombre",
       headerName: "Nombre",
@@ -242,14 +241,25 @@ const MyDoctors = () => {
 
   return (
     <>
-      <Box>Estos son los doctores consultados</Box>
       {loading ? (
         <div>Cargando</div>
       ) : (
         <Box sx={{ height: 400, width: "100%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
+              Registro de Medicos consultados
+            </Typography>
+          </Box>
+
           {!informacion.length ? (
             <>
-              <Skeleton>No datos para mostrar</Skeleton>
+              <Skeleton>No hay registros para mostrar</Skeleton>
             </>
           ) : (
             <>

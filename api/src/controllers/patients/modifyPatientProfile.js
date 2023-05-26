@@ -7,9 +7,9 @@ const modifyPatientProfile = async ({
   telefono,
   nombre,
   apellido,
+  ObraSocialId,
 }) => {
   let patient = await PacienteType.findByPk(id);
-  console.log(id, dni, email, telefono, nombre, apellido);
 
   if (patient) {
     let newPatient = await patient.update({
@@ -18,6 +18,7 @@ const modifyPatientProfile = async ({
       telefono,
       nombre,
       apellido,
+      ObraSocialId,
     });
     return newPatient;
   } else {

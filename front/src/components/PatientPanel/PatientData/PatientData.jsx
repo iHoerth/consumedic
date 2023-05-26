@@ -125,7 +125,6 @@ const PatientData = () => {
               alignItems: "left",
             }}
           >
-            {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
             {vista === 0 ? (
               <MyDoctors />
             ) : vista === 1 ? (
