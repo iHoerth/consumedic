@@ -8,6 +8,7 @@ import MyDoctors from "../MyDoctors/MyDoctors";
 import MyDates from "../MyDates/MyDates";
 import MyDocuments from "../MyDocuments/MyDocuments";
 import EditProfile from "../EditProfile/EditProfile";
+import MyOpinions from "../MyOpinions/MyOpinions";
 import { useTheme } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../../context/ContextProvider";
@@ -23,7 +24,13 @@ const PatientData = () => {
     setValue(newValue);
   };
 
-  const views = ["Mis Medicos", "Mis Citas", "Mis Documentos", "Editar Perfil"];
+  const views = [
+    "Mis Medicos",
+    "Mis Citas",
+    "Mis Documentos",
+    "Editar Perfil",
+    "Ver Opiniones",
+  ];
   const handleClick = (event) => {
     const index = views.findIndex((el) => el === event.target.innerHTML);
     console.log(index);
@@ -96,8 +103,6 @@ const PatientData = () => {
                   onClick={handleClick}
                 />
               </ListItemButton>
-
-              <Divider />
               <Divider />
               <ListItemButton>
                 <ListItemText
@@ -110,7 +115,18 @@ const PatientData = () => {
                   onClick={handleClick}
                 />
               </ListItemButton>
-
+              <Divider />
+              <ListItemButton>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "500",
+                  }}
+                  sx={{ m: "0px", color: "white", padding: "10px" }}
+                  primary="Ver Opiniones"
+                  onClick={handleClick}
+                />
+              </ListItemButton>
               <Divider />
             </List>
           </Box>
@@ -133,6 +149,8 @@ const PatientData = () => {
               <MyDocuments />
             ) : vista === 3 ? (
               <EditProfile />
+            ) : vista === 4 ? (
+              <MyOpinions />
             ) : null}
           </Box>
         </Stack>
