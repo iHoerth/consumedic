@@ -8,6 +8,9 @@ const { restorePatient } = require("../controllers/patients/restorePatient");
 const {
   getSoftDeletedPatient,
 } = require("../controllers/patients/getSoftDeletedPatient");
+const {
+  modifyPatientProfile,
+} = require("../controllers/patients/modifyPatientProfile");
 const { generateRandomPassword } = require("../utils/generateRandomPw");
 
 const bcrypt = require("bcrypt");
@@ -132,6 +135,24 @@ const getSoftDeletedPatients = async (req, res) => {
   }
 };
 
+const editPatientProfile = async (req, res) => {
+  try {
+    const { id, dni, email, telefono, nombre, apellido } = req.body;
+
+    const result = await modifyPatientProfile({
+      id,
+      dni,
+      email,
+      telefono,
+      nombre,
+      apellido,
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getPatients,
   getPatientsById,
@@ -140,4 +161,5 @@ module.exports = {
   deletePatients,
   getSoftDeletedPatients,
   restorePatients,
+  editPatientProfile,
 };
