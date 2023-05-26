@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-
+const bcrypt = require("bcrypt");
 module.exports = (sequelize) => {
   sequelize.define(
     "DoctorType",
@@ -56,7 +56,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         set(value) {
           const hashedPassword = bcrypt.hashSync(value, 10);
-          this.setDataValue('password', hashedPassword);
+          this.setDataValue("password", hashedPassword);
         },
       },
       titulo: {
