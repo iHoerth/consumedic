@@ -115,7 +115,7 @@ const deleteDoctors = async (req, res) => {
     const result = await deleteDoctor(req.params);
     res.status(200).send(result);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send(error.message);
   }
 };
 
@@ -137,7 +137,7 @@ const putDoctorEdit = async (req, res) => {
     const doctorNewDetails = req.body;
     if (!doctorNewDetails) throw new Error("No se han recibido Datos");
 
-    if(doctorNewDetails.imagen!=doctorNewDetails.oldImagen){
+    if (doctorNewDetails.imagen != doctorNewDetails.oldImagen) {
       const cloudinaryResult = await cloudinary.uploader.upload(
         doctorNewDetails.imagen,
         {
@@ -167,7 +167,7 @@ const restoreDoctors = async (req, res) => {
 
     res.status(200).send(result);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send(error.message);
   }
 };
 

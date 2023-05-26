@@ -93,7 +93,7 @@ const deletePatients = async (req, res) => {
     const result = await deletePatient(req.params);
     res.status(200).send(result);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send(error.message);
   }
 };
 
@@ -118,7 +118,7 @@ const restorePatients = async (req, res) => {
     console.log("id = ", result);
     res.status(200).send(result);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send(error.message);
   }
 };
 
