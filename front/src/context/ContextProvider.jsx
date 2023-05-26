@@ -268,6 +268,16 @@ const ContextProvider = ({ children }) => {
       }
     },
 
+    modifyPatientProfiler: async (patientData) => {
+      console.log(patientData);
+      const data = await axios.put(`${URL_PATIENTS}/profile`, patientData).data;
+      setPatientsData((prevState) => ({
+        ...prevState,
+        patientDetail: { ...data },
+      }));
+      return data;
+    },
+
     postOpinions: async (newOpinion) => {
       try {
         const data = (await axios.post(`${URL_OPINIONS}`, newOpinion)).data;

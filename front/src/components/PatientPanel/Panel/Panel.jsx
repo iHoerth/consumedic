@@ -14,8 +14,7 @@ import {
 
 const Panel = () => {
   const theme = useTheme();
-  const { patientDetail, fetchPatientByEmail } = useContext(Context)[1];
-  const { session } = useContext(Context)[2];
+  const { patientDetail } = useContext(Context)[1];
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
