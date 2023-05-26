@@ -23,6 +23,7 @@ import DetallePaciente from "../../components/Panel Admin/DetallePaciente";
 import EditarDoctores from "../../components/Panel Admin/EditarDoctores";
 import DetalleDoctor from "../../components/Panel Admin/DetalleDoctor";
 import EditarPacientes from "../../components/Panel Admin/EditarPacientes";
+import UsuariosEliminados from "../../components/Panel Admin/UsuariosEliminados";
 
 const Admin = () => {
   const theme = useTheme();
@@ -35,7 +36,7 @@ const Admin = () => {
     setLoading(false);
   }, []);
 
-  const views = ["Perfil Admin", "Editar Pacientes", "Editar Doctores"];
+  const views = ["Perfil Admin", "Editar Pacientes", "Editar Doctores","UsuariosEliminados"];
 
   const handleClick = (event) => {
     const index = views.findIndex((el) => el === event.target.innerHTML);
@@ -100,6 +101,14 @@ const Admin = () => {
                     onClick={handleClick}
                   />
                 </ListItemButton>
+                <ListItemButton>
+                  <ListItemText
+                    primaryTypographyProps={{ fontSize: "15px" }}
+                    sx={{ m: "0px" }}
+                    primary="Usuarios Eliminados"
+                    onClick={handleClick}
+                  />
+                </ListItemButton>
                 <Divider />
               </List>
             </Box>
@@ -118,7 +127,7 @@ const Admin = () => {
                 <Loading />
               ) : (
                 <>
-                  {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
+                  {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA IZQ DE LA LISTA */}
                   {vista === 0 ? (
                     "Admin General  A PENSARRR"
                   ) : vista === 1 ? (
@@ -129,7 +138,9 @@ const Admin = () => {
                     <DetallePaciente />
                   ) : vista === 4 ? (
                     <DetalleDoctor />
-                  ) : null}
+                  ) : vista === 5 ?( 
+                   <UsuariosEliminados />
+                   ): vista === 6 }
                 </>
               )}
             </Box>

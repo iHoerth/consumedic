@@ -74,6 +74,7 @@ const EditarDoctores = () => {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -83,10 +84,10 @@ const EditarDoctores = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
-          padding: "0px 0 10px 0",
+          padding: "0px 0px 0",
         }}
       >
-        <Typography
+         <Typography
           style={{
             fontSize: "larger",
             fontWeight: "600",
@@ -103,7 +104,7 @@ const EditarDoctores = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
-            marginTop: "10px",
+            marginTop: "0px",
           }}
         >
           <TextField

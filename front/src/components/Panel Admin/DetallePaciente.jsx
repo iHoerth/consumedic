@@ -37,6 +37,7 @@ const DetallePaciente = () => {
       .then(() => {
         // Eliminación exitosa, actualizar la lista de pacientes
         fetchPatients();
+        alert("El paciente ha sido eliminado exitosamente.");
       })
       .catch((error) => {
         console.log("Error al eliminar el paciente:", error);
@@ -111,17 +112,14 @@ const DetallePaciente = () => {
           />
         </ListItem>
 
-        {/* <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <KeyIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            secondary="password"
-            primary={`${patientDetail.password}`}
-          />
-        </ListItem> */}
+        <ListItem>
+  <ListItemAvatar>
+    <Avatar>
+      <KeyIcon />
+    </Avatar>
+  </ListItemAvatar>
+  <ListItemText secondary="password" primary="****************" />
+</ListItem>
 
         <ListItem>
           <ListItemAvatar>

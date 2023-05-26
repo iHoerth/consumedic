@@ -1,3 +1,5 @@
+import { color } from "@mui/system";
+
 export const calculateMaxPages = (allDoctors, doctorsPerPage, pages) => {
   for (let i = 1; i <= Math.ceil(allDoctors.length / doctorsPerPage); i++) {
     pages.push(i);
@@ -26,6 +28,7 @@ export const homeCards = [
   {
     title: `Encontrá tu especialista`,
     body: `Las opiniones reales de miles de pacientes te ayudarán a tomar siempre la mejor decisión.`,
+    backgroundColor: "#black",
   },
   {
     title: `Pedí turno de forma fácil`,

@@ -61,6 +61,7 @@ const DoctorDashboard = () => {
     setVista(index);
   };
 
+
   return (
     <>
       <NavBar />
@@ -191,7 +192,7 @@ const DoctorDashboard = () => {
               ) : (
                 <>
                   {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
-                  {vista === 0 ? (
+                  {vista === 0 ?  (
                     <Profile doctorDetail={doctorDetail}/>
                   ) : vista === 3 ? (
                     <ConfigAgenda doctorDetail={doctorDetail} />

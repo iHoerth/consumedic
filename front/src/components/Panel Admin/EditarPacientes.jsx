@@ -59,6 +59,7 @@ const EditarPacientes = () => {
       .then(() => {
         // Eliminación exitosa, actualizar la lista de pacientes
         fetchPatients();
+        alert("El paciente ha sido eliminado exitosamente.");
       })
       .catch((error) => {
         console.log("Error al eliminar el paciente:", error);
@@ -76,7 +77,9 @@ const EditarPacientes = () => {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  
 
   return (
     <>
@@ -85,7 +88,7 @@ const EditarPacientes = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
-          padding: "0px 0 10px 0",
+          padding: "1px 0 0px 0",
         }}
       >
         <Typography
@@ -105,7 +108,7 @@ const EditarPacientes = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
-            marginTop: "10px",
+            marginTop: "0px",
           }}
         >
           <TextField
