@@ -14,6 +14,9 @@ import { useNavigate } from "react-router-dom";
 // } from '../helpers/urlVariables';
 
 const URL_PATIENTS = process.env.REACT_APP_URL_PATIENTS;
+// const URL_SOFT_DELETED_PATIENTS =
+// process.env.REACT_APP_URL_SOFT_DELETED_PATIENTS;
+// const URL_RESTORE_PATIENT = process.env.REACT_APP_URL_RESTORE_PATIENT;
 const URL_DOCTORS = process.env.REACT_APP_URL_DOCTORS;
 const URL_SPECIALTIES = process.env.REACT_APP_URL_SPECIALTIES;
 const URL_SOCIALSECURITY = process.env.REACT_APP_URL_SOCIALSECURITY;
@@ -100,8 +103,10 @@ const ContextProvider = ({ children }) => {
       try {
         const response = await axios.post(`${URL_DOCTORS}`, newDoctor);
         const data = await response.data;
-        const idMedico = data.id
-        const horarios = await axios.post(`${URL_POSTAGENDA}/first`,{idMedico})
+        const idMedico = data.id;
+        const horarios = await axios.post(`${URL_POSTAGENDA}/first`, {
+          idMedico,
+        });
 
         setDoctorsData((prevState) => ({
           ...prevState,
@@ -194,6 +199,7 @@ const ContextProvider = ({ children }) => {
     patients: [],
     patientDetail: {},
     filteredPatients: [],
+    deletedPatient: [],
     opinions: [],
     snackOk: false,
     snackOkMensaje: "",
@@ -234,9 +240,28 @@ const ContextProvider = ({ children }) => {
         console.log(error);
       }
     },
+    fetchSoftDeletedPatient: async () => {
+      try {
+        const data = (await axios(`${URL_PATIENTS}/softDeleted`)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          deletedPatient: [...data],
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
     deletePatient: async (id) => {
       try {
         await axios.delete(`${URL_PATIENTS}/${id}`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    restorePatient: async (id) => {
+      try {
+        await axios.put(`${URL_PATIENTS}/restore/${id}`);
       } catch (error) {
         console.log(error);
       }
@@ -283,22 +308,6 @@ const ContextProvider = ({ children }) => {
         snackFailMensaje: dato,
       }));
     },
-    // deletePatient: async (patientId) => {
-    //   try {
-    //     await axios.delete(`${URL_PATIENTS}/${patientId}`);
-    //     setPatientsData((prevState) => ({
-    //       ...prevState,
-    //       patients: prevState.patients.filter(
-    //         (patient) => patient.id !== patientId
-    //       ),
-    //       filteredPatients: prevState.filteredPatients.filter(
-    //         (patient) => patient.id !== patientId
-    //       ),
-    //     }));
-    //   } catch (error) {
-    //     console.error("Error deleting patient", error);
-    //   }
-    // },
 
     postAppointment: async (datosTurno) => {
       try {
@@ -368,6 +377,12 @@ const ContextProvider = ({ children }) => {
       setPatientsData((prevState) => ({
         ...prevState,
         opinions: [...opinionsData],
+      }));
+    },
+    setPaciente: (paciente) => {
+      setPatientsData((prevState) => ({
+        ...prevState,
+        patientDetail: { ...paciente },
       }));
     },
   });
