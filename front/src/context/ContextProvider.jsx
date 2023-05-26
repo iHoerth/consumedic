@@ -14,9 +14,6 @@ import { useNavigate } from "react-router-dom";
 // } from '../helpers/urlVariables';
 
 const URL_PATIENTS = process.env.REACT_APP_URL_PATIENTS;
-// const URL_SOFT_DELETED_PATIENTS =
-// process.env.REACT_APP_URL_SOFT_DELETED_PATIENTS;
-// const URL_RESTORE_PATIENT = process.env.REACT_APP_URL_RESTORE_PATIENT;
 const URL_DOCTORS = process.env.REACT_APP_URL_DOCTORS;
 const URL_SPECIALTIES = process.env.REACT_APP_URL_SPECIALTIES;
 const URL_SOCIALSECURITY = process.env.REACT_APP_URL_SOCIALSECURITY;
