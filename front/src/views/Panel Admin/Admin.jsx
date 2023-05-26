@@ -23,7 +23,8 @@ import DetallePaciente from "../../components/Panel Admin/DetallePaciente";
 import EditarDoctores from "../../components/Panel Admin/EditarDoctores";
 import DetalleDoctor from "../../components/Panel Admin/DetalleDoctor";
 import EditarPacientes from "../../components/Panel Admin/EditarPacientes";
-
+import PacientesEliminados from "../../components/Panel Admin/PacientesEliminados";
+import DoctoresEliminados from "../../components/Panel Admin/DoctoresEliminados";
 
 const Admin = () => {
   const theme = useTheme();
@@ -36,7 +37,15 @@ const Admin = () => {
     setLoading(false);
   }, []);
 
-  const views = ["Perfil Admin", "Editar Pacientes", "Editar Doctores"];
+  const views = [
+    "Perfil Admin",
+    "Editar Pacientes",
+    "Editar Doctores",
+    "Pacientes Eliminados",
+    "Doctores Eliminados",
+    "Detalle Paciente",
+    "Detalle Doctor",
+  ];
 
   const handleClick = (event) => {
     const index = views.findIndex((el) => el === event.target.innerHTML);
@@ -101,7 +110,23 @@ const Admin = () => {
                     onClick={handleClick}
                   />
                 </ListItemButton>
-             
+                <ListItemButton>
+                  <ListItemText
+                    primaryTypographyProps={{ fontSize: "15px" }}
+                    sx={{ m: "0px" }}
+                    primary="Pacientes Eliminados"
+                    onClick={handleClick}
+                  />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText
+                    primaryTypographyProps={{ fontSize: "15px" }}
+                    sx={{ m: "0px" }}
+                    primary="Doctores Eliminados"
+                    onClick={handleClick}
+                  />
+                </ListItemButton>
+
                 <Divider />
               </List>
             </Box>
@@ -122,17 +147,20 @@ const Admin = () => {
                 <>
                   {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA IZQ DE LA LISTA */}
                   {vista === 0 ? (
-                    "Admin General  A PENSARRR"
+                    "Admin General"
                   ) : vista === 1 ? (
                     <EditarPacientes />
                   ) : vista === 2 ? (
                     <EditarDoctores />
                   ) : vista === 3 ? (
-                    <DetallePaciente />
+                    <PacientesEliminados />
                   ) : vista === 4 ? (
+                    <DoctoresEliminados />
+                  ) : vista === 5 ? (
+                    <DetallePaciente />
+                  ) : vista === 6 ? (
                     <DetalleDoctor />
-                  ) : vista === 5 }
-                  
+                  ) : null}
                 </>
               )}
             </Box>
