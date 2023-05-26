@@ -14,7 +14,7 @@ import {
 import PersonIcon from "@mui/icons-material/Person";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
-// import KeyIcon from "@mui/icons-material/Key";
+ import KeyIcon from "@mui/icons-material/Key";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import Grid3x3Icon from "@mui/icons-material/Grid3x3";
 // import { useTheme } from "@emotion/react";
@@ -41,6 +41,7 @@ const DetalleDoctor = () => {
       .then(() => {
         // Eliminación exitosa, actualizar la lista de pacientes
         fetchDoctors();
+        alert("La eliminacion del doctor fue exitosa")
       })
       .catch((error) => {
         console.log("Error al eliminar el doctor:", error);
@@ -93,7 +94,7 @@ const DetalleDoctor = () => {
           />
         </ListItem>
 
-        {/* <ListItem>
+         <ListItem>
           <ListItemAvatar>
             <Avatar>
               <KeyIcon />
@@ -103,7 +104,7 @@ const DetalleDoctor = () => {
             secondary="password"
             primary={`${doctorDetail.password}`}
           />
-        </ListItem> */}
+        </ListItem> 
 
         <ListItem>
           <ListItemAvatar>

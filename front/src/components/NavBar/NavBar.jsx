@@ -32,6 +32,10 @@ const NavBar = ({ component, variant,text, type }) => {
       title: 'Eres médico/a?',
       path: '/loginDoctor',
     },
+    {
+      title: 'Eres Admin?',
+      path: '/loginDoctor',
+    },
   ];
 
   /* Estado para ver si se bajo o no */

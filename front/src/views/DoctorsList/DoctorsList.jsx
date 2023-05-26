@@ -43,13 +43,7 @@ const DoctorsList = () => {
       <NavBar />
       <Box
         sx={{
-          backgroundImage: `url('${cards22}')`,
-          backgroundPosition: 'bottom',
-          backgroundPositionY: '70%',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
-          position: 'relative',
+        
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
