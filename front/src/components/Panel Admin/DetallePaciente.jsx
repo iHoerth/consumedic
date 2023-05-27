@@ -56,6 +56,7 @@ const DetallePaciente = () => {
         .then(() => {
           // Eliminación exitosa, actualizar la lista de pacientes
           fetchPatients();
+          fetchSoftDeletedPatient();
           alert("El paciente ha sido eliminado exitosamente.");
         })
         .catch((error) => {
@@ -156,7 +157,7 @@ const DetallePaciente = () => {
           variant="outlined"
           onClick={() => {
             handleClickDelete(patientDetail.id);
-            setVista(1);
+            setVista(patientDetail.deletedAt === null ? 1 : 3);
           }}
         >
           {patientDetail.deletedAt ? "Restaurar" : "Eliminar"}
