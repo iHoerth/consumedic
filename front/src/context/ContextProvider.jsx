@@ -53,6 +53,7 @@ const ContextProvider = ({ children }) => {
     doctors: [],
     doctorDetail: {},
     filteredDoctors: [],
+    deletedDoctor: [],
     doctorOpinions: [],
     snackOk: false,
     snackOkMensaje: "",
@@ -75,6 +76,7 @@ const ContextProvider = ({ children }) => {
         doctorDetail: data,
       }));
     },
+
     fetchDoctorByEmail: async (email) => {
       const data = (await axios(`${URL_DOCTORS}?email=${email}`)).data;
       setDoctorsData((prevState) => ({
@@ -83,6 +85,19 @@ const ContextProvider = ({ children }) => {
       }));
       return { ...data };
     },
+
+    fetchSoftDeletedDoctor: async () => {
+      try {
+        const data = (await axios(`${URL_DOCTORS}/softDeleted`)).data;
+        setDoctorsData((prevState) => ({
+          ...prevState,
+          deletedDoctor: [...data],
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     deleteDoctor: async (id) => {
       try {
         await axios.delete(`${URL_DOCTORS}/${id}`);
@@ -90,6 +105,15 @@ const ContextProvider = ({ children }) => {
         console.log(error);
       }
     },
+
+    restoreDoctor: async (id) => {
+      try {
+        await axios.put(`${URL_DOCTORS}/restore/${id}`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     cleanDetail: async () => {
       setDoctorsData((prevState) => ({
         ...prevState,
@@ -190,6 +214,12 @@ const ContextProvider = ({ children }) => {
         snackFailMensaje: dato,
       }));
     },
+    setDoctor: (doctor) => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        doctorDetail: { ...doctor },
+      }));
+    },
   });
 
   const [patientsData, setPatientsData] = useState({
@@ -281,6 +311,7 @@ const ContextProvider = ({ children }) => {
         console.log(error);
       }
     },
+
     setSnackOk: (dato) => {
       setDoctorsData((prevState) => ({
         ...prevState,

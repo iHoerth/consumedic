@@ -14,7 +14,7 @@ import {
 import PersonIcon from "@mui/icons-material/Person";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
- import KeyIcon from "@mui/icons-material/Key";
+import KeyIcon from "@mui/icons-material/Key";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import Grid3x3Icon from "@mui/icons-material/Grid3x3";
 // import { useTheme } from "@emotion/react";
@@ -22,11 +22,17 @@ import Grid3x3Icon from "@mui/icons-material/Grid3x3";
 const DetalleDoctor = () => {
   // const theme = useTheme();
   // const { session } = useContext(Context[2]);
-  const { fetchDoctors, doctorDetail, fetchDoctorByEmail, deleteDoctor } =
-    useContext(Context)[0];
+  const {
+    fetchDoctors,
+    doctorDetail,
+    fetchDoctorByEmail,
+    deleteDoctor,
+    fetchSoftDeletedDoctor,
+    restoreDoctor,
+  } = useContext(Context)[0];
   const { setVista, email } = useContext(Context)[6];
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!doctorDetail) {
@@ -37,16 +43,31 @@ const DetalleDoctor = () => {
   }, [doctorDetail]);
 
   const handleClickDelete = (id) => {
-    deleteDoctor(id)
-      .then(() => {
-        // Eliminación exitosa, actualizar la lista de pacientes
-        fetchDoctors();
-        alert("La eliminacion del doctor fue exitosa")
-      })
-      .catch((error) => {
-        console.log("Error al eliminar el doctor:", error);
-        // Manejar el error de eliminación del paciente
-      });
+    if (!doctorDetail.deletedAt) {
+      deleteDoctor(id)
+        .then(() => {
+          // Eliminación exitosa, actualizar la lista de pacientes
+          fetchDoctors();
+          fetchSoftDeletedDoctor();
+          alert("La eliminacion del doctor fue exitosa");
+        })
+        .catch((error) => {
+          console.log("Error al eliminar el doctor:", error);
+          // Manejar el error de eliminación del paciente
+        });
+    } else {
+      restoreDoctor(id)
+        .then(() => {
+          // Eliminación exitosa, actualizar la lista de pacientes
+          fetchSoftDeletedDoctor();
+          fetchDoctors();
+          alert("El doctor ha sido restaurado exitosamente.");
+        })
+        .catch((error) => {
+          console.log("Error al restaurar el doctor:", error);
+          // Manejar el error de eliminación del paciente
+        });
+    }
   };
 
   return (
@@ -94,14 +115,14 @@ const DetalleDoctor = () => {
           />
         </ListItem>
 
-         <ListItem>
+        <ListItem>
           <ListItemAvatar>
             <Avatar>
               <KeyIcon />
             </Avatar>
           </ListItemAvatar>
           <ListItemText secondary="password" primary="****************" />
-        </ListItem> 
+        </ListItem>
 
         <ListItem>
           <ListItemAvatar>
@@ -122,14 +143,23 @@ const DetalleDoctor = () => {
         </ListItem>
 
         <ListItem>
-  <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center',marginLeft: 'auto', marginRight: '0',marginTop: '-430px' }}>
-    <img src={doctorDetail.imagen} alt="Imagen del doctor" style={{ maxWidth: '100%', marginLeft: 'auto', marginRight: '0' }} />
-  </Box>
-</ListItem>
-
-
-
-            
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              marginLeft: "auto",
+              marginRight: "0",
+              marginTop: "-430px",
+            }}
+          >
+            <img
+              src={doctorDetail.imagen}
+              alt="Imagen del doctor"
+              style={{ maxWidth: "100%", marginLeft: "auto", marginRight: "0" }}
+            />
+          </Box>
+        </ListItem>
       </List>
 
       <Box
@@ -140,7 +170,7 @@ const DetalleDoctor = () => {
       >
         <Button
           variant="outlined"
-          onClick={() => setVista(2)}
+          onClick={() => setVista(doctorDetail.deletedAt === null ? 2 : 4)}
           style={{ marginRight: "10px" }}
         >
           Volver
@@ -151,10 +181,10 @@ const DetalleDoctor = () => {
           variant="outlined"
           onClick={() => {
             handleClickDelete(doctorDetail.id);
-            setVista(2);
+            setVista(doctorDetail.deletedAt === null ? 2 : 4);
           }}
         >
-          Eliminar
+          {doctorDetail.deletedAt ? "Restaurar" : "Eliminar"}
         </Button>
       </Box>
     </>
