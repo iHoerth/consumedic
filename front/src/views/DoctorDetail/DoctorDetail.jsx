@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/ContextProvider";
 import { useParams } from "react-router-dom";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import CardMUI from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -25,7 +25,14 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { NavLink } from "react-router-dom";
-import { useMediaQuery, useTheme, Divider, Snackbar, Alert, AlertTitle } from "@mui/material";
+import {
+  useMediaQuery,
+  useTheme,
+  Divider,
+  Snackbar,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import { Container, Box } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
@@ -37,14 +44,25 @@ import Calendar from "../../components/Calendar/Calendar";
 import detail23 from "../../assets/Img/detail23.jpg";
 
 const StyledRating = styled(Rating)({
-  '& .MuiRating-iconFilled': {
-    color: '#0fb1bc',
+  "& .MuiRating-iconFilled": {
+    color: "#0fb1bc",
   },
 });
 
 const DoctorDetail = () => {
   const theme = useTheme();
-  const {modal, setModal, snackOk, setSnackOk, snackOkMensaje, setSnackOkMensaje, snackFail, setSnackFail, snackFailMensaje,setSnackFailMensaje} = useContext(Context)[7];
+  const {
+    modal,
+    setModal,
+    snackOk,
+    setSnackOk,
+    snackOkMensaje,
+    setSnackOkMensaje,
+    snackFail,
+    setSnackFail,
+    snackFailMensaje,
+    setSnackFailMensaje,
+  } = useContext(Context)[7];
   const [loading, setLoading] = useState(true);
   const [doctorsData] = useContext(Context);
   const { doctorDetail, fetchDoctorById, cleanDetail } = doctorsData;
@@ -78,10 +96,8 @@ const DoctorDetail = () => {
   };
 
   if (loading) {
-    return <div>CARGANDO</div>;
+    return <div>Cargando</div>;
   }
-
-  console.log(doctorDetail);
 
   return (
     <Container
@@ -98,7 +114,6 @@ const DoctorDetail = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        // typography: theme.typography,
         "@media (max-width: 600px)": {
           height: {
             xs: "50vh",
@@ -111,34 +126,30 @@ const DoctorDetail = () => {
     >
       <NavBar />
       <Snackbar
-          open={snackOk}
-          autoHideDuration={1500}
-          onClose={
-            ()=>{
-              setSnackOk(false)
-              setSnackOkMensaje("")
-            }
-          }
+        open={snackOk}
+        autoHideDuration={1500}
+        onClose={() => {
+          setSnackOk(false);
+          setSnackOkMensaje("");
+        }}
       >
-          <Alert severity="success" variant="filled">
-              <AlertTitle>Mensaje Exitoso</AlertTitle>
-              {snackOkMensaje}
-          </Alert>
-      </Snackbar>       
+        <Alert severity="success" variant="filled">
+          <AlertTitle>Mensaje Exitoso</AlertTitle>
+          {snackOkMensaje}
+        </Alert>
+      </Snackbar>
       <Snackbar
-          open={snackFail}
-          autoHideDuration={1500}
-          onClose={
-            ()=>{
-              setSnackFail(false)
-              setSnackFailMensaje("")
-            }
-          }
+        open={snackFail}
+        autoHideDuration={1500}
+        onClose={() => {
+          setSnackFail(false);
+          setSnackFailMensaje("");
+        }}
       >
-          <Alert severity="error" variant="filled">
-              <AlertTitle>Mensaje de Error</AlertTitle>
-              {snackFailMensaje}
-          </Alert>
+        <Alert severity="error" variant="filled">
+          <AlertTitle>Mensaje de Error</AlertTitle>
+          {snackFailMensaje}
+        </Alert>
       </Snackbar>
       <CardMUI
         sx={{
@@ -150,11 +161,19 @@ const DoctorDetail = () => {
           alignItems: "center",
           marginTop: "150px",
           marginBottom: "10%",
-          borderRadius: "15px"
+          borderRadius: "15px",
         }}
       >
-        <Box display={{display:"flex"}}>
-          <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", ml:"10px", mr:"5px"}}>
+        <Box display={{ display: "flex" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              ml: "10px",
+              mr: "5px",
+            }}
+          >
             <IconButton sx={{ p: 2 }}>
               <Avatar
                 alt="img"
@@ -173,13 +192,13 @@ const DoctorDetail = () => {
                   <span key={index}>{`${item.name} `}</span>
                 ))
               }
-              sx={{display:"flex", flexDirection:"column", alignItems:"center"}}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             />
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ pb: 1 }}
-            >
+            <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
               {doctorDetail.Descripcion}
             </Typography>
             <Stack spacing={1}>
@@ -198,11 +217,11 @@ const DoctorDetail = () => {
             </Stack>
 
             <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-              {doctorDetail.Opinions?.length ? (
-                doctorDetail.Opinions.map((item, index) => (
-                  <span key={index}>{item.mensaje}</span>
-                ))
-              ) : null}
+              {doctorDetail.Opinions?.length
+                ? doctorDetail.Opinions.map((item, index) => (
+                    <span key={index}>{item.mensaje}</span>
+                  ))
+                : null}
             </Typography>
 
             <Box
@@ -211,7 +230,7 @@ const DoctorDetail = () => {
                 gap: 2,
                 alignItems: "center",
                 flexWrap: "wrap",
-                mb:"10px"
+                mb: "10px",
               }}
             >
               {/* <Button
@@ -229,7 +248,7 @@ const DoctorDetail = () => {
                 color="primary"
                 variant="outlined"
                 size="md"
-                onClick={()=>setModal(true)}
+                onClick={() => setModal(true)}
               >
                 <SmsIcon color="primary" />
                 <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
@@ -251,44 +270,89 @@ const DoctorDetail = () => {
                     outline: "none",
                   }}
                 >
-                  <MailMensajeDoctor emailMedico={doctorDetail.email}/>
+                  <MailMensajeDoctor emailMedico={doctorDetail.email} />
                 </Box>
               </Modal>
             </Box>
           </Box>
           <Divider orientation="vertical" flexItem />
           <CardContent>
-            <Box sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>
-              <Box sx={{display:"block", mt:"30px", mr:"15px", ml:"5px"}}>
-                <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Box sx={{ display: "block", mt: "30px", mr: "15px", ml: "5px" }}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ p: 1 }}
+                >
                   <LocationOnSharpIcon
                     sx={{ marginRight: "0.5rem" }}
                     color="primary"
                   />
                   {doctorDetail.direccion}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                  <VideocamIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ p: 1 }}
+                >
+                  <VideocamIcon
+                    sx={{ marginRight: "0.5rem" }}
+                    color="primary"
+                  />
                   Consulta en linea: ${doctorDetail.precio}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                  <LocalPhoneIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ p: 1 }}
+                >
+                  <LocalPhoneIcon
+                    sx={{ marginRight: "0.5rem" }}
+                    color="primary"
+                  />
                   {doctorDetail.telefono}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                  <PeopleAltIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ p: 1 }}
+                >
+                  <PeopleAltIcon
+                    sx={{ marginRight: "0.5rem" }}
+                    color="primary"
+                  />
                   {doctorDetail.ObraSocials?.length &&
                     doctorDetail.ObraSocials.map((item, index) => (
                       <span key={index}>Obra sociales: {item.nombre}</span>
                     ))}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                  <PaymentsIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ p: 1 }}
+                >
+                  <PaymentsIcon
+                    sx={{ marginRight: "0.5rem" }}
+                    color="primary"
+                  />
                   Pagos: Mercado Pago
                 </Typography>
                 <NavLink to="https://www.linkedin.com" target="_blank">
-                  <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                    <LinkedInIcon sx={{ marginRight: "0.5rem" }} color="primary" />
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ p: 1 }}
+                  >
+                    <LinkedInIcon
+                      sx={{ marginRight: "0.5rem" }}
+                      color="primary"
+                    />
                     LinkedIn
                   </Typography>
                 </NavLink>
@@ -318,9 +382,9 @@ const DoctorDetail = () => {
                 </Accordion>
               </Box>
               <Divider orientation="vertical" flexItem />
-              <Box sx={{ml:"15px", mt:"20px"}}>
+              <Box sx={{ ml: "15px", mt: "20px" }}>
                 <Calendar id={id} calendar={doctorDetail.calendar} />
-              </Box>      
+              </Box>
             </Box>
           </CardContent>
         </Box>

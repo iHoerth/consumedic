@@ -131,7 +131,7 @@ const MyDates = () => {
 
           {!informacion.length ? (
             <>
-              <Skeleton>No registros para mostar!</Skeleton>
+              <Skeleton>No hay registros para mostar!</Skeleton>
             </>
           ) : (
             <DataGrid

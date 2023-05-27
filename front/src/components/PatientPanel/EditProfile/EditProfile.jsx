@@ -63,8 +63,8 @@ const EditProfile = () => {
 
   const handleSave = () => {
     modifyPatientProfiler(datos)
-      .then((data) => {
-        alert(data);
+      .then(() => {
+        alert("Se actualizo correctamente");
       })
       .catch((error) => {
         alert(error);
