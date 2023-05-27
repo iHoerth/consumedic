@@ -25,7 +25,7 @@ const mp_failure = MP_FAILURE;
 const port = PORT || 3001;
 
 const server = express();
-server.use(express.json());
+server.use(express.json()); //! probando limitar tamaño de archivos! express.json({ limit: '10mb' })
 server.use(
   cors({
     origin: "*",

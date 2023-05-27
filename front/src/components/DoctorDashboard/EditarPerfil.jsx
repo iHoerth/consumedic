@@ -39,6 +39,8 @@ const EditarPerfil = ({doctorDetail1}) => {
     const [openImagen, setOpenImagen]=useState(false)
     const [fileName, setFileName] = useState("")
     const [files64, setFiles64]=useState()
+    const [fileSize, setFileSize]=useState()
+    const [alert, setAlert] = useState(false)
     const [snack, setSnack]=useState(false)
     const {vista, setVista} = useContext(Context)[3];
     let respuesta=0;
@@ -222,6 +224,8 @@ const EditarPerfil = ({doctorDetail1}) => {
         setFileName("")
         setOs(true)
         setEspe(true)
+        setFileSize()
+        setAlert(false)
 
     }
 
@@ -229,13 +233,25 @@ const EditarPerfil = ({doctorDetail1}) => {
         setFiles64()
         const file = event.target.files[0];
         // console.log(file);
-        setFileName(file.name)
+        setFileName(file?.name)
         setFilesToBase(file)
     };
     const setFilesToBase = (file) => {
+      try {
+        
         const reader = new FileReader();
         const property = "imagen"
         reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          let fileSize = reader.result.length;
+          fileSize = (fileSize/1024).toFixed(2);
+          setFileSize(fileSize)
+          if(fileSize>1*1024) setAlert(true)
+          else setAlert(false)
+          console.log(`File size: ${fileSize} kb`);
+        };
+
         reader.onloadend = () => {
             const values=reader.result
             setFiles64(values)
@@ -245,6 +261,9 @@ const EditarPerfil = ({doctorDetail1}) => {
             });
             validarForm({ ...datos, [property]: values });
         };
+      } catch (error) {
+        return
+      }
     }
 
     const handleSubmit = async () => {
@@ -568,10 +587,13 @@ const EditarPerfil = ({doctorDetail1}) => {
                         </Button>
                     </label>
                 </Box>
-                <Typography sx={{ml:"38%", mb:"10px"}}>{fileName}</Typography>
+                <Typography sx={{ml:"2%", mb:"10px"}}>{fileName}</Typography>
+                <Typography sx={{ml:"2%", mb:"10px"}}>{fileSize?`size: ${fileSize} kb`:null}</Typography>
+                <Typography sx={{ml:"2%", mb:"10px", color:"red"}}>{alert?"El archivo debe tener menos de 1mb":null}</Typography>
+
                 <DialogActions>
                     <Button onClick={handleClose}>Cancelar</Button>
-                    <Button name="documentos" variant="contained" onClick={handleClose} disabled={fileName?false:true}>Registrar</Button>
+                    <Button name="documentos" variant="contained" onClick={handleClose} disabled={fileName?(alert?true:false):true}>Registrar</Button>
                 </DialogActions>
             </Dialog>
         </>
