@@ -77,7 +77,7 @@ const Aceptado = ({idPaciente}) => {
       postAppointment(datos);
       
     }
-  }, [loading, patientDetail]);
+  }, [patientDetail]);
 
   const handleClick = ()=>{
     navigate("/patientpanel/");
