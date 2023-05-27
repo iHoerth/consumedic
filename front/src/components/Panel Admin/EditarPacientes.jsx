@@ -20,8 +20,13 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 
 const EditarPacientes = () => {
-  const { patients, fetchPatients, fetchPatientByEmail, deletePatient } =
-    useContext(Context)[1];
+  const {
+    patients,
+    fetchPatients,
+    fetchPatientByEmail,
+    deletePatient,
+    fetchSoftDeletedPatient,
+  } = useContext(Context)[1];
   const { setVista, setEmail } = useContext(Context)[6];
 
   const [loading, setLoading] = useState(true);
@@ -59,6 +64,7 @@ const EditarPacientes = () => {
       .then(() => {
         // Eliminación exitosa, actualizar la lista de pacientes
         fetchPatients();
+        fetchSoftDeletedPatient();
         alert("El paciente ha sido eliminado exitosamente.");
       })
       .catch((error) => {
