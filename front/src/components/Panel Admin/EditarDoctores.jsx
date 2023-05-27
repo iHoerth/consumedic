@@ -20,16 +20,22 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 
 const EditarDoctores = () => {
-  const { doctors, fetchDoctors, fetchDoctorByEmail, deleteDoctor } =
-    useContext(Context)[0];
+  const {
+    doctors,
+    fetchDoctors,
+    fetchDoctorByEmail,
+    deleteDoctor,
+    fetchSoftDeletedDoctor,
+  } = useContext(Context)[0];
   const { setVista, setEmail } = useContext(Context)[6];
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   const [fetched, setfetched] = useState(false);
+
   useEffect(() => {
     if (doctors.length === 0 && !fetched) {
       fetchDoctors();
@@ -51,7 +57,7 @@ const EditarDoctores = () => {
     const email = event.target.id;
     fetchDoctorByEmail(email);
     setEmail(email);
-    setVista(4);
+    setVista(6);
   };
 
   const handleClickDelete = (id) => {
@@ -59,6 +65,8 @@ const EditarDoctores = () => {
       .then(() => {
         // Eliminación exitosa, actualizar la lista de doctores
         fetchDoctors();
+        fetchSoftDeletedDoctor();
+        alert("El doctor se eliminó exitosamente.");
       })
       .catch((error) => {
         console.log("Error al eliminar el doctor:", error);
@@ -87,7 +95,7 @@ const EditarDoctores = () => {
           padding: "0px 0px 0",
         }}
       >
-         <Typography
+        <Typography
           style={{
             fontSize: "larger",
             fontWeight: "600",
