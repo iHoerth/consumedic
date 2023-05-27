@@ -1,15 +1,25 @@
-require('dotenv').config();
+require("dotenv").config();
 // const { PORT } = process.env;
-const { PORT, HOST, DEPLOY, DEPLOYPORT, tokenMP, MP_SUCCES, MP_PENDING, MP_FAILURE, LIKN_DEPLOY } = process.env;
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const routes = require('./src/routes/index');
-const { conn } = require('./src/db');
+const {
+  PORT,
+  HOST,
+  DEPLOY,
+  DEPLOYPORT,
+  tokenMP,
+  MP_SUCCES,
+  MP_PENDING,
+  MP_FAILURE,
+  LIKN_DEPLOY,
+} = process.env;
+const express = require("express");
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const routes = require("./src/routes/index");
+const { conn } = require("./src/db");
 
-const hostFront = DEPLOY || 'localhost';
-const portFront = DEPLOYPORT || ':3000';
+const hostFront = DEPLOY || "localhost";
+const portFront = DEPLOYPORT || ":3000";
 const mp_success = MP_SUCCES;
 const mp_failure = MP_FAILURE;
 const port = PORT || 3001;
@@ -18,10 +28,9 @@ const server = express();
 server.use(express.json());
 server.use(
   cors({
-    origin: '*',
+    origin: "*",
   })
 );
-
 
 // server.use(
 //   cors({
@@ -29,25 +38,25 @@ server.use(
 //   })
 // );
 // server.use(cors());
-server.use(morgan('dev'));
+server.use(morgan("dev"));
 //
 
-server.use('/', routes);
+server.use("/", routes);
 
-conn.sync({ force: false }).then(async () => {
-  console.log('Database connected');
-  server.listen(port, HOST ? HOST : '0.0.0.0', () => {
-    console.log('Server raised on port ' + port);
+conn.sync({ force: true }).then(async () => {
+  console.log("Database connected");
+  server.listen(port, HOST ? HOST : "0.0.0.0", () => {
+    console.log("Server raised on port " + port);
   });
 });
 
-server.set('port', port);
+server.set("port", port);
 
-server.post('/turno', (req, res) => {
+server.post("/turno", (req, res) => {
   // res.status(200).send('ok');
 
   const dataPreferences = req.body;
-  console.log('cita: ' + dataPreferences);
+  console.log("cita: " + dataPreferences);
 
   // https://pf-soyhenry.vercel.app
 
@@ -79,8 +88,8 @@ server.post('/turno', (req, res) => {
     //   },
   };
 
-  server.use('/notificar', (req, res) => {
-    console.log('notificar');
+  server.use("/notificar", (req, res) => {
+    console.log("notificar");
   });
 
   mercadopago.preferences
@@ -100,7 +109,7 @@ server.post('/turno', (req, res) => {
 });
 
 // SDK de Mercado Pago
-const mercadopago = require('mercadopago');
+const mercadopago = require("mercadopago");
 // Agrega credenciales
 mercadopago.configure({
   access_token: tokenMP,
