@@ -91,22 +91,26 @@ const EditarDoctores = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center",
-          padding: "0px 0px 0",
+          justifyContent: "space-around",
+          aligenItems: "center",
+          padding: "20px",
+          backgroundColor: "#009BFF",
+          borderRadius: "3px",
+          marginRight: "16px",
+          marginLeft: "16px",
+          marginBottom: "30px",
         }}
       >
         <Typography
           style={{
             fontSize: "larger",
             fontWeight: "600",
-            backgroundColor: "#009BFF",
+            color: "white",
+            marginTop: "10px",
           }}
         >
           Listado de Doctores
         </Typography>
-      </Box>
-      <Divider />
-      <Container>
         <Box
           style={{
             display: "flex",
@@ -119,14 +123,20 @@ const EditarDoctores = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Buscar por nombre"
-            variant="outlined"
             size="small"
-            sx={{ backgroundColor: "#009BFF" }} // Cambia el color del campo de búsqueda
+            sx={{
+              border: "2px solid white",
+              borderRadius: "3px",
+              color: "white",
+            }} // Cambia el color del campo de búsqueda
             InputProps={{
-              endAdornment: <SearchIcon />,
+              endAdornment: <SearchIcon sx={{ color: "white" }} />,
             }}
           />
         </Box>
+      </Box>
+
+      <Container>
         <TableContainer component={Paper}>
           <Table>
             <TableHead
@@ -165,6 +175,9 @@ const EditarDoctores = () => {
                         onClick={handleClick}
                         variant="outlined"
                         size="small"
+                        style={{
+                          marginRight: "40px",
+                        }}
                       >
                         Acceder
                       </Button>
@@ -185,19 +198,20 @@ const EditarDoctores = () => {
           </Table>
         </TableContainer>
         {!loading && (
-          <Stack
-            direction="row"
+          <Box
+            display="flex"
             justifyContent="center"
-            alignItems="center"
-            mt={1}
+            marginTop="20px"
+            marginBottom="10px"
           >
             <Pagination
               count={totalPages}
               page={currentPage}
               onChange={handlePageChange}
-              shape="rounded"
+              size="small"
+              color="primary"
             />
-          </Stack>
+          </Box>
         )}
       </Container>
     </>

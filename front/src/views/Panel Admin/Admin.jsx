@@ -86,7 +86,7 @@ const Admin = () => {
                         fontSize: "20px",
                         fontWeight: "500",
                       }}
-                      sx={{ m: "0px" }}
+                      sx={{ m: "0px", color: "white" }}
                       primary="Perfil Admin"
                       onClick={handleClick}
                     />
@@ -97,31 +97,34 @@ const Admin = () => {
                 <ListItemButton>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: "15px" }}
-                    sx={{ m: "0px" }}
+                    sx={{ m: "0px", color: "white" }}
                     primary="Editar Pacientes"
                     onClick={handleClick}
                   />
                 </ListItemButton>
+                <Divider />
                 <ListItemButton>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: "15px" }}
-                    sx={{ m: "0px" }}
+                    sx={{ m: "0px", color: "white" }}
                     primary="Editar Doctores"
                     onClick={handleClick}
                   />
                 </ListItemButton>
+                <Divider />
                 <ListItemButton>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: "15px" }}
-                    sx={{ m: "0px" }}
+                    sx={{ m: "0px", color: "white" }}
                     primary="Pacientes Eliminados"
                     onClick={handleClick}
                   />
                 </ListItemButton>
+                <Divider />
                 <ListItemButton>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: "15px" }}
-                    sx={{ m: "0px" }}
+                    sx={{ m: "0px", color: "white" }}
                     primary="Doctores Eliminados"
                     onClick={handleClick}
                   />
