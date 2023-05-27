@@ -63,7 +63,8 @@ const getCalendar = async (req, res) => {
 };
 
 const createAppointments = async (req, res) => {
-  const { fecha, hora, descripcion, idDoctor, idPatient } = req.body;
+  let { fecha, hora, descripcion, idDoctor, idPatient } = req.body;
+  idDoctor=Number(idDoctor);
 
   if (!fecha || !hora || !descripcion || !idDoctor || !idPatient) {
     throw new Error(
