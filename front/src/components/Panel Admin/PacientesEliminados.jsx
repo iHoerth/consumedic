@@ -94,22 +94,26 @@ const PacientesEliminados = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center",
-          padding: "1px 0 0px 0",
+          justifyContent: "space-around",
+          aligenItems: "center",
+          padding: "20px",
+          backgroundColor: "#009BFF",
+          borderRadius: "3px",
+          marginRight: "16px",
+          marginLeft: "16px",
+          marginBottom: "30px",
         }}
       >
         <Typography
           style={{
             fontSize: "larger",
             fontWeight: "600",
-            backgroundColor: "#009BFF",
+            color: "white",
+            marginTop: "10px",
           }}
         >
           Listado de Pacientes Eliminados
         </Typography>
-      </Box>
-      <Divider />
-      <Container>
         <Box
           style={{
             display: "flex",
@@ -122,14 +126,20 @@ const PacientesEliminados = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Buscar por nombre"
-            variant="outlined"
             size="small"
-            sx={{ backgroundColor: "#009BFF" }}
+            sx={{
+              border: "2px solid white",
+              borderRadius: "3px",
+              color: "white",
+            }}
             InputProps={{
-              endAdornment: <SearchIcon />,
+              endAdornment: <SearchIcon sx={{ color: "white" }} />,
             }}
           />
         </Box>
+      </Box>
+
+      <Container>
         <TableContainer component={Paper}>
           <Table>
             <TableHead
@@ -163,6 +173,9 @@ const PacientesEliminados = () => {
                       onClick={() => handleClick(paciente)}
                       variant="outlined"
                       size="small"
+                      style={{
+                        marginRight: "40px",
+                      }}
                     >
                       Acceder
                     </Button>
@@ -193,6 +206,7 @@ const PacientesEliminados = () => {
             page={currentPage}
             onChange={handlePageChange}
             size="small"
+            color="primary"
           />
         </Box>
       </Container>
