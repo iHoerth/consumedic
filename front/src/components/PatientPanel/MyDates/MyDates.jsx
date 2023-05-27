@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../../../context/ContextProvider";
 import { DataGrid } from "@material-ui/data-grid";
-import { Box, Skeleton } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 
 const MyDates = () => {
   const { informacion, fetchPatientData } = useContext(Context)[5];
@@ -19,10 +19,7 @@ const MyDates = () => {
     }
   }, [patientDetail.id]);
 
-  console.log("informacion", informacion);
-
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
       field: "fecha",
       headerName: "Fecha",
@@ -109,14 +106,32 @@ const MyDates = () => {
 
   return (
     <>
-      <Box>Este es tu historial de citas</Box>
       {loading ? (
         <div>Cargando</div>
       ) : (
-        <Box sx={{ height: 400, width: "100%" }}>
-          {!informacion.length ? (
+        <Box
+          sx={{
+            height: 400,
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
+              Registro de Citas Médicas del Paciente
+            </Typography>
+          </Box>
+
+          {!informacionData.length ? (
             <>
-              <Skeleton>No datos para mostar</Skeleton>
+              <Skeleton>No hay registros para mostar!</Skeleton>
             </>
           ) : (
             <DataGrid

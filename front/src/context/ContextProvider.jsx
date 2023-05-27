@@ -362,6 +362,17 @@ const ContextProvider = ({ children }) => {
       }
     },
 
+    modifyPatientProfiler: async (patientData) => {
+      await axios.put(`${URL_PATIENTS}/profile`, patientData).data;
+      const data = (await axios(`${URL_PATIENTS}?email=${patientData.email}`))
+        .data;
+
+      setPatientsData((prevState) => ({
+        ...prevState,
+        patientDetail: { ...data },
+      }));
+    },
+
     postOpinions: async (newOpinion) => {
       try {
         const data = (await axios.post(`${URL_OPINIONS}`, newOpinion)).data;
@@ -480,6 +491,15 @@ const ContextProvider = ({ children }) => {
     fetchAppointmentById: async () => {},
 
     setPayedToTrue: async () => {},
+
+    deleteAppointmentById: async (id) => {
+      try {
+        const response = await axios.delete(`${URL_APPOINTMENTS}/${id}`);
+        return response.data;
+      } catch (error) {
+        return error;
+      }
+    },
   });
 
   const [panelPaciente, setPanelPaciente] = useState({
@@ -488,6 +508,7 @@ const ContextProvider = ({ children }) => {
     fetchPatientData: async (id) => {
       const pacientesData = (await axios(`${URL_PERFILPACIENTE}/${id}/doctors`))
         .data;
+
       setPanelPaciente((prevState) => ({
         ...prevState,
         informacion: [...pacientesData],

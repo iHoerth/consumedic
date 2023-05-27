@@ -1,44 +1,51 @@
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../../context/ContextProvider';
-import { useParams } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
-import CardMUI from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
-import LocationOnSharpIcon from '@mui/icons-material/LocationOnSharp';
-import Button from '@mui/material/Button';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import SmsIcon from '@mui/icons-material/Sms';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import PaymentsIcon from '@mui/icons-material/Payments';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import VideocamIcon from '@mui/icons-material/Videocam';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { NavLink } from 'react-router-dom';
-import { useMediaQuery, useTheme, Divider, Snackbar, Alert, AlertTitle } from '@mui/material';
-import { Container, Box } from '@mui/material';
-import NavBar from '../../components/NavBar/NavBar';
-import Footer from '../../components/Footer/Footer';
-import { Modal } from '@mui/material';
-import MailMensajeDoctor from '../../components/Mail/MailMensajeDoctor';
+import { useContext, useEffect, useState } from "react";
+import { Context } from "../../context/ContextProvider";
+import { useParams } from "react-router-dom";
+import { styled } from "@mui/material/styles";
+import CardMUI from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Rating from "@mui/material/Rating";
+import Stack from "@mui/material/Stack";
+import LocationOnSharpIcon from "@mui/icons-material/LocationOnSharp";
+import Button from "@mui/material/Button";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import SmsIcon from "@mui/icons-material/Sms";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import PaymentsIcon from "@mui/icons-material/Payments";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import VideocamIcon from "@mui/icons-material/Videocam";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { NavLink } from "react-router-dom";
+import {
+  useMediaQuery,
+  useTheme,
+  Divider,
+  Snackbar,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
+import { Container, Box } from "@mui/material";
+import NavBar from "../../components/NavBar/NavBar";
+import Footer from "../../components/Footer/Footer";
+import { Modal } from "@mui/material";
+import MailMensajeDoctor from "../../components/Mail/MailMensajeDoctor";
 
-import Calendar from '../../components/Calendar/Calendar';
+import Calendar from "../../components/Calendar/Calendar";
 
-import detail23 from '../../assets/Img/detail23.jpg';
+import detail23 from "../../assets/Img/detail23.jpg";
 
 const StyledRating = styled(Rating)({
-  '& .MuiRating-iconFilled': {
-    color: '#0fb1bc',
+  "& .MuiRating-iconFilled": {
+    color: "#0fb1bc",
   },
 });
 
@@ -89,32 +96,30 @@ const DoctorDetail = () => {
   };
 
   if (loading) {
-    return <div>CARGANDO</div>;
+    return <div>Cargando</div>;
   }
-
-  console.log(doctorDetail);
 
   return (
     <Container
       sx={{
         backgroundImage: `url('${detail23}')`,
-        backgroundPosition: 'bottom',
-        backgroundPositionY: '23%',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        '@media (max-width: 600px)': {
+        backgroundPosition: "bottom",
+        backgroundPositionY: "23%",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        "@media (max-width: 600px)": {
           height: {
-            xs: '50vh',
-            sm: '60vh',
-            md: '70vh',
-            lg: '80vh',
+            xs: "50vh",
+            sm: "60vh",
+            md: "70vh",
+            lg: "80vh",
           },
         },
       }}
@@ -125,7 +130,7 @@ const DoctorDetail = () => {
         autoHideDuration={1500}
         onClose={() => {
           setSnackOk(false);
-          setSnackOkMensaje('');
+          setSnackOkMensaje("");
         }}
       >
         <Alert severity="success" variant="filled">
@@ -138,7 +143,7 @@ const DoctorDetail = () => {
         autoHideDuration={1500}
         onClose={() => {
           setSnackFail(false);
-          setSnackFailMensaje('');
+          setSnackFailMensaje("");
         }}
       >
         <Alert severity="error" variant="filled">
@@ -149,24 +154,24 @@ const DoctorDetail = () => {
       <CardMUI
         sx={{
           typography: theme.typography,
-          mt: '10px',
-          mb: '30px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          marginTop: '150px',
-          marginBottom: '10%',
-          borderRadius: '15px',
+          mt: "10px",
+          mb: "30px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "150px",
+          marginBottom: "10%",
+          borderRadius: "15px",
         }}
       >
-        <Box display={{ display: 'flex' }}>
+        <Box display={{ display: "flex" }}>
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              ml: '10px',
-              mr: '5px',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              ml: "10px",
+              mr: "5px",
             }}
           >
             <IconButton sx={{ p: 2 }}>
@@ -180,14 +185,18 @@ const DoctorDetail = () => {
               />
             </IconButton>
             <CardHeader
-              title={doctorDetail.nombre + ' ' + doctorDetail.apellido}
+              title={doctorDetail.nombre + " " + doctorDetail.apellido}
               subheader={
                 doctorDetail.Especialidads?.length &&
                 doctorDetail.Especialidads.map((item, index) => (
                   <span key={index}>{`${item.name} `}</span>
                 ))
               }
-              sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             />
             <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
               {doctorDetail.Descripcion}
@@ -217,11 +226,11 @@ const DoctorDetail = () => {
 
             <Box
               sx={{
-                display: 'flex',
+                display: "flex",
                 gap: 2,
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                mb: '10px',
+                alignItems: "center",
+                flexWrap: "wrap",
+                mb: "10px",
               }}
             >
               {/* <Button
@@ -235,7 +244,12 @@ const DoctorDetail = () => {
                   Pedir turno
                 </Typography>
               </Button> */}
-              <Button color="primary" variant="outlined" size="md" onClick={() => setModal(true)}>
+              <Button
+                color="primary"
+                variant="outlined"
+                size="md"
+                onClick={() => setModal(true)}
+              >
                 <SmsIcon color="primary" />
                 <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
                   Enviar mensaje
@@ -245,15 +259,15 @@ const DoctorDetail = () => {
               <Modal open={modal}>
                 <Box
                   sx={{
-                    position: 'absolute',
-                    width: '60%',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    bgcolor: 'background.paper',
+                    position: "absolute",
+                    width: "60%",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "background.paper",
                     boxShadow: 24,
                     p: 4,
-                    outline: 'none',
+                    outline: "none",
                   }}
                 >
                   <MailMensajeDoctor emailMedico={doctorDetail.email} />
@@ -263,39 +277,90 @@ const DoctorDetail = () => {
           </Box>
           <Divider orientation="vertical" flexItem />
           <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Box sx={{ display: 'block', mt: '30px', mr: '15px', ml: '5px' }}>
-                <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                  <LocationOnSharpIcon sx={{ marginRight: '0.5rem' }} color="primary" />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Box sx={{ display: "block", mt: "30px", mr: "15px", ml: "5px" }}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ p: 1 }}
+                >
+                  <LocationOnSharpIcon
+                    sx={{ marginRight: "0.5rem" }}
+                    color="primary"
+                  />
                   {doctorDetail.direccion}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                  <VideocamIcon sx={{ marginRight: '0.5rem' }} color="primary" />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ p: 1 }}
+                >
+                  <VideocamIcon
+                    sx={{ marginRight: "0.5rem" }}
+                    color="primary"
+                  />
                   Consulta en linea: ${doctorDetail.precio}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                  <LocalPhoneIcon sx={{ marginRight: '0.5rem' }} color="primary" />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ p: 1 }}
+                >
+                  <LocalPhoneIcon
+                    sx={{ marginRight: "0.5rem" }}
+                    color="primary"
+                  />
                   {doctorDetail.telefono}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                  <PeopleAltIcon sx={{ marginRight: '0.5rem' }} color="primary" />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ p: 1 }}
+                >
+                  <PeopleAltIcon
+                    sx={{ marginRight: "0.5rem" }}
+                    color="primary"
+                  />
                   {doctorDetail.ObraSocials?.length &&
                     doctorDetail.ObraSocials.map((item, index) => (
                       <span key={index}>Obra sociales: {item.nombre}</span>
                     ))}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                  <PaymentsIcon sx={{ marginRight: '0.5rem' }} color="primary" />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ p: 1 }}
+                >
+                  <PaymentsIcon
+                    sx={{ marginRight: "0.5rem" }}
+                    color="primary"
+                  />
                   Pagos: Mercado Pago
                 </Typography>
                 <NavLink to="https://www.linkedin.com" target="_blank">
-                  <Typography variant="body2" color="text.secondary" sx={{ p: 1 }}>
-                    <LinkedInIcon sx={{ marginRight: '0.5rem' }} color="primary" />
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ p: 1 }}
+                  >
+                    <LinkedInIcon
+                      sx={{ marginRight: "0.5rem" }}
+                      color="primary"
+                    />
                     LinkedIn
                   </Typography>
                 </NavLink>
 
-                <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+                <Accordion
+                  expanded={expanded === "panel2"}
+                  onChange={handleChange("panel2")}
+                >
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon color="primary" />}
                     aria-controls="panel2bh-content"
@@ -304,7 +369,7 @@ const DoctorDetail = () => {
                     <Typography
                       variant="body2"
                       color="text.secondary"
-                      sx={{ width: '33%', flexShrink: 0 }}
+                      sx={{ width: "33%", flexShrink: 0 }}
                     >
                       Formacion
                     </Typography>
@@ -317,7 +382,7 @@ const DoctorDetail = () => {
                 </Accordion>
               </Box>
               <Divider orientation="vertical" flexItem />
-              <Box sx={{ ml: '15px', mt: '20px' }}>
+              <Box sx={{ ml: "15px", mt: "20px" }}>
                 <Calendar id={id} calendar={doctorDetail.calendar} />
               </Box>
             </Box>
