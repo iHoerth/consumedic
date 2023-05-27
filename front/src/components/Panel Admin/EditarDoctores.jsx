@@ -152,7 +152,7 @@ const EditarDoctores = () => {
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">ID</TableCell>
                 <TableCell align="center">Teléfono</TableCell>
-                <TableCell align="center">Ver Detalles</TableCell>
+                <TableCell align="center">Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
