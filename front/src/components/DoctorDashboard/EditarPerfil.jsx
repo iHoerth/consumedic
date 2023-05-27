@@ -42,6 +42,7 @@ const EditarPerfil = ({doctorDetail1}) => {
     const [fileSize, setFileSize]=useState()
     const [alert, setAlert] = useState(false)
     const [snack, setSnack]=useState(false)
+    const [snackFail, setSnackFail]=useState(false)
     const {vista, setVista} = useContext(Context)[3];
     let respuesta=0;
     useEffect(() => {
@@ -267,8 +268,12 @@ const EditarPerfil = ({doctorDetail1}) => {
 
     const handleSubmit = async () => {
         console.log(datos);
-        await putDoctor(datos)
-        setSnack(true)    
+        try {
+          await putDoctor(datos)
+          setSnack(true)    
+        } catch (error) {
+          setSnackFail(false)
+        }
     }
    
     if(loading) return (<Loading />)
@@ -284,6 +289,16 @@ const EditarPerfil = ({doctorDetail1}) => {
                 <Alert severity="success" variant="filled">
                     <AlertTitle>Mensaje Exitoso</AlertTitle>
                     Los cambios de su Perfil han sido suscriptos
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={snackFail}
+                autoHideDuration={1500}
+                onClose={()=>setSnackFail(false)}
+            >
+                <Alert severity="error" variant="filled">
+                    <AlertTitle>Mensaje de Error</AlertTitle>
+                    No se han podido publicar los Cambios
                 </Alert>
             </Snackbar>
             <Stack alignItems="center">
