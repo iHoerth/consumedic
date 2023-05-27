@@ -247,6 +247,8 @@ const EditarPerfil = ({doctorDetail1}) => {
           let fileSize = reader.result.length;
           fileSize = (fileSize/1024/1024).toFixed(2);
           setFileSize(fileSize)
+          if(fileSize>1)setAlert(true)
+          else setAlert(false)
         };
 
         reader.onloadend = () => {
@@ -585,7 +587,7 @@ const EditarPerfil = ({doctorDetail1}) => {
                     </label>
                 </Box>
                 <Typography sx={{ml:"2%", mb:"10px"}}>{fileName}</Typography>
-                <Typography sx={{ml:"2%", mb:"10px"}}>{fileSize?`size: ${fileSize} kb`:null}</Typography>
+                <Typography sx={{ml:"2%", mb:"10px"}}>{fileSize?`size: ${fileSize} mb`:null}</Typography>
                 <Typography sx={{ml:"2%", mb:"10px", color:"red"}}>{alert?"El archivo debe tener menos de 1mb":null}</Typography>
 
                 <DialogActions>

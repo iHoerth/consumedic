@@ -45,6 +45,8 @@ const HistorialPaciente = () => {
     const [title, setTitle] = useState("")
     const [snackRespuesta, setSnackRespuesta]=useState(false)
     const [snackDocumento, setSnackDocumento]=useState(false)
+    const [fileSize, setFileSize]=useState()
+    const [alert, setAlert] = useState(false)
 
 
     const [files64, setFiles64]=useState("")
@@ -125,6 +127,8 @@ const HistorialPaciente = () => {
         setRespuesta("")
         fetchDoctorByEmail(doctorDetail.email)
         fetchDoctorByEmail(session.email)
+        setFileSize()
+
 
     }
 
@@ -136,10 +140,22 @@ const HistorialPaciente = () => {
         setFilesToBase(file)
     };
     const setFilesToBase = (file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            setFiles64(reader.result)
+        try {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                let fileSize = reader.result.length;
+                fileSize = (fileSize/1024/1024).toFixed(2);
+                setFileSize(fileSize)
+                if(fileSize>1)setAlert(true)
+                else setAlert(false)
+              };
+            reader.onloadend = () => {
+                setFiles64(reader.result)
+            }
+            
+        } catch (error) {
+            
         }
     };
 
@@ -318,10 +334,13 @@ const HistorialPaciente = () => {
                                                     </Button>
                                                 </label>
                                             </Box>
-                                            <Typography sx={{ml:"38%", mb:"10px"}}>{fileName}</Typography>
+                                            <Typography sx={{ml:"2%", mb:"10px"}}>{fileName}</Typography>
+                                            <Typography sx={{ml:"2%", mb:"10px"}}>{fileSize?`size: ${fileSize} mb`:null}</Typography>
+                                            <Typography sx={{ml:"2%", mb:"10px", color:"red"}}>{alert?"El archivo debe tener menos de 1mb":null}</Typography>
+
                                             <DialogActions>
                                                 <Button onClick={handleClose}>Cancelar</Button>
-                                                <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose} disabled={title===""? true :(files64===""?true:false)}>Registrar</Button>
+                                                <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose} disabled={title===""? true :(files64===""?true:(alert?true:false))}>Registrar</Button>
                                             </DialogActions>
                                         </Dialog>
                                     </TableCell>
