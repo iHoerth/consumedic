@@ -49,6 +49,7 @@ const CreateDoctor = () => {
   const location = useLocation();
   const [fileName, setFileName] = useState("") 
   const [open, setOpen] = useState()
+  const [fileSize, setFileSize] = useState()
   const [form, setForm] = useState({
     dni: "",
     numeroMatricula: "",
@@ -153,6 +154,9 @@ const CreateDoctor = () => {
     if (!form.fotoMatricula) {
       errors.fotoMatricula = "La foto de perfil es requerida";
     }
+    if (fileSize>1) {
+      errors.fotoMatricula = "La foto debe tener menos de 1mb";
+    }
     if (!form.idEspecialidad) {
       errors.idEspecialidad = "El campo especialidad es requerido";
     }
@@ -220,6 +224,12 @@ const CreateDoctor = () => {
     const reader = new FileReader();
     try {
       reader.readAsDataURL(file);
+      reader.onload = () => {
+        let fileSize = reader.result.length;
+        fileSize = (fileSize/1024).toFixed(2);
+        setFileSize(fileSize)
+        console.log(`File size: ${fileSize} kb`);
+      };
       reader.onloadend = () => {
         setForm({
           ...form,

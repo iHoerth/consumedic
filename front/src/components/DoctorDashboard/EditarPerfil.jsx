@@ -245,11 +245,8 @@ const EditarPerfil = ({doctorDetail1}) => {
 
         reader.onload = () => {
           let fileSize = reader.result.length;
-          fileSize = (fileSize/1024).toFixed(2);
+          fileSize = (fileSize/1024/1024).toFixed(2);
           setFileSize(fileSize)
-          if(fileSize>1*1024) setAlert(true)
-          else setAlert(false)
-          console.log(`File size: ${fileSize} kb`);
         };
 
         reader.onloadend = () => {
