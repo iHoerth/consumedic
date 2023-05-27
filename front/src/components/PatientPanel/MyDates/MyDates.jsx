@@ -129,7 +129,7 @@ const MyDates = () => {
             </Typography>
           </Box>
 
-          {!informacion.length ? (
+          {!informacionData.length ? (
             <>
               <Skeleton>No hay registros para mostar!</Skeleton>
             </>

@@ -6,7 +6,6 @@ import ListItemText from "@mui/material/ListItemText";
 
 import MyDoctors from "../MyDoctors/MyDoctors";
 import MyDates from "../MyDates/MyDates";
-import MyDocuments from "../MyDocuments/MyDocuments";
 import EditProfile from "../EditProfile/EditProfile";
 import MyOpinions from "../MyOpinions/MyOpinions";
 import { useTheme } from "@mui/material";
@@ -24,13 +23,7 @@ const PatientData = () => {
     setValue(newValue);
   };
 
-  const views = [
-    "Mis Medicos",
-    "Mis Citas",
-    "Mis Documentos",
-    "Editar Perfil",
-    "Ver Opiniones",
-  ];
+  const views = ["Mis Medicos", "Mis Citas", "Editar Perfil", "Ver Opiniones"];
   const handleClick = (event) => {
     const index = views.findIndex((el) => el === event.target.innerHTML);
     console.log(index);
@@ -99,18 +92,6 @@ const PatientData = () => {
                     fontWeight: "500",
                   }}
                   sx={{ m: "0px", color: "white", padding: "10px" }}
-                  primary="Mis Documentos"
-                  onClick={handleClick}
-                />
-              </ListItemButton>
-              <Divider />
-              <ListItemButton>
-                <ListItemText
-                  primaryTypographyProps={{
-                    fontSize: "20px",
-                    fontWeight: "500",
-                  }}
-                  sx={{ m: "0px", color: "white", padding: "10px" }}
                   primary="Editar Perfil"
                   onClick={handleClick}
                 />
@@ -146,10 +127,8 @@ const PatientData = () => {
             ) : vista === 1 ? (
               <MyDates />
             ) : vista === 2 ? (
-              <MyDocuments />
-            ) : vista === 3 ? (
               <EditProfile />
-            ) : vista === 4 ? (
+            ) : vista === 3 ? (
               <MyOpinions />
             ) : null}
           </Box>
