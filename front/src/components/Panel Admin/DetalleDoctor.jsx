@@ -7,62 +7,46 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  Typography,
-  Divider,
+  // Typography,
+  // Divider,
   Button,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
-import KeyIcon from "@mui/icons-material/Key";
+ import KeyIcon from "@mui/icons-material/Key";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import Grid3x3Icon from "@mui/icons-material/Grid3x3";
-const DetallePaciente = () => {
-  const {
-    restorePatient,
-    fetchPatients,
-    patientDetail,
-    fetchPatientByEmail,
-    deletePatient,
-    fetchSoftDeletedPatient,
-  } = useContext(Context)[1];
+// import { useTheme } from "@emotion/react";
+
+const DetalleDoctor = () => {
+  // const theme = useTheme();
+  // const { session } = useContext(Context[2]);
+  const { fetchDoctors, doctorDetail, fetchDoctorByEmail, deleteDoctor } =
+    useContext(Context)[0];
   const { setVista, email } = useContext(Context)[6];
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!patientDetail) {
-      fetchPatientByEmail(email);
+    if (!doctorDetail) {
+      fetchDoctorByEmail(email);
     } else {
       setLoading(false);
     }
-  }, [patientDetail]);
+  }, [doctorDetail]);
 
   const handleClickDelete = (id) => {
-    if (patientDetail.deletedAt) {
-      restorePatient(id)
-        .then(() => {
-          // Eliminación exitosa, actualizar la lista de pacientes
-          fetchSoftDeletedPatient();
-          fetchPatients();
-          alert("El paciente ha sido restaurado exitosamente.");
-        })
-        .catch((error) => {
-          console.log("Error al restaurar el paciente:", error);
-          // Manejar el error de eliminación del paciente
-        });
-    } else {
-      deletePatient(id)
-        .then(() => {
-          // Eliminación exitosa, actualizar la lista de pacientes
-          fetchPatients();
-          alert("El paciente ha sido eliminado exitosamente.");
-        })
-        .catch((error) => {
-          console.log("Error al eliminar el paciente:", error);
-          // Manejar el error de eliminación del paciente
-        });
-    }
+    deleteDoctor(id)
+      .then(() => {
+        // Eliminación exitosa, actualizar la lista de pacientes
+        fetchDoctors();
+        alert("La eliminacion del doctor fue exitosa")
+      })
+      .catch((error) => {
+        console.log("Error al eliminar el doctor:", error);
+        // Manejar el error de eliminación del paciente
+      });
   };
 
   return (
@@ -84,7 +68,7 @@ const DetallePaciente = () => {
           </ListItemAvatar>
           <ListItemText
             secondary="Nombre y Apellido"
-            primary={`${patientDetail.nombre} ${patientDetail.apellido}`}
+            primary={`${doctorDetail.nombre} ${doctorDetail.apellido}`}
           />
         </ListItem>
         <ListItem>
@@ -95,7 +79,7 @@ const DetallePaciente = () => {
           </ListItemAvatar>
           <ListItemText
             secondary="Teléfono"
-            primary={`${patientDetail.telefono}`}
+            primary={`${doctorDetail.telefono}`}
           />
         </ListItem>
         <ListItem>
@@ -106,18 +90,18 @@ const DetallePaciente = () => {
           </ListItemAvatar>
           <ListItemText
             secondary="Correo Electrónico"
-            primary={`${patientDetail.email}`}
+            primary={`${doctorDetail.email}`}
           />
         </ListItem>
 
-        <ListItem>
+         <ListItem>
           <ListItemAvatar>
             <Avatar>
               <KeyIcon />
             </Avatar>
           </ListItemAvatar>
           <ListItemText secondary="password" primary="****************" />
-        </ListItem>
+        </ListItem> 
 
         <ListItem>
           <ListItemAvatar>
@@ -125,7 +109,7 @@ const DetallePaciente = () => {
               <QuestionMarkIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText secondary="admin?" primary={`${patientDetail.admin}`} />
+          <ListItemText secondary="admin?" primary={`${doctorDetail.admin}`} />
         </ListItem>
 
         <ListItem>
@@ -134,9 +118,20 @@ const DetallePaciente = () => {
               <Grid3x3Icon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText secondary="id" primary={`${patientDetail.id}`} />
+          <ListItemText secondary="id" primary={`${doctorDetail.id}`} />
         </ListItem>
+
+        <ListItem>
+  <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center',marginLeft: 'auto', marginRight: '0',marginTop: '-430px' }}>
+    <img src={doctorDetail.imagen} alt="Imagen del doctor" style={{ maxWidth: '100%', marginLeft: 'auto', marginRight: '0' }} />
+  </Box>
+</ListItem>
+
+
+
+            
       </List>
+
       <Box
         display="flex"
         justifyContent="center"
@@ -145,25 +140,25 @@ const DetallePaciente = () => {
       >
         <Button
           variant="outlined"
-          onClick={() => setVista(patientDetail.deletedAt === null ? 1 : 3)}
+          onClick={() => setVista(2)}
           style={{ marginRight: "10px" }}
         >
           Volver
         </Button>
 
         <Button
-          id={patientDetail.id}
+          id={doctorDetail.id}
           variant="outlined"
           onClick={() => {
-            handleClickDelete(patientDetail.id);
-            setVista(1);
+            handleClickDelete(doctorDetail.id);
+            setVista(2);
           }}
         >
-          {patientDetail.deletedAt ? "Restaurar" : "Eliminar"}
+          Eliminar
         </Button>
       </Box>
     </>
   );
 };
 
-export default DetallePaciente;
+export default DetalleDoctor;

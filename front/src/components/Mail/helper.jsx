@@ -3,7 +3,6 @@ import axios from "axios";
 const URL_MAIL = process.env.REACT_APP_URL_MAIL;
 
 export const sendMail = (data) => {
-  console.log(data);
   return axios
     .post(URL_MAIL, data, {
       headers: {
@@ -20,7 +19,6 @@ export const sendMail = (data) => {
 };
 
 export const sendMailToPaciente = (data) => {
-  console.log(data);
   return axios
     .post(`${URL_MAIL}/paciente`, data, {
       headers: {
@@ -37,7 +35,6 @@ export const sendMailToPaciente = (data) => {
 };
 
 export const sendMailRespuesta = (data) => {
-  console.log(data);
   return axios
     .post(`${URL_MAIL}/respuesta`, data, {
       headers: {
@@ -54,7 +51,6 @@ export const sendMailRespuesta = (data) => {
 };
 
 export const sendMailDocumento = (data) => {
-  console.log(data);
   return axios
     .post(`${URL_MAIL}/documento`, data, {
       headers: {

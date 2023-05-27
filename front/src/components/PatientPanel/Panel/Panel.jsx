@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import { Context } from "../../../context/ContextProvider";
-import Loading from "../../Loading/Loading";
 import PatientData from "../PatientData/PatientData";
 import {
   Box,
@@ -10,7 +9,6 @@ import {
   CardContent,
   Typography,
   Divider,
-  Skeleton,
 } from "@mui/material";
 
 const Panel = () => {

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/ContextProvider";
-import TextField from "@mui/material/TextField";
+import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import {
   Table,
@@ -19,50 +19,58 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const EditarPacientes = () => {
-  const { patients, fetchPatients, fetchPatientByEmail, deletePatient } =
-    useContext(Context)[1];
+const PacientesEliminados = () => {
+  const {
+    fetchPatients,
+    deletedPatient,
+    fetchSoftDeletedPatient,
+    fetchPatientByEmail,
+    restorePatient,
+    setPaciente,
+  } = useContext(Context)[1];
   const { setVista, setEmail } = useContext(Context)[6];
-
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-
   const [fetched, setfetched] = useState(false);
+
   useEffect(() => {
-    if (patients.length === 0 && !fetched) {
-      fetchPatients();
+    if (deletedPatient.length === 0 && !fetched) {
+      fetchSoftDeletedPatient();
+
       setfetched(true);
     } else {
       setLoading(false);
     }
-  }, [patients]);
+  }, [...deletedPatient]);
 
   useEffect(() => {
-    const filtered = patients.filter((paciente) =>
+    const filtered = deletedPatient.filter((paciente) =>
       paciente.nombre.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredPatients(filtered);
-  }, [searchQuery, patients]);
+  }, [searchQuery, deletedPatient]);
 
-  const handleClick = (event) => {
-    const email = event.target.id;
-    fetchPatientByEmail(email);
-    setEmail(email);
+  const handleClick = (paciente) => {
+    // const email = event.target.id;
+    // fetchPatientByEmail(email);
+    // setEmail(email);
+    setPaciente(paciente);
     setVista(5);
   };
 
-  const handleClickDelete = (id) => {
-    deletePatient(id)
+  const handleClickRestore = (id) => {
+    restorePatient(id)
       .then(() => {
         // Eliminación exitosa, actualizar la lista de pacientes
+        fetchSoftDeletedPatient();
         fetchPatients();
-        alert("El paciente ha sido eliminado exitosamente.");
+        alert("El paciente ha sido restaurado exitosamente.");
       })
       .catch((error) => {
-        console.log("Error al eliminar el paciente:", error);
+        console.log("Error al restaurar el paciente:", error);
         // Manejar el error de eliminación del paciente
       });
   };
@@ -97,7 +105,7 @@ const EditarPacientes = () => {
             backgroundColor: "#009BFF",
           }}
         >
-          Listado de Pacientes
+          Listado de Pacientes Eliminados
         </Typography>
       </Box>
       <Divider />
@@ -152,7 +160,7 @@ const EditarPacientes = () => {
                   <TableCell align="center">
                     <Button
                       id={paciente.email}
-                      onClick={handleClick}
+                      onClick={() => handleClick(paciente)}
                       variant="outlined"
                       size="small"
                     >
@@ -160,12 +168,12 @@ const EditarPacientes = () => {
                     </Button>
                     <Button
                       id={paciente.id}
-                      onClick={() => handleClickDelete(paciente.id)}
+                      onClick={() => handleClickRestore(paciente.id)}
                       variant="outlined"
                       color="warning"
                       size="small"
                     >
-                      X
+                      Restaurar
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -191,5 +199,4 @@ const EditarPacientes = () => {
     </>
   );
 };
-
-export default EditarPacientes;
+export default PacientesEliminados;

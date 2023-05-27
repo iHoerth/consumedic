@@ -23,7 +23,6 @@ const Footer = () => {
 
   const handleNavigation = (event, page) => {
     let newHeight = 0;
-    console.log(page);
     switch (page) {
       case 'home':
         newHeight = 0;
@@ -44,8 +43,9 @@ const Footer = () => {
   };
 
   return (
-    <Box
+    <AppBar
       sx={{
+        position:'relative',
         bgcolor: theme.palette.primary.main,
         width: '100%',
         display: 'flex',
@@ -70,8 +70,8 @@ const Footer = () => {
         >
           <BottomNavigationAction
             label="Incio"
-            color='white'
-            showLabel='true'
+            color="white"
+            showLabel="true"
             icon={
               <Home
                 sx={{
@@ -197,7 +197,7 @@ const Footer = () => {
           Consumedic. Encontrá tu especialista y pedí turno`}
         </Typography>
       </Box>
-    </Box>
+    </AppBar>
   );
 };
 

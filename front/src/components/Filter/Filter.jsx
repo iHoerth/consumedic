@@ -34,7 +34,6 @@ const Filter = ({ handlePageChange }) => {
     for (const key in FILTER_TYPES) {
       // Itero en las keys de mi Filter types, para buscar en el estado las tuplas.
       // Las que tengan el flag en true, entran y comparan su objeto value contra el del current doc
-      console.log(selectedFilters[FILTER_TYPES[key]], `tupla de filtros`);
       const [flag, value] = selectedFilters[FILTER_TYPES[key]];
       if (flag) {
         newDoctors = newDoctors.filter((doc) =>
@@ -43,7 +42,6 @@ const Filter = ({ handlePageChange }) => {
         );
       }
     }
-    console.log(`NEW FILTER \n`, newDoctors);
     // 'despacho' la accion que setea el nuevo filtro de doctores
     filterDoctors(newDoctors);
     // lo retorno por si llegara a ser necesario
@@ -52,7 +50,6 @@ const Filter = ({ handlePageChange }) => {
 
   useEffect(() => {
     handleNewFilters();
-    console.log(`*USE EFFECT CALL* \n`);
   }, [selectedFilters]);
 
   return (
@@ -61,18 +58,33 @@ const Filter = ({ handlePageChange }) => {
       size="large"
       component="div"
       display="flex"
-      flexDirection="row"
-      justifyContent='center'
+      justifyContent="center"
       gap="20px"
       sx={{
-        width: {
-          desktop: '600px',
+        flex:{
+          mobile: 2,
+          tablet: 4,
+          laptop: 4,
+          desktop: 4,
         },
+        flexDirection: {
+          mobile: 'column',
+          tablet: 'row',
+          laptop: 'row',
+          desktop: 'row',
+        },
+        width: '100%'
       }}
     >
       <Autocomplete
         sx={{
-          width: 240,
+          // width: {
+          //   mobile: '100%',
+          //   tablet: 240,
+          //   laptop: 240,
+          //   desktop: 240,
+          // },
+          flex: 1,
         }}
         disablePortal
         id="combo-box-demo"
@@ -102,7 +114,15 @@ const Filter = ({ handlePageChange }) => {
         }
       />
       <Autocomplete
-        sx={{ width: 240 }}
+        sx={{
+          // width: {
+          //   mobile: '100%',
+          //   tablet: 240,
+          //   laptop: 240,
+          //   desktop: 240,
+          // },
+          flex: 1,
+        }}
         disablePortal
         id="combo-box-demo"
         options={socialSecurity}
