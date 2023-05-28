@@ -143,16 +143,42 @@ const MyDates = () => {
     );
   };
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={informacionData}
-        columns={columns}
-        components={{
-          Pagination: CustomPagination,
-        }}
-        pagination
-      />
-    </div>
+    <>
+      {loading ? (
+        <div>Cargando</div>
+      ) : (
+        <Box sx={{ height: 400, width: "100%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
+              Historial de Citas
+            </Typography>
+          </Box>
+
+          {!informacion.length ? (
+            <>
+              <Skeleton>No hay registros para mostrar</Skeleton>
+            </>
+          ) : (
+            <>
+              <DataGrid
+                rows={informacionData}
+                columns={columns}
+                components={{
+                  Pagination: CustomPagination,
+                }}
+                pagination
+              />
+            </>
+          )}
+        </Box>
+      )}
+    </>
   );
 };
 
