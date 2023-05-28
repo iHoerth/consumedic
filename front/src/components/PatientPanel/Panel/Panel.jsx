@@ -26,7 +26,7 @@ const Panel = () => {
           flexDirection: "column",
           justifyContent: "normal",
           alignItems: "stretch",
-          height: "55rem",
+          height: "47rem",
           borderRadius: "10px",
           width: "100%",
         }}
