@@ -78,37 +78,37 @@ const MyDoctors = () => {
       field: "nombre",
       headerName: "Nombre",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "apellido",
       headerName: "Apellido",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "especialidad",
       headerName: "Especialidad",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "telefono",
       headerName: "Telefono",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "email",
       headerName: "Email",
       width: 220,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "opinion",
       headerName: "Agregar Opinión",
       width: 180,
-      editable: true,
+      disableColumnMenu: true,
       renderCell: (params) => (
         <Icon>
           {opinionsSent[params.row.id] ? (
@@ -133,7 +133,7 @@ const MyDoctors = () => {
       field: "eliminar",
       headerName: "Eliminar",
       width: 150,
-      editable: false,
+      disableColumnMenu: true,
       renderCell: (params) => (
         <Button
           variant="outlined"
@@ -238,7 +238,21 @@ const MyDoctors = () => {
         alert(error.message);
       });
   };
-
+  const CustomPagination = () => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          padding: "8px",
+        }}
+      >
+        <span style={{ marginRight: "8px" }}>Page:</span>
+        <button disabled>1</button>
+      </div>
+    );
+  };
   return (
     <>
       {loading ? (
@@ -359,12 +373,12 @@ const MyDoctors = () => {
                 </Box>
               </Modal>
               <DataGrid
-                disableSelectionOnClick
                 rows={informacionData}
                 columns={columns}
-                pageSize={5}
-                checkboxSelection
-                rowsPerPageOptions={[5, 10, 20]}
+                components={{
+                  Pagination: CustomPagination,
+                }}
+                pagination
               />
             </>
           )}
