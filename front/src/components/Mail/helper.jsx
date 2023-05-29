@@ -65,3 +65,21 @@ export const sendMailDocumento = (data) => {
       return error;
     });
 };
+
+
+
+export const sendMailCita = (data) => {
+  return axios
+    .post(`${URL_MAIL}/cita`, data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};

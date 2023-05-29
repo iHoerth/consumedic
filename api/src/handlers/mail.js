@@ -2,6 +2,7 @@ const { createMail } = require("../controllers/mail/createMail");
 const { sendMailToPaciente } = require("../controllers/mail/sendMailToPaciente")
 const { sendMailRespuesta } = require("../controllers/mail/sendMailRespuesta")
 const { sendMailDocumento } = require("../controllers/mail/sendMailDocumento")
+const { sendMailCita } = require("../controllers/mail/sendMailCita")
 
 const postMail = async (req, res) => {
   try {
@@ -40,9 +41,21 @@ const postMailRespuesta = async (req, res) => {
 
 const postMailDocumento = async (req, res) => {
   try {
-    const { nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectDocumento, messageDocumento, title} = req.body;
     console.log(req.body);
+    const { nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectDocumento, messageDocumento, title} = req.body;
     await sendMailDocumento(nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectDocumento, messageDocumento, title);
+
+    res.status(200).json({ message: "Mensaje enviado correctamente" });
+  } catch (error) {
+    res.status(500).json({ message: "Error al enviar el mensaje" });
+  }
+};
+
+const postMailCita = async (req, res) => {
+  try {
+    const { fecha, hora, comentario, nombreDoctor, apellidoDoctor, direccion, email, emailPaciente } = req.body;
+    console.log(req.body);
+    await sendMailCita(fecha, hora, comentario, nombreDoctor, apellidoDoctor, direccion, email, emailPaciente);
 
     res.status(200).json({ message: "Mensaje enviado correctamente" });
   } catch (error) {
@@ -54,5 +67,6 @@ module.exports = {
   postMail,
   postMailToPaciente,
   postMailRespuesta,
-  postMailDocumento
+  postMailDocumento,
+  postMailCita
 };
