@@ -187,6 +187,11 @@ const ContextProvider = ({ children }) => {
         return { sessionData, doctorData };
       } catch (error) {
         console.log(error);
+        setDoctorsData((prevState) => ({
+          ...prevState,
+          snackFail: true,
+          snackFailMensaje: "No se encuentra usuario con ese email y/o contraseña",
+        }));
       }
     },
     putDoctor: async (doctorNewDetails) => {

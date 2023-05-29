@@ -66,6 +66,8 @@ const createAppointments = async (req, res) => {
   let { fecha, hora, descripcion, idDoctor, idPatient } = req.body;
   idDoctor=Number(idDoctor);
 
+  console.log(req.body);
+
   if (!fecha || !hora || !descripcion || !idDoctor || !idPatient) {
     throw new Error(
       "Faltan datos; Debe proporcionar: fecha, hora, descripcion, idDoctor, idPaciente"

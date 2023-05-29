@@ -47,7 +47,7 @@ const App = () => {
               <Route path="/perfilMedico" element={<DoctorDashboard />} />
               <Route path="/search" element={<DoctorsList />} />
               <Route path="/detail/:id" element={<DoctorDetail />} />
-              <Route path="/turno/:id/:fecha/:hora/:estado/:comentario" element={<Appointment />} />
+              <Route path="/turno/:id/:idPaciente/:fecha/:hora/:estado/:comentario" element={<Appointment />} />
 
               <Route path="/admin" element={<Admin/>} />
 
@@ -66,7 +66,7 @@ const App = () => {
               <Route path="/patientpanel/" element={<PatientPanel />} />
               <Route path="/search" element={<DoctorsList />} />
               <Route path="/detail/:id" element={<DoctorDetail />} />
-              <Route path="/turno/:id/:fecha/:hora/:estado/:comentario" element={<Appointment />}  />
+              <Route path="/turno/:id/:idPaciente/:fecha/:hora/:estado/:comentario" element={<Appointment />}  />
 
               <Route path="/admin" element={<Admin/>} />
 
@@ -90,7 +90,7 @@ const App = () => {
 
             <Route path="/createDoctor" element={<CreateDoctor />} />
             <Route path="/patientpanel/" element={<PatientPanel />} />
-            <Route path="/turno/:id/:fecha/:hora/:estado/:comentario" element={<Appointment />} />
+            <Route path="/turno/:id/:idPaciente/:fecha/:hora/:estado/:comentario" element={<Appointment />} />
             <Route path="*" element={<Error404 />} />
             <Route path="/loading" element={<Loading />} />
             <Route path="/perfilMedico" element={<DoctorDashboard />} />

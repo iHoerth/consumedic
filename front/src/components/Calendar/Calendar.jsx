@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useContext } from 'react';
+import { Context } from '../../context/ContextProvider';
 import { useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -19,6 +21,7 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 
 const Calendar = ({ id, calendar }) => {
   const theme = useTheme();
+  const { patientDetail } = useContext(Context)[1];
   const meses = [
     "ene",
     "feb",
@@ -185,7 +188,7 @@ const Calendar = ({ id, calendar }) => {
                                   textDecoration: "none",
                                   color: "#0752df",
                                 }}
-                                to={`/turno/${id}/${dia.fecha}/${turno.hora}/reserva/0`}
+                                to={`/turno/${id}/${patientDetail.id}/${dia.fecha}/${turno.hora}/reserva/0`}
                               >{`${hh}:${mm}`}</Link>
                               {/* <Typography>{`${hh}:${mm}`}</Typography> */}
                             </ListItemButton>
