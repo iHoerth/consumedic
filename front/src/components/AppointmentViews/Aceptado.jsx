@@ -67,18 +67,7 @@ const Aceptado = () => {
       await fetchPatientByEmail(session.email)
       await fetchDoctorById(id)
       await postAppointment(datos)
-      const datosEmail={
-        fecha: fecha,
-        hora: hora,
-        comentario: comentario,
-        nombreDoctor: doctorDetail.nombre,
-        apellidoDoctor: doctorDetail.apellido,
-        direccion: doctorDetail.direccion,
-        email: doctorDetail.email,
-        emailPaciente: session.email,
-      }
-      console.log(datosEmail);
-      await sendMailCita(datosEmail)
+      await sendMailCita(datos)
       return datos
 
     }

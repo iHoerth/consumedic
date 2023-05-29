@@ -1,6 +1,7 @@
 const nodeMailer = require("nodemailer");
 
-const sendMailCita = async (fecha, hora, comentario, nombreDoctor, apellidoDoctor, direccion, email, emailPaciente) => {
+const sendMailCita = async ({fecha, hora, comentario, nombreDoctor, apellidoDoctor, direccion, email, emailPaciente}) => {
+  
   let transporter = nodeMailer.createTransport({
     service: "gmail",
     auth: {
