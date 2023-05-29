@@ -50,6 +50,8 @@ const Reserva = () => {
   let datosTurno = `${dd} ${mm} ${yy}, ${hh}:${min} hs`;
 
   const { doctorDetail, fetchDoctorById } = useContext(Context)[0];
+  const { patientDetail } = useContext(Context)[1];
+
 
   const dataPreferences = {
     doctorName: doctorDetail.nombre,
@@ -62,6 +64,8 @@ const Reserva = () => {
     horaCita: hora,
     idDoctor: id,
     comentario: form.motivo,
+    pacienteId: patientDetail.id
+
   };
   useEffect(() => {
     fetchDoctorById(id);
