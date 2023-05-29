@@ -21,15 +21,14 @@ const Panel = () => {
     <>
       <Box
         sx={{
-          padding: "30px",
+          padding: "10px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "normal",
           alignItems: "stretch",
-          height: "55rem",
+          height: "47rem",
           borderRadius: "10px",
-          width: "80%",
-          paddingTop: "150px",
+          width: "100%",
         }}
       >
         <Card

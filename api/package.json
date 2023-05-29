@@ -18,6 +18,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "faker": "^5.5.3",
     "google-auth-library": "^8.8.0",
     "jsonwebtoken": "^9.0.0",
     "mercadopago": "^1.5.16",
@@ -27,8 +28,5 @@
     "pg": "^8.10.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.31.1"
-  },
-  "devDependencies": {
-    "faker": "^5.5.3"
   }
 }
