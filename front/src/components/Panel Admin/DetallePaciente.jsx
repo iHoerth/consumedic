@@ -26,13 +26,13 @@ const DetallePaciente = () => {
     deletePatient,
     fetchSoftDeletedPatient,
   } = useContext(Context)[1];
-  const { setVista, email } = useContext(Context)[6];
+  const { setVista, email, setAdmin } = useContext(Context)[6];
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!patientDetail) {
-      fetchPatientByEmail(email);
+      fetchPatientByEmail(patientDetail.email);
     } else {
       setLoading(false);
     }
@@ -64,6 +64,11 @@ const DetallePaciente = () => {
           // Manejar el error de eliminación del paciente
         });
     }
+  };
+
+  const handleClickAdmin = async (id) => {
+    await setAdmin(id)
+    await fetchPatientByEmail(patientDetail.email);
   };
 
   return (
@@ -162,6 +167,17 @@ const DetallePaciente = () => {
         >
           {patientDetail.deletedAt ? "Restaurar" : "Eliminar"}
         </Button>
+
+        <Button
+          id={patientDetail.id}
+          variant="outlined"
+          onClick={() => {
+            handleClickAdmin(patientDetail.id);
+          }}
+        >
+          {patientDetail.admin ? "Sacar Admin" : "Hacer Admin"}
+        </Button>
+
       </Box>
     </>
   );

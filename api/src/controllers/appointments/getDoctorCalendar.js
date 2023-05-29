@@ -1,5 +1,5 @@
 const { Cita } = require('../../db');
-const { getAppointmentsByDoctor } = require('./getAppointmentsByDoctor');
+const { getAppointmentsByDoctorCalendar } = require('./getAppointmentsByDoctorCalendar');
 const { getHorariosById } = require('../horarios/getHorariosById');
 
 const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -60,7 +60,7 @@ const getDoctorCalendar = async (idDoctor) => {
   };
 
   const traerTurnos = async (idDoctor) => {
-    const turnosReservados = await getAppointmentsByDoctor(idDoctor);
+    const turnosReservados = await getAppointmentsByDoctorCalendar(idDoctor);
     return turnosReservados;
   };
   const filtrarTurnos = (turno) => {
@@ -104,7 +104,7 @@ const getDoctorCalendar = async (idDoctor) => {
 
 
   let turnosFiltrados = turnosMedico.filter(filtrarTurnos); //Filter turnos menores a la fecha actual
-
+  console.log("107", turnosOcupados);
   // buscar turnos que ya estan agendados en Citas para cambiar a estado ocupado
   for (let i = 0; i < turnosOcupados.length; i++) {
     const found = turnosFiltrados.findIndex(

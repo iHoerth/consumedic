@@ -239,7 +239,7 @@ const CreateDoctor = () => {
       reader.readAsDataURL(file);
       reader.onload = () => {
         let fileSize = reader.result.length;
-        fileSize = (fileSize/1024).toFixed(2);
+        fileSize = (fileSize/1024/1024).toFixed(2);
         setFileSize(fileSize)
         console.log(`File size: ${fileSize} kb`);
       };
