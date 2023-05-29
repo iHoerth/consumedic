@@ -25,6 +25,8 @@ const URL_APPOINTMENTS = process.env.REACT_APP_URL_APPOINTMENTS;
 const URL_PERFILPACIENTE = process.env.REACT_APP_URL_PERFILPACIENTE;
 const URL_DOCUMENTOS = process.env.REACT_APP_URL_DOCUMENTOS;
 const URL_OPINIONS = process.env.REACT_APP_URL_OPINIONS;
+const URL_ADMIN = process.env.REACT_APP_URL_ADMIN;
+
 
 export const Context = createContext([]);
 export const UtilitiesContext = createContext([]);
@@ -641,6 +643,13 @@ const ContextProvider = ({ children }) => {
         ...prevState,
         email: email,
       }));
+    },
+    setAdmin: async (id) => {
+      try {
+        await axios.put(`${URL_ADMIN}/newAdmin`, {id})
+      } catch (error) {
+          console.log(error);
+      }
     },
   });
 

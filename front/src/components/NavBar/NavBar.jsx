@@ -34,7 +34,7 @@ const NavBar = ({ component, variant,text, type }) => {
     },
     {
       title: 'Eres Admin?',
-      path: '/loginDoctor',
+      path: '/login',
     },
   ];
 
