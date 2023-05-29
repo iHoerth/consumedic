@@ -394,8 +394,9 @@ const ContextProvider = ({ children }) => {
           });
       } else {
         try {
+          console.log(loginData);
           const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData)).data;
-          const patientData = await patientsData.fetchPatientByEmail(
+           const patientData = await patientsData.fetchPatientByEmail(
             loginData.email,
             loginData.nombre,
             loginData.apellido
@@ -407,9 +408,14 @@ const ContextProvider = ({ children }) => {
             apellido: loginData.apellido,
             token: loginData.tokenId,
           });
+          console.log({ sessionData, patientData });
           return { sessionData, patientData };
         } catch (error) {
-          console.log(error);
+          setPatientsData((prevState) => ({
+            ...prevState,
+            snackFail: true,
+            snackFailMensaje: 'No se encuentra usuario con ese email y/o contraseña',
+          }));
         }
       }
     },
