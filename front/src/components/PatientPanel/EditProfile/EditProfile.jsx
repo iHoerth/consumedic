@@ -10,6 +10,9 @@ import {
   Typography,
   FormControl,
   InputLabel,
+  Snackbar,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 
 const EditProfile = () => {
@@ -19,6 +22,12 @@ const EditProfile = () => {
   const { socialSecurity, fetchUtilities } = useContext(UtilitiesContext);
   const [loading, setLoading] = useState(true);
   const [inputClicked, setInputClicked] = useState(false);
+
+  //Alerts
+  const [snackOk, setSnackOk] = useState(false);
+  const [snackFail, setSnackFail] = useState(false);
+  const [snackOkMensaje, setSnackOkMensaje] = useState("");
+  const [snackFailMensaje, setSnackFailMensaje] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -63,11 +72,14 @@ const EditProfile = () => {
 
   const handleSave = () => {
     modifyPatientProfiler(datos)
-      .then(() => {
-        alert("Se actualizo correctamente");
+      .then((data) => {
+        setSnackOkMensaje("Se actualiazo correctamente!");
+        setSnackOk(true);
+        setInputClicked(false);
       })
       .catch((error) => {
-        alert(error);
+        setSnackFailMensaje("No se ha podido actualizar la informacion!");
+        setSnackFail(true);
       });
 
     fetchPatientByEmail(session.email);
@@ -89,6 +101,34 @@ const EditProfile = () => {
               padding: "10px",
             }}
           >
+            <Snackbar
+              open={snackOk}
+              autoHideDuration={2500}
+              onClose={() => {
+                setSnackOk(false);
+                setSnackOkMensaje("");
+              }}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              <Alert severity="success" variant="filled">
+                <AlertTitle>Mensaje Exitoso</AlertTitle>
+                {snackOkMensaje}
+              </Alert>
+            </Snackbar>
+            <Snackbar
+              open={snackFail}
+              autoHideDuration={2500}
+              onClose={() => {
+                setSnackFail(false);
+                setSnackFailMensaje("");
+              }}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              <Alert severity="error" variant="filled">
+                <AlertTitle>Mensaje de Error</AlertTitle>
+                {snackFailMensaje}
+              </Alert>
+            </Snackbar>
             <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
               Editar datos del Perfil
             </Typography>

@@ -16,6 +16,9 @@ import {
   Paper,
   Avatar,
   Typography,
+  Snackbar,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 
 const MyDoctors = () => {
@@ -34,6 +37,14 @@ const MyDoctors = () => {
     opinion: "",
     rating: 0,
   });
+
+  //alerts
+  const [snackOk, setSnackOk] = useState(false);
+  const [snackFail, setSnackFail] = useState(false);
+  const [snackInfo, setSnackInfo] = useState(false);
+  const [snackOkMensaje, setSnackOkMensaje] = useState("");
+  const [snackFailMensaje, setSnackFailMensaje] = useState("");
+  const [snackInfoMensaje, setSnackInfoMensaje] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -115,6 +126,12 @@ const MyDoctors = () => {
             <CheckCircle
               sx={{
                 color: theme.palette.primary.main,
+              }}
+              onClick={() => {
+                setSnackInfoMensaje(
+                  "Ya has enviado una opinión a este médico."
+                );
+                setSnackInfo(true);
               }}
             />
           ) : (
@@ -209,22 +226,26 @@ const MyDoctors = () => {
       !opinionText.opinion ||
       opinionText.opinion.trim() === ""
     ) {
-      alert("Por favor, complete todos los campos");
+      setSnackInfoMensaje("Por favor, complete todos los campos");
+      setSnackInfo(true);
       return;
     } else if (opinionsSent[selectedId]) {
-      alert("Ya has enviado una opinión a este médico.");
+      setSnackInfoMensaje("Ya has enviado una opinión a este médico.");
+      setSnackInfo(true);
       return;
     } else {
       postOpinions({ ubicacion, puntaje, mensaje, idMedico, idPaciente })
         .then((data) => {
-          alert(data.message);
+          setSnackOkMensaje("Opinion Registrada! Ver en Opiniones");
+          setSnackOk(true);
           setOpinionsSent((prevOpinionsSent) => ({
             ...prevOpinionsSent,
             [selectedId]: true,
           }));
         })
         .catch((error) => {
-          alert(error.message);
+          setSnackFailMensaje("No se ha podido registrar la opinion");
+          setSnackFail(true);
         });
     }
   };
@@ -232,10 +253,12 @@ const MyDoctors = () => {
   const handleDelete = (citaId) => {
     deleteAppointmentById(citaId)
       .then((data) => {
-        alert(data);
+        setSnackOkMensaje("Eliminado con exito!");
+        setSnackOk(true);
       })
       .catch((error) => {
-        alert(error.message);
+        setSnackFailMensaje("No se ha podido eliminar el doctor");
+        setSnackFail(true);
       });
   };
   const CustomPagination = () => {
@@ -270,6 +293,49 @@ const MyDoctors = () => {
               Registro de Medicos consultados
             </Typography>
           </Box>
+
+          <Snackbar
+            open={snackOk}
+            autoHideDuration={2500}
+            onClose={() => {
+              setSnackOk(false);
+              setSnackOkMensaje("");
+            }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert severity="success" variant="filled">
+              <AlertTitle>Mensaje Exitoso</AlertTitle>
+              {snackOkMensaje}
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            open={snackFail}
+            autoHideDuration={2500}
+            onClose={() => {
+              setSnackFail(false);
+              setSnackFailMensaje("");
+            }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert severity="error" variant="filled">
+              <AlertTitle>Mensaje de Error</AlertTitle>
+              {snackFailMensaje}
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            open={snackInfo}
+            autoHideDuration={2500}
+            onClose={() => {
+              setSnackInfo(false);
+              setSnackInfoMensaje("");
+            }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert severity="info" variant="filled">
+              <AlertTitle>Mensaje de Informacion</AlertTitle>
+              {snackInfoMensaje}
+            </Alert>
+          </Snackbar>
 
           {!informacion.length ? (
             <>
