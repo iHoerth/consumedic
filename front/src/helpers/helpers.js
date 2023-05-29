@@ -56,9 +56,10 @@ export const members = [
   },
   {
     id: 3,
+    phrase: '❝ Pon el corazón, mente y el alma incluso en los actos más pequeños.Ese es el secreto del éxito ❞',
     name: 'Noelia Paz',
     role: 'Frontend',
-    img: 'https://i.pinimg.com/originals/7d/26/20/7d2620be930884afa132b5172a82d562.jpg',
+    img: 'https://i.ibb.co/98H5xkg/noe.jpg',
     description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
     linkedin: 'https://www.linkedin.com',
     github: 'https://github.com/',
@@ -92,9 +93,10 @@ export const members = [
   },
   {
     id: 6,
+    phrase: '❝Fallar en planear es planear fallar ❞',
     name: 'Mauro Gatica',
     role: 'Backend',
-    img: 'https://i.pinimg.com/236x/d7/64/18/d76418f406971b8b0c02d158e159d920.jpg',
+    img: 'https://i.ibb.co/WDc8Wkp/yo.jpg',
     description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
     linkedin: 'https://www.linkedin.com',
     github: 'https://github.com/',
