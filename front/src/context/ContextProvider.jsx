@@ -34,7 +34,6 @@ export const SessionContext = createContext([]);
 
 const ContextProvider = ({ children }) => {
   const navigate = useNavigate();
-  console.log(URL_DOCTORS);
   const [loading, setLoading] = useState(false);
 
   const [session, setSession] = useLocalStorage("loggedUser", {
@@ -54,34 +53,80 @@ const ContextProvider = ({ children }) => {
     doctors: [],
     doctorDetail: {},
     filteredDoctors: [],
+    deletedDoctor: [],
     doctorOpinions: [],
+    snackOk: false,
+    snackOkMensaje: "",
+    snackFail: false,
+    snackFailMensaje: "",
     fetchDoctors: async () => {
-      const response = await axios(URL_DOCTORS);
-      const data = await response.data;
-      setDoctorsData((prevState) => ({
-        ...prevState,
-        doctors: [...data],
-        filteredDoctors: [...data],
-      }));
+      try {
+        const response = await axios(URL_DOCTORS);
+        const data = await response.data;
+        setDoctorsData((prevState) => ({
+          ...prevState,
+          doctors: [...data],
+          filteredDoctors: [...data],
+        }));
+      } catch (error) {
+        console.log(error);
+      }
     },
-    fetchDoctorById: async (id) => {
-      const response = await axios(`${URL_DOCTORS}/${id}`);
-      const data = await response.data;
-      setDoctorsData((prevState) => ({
-        ...prevState,
-        doctorDetail: data,
-      }));
+    fetchDoctorById: async (id) => {  
+      try {
+        const response = await axios(`${URL_DOCTORS}/${id}`);
+        const data = await response.data;
+        setDoctorsData((prevState) => ({
+          ...prevState,
+          doctorDetail: data,
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+
     },
+
     fetchDoctorByEmail: async (email) => {
-      const data = (await axios(`${URL_DOCTORS}?email=${email}`)).data;
-      //console.log(data);
-      setDoctorsData((prevState) => ({
-        ...prevState,
-        doctorDetail: { ...data },
-      }));
-      //console.log({ ...data });
-      return { ...data };
+      try {
+        const data = (await axios(`${URL_DOCTORS}?email=${email}`)).data;
+        setDoctorsData((prevState) => ({
+          ...prevState,
+          doctorDetail: { ...data },
+        }));
+        return { ...data };
+      } catch (error) {
+        console.log(error);
+      }
     },
+
+    fetchSoftDeletedDoctor: async () => {
+      try {
+        const data = (await axios(`${URL_DOCTORS}/softDeleted`)).data;
+        setDoctorsData((prevState) => ({
+          ...prevState,
+          deletedDoctor: [...data],
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    deleteDoctor: async (id) => {
+      try {
+        await axios.delete(`${URL_DOCTORS}/${id}`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    restoreDoctor: async (id) => {
+      try {
+        await axios.put(`${URL_DOCTORS}/restore/${id}`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     cleanDetail: async () => {
       setDoctorsData((prevState) => ({
         ...prevState,
@@ -89,12 +134,29 @@ const ContextProvider = ({ children }) => {
       }));
     },
     createDoctor: async (newDoctor) => {
-      const response = await axios.post(`${URL_DOCTORS}`, newDoctor);
-      const data = await response.data;
-      setDoctorsData((prevState) => ({
-        ...prevState,
-        doctorDetail: { ...data },
-      }));
+      try {
+        const response = await axios.post(`${URL_DOCTORS}`, newDoctor);
+        const data = await response.data;
+        const idMedico = data.id;
+        const horarios = await axios.post(`${URL_POSTAGENDA}/first`, {
+          idMedico,
+        });
+
+        setDoctorsData((prevState) => ({
+          ...prevState,
+          doctorDetail: { ...data },
+          snackOk: true,
+          snackOkMensaje:
+            "Perfil de Doctor Creado con Exito, por favor Ingrese a su cuenta creada",
+        }));
+        navigate(`/loginDoctor/`);
+      } catch (error) {
+        setDoctorsData((prevState) => ({
+          ...prevState,
+          snackFail: true,
+          snackFailMensaje: error.response.data.message,
+        }));
+      }
     },
     filterDoctors: async (newFilter) => {
       setDoctorsData((prevState) => ({
@@ -103,43 +165,80 @@ const ContextProvider = ({ children }) => {
       }));
     },
     loginDoctor: async (loginData) => {
-      // try {
-      const sessionData = (
-        await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)
-      ).data;
-      const doctorData = await doctorsData.fetchDoctorByEmail(
-        loginData.email,
-        loginData.nombre,
-        loginData.apellido
-      );
-      console.log(doctorData);
-      setSession({
-        ...sessionData,
-        email: loginData.email,
-        nombre: loginData.nombre,
-        apellido: loginData.apellido,
-      });
-      console.log({ sessionData, doctorData });
-      return { sessionData, doctorData };
-      // } catch (error) {
-      //   console.log(error.message, "TRY CATCH CONTEXT");
-      // }
+      try {
+        const sessionData = (
+          await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)
+        ).data;
+        const doctorData = await doctorsData.fetchDoctorByEmail(
+          loginData.email,
+          loginData.nombre,
+          loginData.apellido
+        );
+        console.log(doctorData);
+        setSession({
+          ...sessionData,
+          email: loginData.email,
+          nombre: loginData.nombre,
+          apellido: loginData.apellido,
+        });
+        console.log({ sessionData, doctorData });
+        return { sessionData, doctorData };
+      } catch (error) {
+        console.log(error);
+      }
     },
     putDoctor: async (doctorNewDetails) => {
-      console.log(doctorNewDetails);
-      const data = await axios.put(`${URL_DOCTORS}/edit`, doctorNewDetails)
-        .data;
-      setDoctorsData((prevState) => ({
-        ...prevState,
-        doctorDetail: { ...data },
-      }));
-      return data;
+      try {
+        const data = await axios.put(`${URL_DOCTORS}/edit`, doctorNewDetails)
+          .data;
+        setDoctorsData((prevState) => ({
+          ...prevState,
+          doctorDetail: { ...data },
+        }));
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
     },
     fetchOpinions: async (id) => {
-      const data = (await axios.get(`${URL_OPINIONS}/${id}`)).data;
+      try {
+        const data = (await axios.get(`${URL_OPINIONS}/${id}`)).data;
+        setDoctorsData((prevState) => ({
+          ...prevState,
+          doctorOpinions: [...data],
+        }));
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    setSnackOk: (dato) => {
       setDoctorsData((prevState) => ({
         ...prevState,
-        doctorOpinions: [...data],
+        snackOk: dato,
+      }));
+    },
+    setSnackOkMensaje: (dato) => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        snackOkMensaje: dato,
+      }));
+    },
+    setSnackFail: (dato) => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        snackFail: dato,
+      }));
+    },
+    setSnackFailMensaje: (dato) => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        snackFailMensaje: dato,
+      }));
+    },
+    setDoctor: (doctor) => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        doctorDetail: { ...doctor },
       }));
     },
   });
@@ -148,13 +247,18 @@ const ContextProvider = ({ children }) => {
     patients: [],
     patientDetail: {},
     filteredPatients: [],
+    deletedPatient: [],
     opinions: [],
+    snackOk: false,
+    snackOkMensaje: "",
+    snackFail: false,
+    snackFailMensaje: "",
     fetchPatients: async () => {
       try {
         const data = (await axios(URL_PATIENTS)).data;
         setPatientsData((prevState) => ({
           ...prevState,
-          patients: [...prevState.patients, ...data],
+          patients: [...data],
         }));
       } catch (error) {
         console.log(error);
@@ -172,6 +276,50 @@ const ContextProvider = ({ children }) => {
         console.log(error);
       }
     },
+    fetchPatientById: async (id) => {
+      try {
+        const data = (await axios(`${URL_PATIENTS}/${id}`)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          patientDetail: { ...data },
+        }));
+        return { ...data };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    fetchSoftDeletedPatient: async () => {
+      try {
+        const data = (await axios(`${URL_PATIENTS}/softDeleted`)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          deletedPatient: [...data],
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    deletePatient: async (id) => {
+      try {
+        await axios.delete(`${URL_PATIENTS}/${id}`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    restorePatient: async (id) => {
+      try {
+        await axios.put(`${URL_PATIENTS}/restore/${id}`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    cleanDetailPaciente: async () => {
+      setPatientsData((prevState) => ({
+        ...prevState,
+        patientDetail: {},
+      }));
+    },
     createPatient: async (newPatient) => {
       try {
         const data = (await axios.post(`${URL_PATIENTS}`, newPatient)).data;
@@ -184,16 +332,41 @@ const ContextProvider = ({ children }) => {
         console.log(error);
       }
     },
+
+    setSnackOk: (dato) => {
+      setDoctorsData((prevState) => ({
+        ...prevState,
+        snackOk: dato,
+      }));
+    },
+    setSnackOkMensaje: (dato) => {
+      setPatientsData((prevState) => ({
+        ...prevState,
+        snackOkMensaje: dato,
+      }));
+    },
+    setSnackFail: (dato) => {
+      setPatientsData((prevState) => ({
+        ...prevState,
+        snackFail: dato,
+      }));
+    },
+    setSnackFailMensaje: (dato) => {
+      setPatientsData((prevState) => ({
+        ...prevState,
+        snackFailMensaje: dato,
+      }));
+    },
+
     postAppointment: async (datosTurno) => {
       try {
-        await axios.post(`${URL_TURNOS}`, datosTurno);
+        await axios.post(`${URL_APPOINTMENTS}`, datosTurno);
       } catch (error) {
         console.log(error);
       }
     },
     loginPatient: async (loginData) => {
       if (loginData.token) {
-        console.log("** LOGIN DATA **", loginData);
         setSession({
           email: loginData.email,
           token: loginData.token,
@@ -207,8 +380,6 @@ const ContextProvider = ({ children }) => {
           })
           .catch((error) => {
             if (error.response && error.response.status === 400) {
-              console.log("EN EL CATCH DEL GET BY EMAIL");
-
               patientsData
                 .createPatient({
                   loggedFromGoogle: loginData.loggedFromGoogle,
@@ -219,34 +390,48 @@ const ContextProvider = ({ children }) => {
                 .then((newPatient) => {
                   return newPatient;
                 })
-                .catch((error) => {
-                  console.log("Error al crear el nuevo paciente:", error);
-                  // Manejar el error al crear el nuevo paciente
-                });
+                .catch((error) => {});
             } else {
-              console.log("Error en la solicitud GET:", error);
-              // Manejar otros errores de solicitud
             }
           });
       } else {
-        const sessionData = (
-          await axios.post(`${URL_PATIENTS}/login`, loginData)
-        ).data;
-        console.log(loginData.email, `*** CONTEXT ***`);
-        const patientData = await patientsData.fetchPatientByEmail(
-          loginData.email,
-          loginData.nombre,
-          loginData.apellido
-        );
-        setSession({
-          ...sessionData,
-          email: loginData.email,
-          nombre: loginData.nombre,
-          apellido: loginData.apellido,
-          token: loginData.tokenId,
-        });
-        console.log({ sessionData, patientData });
-        return { sessionData, patientData };
+        try {
+          const sessionData = (
+            await axios.post(`${URL_PATIENTS}/login`, loginData)
+          ).data;
+          const patientData = await patientsData.fetchPatientByEmail(
+            loginData.email,
+            loginData.nombre,
+            loginData.apellido
+          );
+          setSession({
+            ...sessionData,
+            email: loginData.email,
+            nombre: loginData.nombre,
+            apellido: loginData.apellido,
+            token: loginData.tokenId,
+          });
+          return { sessionData, patientData };
+          
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+
+    modifyPatientProfiler: async (patientData) => {
+      try {
+        await axios.put(`${URL_PATIENTS}/profile`, patientData).data;
+        const data = (await axios(`${URL_PATIENTS}?email=${patientData.email}`))
+          .data;
+  
+        setPatientsData((prevState) => ({
+          ...prevState,
+          patientDetail: { ...data },
+        }));
+        
+      } catch (error) {
+        console.log(error);
       }
     },
 
@@ -258,19 +443,42 @@ const ContextProvider = ({ children }) => {
         console.log(error);
       }
     },
+
+    getOpinionsByPaciente: async (id) => {
+      try {
+        const opinionsData = (await axios(`${URL_OPINIONS}/paciente/${id}`)).data;
+        setPatientsData((prevState) => ({
+          ...prevState,
+          opinions: [...opinionsData],
+        }));
+        
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    setPaciente: (paciente) => {
+      setPatientsData((prevState) => ({
+        ...prevState,
+        patientDetail: { ...paciente },
+      }));
+    },
   });
 
   const [utilities, setUtilities] = useState({
     socialSecurity: [],
     specialties: [],
     fetchUtilities: async () => {
-      const socialSecurityData = (await axios(`${URL_SOCIALSECURITY}`)).data;
-      const specialtiesData = (await axios(`${URL_SPECIALTIES}`)).data;
-      setUtilities((prevState) => ({
-        ...prevState,
-        socialSecurity: [...socialSecurityData],
-        specialties: [...specialtiesData],
-      }));
+      try {
+        const socialSecurityData = (await axios(`${URL_SOCIALSECURITY}`)).data;
+        const specialtiesData = (await axios(`${URL_SPECIALTIES}`)).data;
+        setUtilities((prevState) => ({
+          ...prevState,
+          socialSecurity: [...socialSecurityData],
+          specialties: [...specialtiesData],
+        }));
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -281,28 +489,43 @@ const ContextProvider = ({ children }) => {
     vista: 0,
 
     fetchPacientes: async (id) => {
-      const pacientesData = (await axios(`${URL_PERFILMEDICO}/${id}/pacientes`))
-        .data;
-      setPanelMedico((prevState) => ({
-        ...prevState,
-        pacientes: [...pacientesData],
-      }));
+      try {
+        const pacientesData = (
+          await axios(`${URL_PERFILMEDICO}/${id}/pacientes`)
+        ).data;
+        setPanelMedico((prevState) => ({
+          ...prevState,
+          pacientes: [...pacientesData],
+        }));
+      } catch (error) {
+        console.log(error.message);
+      }
     },
     fetchPacienteHistorial: async (idMedico, idPaciente) => {
-      const pacienteHistorialData = (
-        await axios(`${URL_PERFILMEDICO}/${idMedico}/pacientes/${idPaciente}`)
-      ).data;
-      setPanelMedico((prevState) => ({
-        ...prevState,
-        pacienteHistorial: { ...pacienteHistorialData },
-      }));
+      try {
+        const pacienteHistorialData = (
+          await axios(`${URL_PERFILMEDICO}/${idMedico}/pacientes/${idPaciente}`)
+        ).data;
+        setPanelMedico((prevState) => ({
+          ...prevState,
+          pacienteHistorial: { ...pacienteHistorialData },
+        }));
+        
+      } catch (error) {
+        console.log(error);
+      }
     },
     fetchTurnos: async (id) => {
-      const turnosData = (await axios(`${URL_APPOINTMENTS}/doctor/${id}`)).data;
-      setPanelMedico((prevState) => ({
-        ...prevState,
-        turnos: turnosData,
-      }));
+      try {
+        const turnosData = (await axios(`${URL_APPOINTMENTS}/doctor/${id}`))
+          .data;
+        setPanelMedico((prevState) => ({
+          ...prevState,
+          turnos: turnosData,
+        }));
+      } catch (error) {
+        console.log(error.message);
+      }
     },
     setVista: (vista) => {
       setPanelMedico((prevState) => ({
@@ -326,11 +549,15 @@ const ContextProvider = ({ children }) => {
       });
     },
     postRespuestaCita: async (idCita, respuesta) => {
-      console.log(idCita, respuesta);
-      await axios.post(`${URL_PERFILMEDICO}/doctor/cita/respuesta`, {
-        idCita,
-        respuesta,
-      });
+      try {
+        await axios.post(`${URL_PERFILMEDICO}/doctor/cita/respuesta`, {
+          idCita,
+          respuesta,
+        });
+        
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -347,18 +574,33 @@ const ContextProvider = ({ children }) => {
     fetchAppointmentById: async () => {},
 
     setPayedToTrue: async () => {},
+
+    deleteAppointmentById: async (id) => {
+      try {
+        const response = await axios.delete(`${URL_APPOINTMENTS}/${id}`);
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   });
 
   const [panelPaciente, setPanelPaciente] = useState({
     informacion: [],
 
     fetchPatientData: async (id) => {
-      const pacientesData = (await axios(`${URL_PERFILPACIENTE}/${id}/doctors`))
-        .data;
-      setPanelPaciente((prevState) => ({
-        ...prevState,
-        informacion: [...pacientesData],
-      }));
+      try {
+        const pacientesData = (await axios(`${URL_PERFILPACIENTE}/${id}/doctors`))
+          .data;
+  
+        setPanelPaciente((prevState) => ({
+          ...prevState,
+          informacion: [...pacientesData],
+        }));
+        
+      } catch (error) {
+        console.log(error);
+      }
     },
     postDocumentosCita: async (
       idCita,
@@ -367,13 +609,18 @@ const ContextProvider = ({ children }) => {
       idPaciente,
       titulo
     ) => {
-      await axios.post(`${URL_DOCUMENTOS}`, {
-        idCita,
-        files64,
-        idMedico,
-        idPaciente,
-        titulo,
-      });
+      try {
+        await axios.post(`${URL_DOCUMENTOS}`, {
+          idCita,
+          files64,
+          idMedico,
+          idPaciente,
+          titulo,
+        });
+        
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -397,6 +644,58 @@ const ContextProvider = ({ children }) => {
     },
   });
 
+  const [mailer, setMailer] = useState({
+    mailDoctor: "",
+    mailPaciente: "",
+    modal: false,
+    snackOk: false,
+    snackOkMensaje: "",
+    snackFail: false,
+    snackFailMensaje: "",
+    setMailDoctor: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        mailDoctor: dato,
+      }));
+    },
+    setMailPaciente: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        mailPaciente: dato,
+      }));
+    },
+    setModal: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        modal: dato,
+      }));
+    },
+    setSnackOk: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        snackOk: dato,
+      }));
+    },
+    setSnackOkMensaje: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        snackOkMensaje: dato,
+      }));
+    },
+    setSnackFail: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        snackFail: dato,
+      }));
+    },
+    setSnackFailMensaje: (dato) => {
+      setMailer((prevState) => ({
+        ...prevState,
+        snackFailMensaje: dato,
+      }));
+    },
+  });
+
   return (
     <>
       <LoadingContext.Provider value={[loading, setLoading]}>
@@ -411,6 +710,7 @@ const ContextProvider = ({ children }) => {
                 appointment, //[4]
                 panelPaciente, //[5]
                 panelAdmin, // [6]
+                mailer, //[7]
               ]}
             >
               {children}

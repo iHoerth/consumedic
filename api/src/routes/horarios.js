@@ -3,7 +3,8 @@ const { Router } = require("express");
 const {
     postHorarios,
     getHorariosId,
-    postHorariosBulk
+    postHorariosBulk,
+    postFirstHorarios
 } =  require ("../handlers/horarios")
 
 const horariosRouter = Router();
@@ -14,6 +15,7 @@ horariosRouter.get("/:id", getHorariosId);
 
 // POST
 horariosRouter.post("/", postHorarios);
+horariosRouter.post("/bulk/first", postFirstHorarios);
 horariosRouter.post("/bulk", postHorariosBulk);
 
 

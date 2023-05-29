@@ -72,10 +72,12 @@ const Aceptado = ({idPaciente}) => {
       search();
       console.log(patientDetail);
     } else {
+      console.log(datos);
       setLoading(false);
       postAppointment(datos);
+      
     }
-  }, [loading, patientDetail]);
+  }, [patientDetail]);
 
   const handleClick = ()=>{
     navigate("/patientpanel/");

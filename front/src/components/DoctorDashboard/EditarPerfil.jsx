@@ -39,7 +39,10 @@ const EditarPerfil = ({doctorDetail1}) => {
     const [openImagen, setOpenImagen]=useState(false)
     const [fileName, setFileName] = useState("")
     const [files64, setFiles64]=useState()
+    const [fileSize, setFileSize]=useState()
+    const [alert, setAlert] = useState(false)
     const [snack, setSnack]=useState(false)
+    const [snackFail, setSnackFail]=useState(false)
     const {vista, setVista} = useContext(Context)[3];
     let respuesta=0;
     useEffect(() => {
@@ -222,6 +225,8 @@ const EditarPerfil = ({doctorDetail1}) => {
         setFileName("")
         setOs(true)
         setEspe(true)
+        setFileSize()
+        setAlert(false)
 
     }
 
@@ -229,13 +234,24 @@ const EditarPerfil = ({doctorDetail1}) => {
         setFiles64()
         const file = event.target.files[0];
         // console.log(file);
-        setFileName(file.name)
+        setFileName(file?.name)
         setFilesToBase(file)
     };
     const setFilesToBase = (file) => {
+      try {
+        
         const reader = new FileReader();
         const property = "imagen"
         reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          let fileSize = reader.result.length;
+          fileSize = (fileSize/1024/1024).toFixed(2);
+          setFileSize(fileSize)
+          if(fileSize>1)setAlert(true)
+          else setAlert(false)
+        };
+
         reader.onloadend = () => {
             const values=reader.result
             setFiles64(values)
@@ -245,12 +261,19 @@ const EditarPerfil = ({doctorDetail1}) => {
             });
             validarForm({ ...datos, [property]: values });
         };
+      } catch (error) {
+        return
+      }
     }
 
     const handleSubmit = async () => {
         console.log(datos);
-        await putDoctor(datos)
-        setSnack(true)    
+        try {
+          await putDoctor(datos)
+          setSnack(true)    
+        } catch (error) {
+          setSnackFail(false)
+        }
     }
    
     if(loading) return (<Loading />)
@@ -266,6 +289,16 @@ const EditarPerfil = ({doctorDetail1}) => {
                 <Alert severity="success" variant="filled">
                     <AlertTitle>Mensaje Exitoso</AlertTitle>
                     Los cambios de su Perfil han sido suscriptos
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={snackFail}
+                autoHideDuration={1500}
+                onClose={()=>setSnackFail(false)}
+            >
+                <Alert severity="error" variant="filled">
+                    <AlertTitle>Mensaje de Error</AlertTitle>
+                    No se han podido publicar los Cambios
                 </Alert>
             </Snackbar>
             <Stack alignItems="center">
@@ -568,10 +601,13 @@ const EditarPerfil = ({doctorDetail1}) => {
                         </Button>
                     </label>
                 </Box>
-                <Typography sx={{ml:"38%", mb:"10px"}}>{fileName}</Typography>
+                <Typography sx={{ml:"2%", mb:"10px"}}>{fileName}</Typography>
+                <Typography sx={{ml:"2%", mb:"10px"}}>{fileSize?`size: ${fileSize} mb`:null}</Typography>
+                <Typography sx={{ml:"2%", mb:"10px", color:"red"}}>{alert?"El archivo debe tener menos de 1mb":null}</Typography>
+
                 <DialogActions>
                     <Button onClick={handleClose}>Cancelar</Button>
-                    <Button name="documentos" variant="contained" onClick={handleClose} disabled={fileName?false:true}>Registrar</Button>
+                    <Button name="documentos" variant="contained" onClick={handleClose} disabled={fileName?(alert?true:false):true}>Registrar</Button>
                 </DialogActions>
             </Dialog>
         </>

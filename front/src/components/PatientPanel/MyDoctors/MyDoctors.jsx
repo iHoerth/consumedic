@@ -5,6 +5,7 @@ import { Icon } from "@mui/material";
 import { Edit as EditIcon } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Skeleton,
@@ -20,12 +21,15 @@ import {
 const MyDoctors = () => {
   const theme = useTheme();
   const { informacion, fetchPatientData } = useContext(Context)[5];
-  const { opinions, postOpinions, patientDetail } = useContext(Context)[1];
+  const { deleteAppointmentById } = useContext(Context)[4];
+  const { opinions, getOpinionsByPaciente, postOpinions, patientDetail } =
+    useContext(Context)[1];
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [infoData, setInfoData] = useState([]);
   const [opinionsSent, setOpinionsSent] = useState({});
+  const [appointments, setAppointments] = useState([]);
   const [opinionText, setOpinionText] = useState({
     opinion: "",
     rating: 0,
@@ -33,14 +37,25 @@ const MyDoctors = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchPatientData(patientDetail.id).then(() => {
-      setLoading(false);
-    });
+    fetchPatientData(patientDetail.id);
+    getOpinionsByPaciente(patientDetail.id);
+  }, [patientDetail.id]);
 
+  useEffect(() => {
     if (!!informacion.length) {
+      setAppointments(informacion);
       setLoading(false);
     }
-  }, [patientDetail.id]);
+  }, [informacion]);
+
+  useEffect(() => {
+    const opinionsSent = opinions.reduce((acc, opinion) => {
+      const doctorId = opinion.DoctorType.id;
+      acc[doctorId] = true;
+      return acc;
+    }, {});
+    setOpinionsSent(opinionsSent);
+  }, [opinions]);
 
   const direccion = informacion.map((item) => {
     if (item.id === selectedId) {
@@ -59,48 +74,54 @@ const MyDoctors = () => {
   });
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
       field: "nombre",
       headerName: "Nombre",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "apellido",
       headerName: "Apellido",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "especialidad",
       headerName: "Especialidad",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "telefono",
       headerName: "Telefono",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "email",
       headerName: "Email",
       width: 220,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "opinion",
       headerName: "Agregar Opinión",
-      width: 200,
-      editable: true,
+      width: 180,
+      disableColumnMenu: true,
       renderCell: (params) => (
         <Icon>
           {opinionsSent[params.row.id] ? (
-            <CheckCircle color="primary" />
+            <CheckCircle
+              sx={{
+                color: theme.palette.primary.main,
+              }}
+            />
           ) : (
             <EditIcon
+              sx={{
+                color: theme.palette.primary.main,
+              }}
               variant="contained"
               onClick={() => handleOpenModal(params.row.id)}
             />
@@ -112,13 +133,31 @@ const MyDoctors = () => {
       field: "eliminar",
       headerName: "Eliminar",
       width: 150,
-      editable: false,
-      renderCell: (params) => <button>Eliminar</button>,
+      disableColumnMenu: true,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          startIcon={
+            <DeleteIcon
+              sx={{
+                color: theme.palette.primary.main,
+              }}
+            />
+          }
+          onClick={() => {
+            handleDelete(params.row.idCita);
+            setAppointments(
+              appointments.filter(
+                (item) => item.Cita[0].id !== params.row.idCita
+              )
+            );
+          }}
+        ></Button>
+      ),
     },
   ];
-  //onClick={() => handleDelete(params.row.id)}
 
-  const informacionData = informacion.map((item) => {
+  const informacionData = appointments.map((item) => {
     const especialidades = item.Especialidads.map((especialidad) => ({
       especialidad: especialidad.name,
     }));
@@ -127,18 +166,19 @@ const MyDoctors = () => {
       (especialidad) => especialidad.especialidad
     );
     return {
+      idCita: item.Cita[0].id,
       id: item.id,
       apellido: item.apellido,
       especialidad: especialidadName,
       nombre: item.nombre,
       telefono: item.telefono,
       email: item.email,
-      opinion: "", // Agregar una propiedad para almacenar la opinión del médico
+      opinion: "",
     };
   });
 
   const handleOpenModal = (doctorId) => {
-    setSelectedId(doctorId); // Guarda el ID del doctor seleccionado en el estado local
+    setSelectedId(doctorId);
     setOpenModal(true);
   };
 
@@ -154,10 +194,8 @@ const MyDoctors = () => {
       return item;
     });
 
-    // Actualiza el estado con la nueva información
     setInfoData(updatedInformacionData);
 
-    // Cierra el modal y reinicia el estado de la opinión
     handleCloseModal();
     setOpinionText({});
 
@@ -191,16 +229,51 @@ const MyDoctors = () => {
     }
   };
 
+  const handleDelete = (citaId) => {
+    deleteAppointmentById(citaId)
+      .then((data) => {
+        alert(data);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+  const CustomPagination = () => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          padding: "8px",
+        }}
+      >
+        <span style={{ marginRight: "8px" }}>Page:</span>
+        <button disabled>1</button>
+      </div>
+    );
+  };
   return (
     <>
-      <Box>Estos son los doctores consultados</Box>
       {loading ? (
         <div>Cargando</div>
       ) : (
         <Box sx={{ height: 400, width: "100%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
+              Registro de Medicos consultados
+            </Typography>
+          </Box>
+
           {!informacion.length ? (
             <>
-              <Skeleton>No datos para mostrar</Skeleton>
+              <Skeleton>No hay registros para mostrar</Skeleton>
             </>
           ) : (
             <>
@@ -239,7 +312,6 @@ const MyDoctors = () => {
                         return <Avatar src={item.imagen}></Avatar>;
                       }
                     })}
-
                     {informacion.map((item) => {
                       if (item.id === selectedId) {
                         return (
@@ -262,7 +334,7 @@ const MyDoctors = () => {
                       mb: "20px",
                     }}
                     name="rating"
-                    value={opinionText.rating} // Asignar el valor de rating desde el estado opinionText
+                    value={opinionText.rating}
                     onChange={(event, newValue) =>
                       setOpinionText((prevOpinionText) => ({
                         ...prevOpinionText,
@@ -275,7 +347,7 @@ const MyDoctors = () => {
                     label="Opinión"
                     multiline
                     rows={4}
-                    value={opinionText.opinion} // Asignar el valor de opinion desde el estado opinionText
+                    value={opinionText.opinion}
                     onChange={(e) =>
                       setOpinionText((prevOpinionText) => ({
                         ...prevOpinionText,
@@ -300,14 +372,13 @@ const MyDoctors = () => {
                   </Button>
                 </Box>
               </Modal>
-
               <DataGrid
-                disableSelectionOnClick
                 rows={informacionData}
                 columns={columns}
-                pageSize={5}
-                checkboxSelection
-                rowsPerPageOptions={[5, 10, 20]}
+                components={{
+                  Pagination: CustomPagination,
+                }}
+                pagination
               />
             </>
           )}

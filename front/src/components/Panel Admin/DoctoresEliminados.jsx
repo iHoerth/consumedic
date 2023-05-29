@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/ContextProvider";
-import TextField from "@mui/material/TextField";
+import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import {
   Table,
@@ -12,74 +12,68 @@ import {
   Paper,
   Container,
   Box,
-  Stack,
-  Divider,
   Typography,
   Pagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const EditarPacientes = () => {
+const DoctoresEliminados = () => {
   const {
-    patients,
-    fetchPatients,
-    fetchPatientByEmail,
-    deletePatient,
-    fetchSoftDeletedPatient,
-  } = useContext(Context)[1];
+    fetchDoctors,
+    deletedDoctor,
+    fetchSoftDeletedDoctor,
+    fetchDoctorByEmail,
+    restoreDoctor,
+    setDoctor,
+  } = useContext(Context)[0];
   const { setVista, setEmail } = useContext(Context)[6];
-
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-
   const [fetched, setfetched] = useState(false);
+
   useEffect(() => {
-    if (patients.length === 0 && !fetched) {
-      fetchPatients();
+    if (deletedDoctor.length === 0 && !fetched) {
+      fetchSoftDeletedDoctor();
+
       setfetched(true);
     } else {
       setLoading(false);
     }
-  }, [patients]);
+  }, [...deletedDoctor]);
 
   useEffect(() => {
-    const filtered = patients.filter((paciente) =>
-      paciente.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+    const filtered = deletedDoctor.filter((doctor) =>
+      doctor.nombre.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    setFilteredPatients(filtered);
-  }, [searchQuery, patients]);
+    setFilteredDoctors(filtered);
+  }, [searchQuery, deletedDoctor]);
 
-  const handleClick = (event) => {
-    const email = event.target.id;
-    fetchPatientByEmail(email);
-    setEmail(email);
-    setVista(5);
+  const handleClick = (doctor) => {
+    setDoctor(doctor);
+    setVista(6);
   };
 
-  const handleClickDelete = (id) => {
-    deletePatient(id)
+  const handleClickRestore = (id) => {
+    restoreDoctor(id)
       .then(() => {
         // Eliminación exitosa, actualizar la lista de pacientes
-        fetchPatients();
-        fetchSoftDeletedPatient();
-        alert("El paciente ha sido eliminado exitosamente.");
+        fetchSoftDeletedDoctor();
+        fetchDoctors();
+        alert("El doctor ha sido restaurado exitosamente.");
       })
       .catch((error) => {
-        console.log("Error al eliminar el paciente:", error);
+        console.log("Error al restaurar el doctor:", error);
         // Manejar el error de eliminación del paciente
       });
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredPatients.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-  const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
+  const currentItems = filteredDoctors.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredDoctors.length / itemsPerPage);
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
@@ -110,7 +104,7 @@ const EditarPacientes = () => {
             marginTop: "10px",
           }}
         >
-          Listado de Pacientes
+          Listado de Doctores Eliminados
         </Typography>
         <Box
           style={{
@@ -136,6 +130,7 @@ const EditarPacientes = () => {
           />
         </Box>
       </Box>
+
       <Container>
         <TableContainer component={Paper}>
           <Table>
@@ -156,18 +151,18 @@ const EditarPacientes = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {currentItems.map((paciente) => (
-                <TableRow key={paciente.id}>
+              {currentItems.map((doctor) => (
+                <TableRow key={doctor.id}>
                   <TableCell align="left">
-                    {paciente.nombre} {paciente.apellido}
+                    {doctor.nombre} {doctor.apellido}
                   </TableCell>
-                  <TableCell align="center">{paciente.email}</TableCell>
-                  <TableCell align="center">{paciente.id}</TableCell>
-                  <TableCell align="center">{paciente.telefono}</TableCell>
+                  <TableCell align="center">{doctor.email}</TableCell>
+                  <TableCell align="center">{doctor.id}</TableCell>
+                  <TableCell align="center">{doctor.telefono}</TableCell>
                   <TableCell align="center">
                     <Button
-                      id={paciente.email}
-                      onClick={handleClick}
+                      id={doctor.email}
+                      onClick={() => handleClick(doctor)}
                       variant="outlined"
                       size="small"
                       style={{
@@ -177,13 +172,13 @@ const EditarPacientes = () => {
                       Acceder
                     </Button>
                     <Button
-                      id={paciente.id}
-                      onClick={() => handleClickDelete(paciente.id)}
+                      id={doctor.id}
+                      onClick={() => handleClickRestore(doctor.id)}
                       variant="outlined"
                       color="warning"
                       size="small"
                     >
-                      X
+                      Restaurar
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -210,5 +205,4 @@ const EditarPacientes = () => {
     </>
   );
 };
-
-export default EditarPacientes;
+export default DoctoresEliminados;

@@ -1,9 +1,48 @@
 const { createMail } = require("../controllers/mail/createMail");
+const { sendMailToPaciente } = require("../controllers/mail/sendMailToPaciente")
+const { sendMailRespuesta } = require("../controllers/mail/sendMailRespuesta")
+const { sendMailDocumento } = require("../controllers/mail/sendMailDocumento")
 
 const postMail = async (req, res) => {
   try {
-    const { name, email, message, emailMedico } = req.body;
-    await createMail(name, email, message, emailMedico);
+    const { name, emailRecibe, message, emailEscribe, subject } = req.body;
+    
+    await createMail(name, emailRecibe, message, emailEscribe, subject);
+
+    res.status(200).json({ message: "Mensaje enviado correctamente" });
+  } catch (error) {
+    res.status(500).json({ message: "Error al enviar el mensaje" });
+  }
+};
+
+const postMailToPaciente = async (req, res) => {
+  try {
+    const { nombreDoctor, apellidoDoctor, emailRecibe, message, emailEscribe, subject } = req.body;    
+    await sendMailToPaciente(nombreDoctor, apellidoDoctor, emailRecibe, message, emailEscribe, subject);
+
+    res.status(200).json({ message: "Mensaje enviado correctamente" });
+  } catch (error) {
+    res.status(500).json({ message: "Error al enviar el mensaje" });
+  }
+};
+
+const postMailRespuesta = async (req, res) => {
+  try {
+    const { nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectRespuesta, messageRespuesta, respuesta} = req.body;
+    console.log(req.body);
+    await sendMailRespuesta(nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectRespuesta, messageRespuesta,respuesta);
+
+    res.status(200).json({ message: "Mensaje enviado correctamente" });
+  } catch (error) {
+    res.status(500).json({ message: "Error al enviar el mensaje" });
+  }
+};
+
+const postMailDocumento = async (req, res) => {
+  try {
+    const { nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectDocumento, messageDocumento, title} = req.body;
+    console.log(req.body);
+    await sendMailDocumento(nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectDocumento, messageDocumento, title);
 
     res.status(200).json({ message: "Mensaje enviado correctamente" });
   } catch (error) {
@@ -13,4 +52,7 @@ const postMail = async (req, res) => {
 
 module.exports = {
   postMail,
+  postMailToPaciente,
+  postMailRespuesta,
+  postMailDocumento
 };

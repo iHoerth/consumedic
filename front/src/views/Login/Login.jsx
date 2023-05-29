@@ -1,9 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
-import { Container, Paper, TextField, Box, Button, Typography, useTheme } from '@mui/material';
-import { Google } from '@mui/icons-material';
+import { Container, Paper, TextField, Box, Button, Typography, useTheme, Snackbar, Alert, AlertTitle } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import NavBar from '../../components/NavBar/NavBar';
@@ -14,14 +12,12 @@ import login21 from '../../assets/Img/login21.jpg';
 
 const Userlogin = () => {
   const { patientDetail, loginPatient } = useContext(Context)[1];
-  const clientID = '508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com';
-
-  const theme = useTheme();
-  const { values } = theme.breakpoints;
-
-  const navigate = useNavigate();
-
+  const {snackOk, snackOkMensaje,setSnackOk,setSnackOkMensaje} = useContext(Context)[1];
+  const {snackFail, snackFailMensaje,setSnackFail,setSnackFailMensaje} = useContext(Context)[1];
   const [user, setUser] = useState({});
+  const clientID = '508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com';
+  const theme = useTheme();
+  const navigate = useNavigate();
 
   //estados de email y contraseña
   const [localEmail, setLocalEmail] = useState('');
@@ -78,7 +74,8 @@ const Userlogin = () => {
   function handleLocalSubmit(event) {
     event.preventDefault();
     loginPatient({ email: localEmail, password: localPassword }).catch((err) => {
-      console.error(err);
+      setSnackFail(true)
+      setSnackFailMensaje(err.response.data.message)
     });
   }
 
@@ -100,31 +97,6 @@ const Userlogin = () => {
     } catch (e) {
       alert(e.message);
     }
-    // setUser(response.profileObj);
-    // loginPatient({
-    //   email: response.profileObj.email,
-    //   token: response.tokenId,
-    // }).catch((err) => {
-    //   if (err?.response?.data?.message == 'Patient not found') {
-    //     navigate('/create', { state: response.profileObj, replace: true });
-    //   }
-    //   console.error(err);
-    // });
-    // console.log(response);
-    // setUser(response.profileObj);
-    // loginDoctor({
-    //   email: response.profileObj.email,
-    //   token: response.tokenId,
-    // }).catch((err) => {
-    //   if (err?.response?.data?.message == 'Doctor not found') {
-    //     navigate('/createDoctor', {
-    //       state: response.profileObj,
-    //       replace: true,
-    //     });
-    //   }
-
-    //   console.error(err);
-    // });
   };
 
   const onFailure = () => {
@@ -134,6 +106,19 @@ const Userlogin = () => {
   return (
     <>
       <NavBar />
+      <Snackbar
+        open={snackFail}
+        autoHideDuration={2500}
+        onClose={() => {
+          setSnackFail(false);
+          setSnackFailMensaje('');
+        }}
+      >
+        <Alert severity="error" variant="filled">
+          <AlertTitle>Mensaje de Error</AlertTitle>
+          {snackFailMensaje}
+        </Alert>
+      </Snackbar>
       <Box
         sx={{
           backgroundImage: `url('${login21}')`,
@@ -147,6 +132,7 @@ const Userlogin = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          p: 3,
         }}
       >
         <Container
@@ -156,12 +142,14 @@ const Userlogin = () => {
             width: {
               desktop: 400,
               laptop: 400,
-              tablet: '100%',
+              tablet: 400,
               mobile: '100%',
             },
             padding: '15px',
             marginTop: '145px',
             marginBottom: '50px',
+            minWidth: '200px',
+            height: '613px',
           }}
         >
           <Typography variant="h6" align="center" sx={{ marginTop: '50px', marginBottom: '20px' }}>
@@ -177,6 +165,7 @@ const Userlogin = () => {
               alignItems: 'center',
               flexDirection: 'column',
               height: '450px',
+              p: 2,
             }}
           >
             <TextField
@@ -207,7 +196,7 @@ const Userlogin = () => {
                   color: emailError ? 'red' : 'secondary',
                 },
                 height: '80px',
-                width: '320px',
+                width: '100%',
               }}
             ></TextField>
 
@@ -239,15 +228,15 @@ const Userlogin = () => {
                   color: passwordError ? 'red' : 'secondary',
                 },
                 height: '80px',
-                width: '320px',
+                width: '100%',
               }}
             ></TextField>
-
             <Button
               variant="contained"
               color="primary"
-              sx={{ margin: '10px' }}
+              sx={{ margin: '10px', width: '100%' }}
               onClick={handleLocalSubmit}
+              disabled={localEmail===""&&localPassword===""?true:(emailError||passwordError?true:false)}
             >
               Ingresar
             </Button>
@@ -259,6 +248,7 @@ const Userlogin = () => {
               onFailure={onFailure}
               cookiePolicy={'single_host_origin'}
             />
+
             <div className={user ? 'profile' : 'hidden'}>
               <img src={user.imageUrl} alt="" />
               <h3>{user.name}</h3>
@@ -269,8 +259,8 @@ const Userlogin = () => {
             </Button>
           </Box>
         </Container>
-        <Footer />
       </Box>
+      <Footer />
     </>
   );
 };

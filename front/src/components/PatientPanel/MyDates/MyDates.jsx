@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../../../context/ContextProvider";
-import { DataGrid } from "@material-ui/data-grid";
-import { Box, Skeleton } from "@mui/material";
+import { DataGrid, GridToolbar } from "@material-ui/data-grid";
+import { Box, Skeleton, Typography } from "@mui/material";
 
 const MyDates = () => {
   const { informacion, fetchPatientData } = useContext(Context)[5];
@@ -19,59 +19,73 @@ const MyDates = () => {
     }
   }, [patientDetail.id]);
 
-  console.log("informacion", informacion);
-
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
       field: "fecha",
       headerName: "Fecha",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
+      sortComparator: (v1, v2, cellParams1, cellParams2) => {
+        const fecha1 = new Date(v1);
+        const fecha2 = new Date(v2);
+
+        if (fecha1 < fecha2) {
+          return -1;
+        } else if (fecha1 > fecha2) {
+          return 1;
+        } else {
+          return 0;
+        }
+      },
     },
     {
       field: "hora",
       headerName: "Hora",
       width: 150,
-      editable: true,
-    },
-    {
-      field: "imagen",
-      headerName: "Foto",
-      width: 150,
-      editable: true,
+      disableColumnMenu: true,
+      sortComparator: (v1, v2, cellParams1, cellParams2) => {
+        const hora1 = new Date(`1970-01-01T${v1}`);
+        const hora2 = new Date(`1970-01-01T${v2}`);
+
+        if (hora1 < hora2) {
+          return -1;
+        } else if (hora1 > hora2) {
+          return 1;
+        } else {
+          return 0;
+        }
+      },
     },
     {
       field: "nombre",
       headerName: "Nombre",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "apellido",
       headerName: "Apellido",
       width: 150,
-
-      editable: true,
+      disableColumnMenu: true,
     },
     {
       field: "especialidad",
       headerName: "Especialidad",
       width: 150,
-      editable: true,
+      disableColumnMenu: true,
     },
 
     {
       field: "descripcion",
       headerName: "Descripcion",
-      width: 150,
-      editable: true,
+      width: 250,
+      disableColumnMenu: true,
     },
     {
       field: "respuestaMedico",
       headerName: "Informe medico",
-      width: 150,
-      editable: true,
+      width: 250,
+      disableColumnMenu: true,
     },
   ];
 
@@ -103,7 +117,6 @@ const MyDates = () => {
     );
     return {
       id: item.id,
-      imagen: item.imagen,
       apellido: item.apellido,
       nombre: item.nombre,
       especialidad: especialidadName,
@@ -114,26 +127,54 @@ const MyDates = () => {
     };
   });
 
+  const CustomPagination = () => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          padding: "8px",
+        }}
+      >
+        <span style={{ marginRight: "8px" }}>Page:</span>
+        <button disabled>1</button>
+      </div>
+    );
+  };
   return (
     <>
-      <Box>Este es tu historial de citas</Box>
       {loading ? (
         <div>Cargando</div>
       ) : (
         <Box sx={{ height: 400, width: "100%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
+              Historial de Citas
+            </Typography>
+          </Box>
+
           {!informacion.length ? (
             <>
-              <Skeleton>No datos para mostar</Skeleton>
+              <Skeleton>No hay registros para mostrar</Skeleton>
             </>
           ) : (
-            <DataGrid
-              disableSelectionOnClick
-              rows={informacionData}
-              columns={columns}
-              pageSize={5}
-              checkboxSelection
-              rowsPerPageOptions={[5, 10, 20]}
-            />
+            <>
+              <DataGrid
+                rows={informacionData}
+                columns={columns}
+                components={{
+                  Pagination: CustomPagination,
+                }}
+                pagination
+              />
+            </>
           )}
         </Box>
       )}

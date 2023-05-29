@@ -12,7 +12,7 @@ import { Context } from "../../context/ContextProvider";
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { Stack, Divider } from "@mui/material";
+import { Stack, Divider,  Snackbar, Alert, AlertTitle } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -26,6 +26,7 @@ const DoctorDashboard = () => {
   const {turnos} = useContext(Context)[3];
   const {pacienteHistorial, pacientes} = useContext(Context)[3];
   const { fetchDoctorByEmail, doctorDetail } = useContext(Context)[0];
+  const {snackOk, snackOkMensaje,setSnackOk,setSnackOkMensaje} = useContext(Context)[0];
   const {id, nombre, Descripcion, apellido, direccion, dni, email, imagen, precio, telefono, titulo, Especialidads, ObraSocials} = doctorDetail
   const { vista, setVista} = useContext(Context)[3];
   const [loading, setLoading] = useState(true);
@@ -42,8 +43,6 @@ const DoctorDashboard = () => {
     }
     console.log(loading);
   }, [loading, doctorDetail, turnos, pacientes, pacienteHistorial]);
-  // console.log(doctorDetail);
-  
 
   const views = [
     "Mi Perfil",
@@ -62,9 +61,23 @@ const DoctorDashboard = () => {
     setVista(index);
   };
 
+
   return (
     <>
       <NavBar />
+      <Snackbar
+        open={snackOk}
+        autoHideDuration={1500}
+        onClose={() => {
+          setSnackOk(false);
+          setSnackOkMensaje('');
+        }}
+      >
+        <Alert severity="success" variant="filled">
+          <AlertTitle>Mensaje Exitoso</AlertTitle>
+          {snackOkMensaje}
+        </Alert>
+      </Snackbar>
       <Container maxWidth="sm" sx={{ mt: "100px", mb: "40px"}}>
         <Box sx={{ height: "85vh" }}>
           <Stack
@@ -179,7 +192,7 @@ const DoctorDashboard = () => {
               ) : (
                 <>
                   {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA DERECHA DE LA LISTA */}
-                  {vista === 0 ? (
+                  {vista === 0 ?  (
                     <Profile doctorDetail={doctorDetail}/>
                   ) : vista === 3 ? (
                     <ConfigAgenda doctorDetail={doctorDetail} />

@@ -14,26 +14,24 @@ import { Button, Box, Typography, Divider } from '@mui/material';
 
 const Pacientes = ({id}) => {
     const { pacientes, pacienteHistorial, fetchPacientes, fetchPacienteHistorial,setVista} = useContext(Context)[3];
+    const {fetchPatientById } = useContext(Context)[1];
+    const {fetchDoctorById} = useContext(Context)[0];
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!pacientes.length) {
           const search = async () => {
             await fetchPacientes(id)
           }
           search()
-        }
-        else{
-          setLoading(false);
-        }
-        // console.log(pacienteHistorial);
-    }, [loading, pacientes]);
+    }, []);
 
 
     const handleClick = async (event) =>{
         const idPaciente = Number(event.target.id);
         const idMedico = id
         await fetchPacienteHistorial(idMedico,idPaciente)
+        await fetchPatientById(idPaciente)
+        await fetchDoctorById(idMedico)
         setVista(10)
     }
     
@@ -57,7 +55,8 @@ const Pacientes = ({id}) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                            { pacientes.map(paciente => (
+                            { !pacientes?.length ? "No hay turnos para mostrar"
+                             : pacientes.map(paciente => (
                                 <TableRow>
                                     <TableCell align="left">{paciente.nombre} {paciente.apellido}</TableCell>
                                     {/* <TableCell align="center">{paciente.apellido}</TableCell> */}

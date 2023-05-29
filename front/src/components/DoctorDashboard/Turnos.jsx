@@ -10,15 +10,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import { Button, Box, Typography, Divider } from '@mui/material';
+import { Button, Box, Typography, Divider, Snackbar, Alert, AlertTitle, Modal } from '@mui/material';
+import MailMensajePaciente from "../Mail/MailMensajePaciente";
 
 
 
 const Turnos = ({id}) => {
     const {turnos, fetchTurnos} = useContext(Context)[3];
+    const {fetchPatientByEmail} = useContext(Context)[1];
     const [loading, setLoading] = useState(true);
     const [view, setView] = useState(0)
-
+    const { session } = useContext(Context)[2];
+    const {mailDoctor, setMailDoctor, mailPaciente, setMailPaciente, modal, setModal, snackOk, setSnackOk, snackOkMensaje, setSnackOkMensaje, snackFail, setSnackFail, snackFailMensaje,setSnackFailMensaje} = useContext(Context)[7];
     useEffect(() => {
         if (!turnos.viejosTurnos||!turnos.futurosTurnos) {
             const search = async () => {
@@ -70,7 +73,7 @@ const Turnos = ({id}) => {
                                     <TableCell align="center">{turno.hora}</TableCell>
                                     <TableCell align="center">{`${turno.paciente.nombre} ${turno.paciente.apellido}`}</TableCell>
                                     <TableCell align="center">{turno.descripcion}</TableCell>
-                                    <TableCell align="center"><Button id={turno.id} onClick={handleClick} variant="outlined" size="small">Cancelar Turno</Button></TableCell>
+                                    <TableCell align="center"><Button id={turno.id} onClick={async()=>{await fetchPatientByEmail(turno.paciente.email);setModal(true); setMailPaciente(turno.paciente.email); setMailDoctor(session.email) }} variant="outlined" size="small">Mensaje al Paciente</Button></TableCell>
                                 </TableRow>
                             )):"No hay turnos para mostrar") : (turnos.viejosTurnos&&turnos.viejosTurnos.length ? turnos.viejosTurnos.map(turno => (
                                 <TableRow>
@@ -78,12 +81,60 @@ const Turnos = ({id}) => {
                                     <TableCell align="center">{turno.hora}</TableCell>
                                     <TableCell align="center">{`${turno.paciente.nombre} ${turno.paciente.apellido}`}</TableCell>
                                     <TableCell align="center">{turno.descripcion}</TableCell>
-                                    <TableCell align="center"><Button id={turno.id} onClick={handleClick} variant="outlined" size="small" disabled>Cancelar Turno</Button></TableCell>
+                                    <TableCell align="center"><Button id={turno.id} variant="outlined" size="small" disabled>Mensaje al Paciente</Button></TableCell>
                                 </TableRow>
                             )):"No hay turnos para mostrar") }
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Snackbar
+                open={snackOk}
+                autoHideDuration={1500}
+                onClose={
+                    ()=>{
+                    setSnackOk(false)
+                    setSnackOkMensaje("")
+                    }
+                }
+            >
+                <Alert severity="success" variant="filled">
+                    <AlertTitle>Mensaje Exitoso</AlertTitle>
+                    {snackOkMensaje}
+                </Alert>
+            </Snackbar>       
+            <Snackbar
+                open={snackFail}
+                autoHideDuration={1500}
+                onClose={
+                    ()=>{
+                    setSnackFail(false)
+                    setSnackFailMensaje("")
+                    }
+                }
+            >
+                <Alert severity="error" variant="filled">
+                    <AlertTitle>Mensaje de Error</AlertTitle>
+                    {snackFailMensaje}
+                </Alert>
+            </Snackbar>
+            <Modal open={modal}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    width: "60%",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "background.paper",
+                    boxShadow: 24,
+                    p: 4,
+                    outline: "none",
+                    
+                  }}
+                >
+                  <MailMensajePaciente />
+                </Box>
+              </Modal>
         </>
     )
 }

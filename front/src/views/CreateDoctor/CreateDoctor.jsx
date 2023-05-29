@@ -9,12 +9,10 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import TextField from "@mui/material/TextField";
 import imagen8 from "../../assets/Img/8.jpg";
 import NavBar from "../../components/NavBar/NavBar";
-import { Container, Paper, Typography, Autocomplete } from "@mui/material";
+import { Container, Paper, Typography, Autocomplete, Snackbar, Alert, AlertTitle  } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Context, UtilitiesContext } from "../../context/ContextProvider";
-import { FormHelperText } from "@mui/material";
 import Footer from "../../components/Footer/Footer";
-import axios from "axios";
 
 const typrographyError = styled(Typography)({
   fontSize: "8px",
@@ -44,11 +42,14 @@ const StyleForm = styled(Container)({
 const CreateDoctor = () => {
   const navigate = useNavigate();
   const doctor = useContext(Context)[0];
+  const {snackFail, snackFailMensaje,setSnackFail,setSnackFailMensaje} = useContext(Context)[0];
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const { createDoctor, doctorDetail } = doctor;
   const { loginDoctor } = useContext(Context);
   const location = useLocation();
-
+  const [fileName, setFileName] = useState("") 
+  const [open, setOpen] = useState()
+  const [fileSize, setFileSize] = useState()
   const [form, setForm] = useState({
     dni: "",
     numeroMatricula: "",
@@ -88,7 +89,6 @@ const CreateDoctor = () => {
     idEspecialidad: "",
     idObraSocial: "",
   });
-
   const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
@@ -119,8 +119,8 @@ const CreateDoctor = () => {
 
     if (!form.telefono) {
       errors.telefono = "El campo teléfono es requerido";
-    } else if (!/^\d{10}$/.test(form.phone)) {
-      errors.phone = "El número de teléfono debe contener 10 dígitos";
+    } else if (!/^\d{10,15}$/.test(form.telefono)) {
+      errors.telefono = "El número de teléfono debe contener entre 10 y 15 dígitos";
     }
 
     // if (!form.idObraSocial) {
@@ -152,7 +152,10 @@ const CreateDoctor = () => {
       errors.direccion = "La direccion donde atiente es requerido";
     }
     if (!form.fotoMatricula) {
-      errors.fotoMatricula = "La foto de la matricula es requerida";
+      errors.fotoMatricula = "La foto de perfil es requerida";
+    }
+    if (fileSize>1) {
+      errors.fotoMatricula = "La foto debe tener menos de 1mb";
     }
     if (!form.idEspecialidad) {
       errors.idEspecialidad = "El campo especialidad es requerido";
@@ -163,9 +166,22 @@ const CreateDoctor = () => {
     if (!form.precioConsulta) {
       errors.precioConsulta = "El precio de la consulta es requerido";
     }
+
+
     if (!form.numeroMatricula) {
       errors.numeroMatricula = "El numero de matricula es requerido";
+    } else if (!/^\d{5}$/.test(form.numeroMatricula)) {
+      errors.numeroMatricula = "El numero de matricula tiene que ser un numero de 5 digitos";
     }
+
+    // if (typeof form.numeroMatricula !== 'number') {
+    //   errors.numeroMatricula = "El numero de matricula tiene que ser un numero";
+    // }
+    // if (!form.numeroMatricula) {
+    //   errors.numeroMatricula = "El numero de matricula es requerido";
+
+    // }
+    
     setError(errors);
     return Object.keys(errors).length === 0;
   }
@@ -203,8 +219,7 @@ const CreateDoctor = () => {
     console.log(newDoctor);
     handleCheckedPassword();
     createDoctor(newDoctor);
-    navigate(`/perfilMedico/`);
-  };
+};
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -220,13 +235,25 @@ const CreateDoctor = () => {
 
   const setFileToBase = (file) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setForm({
-        ...form,
-        fotoMatricula: reader.result,
-      });
-    };
+    try {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        let fileSize = reader.result.length;
+        fileSize = (fileSize/1024).toFixed(2);
+        setFileSize(fileSize)
+        console.log(`File size: ${fileSize} kb`);
+      };
+      reader.onloadend = () => {
+        setForm({
+          ...form,
+          fotoMatricula: reader.result,
+        });
+        setFileName(file.name)
+        validarForm({ ...form, fotoMatricula: reader.result });
+      };
+    } catch (error) {
+      return;
+    }
   };
 
   const handleEspecialidad = (selectedOptionsE) => {
@@ -264,11 +291,24 @@ const CreateDoctor = () => {
         email: location.state.email,
       });
     }
-  }, [location?.state]);
 
+  }, [location?.state]);
   return (
     <>
       <NavBar></NavBar>
+      <Snackbar
+        open={snackFail}
+        autoHideDuration={2500}
+        onClose={() => {
+          setSnackFail(false);
+          setSnackFailMensaje("")
+        }}
+      >
+        <Alert severity="error" variant="filled">
+          <AlertTitle>Mensaje de Error</AlertTitle>
+          {snackFailMensaje}
+        </Alert>
+      </Snackbar>
       <Container
         sx={{
           backgroundImage: `url('${imagen8}')`,
@@ -421,6 +461,14 @@ const CreateDoctor = () => {
                 </Button>
               </label>
               {form.fotoMatricula && <span>{form.fotoMatricula.name}</span>}
+              {fileName ? (
+                <Typography
+                  variant="inherit"
+                  style={{ maxWidth: "180px", fontSize: "12px", margin: "6px" }}
+                >
+                  {fileName}
+                </Typography>
+              ) : null}
               {error.fotoMatricula ? (
                 <Typography
                   variant="inherit"
@@ -800,6 +848,7 @@ const CreateDoctor = () => {
                 variant="contained"
                 color="primary"
                 onClick={handleSubmit}
+                disabled={error.apellido||error.confirmarContrasena||error.contrasena||error.direccion||error.dni||error.email||error.fotoMatricula||error.idEspecialidad||error.idObraSocial||error.numeroMatricula||error.precioConsulta||error.telefono||error.tituloUniversitario}
               >
                 Crear usuario
               </CrearDoctor>

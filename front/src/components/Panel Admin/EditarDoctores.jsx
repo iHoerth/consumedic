@@ -19,67 +19,66 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const EditarPacientes = () => {
+const EditarDoctores = () => {
   const {
-    patients,
-    fetchPatients,
-    fetchPatientByEmail,
-    deletePatient,
-    fetchSoftDeletedPatient,
-  } = useContext(Context)[1];
+    doctors,
+    fetchDoctors,
+    fetchDoctorByEmail,
+    deleteDoctor,
+    fetchSoftDeletedDoctor,
+  } = useContext(Context)[0];
   const { setVista, setEmail } = useContext(Context)[6];
 
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-
   const [fetched, setfetched] = useState(false);
+
   useEffect(() => {
-    if (patients.length === 0 && !fetched) {
-      fetchPatients();
+    if (doctors.length === 0 && !fetched) {
+      fetchDoctors();
       setfetched(true);
     } else {
       setLoading(false);
     }
-  }, [patients]);
+  }, [doctors]);
 
   useEffect(() => {
-    const filtered = patients.filter((paciente) =>
-      paciente.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+    // filtro para buscar por nombre
+    const filtered = doctors.filter((doctor) =>
+      doctor.nombre.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    setFilteredPatients(filtered);
-  }, [searchQuery, patients]);
+    setFilteredDoctors(filtered);
+  }, [searchQuery, doctors]);
 
   const handleClick = (event) => {
     const email = event.target.id;
-    fetchPatientByEmail(email);
+    fetchDoctorByEmail(email);
     setEmail(email);
-    setVista(5);
+    setVista(6);
   };
 
   const handleClickDelete = (id) => {
-    deletePatient(id)
+    deleteDoctor(id)
       .then(() => {
-        // Eliminación exitosa, actualizar la lista de pacientes
-        fetchPatients();
-        fetchSoftDeletedPatient();
-        alert("El paciente ha sido eliminado exitosamente.");
+        // Eliminación exitosa, actualizar la lista de doctores
+        fetchDoctors();
+        fetchSoftDeletedDoctor();
+        alert("El doctor se eliminó exitosamente.");
       })
       .catch((error) => {
-        console.log("Error al eliminar el paciente:", error);
-        // Manejar el error de eliminación del paciente
+        console.log("Error al eliminar el doctor:", error);
+        // Manejar el error de eliminación del doctor
       });
   };
 
+  // Lógica para la paginación
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredPatients.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-  const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
+  const currentItems = filteredDoctors.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredDoctors.length / itemsPerPage);
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
@@ -110,7 +109,7 @@ const EditarPacientes = () => {
             marginTop: "10px",
           }}
         >
-          Listado de Pacientes
+          Listado de Doctores
         </Typography>
         <Box
           style={{
@@ -129,13 +128,14 @@ const EditarPacientes = () => {
               border: "2px solid white",
               borderRadius: "3px",
               color: "white",
-            }}
+            }} // Cambia el color del campo de búsqueda
             InputProps={{
               endAdornment: <SearchIcon sx={{ color: "white" }} />,
             }}
           />
         </Box>
       </Box>
+
       <Container>
         <TableContainer component={Paper}>
           <Table>
@@ -151,64 +151,71 @@ const EditarPacientes = () => {
                 <TableCell align="left">Nombre y Apellido</TableCell>
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">ID</TableCell>
-                <TableCell align="center">Telefono</TableCell>
+                <TableCell align="center">Teléfono</TableCell>
                 <TableCell align="center">Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {currentItems.map((paciente) => (
-                <TableRow key={paciente.id}>
-                  <TableCell align="left">
-                    {paciente.nombre} {paciente.apellido}
-                  </TableCell>
-                  <TableCell align="center">{paciente.email}</TableCell>
-                  <TableCell align="center">{paciente.id}</TableCell>
-                  <TableCell align="center">{paciente.telefono}</TableCell>
-                  <TableCell align="center">
-                    <Button
-                      id={paciente.email}
-                      onClick={handleClick}
-                      variant="outlined"
-                      size="small"
-                      style={{
-                        marginRight: "40px",
-                      }}
-                    >
-                      Acceder
-                    </Button>
-                    <Button
-                      id={paciente.id}
-                      onClick={() => handleClickDelete(paciente.id)}
-                      variant="outlined"
-                      color="warning"
-                      size="small"
-                    >
-                      X
-                    </Button>
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={5} align="center">
+                    Cargando...
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                currentItems.map((doctor) => (
+                  <TableRow key={doctor.id}>
+                    <TableCell align="left">{`${doctor.nombre} ${doctor.apellido}`}</TableCell>
+                    <TableCell align="center">{doctor.email}</TableCell>
+                    <TableCell align="center">{doctor.id}</TableCell>
+                    <TableCell align="center">{doctor.telefono}</TableCell>
+                    <TableCell align="center">
+                      <Button
+                        id={doctor.email}
+                        onClick={handleClick}
+                        variant="outlined"
+                        size="small"
+                        style={{
+                          marginRight: "40px",
+                        }}
+                      >
+                        Acceder
+                      </Button>
+                      <Button
+                        id={doctor.id}
+                        onClick={() => handleClickDelete(doctor.id)}
+                        variant="outlined"
+                        color="warning"
+                        size="small"
+                      >
+                        X
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-
-        <Box
-          display="flex"
-          justifyContent="center"
-          marginTop="20px"
-          marginBottom="10px"
-        >
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={handlePageChange}
-            size="small"
-            color="primary"
-          />
-        </Box>
+        {!loading && (
+          <Box
+            display="flex"
+            justifyContent="center"
+            marginTop="20px"
+            marginBottom="10px"
+          >
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              size="small"
+              color="primary"
+            />
+          </Box>
+        )}
       </Container>
     </>
   );
 };
 
-export default EditarPacientes;
+export default EditarDoctores;

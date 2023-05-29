@@ -1,7 +1,7 @@
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import Panel from "../../components/PatientPanel/Panel/Panel";
-import { Box } from "@mui/material";
+import { Box, Container, Stack, Divider } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/ContextProvider";
 import Loading from "../../components/Loading/Loading";
@@ -10,19 +10,6 @@ const PatientPanel = () => {
   const { session } = useContext(Context)[2];
   const { fetchPatientByEmail, patientDetail } = useContext(Context)[1];
   const [loading, setLoading] = useState(true);
-  console.log("patientDetail", patientDetail);
-
-  // useEffect(() => {
-  //   if (session.email && !patientDetail.email) {
-  //     setLoading(true);
-  //     fetchPatientByEmail(session.email).then(() => {
-  //       setLoading(false);
-  //     });
-  //     setLoading(false);
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [loading, patientDetail]);
 
   useEffect(() => {
     setLoading(true);
@@ -37,17 +24,17 @@ const PatientPanel = () => {
       ) : (
         <>
           <NavBar />
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              pb: "25px",
-            }}
-          >
-            <Panel />
-          </Box>
+          <Container maxWidth="sm" sx={{ mt: "100px", mb: "40px" }}>
+            <Box sx={{ height: "85vh" }}>
+              <Stack
+                direction="row"
+                sx={{ border: "1px solid", borderColor: "#bababa" }}
+                divider={<Divider orientation="vertical" flexItem />}
+              >
+                <Panel />
+              </Stack>
+            </Box>
+          </Container>
           <Footer />
         </>
       )}

@@ -22,6 +22,9 @@ const URL_POSTAGENDA = process.env.REACT_APP_URL_POSTAGENDA
 
 const ConfigAgenda = ({doctorDetail}) => {
   const [snack, setSnack]=useState(false)
+  const [snackFail, setSnackFail]=useState(false)
+  const [snackFailMensaje, setSnackFailMensaje]=useState("")
+
   let check = false;
   let horario_inicio="00:00:00"
   let horario_fin="00:00:00"
@@ -219,14 +222,14 @@ const ConfigAgenda = ({doctorDetail}) => {
         const agenda = [lunes, martes, miercoles, jueves, viernes, sabado, domingo]
         const id = doctorDetail.id;
         postAgenda(agenda, id)
-        setSnack(true)
-    }
-    const postAgenda = async (agenda, id) => {
+      }
+      const postAgenda = async (agenda, id) => {
         try {
-            const post = await axios.post(URL_POSTAGENDA, {agenda, id})
-            console.log(post.data);
+          const post = await axios.post(URL_POSTAGENDA, {agenda, id})
+          setSnack(true)
         } catch (error) {
-            console.log(error);
+          setSnackFail(true)
+          setSnackFailMensaje("No se pudo Actualizar la Agenda")
         }
     }
 
@@ -235,15 +238,28 @@ const ConfigAgenda = ({doctorDetail}) => {
   return (
     <>
     <Snackbar
-                open={snack}
-                autoHideDuration={1500}
-                onClose={()=>setSnack(false)}
-            >
-                <Alert severity="success" variant="filled">
-                    <AlertTitle>Mensaje Exitoso</AlertTitle>
-                    Los cambios en su Agenda han sido suscriptos
-                </Alert>
-            </Snackbar>
+        open={snack}
+        autoHideDuration={1500}
+        onClose={()=>setSnack(false)}
+    >
+        <Alert severity="success" variant="filled">
+            <AlertTitle>Mensaje Exitoso</AlertTitle>
+            Los cambios en su Agenda han sido suscriptos
+        </Alert>
+    </Snackbar>
+    <Snackbar
+        open={snackFail}
+        autoHideDuration={1500}
+        onClose={()=>{
+          setSnackFail(false)
+          setSnackFailMensaje("")
+        }}
+    >
+        <Alert severity="error" variant="filled">
+            <AlertTitle>Mensaje de Errror</AlertTitle>
+            {snackFailMensaje}
+        </Alert>
+    </Snackbar>
     <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
         <Typography style={{fontSize:"larger", fontWeight:"600"}}>Configure sus Días y Horarios de Atención</Typography>
     </Box>

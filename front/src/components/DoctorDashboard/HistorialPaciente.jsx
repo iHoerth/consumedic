@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { Context } from '../../context/ContextProvider';
+import { sendMailDocumento, sendMailRespuesta } from "../Mail/helper";
 
 import { Divider, ListItem, TextField } from "@mui/material";
 import List from "@mui/material/List";
@@ -31,7 +32,9 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 const HistorialPaciente = () => {
     const {pacienteHistorial, setVista, postDocumentosCita, postRespuestaCita,fetchPacienteHistorial} = useContext(Context)[3];
-    const {doctorDetail, fetchDoctorByEmail} = useContext(Context)[0];
+    const {mailDoctor, setMailDoctor, mailPaciente, setMailPaciente, modal, setModal, snackOk, setSnackOk, snackOkMensaje, setSnackOkMensaje, snackFail, setSnackFail, snackFailMensaje,setSnackFailMensaje} = useContext(Context)[7];
+    const {doctorDetail, fetchDoctorByEmail, cleanDetail} = useContext(Context)[0];
+    const {patientDetail, fetchPatientByEmail, cleanDetailPaciente } = useContext(Context)[1];
     const { session } = useContext(Context)[2];
     const [loading, setLoading] = useState(true);
     const [openResponse, setOpenResponse] = useState(false)
@@ -42,6 +45,8 @@ const HistorialPaciente = () => {
     const [title, setTitle] = useState("")
     const [snackRespuesta, setSnackRespuesta]=useState(false)
     const [snackDocumento, setSnackDocumento]=useState(false)
+    const [fileSize, setFileSize]=useState()
+    const [alert, setAlert] = useState(false)
 
 
     const [files64, setFiles64]=useState("")
@@ -58,6 +63,9 @@ const HistorialPaciente = () => {
         console.log(pacienteHistorial);
     }, [loading, pacienteHistorial]);
 
+    console.log(patientDetail, doctorDetail);
+
+
     useEffect(() => {
         fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
         
@@ -66,6 +74,20 @@ const HistorialPaciente = () => {
     const handleClickBack = async () =>{
         setVista(6) 
     }
+
+    const [values, setValues] = useState({
+        nombreDoctor: doctorDetail.nombre,
+        apellidoDoctor: doctorDetail.apellido,
+        emailRecibe: "consumedicgeneral@gmail.com", //! modificar a "mailPaciente"
+        emailEscribe: mailDoctor,
+        subjectDocumento: `El Doctor ${doctorDetail.nombre} ${doctorDetail.apellido} ha registrado un documento`,
+        messageDocumento: `Estimado ${patientDetail.nombre} ${patientDetail.apellido}:
+        El Doctor ${doctorDetail.nombre} ${doctorDetail.apellido} ha subido un documento al sistema con el titulo `,
+        subjectRespuesta: `El Doctor ${doctorDetail.nombre} ${doctorDetail.apellido} ha registrado un comentario`,
+        messageRespuesta: `Estimado ${patientDetail.nombre} ${patientDetail.apellido}:
+        El Doctor ${doctorDetail.nombre} ${doctorDetail.apellido} ha resgistrado la siguiente respuesta al sistema: ` 
+      });
+      const {nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectRespuesta, messageRespuesta, subjectDocumento, messageDocumento} = values
 
     const handleClickOpen = (event)=>{
         console.log(event.target.id);
@@ -86,10 +108,13 @@ const HistorialPaciente = () => {
         if(name==="respuesta"){
             postRespuestaCita(idCita, respuesta)
             setSnackRespuesta(true)
+            sendMailRespuesta({nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectRespuesta, messageRespuesta, respuesta})
+
         }
         if(name==="documentos"){
             postDocumentosCita(idCita,files64, pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId, title)
             setSnackDocumento(true)
+            sendMailDocumento({nombreDoctor, apellidoDoctor, emailRecibe, emailEscribe, subjectDocumento, messageDocumento, title})
         }
         fetchPacienteHistorial(pacienteHistorial.citas[0].DoctorTypeId, pacienteHistorial.citas[0].PacienteTypeId)
         setOpenResponse(false)
@@ -102,6 +127,8 @@ const HistorialPaciente = () => {
         setRespuesta("")
         fetchDoctorByEmail(doctorDetail.email)
         fetchDoctorByEmail(session.email)
+        setFileSize()
+
 
     }
 
@@ -113,10 +140,22 @@ const HistorialPaciente = () => {
         setFilesToBase(file)
     };
     const setFilesToBase = (file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            setFiles64(reader.result)
+        try {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                let fileSize = reader.result.length;
+                fileSize = (fileSize/1024/1024).toFixed(2);
+                setFileSize(fileSize)
+                if(fileSize>1)setAlert(true)
+                else setAlert(false)
+              };
+            reader.onloadend = () => {
+                setFiles64(reader.result)
+            }
+            
+        } catch (error) {
+            
         }
     };
 
@@ -134,6 +173,8 @@ const HistorialPaciente = () => {
         setOpenImage(true)
         setImagen(event.target.name)
     }
+
+
 
     return ( 
         <>  
@@ -293,10 +334,13 @@ const HistorialPaciente = () => {
                                                     </Button>
                                                 </label>
                                             </Box>
-                                            <Typography sx={{ml:"38%", mb:"10px"}}>{fileName}</Typography>
+                                            <Typography sx={{ml:"2%", mb:"10px"}}>{fileName}</Typography>
+                                            <Typography sx={{ml:"2%", mb:"10px"}}>{fileSize?`size: ${fileSize} mb`:null}</Typography>
+                                            <Typography sx={{ml:"2%", mb:"10px", color:"red"}}>{alert?"El archivo debe tener menos de 1mb":null}</Typography>
+
                                             <DialogActions>
                                                 <Button onClick={handleClose}>Cancelar</Button>
-                                                <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose} disabled={title===""? true :(files64===""?true:false)}>Registrar</Button>
+                                                <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose} disabled={title===""? true :(files64===""?true:(alert?true:false))}>Registrar</Button>
                                             </DialogActions>
                                         </Dialog>
                                     </TableCell>
