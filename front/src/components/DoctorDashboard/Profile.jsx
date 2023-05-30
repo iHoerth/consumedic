@@ -341,7 +341,6 @@ const Profile = ({ doctorDetail }) => {
               )}
             </TableBody>
           </Table>
-
         </CardContent>
       </Box>
     </>
