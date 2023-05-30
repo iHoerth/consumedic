@@ -83,7 +83,7 @@ const Profile = ({ doctorDetail }) => {
     suma = suma + puntajesOpinions[i]
   }
   if (Opinions?.length) {
-    promedioOpiniones = suma / Opinions.length
+    promedioOpiniones = (suma / Opinions.length).toFixed(2)
   }
 
   return (
