@@ -16,6 +16,9 @@ import {
   Divider,
   Typography,
   Pagination,
+  Snackbar,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -35,6 +38,10 @@ const PacientesEliminados = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const [fetched, setfetched] = useState(false);
+  const [snackOk, setSnackOk] = useState(false);
+  const [snackFail, setSnackFail] = useState(false);
+  const [snackOkMensaje, setSnackOkMensaje] = useState("");
+  const [snackFailMensaje, setSnackFailMensaje] = useState("");
 
   useEffect(() => {
     if (deletedPatient.length === 0 && !fetched) {
@@ -67,7 +74,9 @@ const PacientesEliminados = () => {
         // Eliminación exitosa, actualizar la lista de pacientes
         fetchSoftDeletedPatient();
         fetchPatients();
-        alert("El paciente ha sido restaurado exitosamente.");
+        //alert("El paciente ha sido restaurado exitosamente.");
+        setSnackOkMensaje("El paciente ha sido restaurado exitosamente.");
+        setSnackOk(true);
       })
       .catch((error) => {
         console.log("Error al restaurar el paciente:", error);
@@ -90,6 +99,34 @@ const PacientesEliminados = () => {
 
   return (
     <>
+      <Snackbar
+        open={snackOk}
+        autoHideDuration={2500}
+        onClose={() => {
+          setSnackOk(false);
+          setSnackOkMensaje("");
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="success" variant="filled">
+          <AlertTitle>Mensaje Exitoso</AlertTitle>
+          {snackOkMensaje}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={snackFail}
+        autoHideDuration={2500}
+        onClose={() => {
+          setSnackFail(false);
+          setSnackFailMensaje("");
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="error" variant="filled">
+          <AlertTitle>Mensaje de Error</AlertTitle>
+          {snackFailMensaje}
+        </Alert>
+      </Snackbar>
       <Box
         style={{
           display: "flex",
