@@ -428,7 +428,7 @@ const dataFalsaDoctores = async () => {
             const idEspecialidad= Math.floor(Math.random() *especialidades.length);
             const idObraSocial= Math.ceil(Math.random() * obrasSociales.length);
             
-            createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagenCloudinary, password, titulo, Descripcion, precio, idEspecialidad, idObraSocial )
+            await createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagenCloudinary, password, titulo, Descripcion, precio, idEspecialidad, idObraSocial )
                 
         } else {
             const dni = Math.floor(Math.random() * (35000000 - 15000000 + 1)) + 15000000;
@@ -446,7 +446,7 @@ const dataFalsaDoctores = async () => {
             const idEspecialidad= Math.floor(Math.random() *especialidades.length);
             const idObraSocial= Math.ceil(Math.random() * obrasSociales.length);
             
-            createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagenCloudinary, password, titulo, Descripcion, precio, idEspecialidad, idObraSocial )
+            await createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagenCloudinary, password, titulo, Descripcion, precio, idEspecialidad, idObraSocial )
         }
     
     }
