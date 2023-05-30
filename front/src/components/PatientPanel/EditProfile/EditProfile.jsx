@@ -53,15 +53,18 @@ const EditProfile = () => {
     dni: dni,
     email: email,
     telefono: telefono,
-    obraSocial: 0,
+    ObraSocial: ObraSocial || "",
   });
 
   const handleChange = (event) => {
     const property = event.target.name;
     let value = event.target.value;
 
-    if (property === "obraSocial") {
-      value = event.target.value.id;
+    if (property === "ObraSocial") {
+      value = {
+        id: event.target.value,
+        nombre: event.target.name,
+      };
     }
 
     setDatos({
@@ -201,8 +204,8 @@ const EditProfile = () => {
                   }}
                   labelId="demo-select-small-label"
                   id="demo-select-small"
-                  name="obraSocial"
-                  value={datos.obraSocial}
+                  name="ObraSocial"
+                  value={datos.ObraSocial.id}
                   label="Obra Social"
                   onChange={handleChange}
                   onClick={() => setInputClicked(true)}
@@ -211,7 +214,7 @@ const EditProfile = () => {
                     <em>Ninguna</em>
                   </MenuItem>
                   {socialSecurity?.map((obrasocial) => (
-                    <MenuItem key={obrasocial.id} value={obrasocial}>
+                    <MenuItem key={obrasocial.id} value={obrasocial.id}>
                       {obrasocial.nombre}
                     </MenuItem>
                   ))}
