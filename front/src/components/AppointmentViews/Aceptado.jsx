@@ -3,6 +3,7 @@ import { Context } from '../../context/ContextProvider';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { TextField, Button, Box, Typography, Container, Paper} from '@mui/material';
+import { sendMailCita } from "../Mail/helper";
 
 import axios from 'axios';
 
@@ -21,10 +22,11 @@ initMercadoPago('TEST-9e5c4674-d7f9-42bc-9f39-62fe105ad00c');
 
 
 
-const Aceptado = ({idPaciente}) => {
+const Aceptado = () => {
     const navigate = useNavigate()
-    
-  const { id, fecha, hora, comentario } = useParams(); 
+    const { id, fecha, hora, comentario,idPaciente } = useParams(); 
+        
+  
   const meses = [
     'Ene',
     'Feb',
@@ -51,33 +53,29 @@ const Aceptado = ({idPaciente}) => {
   const { session } = useContext(Context)[2];
   const [loading, setLoading] = useState(true);
   
-  const datos = {
+ let datos = {
     fecha: fecha,
     hora: hora,
     descripcion: comentario,
     idDoctor: id,
-    idPatient: patientDetail.id
+    idPatient: idPaciente
   }
 
   useEffect(() => {
-    fetchDoctorById(id);
+ 
+    const post = async ()=>{
+      await fetchPatientByEmail(session.email)
+      await fetchDoctorById(id)
+      await postAppointment(datos)
+      await sendMailCita(datos)
+      return datos
+
+    }
+    post();
+    
     
   }, []);
 
-  useEffect(() => {
-    if (session.email && !patientDetail.email) {
-      const search = async () => {
-        await fetchPatientByEmail(session.email);
-      };
-      search();
-      console.log(patientDetail);
-    } else {
-      console.log(datos);
-      setLoading(false);
-      postAppointment(datos);
-      
-    }
-  }, [patientDetail]);
 
   const handleClick = ()=>{
     navigate("/patientpanel/");

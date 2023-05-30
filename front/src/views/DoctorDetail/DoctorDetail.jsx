@@ -19,12 +19,14 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import EmailIcon from "@mui/icons-material/Email";
+import SmsIcon from "@mui/icons-material/Sms";
 import {
   useMediaQuery,
   useTheme,
   Card,
   Divider,
   Snackbar,
+  Button,
   Alert,
   AlertTitle,
 } from "@mui/material";
@@ -109,8 +111,6 @@ const DoctorDetail = () => {
     return <div>Cargando</div>;
   }
 
-  console.log("doctorDetail", doctorDetail);
-
   return (
     <Container
       sx={{
@@ -177,7 +177,6 @@ const DoctorDetail = () => {
         <Box
           sx={{
             display: "flex",
-
             flexDirection: "column",
             marginRight: "20px",
           }}
@@ -189,6 +188,7 @@ const DoctorDetail = () => {
               alignItems: "center",
               borderRadius: "5px",
               backgroundColor: "white",
+              padding: "20px",
             }}
           >
             <IconButton sx={{ p: 2 }}>
@@ -252,7 +252,19 @@ const DoctorDetail = () => {
                   Opiniones
                 </Typography>
               </Stack>
-              <Modal open={modal}>
+              <Button
+                color="primary"
+                variant="outlined"
+                size="md"
+                //onClick={() => setModal(true)}   //open={modal}
+                onClick={handleOpen}
+              >
+                <SmsIcon color="primary" />
+                <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
+                  Enviar mensaje
+                </Typography>
+              </Button>
+              <Modal onClose={handleClose} open={open}>
                 <Box
                   sx={{
                     position: "absolute",
