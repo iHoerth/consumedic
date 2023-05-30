@@ -90,11 +90,12 @@ const LoginDoctor = () => {
   function handleLocalSubmit(event) {
     event.preventDefault();
     loginDoctor({ email: localEmail, password: localPassword })
-        // .then((res) => {
-        //   setSnackOk(true);
-        //   setSnackOkMensaje('Logueado con exito');
-        //   navigate('/perfilMedico')
-        // })
+      .then((res) => {
+        console.log(res);
+        setSnackOk(true);
+        setSnackOkMensaje('Logueado con exito');
+        navigate('/perfilMedico')
+      })
       .catch((err) => {
         setSnackFail(true);
         setSnackFailMensaje(err.response.data.message);
@@ -105,17 +106,19 @@ const LoginDoctor = () => {
     console.log(response);
     setUser(response.profileObj);
     loginDoctor({
+      loggedFromGoogle: true,
       email: response.profileObj.email,
-      tokenId: response.tokenId,
+      token: response.tokenId,
+      nombre: response.profileObj.givenName,
+      apellido: response.profileObj.familyName,
     }).catch((err) => {
-      if (err?.response?.data?.message == 'Doctor not found') {
-        navigate('/createDoctor', {
-          state: response.profileObj,
-          replace: true,
-        });
-      }
-
-      console.error(err);
+      // if (err?.response?.data?.message == 'Doctor not found') {
+      //   navigate('/createDoctor', {
+      //     state: response.profileObj,
+      //     replace: true,
+      //   });
+      // }
+      alert(err.message);
     });
   };
 

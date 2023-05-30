@@ -14,15 +14,16 @@ const createDoctor = async (
   Descripcion,
   precio,
   idEspecialidad,
-  idObraSocial
+  idObraSocial,
+  status
 ) => {
-  if (!idEspecialidad) {
-    throw new Error("Se debe proporcionar al menos una especialidad");
-  }
-  if (!idObraSocial) {
-    throw new Error("Se debe proporcionar al menos una obra social");
-  }
-
+  // if (!idEspecialidad) {
+  //   throw new Error("Se debe proporcionar al menos una especialidad");
+  // }
+  // if (!idObraSocial) {
+  //   throw new Error("Se debe proporcionar al menos una obra social");
+  // }
+  console.log(password);
   const newDoctor = await DoctorType.create({
     dni,
     NumMatricula,
@@ -36,6 +37,7 @@ const createDoctor = async (
     titulo,
     Descripcion,
     precio,
+    status
   });
 
   if(!newDoctor) throw new Error("No se pudo agregar el Doctor")
