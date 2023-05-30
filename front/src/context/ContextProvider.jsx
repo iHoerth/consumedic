@@ -135,8 +135,7 @@ const ContextProvider = ({ children }) => {
     },
     createDoctor: async (newDoctor) => {
       try {
-        const response = await axios.post(`${URL_DOCTORS}`, newDoctor);
-        const data = await response.data;
+        const data = (await axios.post(`${URL_DOCTORS}`, newDoctor)).data;
         const idMedico = data.id;
         const horarios = await axios.post(`${URL_POSTAGENDA}/first`, {
           idMedico,
@@ -148,7 +147,7 @@ const ContextProvider = ({ children }) => {
           snackOk: true,
           snackOkMensaje: 'Perfil de Doctor Creado con Exito, por favor Ingrese a su cuenta creada',
         }));
-        navigate(`/loginDoctor/`);
+        // navigate(`/loginDoctor/`);
       } catch (error) {
         setDoctorsData((prevState) => ({
           ...prevState,
@@ -164,28 +163,57 @@ const ContextProvider = ({ children }) => {
       }));
     },
     loginDoctor: async (loginData) => {
-      try {
-        const sessionData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)).data;
-        const doctorData = await doctorsData.fetchDoctorByEmail(
-          loginData.email,
-          loginData.nombre,
-          loginData.apellido
-        );
-        console.log(doctorData);
+      if (loginData.token) {
         setSession({
-          ...sessionData,
           email: loginData.email,
-          nombre: loginData.nombre,
-          apellido: loginData.apellido,
+          token: loginData.token,
+          isDoctor: true,
         });
-        console.log({ sessionData, doctorData });
-        return { sessionData, doctorData };
-      } catch (error) {
-        setDoctorsData((prevState) => ({
-          ...prevState,
-          snackFail: true,
-          snackFailMensaje: 'No se encuentra usuario con ese email y/o contraseña',
-        }));
+        axios
+          .get(`${URL_DOCTORS}?email=${loginData.email}`)
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => {
+            if (error.response && error.response.status === 400) {
+              doctorsData
+                .createDoctor({
+                  loggedFromGoogle: loginData.loggedFromGoogle,
+                  email: loginData.email,
+                  nombre: loginData.nombre,
+                  apellido: loginData.apellido,
+                })
+                .then((newPatient) => {
+                  return newPatient;
+                })
+                .catch((error) => {});
+            } else {
+            }
+          });
+      } else {
+        try {
+          const sessionData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)).data;
+          const doctorData = await doctorsData.fetchDoctorByEmail(
+            loginData.email,
+            loginData.nombre,
+            loginData.apellido
+          );
+          console.log(doctorData);
+          setSession({
+            ...sessionData,
+            email: loginData.email,
+            nombre: loginData.nombre,
+            apellido: loginData.apellido,
+          });
+          console.log({ sessionData, doctorData });
+          return { sessionData, doctorData };
+        } catch (error) {
+          setDoctorsData((prevState) => ({
+            ...prevState,
+            snackFail: true,
+            snackFailMensaje: 'No se encuentra usuario con ese email y/o contraseña',
+          }));
+        }
       }
     },
     putDoctor: async (doctorNewDetails) => {
@@ -327,7 +355,11 @@ const ContextProvider = ({ children }) => {
         }));
         return data;
       } catch (error) {
-        console.log(error);
+        setPatientsData((prevState) => ({
+          ...prevState,
+          snackFail: true,
+          snackFailMensaje: error.response.data.message,
+        }));
       }
     },
 
@@ -394,6 +426,7 @@ const ContextProvider = ({ children }) => {
           });
       } else {
         try {
+          console.log(loginData);
           const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData)).data;
           const patientData = await patientsData.fetchPatientByEmail(
             loginData.email,
@@ -407,9 +440,14 @@ const ContextProvider = ({ children }) => {
             apellido: loginData.apellido,
             token: loginData.tokenId,
           });
+          console.log({ sessionData, patientData });
           return { sessionData, patientData };
         } catch (error) {
-          console.log(error);
+          setPatientsData((prevState) => ({
+            ...prevState,
+            snackFail: true,
+            snackFailMensaje: 'No se encuentra usuario con ese email y/o contraseña',
+          }));
         }
       }
     },
