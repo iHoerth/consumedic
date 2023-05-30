@@ -245,37 +245,37 @@ const Profile = ({ doctorDetail }) => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-        <Box sx={{width:'60%'}}>
-          <CardContent style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', marginTop:'30px' }}>
-          <Typography variant="h6" sx={{ margin:'10px', color: "#4b4b4b" }}>Siguientes turnos</Typography>
-            <Table >
-              <TableHead style={{ backgroundColor: "lightgray", position: "sticky", top: 0, zIndex: 1 }}>
-                <TableRow>
-                  <TableCell key="nombre" align="left">Fecha</TableCell>
-                  <TableCell key="apellido" align="center">Hora</TableCell>
-                  <TableCell align="center">Paciente</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {turnos.futurosTurnos?.map((turno) => (
-                  <TableRow key={turno.id}>
-                    <TableCell align="center">{turno.fecha}</TableCell>
-                    <TableCell align="center">{turno.hora}</TableCell>
-                    <TableCell align="center">{turno.paciente.apellido}</TableCell>
-                  </TableRow>
-                ))}
-                {!turnos.futurosTurnos?.length && (
+        <Box sx={{ display: "flex", justifyContent: "space-around", alignItems:"start" }}>
+          <Box sx={{width:'60%'}}>
+            <CardContent style={{ borderRadius: '10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', marginTop:'5px' }}>
+            <Typography variant="h6" sx={{ margin:'5px', color: "#4b4b4b" }}>Siguientes turnos</Typography>
+              <Table >
+                <TableHead style={{ backgroundColor: "lightgray", position: "sticky", top: 0, zIndex: 1 }}>
                   <TableRow>
-                    <TableCell colSpan={3} align="center">No hay turnos para mostrar</TableCell>
+                    <TableCell key="nombre" align="left">Fecha</TableCell>
+                    <TableCell key="apellido" align="center">Hora</TableCell>
+                    <TableCell align="center">Paciente</TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Box>
+                </TableHead>
+                <TableBody>
+                  {turnos.futurosTurnos?.slice(0,3).map((turno) => (
+                    <TableRow key={turno.id}>
+                      <TableCell align="center">{turno.fecha}</TableCell>
+                      <TableCell align="center">{turno.hora}</TableCell>
+                      <TableCell align="center">{turno.paciente.apellido}</TableCell>
+                    </TableRow>
+                  ))}
+                  {!turnos.futurosTurnos?.length && (
+                    <TableRow>
+                      <TableCell colSpan={3} align="center">No hay turnos para mostrar</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Box>
           {doctorOpinions.length === 0 ? null :
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "top" }}>
               <Box
                 sx={{
                   display: "flex", flexDirection: "column", alignItems: "center",

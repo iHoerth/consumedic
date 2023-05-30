@@ -137,15 +137,14 @@ const ContextProvider = ({ children }) => {
       try {
         const data = (await axios.post(`${URL_DOCTORS}`, newDoctor)).data;
         const idMedico = data.id;
-        const horarios = await axios.post(`${URL_POSTAGENDA}/first`, {
-          idMedico,
-        });
+        const response = (await axios(`${URL_DOCTORS}/${idMedico}`)).data
+
 
         setDoctorsData((prevState) => ({
           ...prevState,
-          doctorDetail: { ...data },
+          doctorDetail: { ...response},
           snackOk: true,
-          snackOkMensaje: 'Perfil de Doctor Creado con Exito, por favor Ingrese a su cuenta creada',
+          snackOkMensaje: 'Perfil de Doctor Creado con Exito',
         }));
       } catch (error) {
         setDoctorsData((prevState) => ({

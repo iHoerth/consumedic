@@ -1,4 +1,5 @@
-const { DoctorType, Especialidad, ObraSocial } = require("../../db");
+const { DoctorType, Especialidad, ObraSocial, Horario } = require("../../db");
+const {createFirstHorarios} = require("../horarios/createFirstHorarios")
 
 const createDoctor = async (
   dni,
@@ -76,6 +77,8 @@ const createDoctor = async (
       if(!newObraSocial) throw new Error("No se encuentra Obra Social con el ID enviado")
       newDoctor.addObraSocials(newObraSocial);
   }
+  await createFirstHorarios (newDoctor.id)
+
   return newDoctor;
 };
 
