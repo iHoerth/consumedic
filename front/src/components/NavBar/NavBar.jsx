@@ -10,11 +10,13 @@ import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import DrawerComponent from './DrawerComponent';
 import { Context } from '../../context/ContextProvider';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 
 const NavBar = ({ component, variant,text, type }) => {
   const { session, setSession } = useContext(Context)[2];
   const navigate = useNavigate();
+  const location = useLocation();
   const theme = useTheme();
   const { values } = theme.breakpoints;
   const screenSizeSmall = useMediaQuery(theme.breakpoints.down('tablet'));
@@ -59,10 +61,13 @@ const NavBar = ({ component, variant,text, type }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+
+  const homePage = location.pathname !== '/';
+
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar
-        color={variant === 'block' ? 'primary' : scrolled ? 'primary' : 'transparent'}
+        color={homePage ? 'primary' : scrolled ? 'primary' : 'transparent'}
         elevation={scrolled ? 4 : 0}
         position={variant === 'block' ? 'block' : 'fixed'}
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
