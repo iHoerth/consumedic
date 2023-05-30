@@ -51,7 +51,7 @@ const Turnos = ({id}) => {
             <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
                 <Typography style={{fontSize:"larger", fontWeight:"600"}}>Listado de Turnos</Typography>
                 <Box sx={{position:"absolute",  right:"10%", mb: "15px"}}>
-                    <Button variant="contained" size="small" onClick={handleTurnoClick}>{view===0?"Turnos Pasados":"Turnos por Venir"}</Button>
+                    <Button variant="contained"  color="secondary" size="small" onClick={handleTurnoClick}>{view===0?"Turnos Pasados":"Turnos por Venir"}</Button>
                 </Box>
             </Box>
             <Divider />
@@ -73,7 +73,7 @@ const Turnos = ({id}) => {
                                     <TableCell align="center">{turno.hora}</TableCell>
                                     <TableCell align="center">{`${turno.paciente.nombre} ${turno.paciente.apellido}`}</TableCell>
                                     <TableCell align="center">{turno.descripcion}</TableCell>
-                                    <TableCell align="center"><Button id={turno.id} onClick={async()=>{await fetchPatientByEmail(turno.paciente.email);setModal(true); setMailPaciente(turno.paciente.email); setMailDoctor(session.email) }} variant="outlined" size="small">Mensaje al Paciente</Button></TableCell>
+                                    <TableCell align="center"><Button id={turno.id} onClick={async()=>{await fetchPatientByEmail(turno.paciente.email);setModal(true); setMailPaciente(turno.paciente.email); setMailDoctor(session.email) }}  color="secondary" variant="outlined" size="small">Mensaje al Paciente</Button></TableCell>
                                 </TableRow>
                             )):"No hay turnos para mostrar") : (turnos.viejosTurnos&&turnos.viejosTurnos.length ? turnos.viejosTurnos.map(turno => (
                                 <TableRow>
@@ -81,7 +81,7 @@ const Turnos = ({id}) => {
                                     <TableCell align="center">{turno.hora}</TableCell>
                                     <TableCell align="center">{`${turno.paciente.nombre} ${turno.paciente.apellido}`}</TableCell>
                                     <TableCell align="center">{turno.descripcion}</TableCell>
-                                    <TableCell align="center"><Button id={turno.id} variant="outlined" size="small" disabled>Mensaje al Paciente</Button></TableCell>
+                                    <TableCell align="center"><Button id={turno.id} variant="outlined" color="secondary" size="small" disabled>Mensaje al Paciente</Button></TableCell>
                                 </TableRow>
                             )):"No hay turnos para mostrar") }
                     </TableBody>

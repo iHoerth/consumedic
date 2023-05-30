@@ -64,7 +64,7 @@ const Pacientes = ({id}) => {
                                     <TableCell align="center">{paciente.ObraSocialId.nombre}</TableCell>
                                     <TableCell align="center">{paciente.telefono}</TableCell>
                                     <TableCell align="center">{paciente.email}</TableCell>
-                                    <TableCell align="center"><Button id={paciente.id} onClick={handleClick} variant="outlined" size="small" >Ver Historial</Button></TableCell>
+                                    <TableCell align="center"><Button id={paciente.id} onClick={handleClick}  color="secondary" variant="outlined" size="small" >Ver Historial</Button></TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>

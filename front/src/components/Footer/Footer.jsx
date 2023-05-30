@@ -14,12 +14,15 @@ import {
   People,
   RateReview,
 } from '@mui/icons-material';
-
+import {Tooltip} from '@mui/material'
+import { useLocation } from 'react-router-dom';
 const preventDefault = (event) => event.preventDefault();
 
 const Footer = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const theme = useTheme();
+  const location = useLocation();
+  const doctorDashboard = location.pathname !== '/perfilMedico';
 
   const handleNavigation = (event, page) => {
     let newHeight = 0;
@@ -40,52 +43,56 @@ const Footer = () => {
     const scrollTo = newHeight; // Valor de desplazamiento personalizado (en este caso, 40% de la altura de la ventana)
     window.scrollTo({ top: scrollTo, behavior: 'smooth' });
     setCurrentPage(page);
+
   };
 
   return (
     <AppBar
       sx={{
-        position:'relative',
-        bgcolor: theme.palette.primary.main,
+        position: 'relative',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
       }}
+      color={location.pathname === '/perfilMedico' ? 'secondary' : 'primary'}
     >
       <Box
         sx={{
           p: 1,
           width: '100%',
-          bgcolor: theme.palette.primary.main,
+          // bgcolor: theme.palette.primary.main,
         }}
+        color={location.pathname === '/perfilMedico' ? 'secondary' : 'primary'}
+
       >
         <BottomNavigation
           value={currentPage}
           onChange={handleNavigation}
           sx={{
-            bgcolor: theme.palette.primary.main,
+            bgcolor: location.pathname === '/perfilMedico' ? theme.palette.secondary.main : theme.palette.primary.main
           }}
+
         >
+          <Tooltip title="Inicio" placement="top">
+            <BottomNavigationAction
+              color="white"
+              showLabel="true"
+              icon={
+                <Home
+                  sx={{
+                    width: 24,
+                    height: 24,
+                    color: 'white',
+                  }}
+                />
+              }
+              href={window.location.pathname !== '/' ? '/' : ''}
+            />
+          </Tooltip>
+          <Tooltip title="Sobre Nosotros" placement="top">
           <BottomNavigationAction
-            label="Incio"
-            color="white"
-            showLabel="true"
-            icon={
-              <Home
-                sx={{
-                  width: 24,
-                  height: 24,
-                  color: 'white',
-                }}
-              />
-            }
-            value="home"
-            href={window.location.pathname !== '/' ? '/' : ''}
-          />
-          <BottomNavigationAction
-            label="Sobre Nosotros"
             icon={
               <Info
                 sx={{
@@ -97,8 +104,9 @@ const Footer = () => {
             }
             value="about"
           />
+          </Tooltip>
+          <Tooltip title="Testimonios" placement="top">
           <BottomNavigationAction
-            label="Testimonios"
             icon={
               <Comment
                 sx={{
@@ -110,6 +118,8 @@ const Footer = () => {
             }
             value="testimonials"
           />
+          </Tooltip>
+          <Tooltip title="Equipo" placement="top">
           <BottomNavigationAction
             label="Equipo"
             icon={
@@ -123,6 +133,9 @@ const Footer = () => {
             }
             value="team"
           />
+          </Tooltip>
+          
+          <Tooltip title="Login" placement="top">
           <a href="/login">
             <BottomNavigationAction
               label="Login"
@@ -137,8 +150,9 @@ const Footer = () => {
               }
               value="login"
             />
-          </a>
+          </a></Tooltip>
         </BottomNavigation>
+        
       </Box>
       <Box
         sx={{
@@ -146,9 +160,11 @@ const Footer = () => {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
-          bgcolor: theme.palette.primary.main,
+          // bgcolor: theme.palette.primary.main,
         }}
+        color={location.pathname === '/perfilMedico' ? 'secondary' : 'primary'}
       >
+        <Tooltip title="Facebook" placement="top">
         <NavLink to="https://www.facebook.com/profile.php?id=100092882291994" target="_blank">
           <Facebook
             sx={{
@@ -160,6 +176,8 @@ const Footer = () => {
             }}
           />
         </NavLink>
+        </Tooltip>
+        <Tooltip title="Twitter" placement="top">
         <NavLink to="https://www.twitter.com/" target="_blank">
           <Twitter
             sx={{
@@ -171,6 +189,8 @@ const Footer = () => {
             }}
           />
         </NavLink>
+        </Tooltip>
+        <Tooltip title="Instagram" placement="top">
         <NavLink to="https://www.instagram.com/pf.consumedic/" target="_blank">
           <Instagram
             sx={{
@@ -182,6 +202,7 @@ const Footer = () => {
             }}
           />
         </NavLink>
+        </Tooltip>
       </Box>
       <Box
         sx={{

@@ -285,12 +285,12 @@ const ConfigAgenda = ({doctorDetail}) => {
                 <Typography>Lunes</Typography>
               </TableCell>
               <TableCell align="center">
-                <Checkbox checked={check10} id="1" onChange={handleChange}/>
+                <Checkbox checked={check10}  color="secondary" id="1" onChange={handleChange}/>
               </TableCell>
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check10}
                         value={value11}
                         onChange={(newValue) => setValue11(newValue)}
@@ -302,7 +302,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check10}
                         value={value12}
                         onChange={(newValue) => setValue12(newValue)}
@@ -314,7 +314,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <TableCell align="center" sx={{width:"20px"}}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check10}
                         value={value13}
                         onChange={(newValue) => setValue13(newValue)}
@@ -333,12 +333,12 @@ const ConfigAgenda = ({doctorDetail}) => {
                 <Typography>Martes</Typography>
               </TableCell>
               <TableCell align="center">
-                <Checkbox checked={check20} id="2" onChange={handleChange}/>
+                <Checkbox checked={check20}  color="secondary" id="2" onChange={handleChange}/>
               </TableCell>
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check20}
                         value={value21}
                         onChange={(newValue) => setValue21(newValue)}
@@ -350,7 +350,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check20}
                         value={value22}
                         onChange={(newValue) => setValue22(newValue)}
@@ -362,7 +362,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <TableCell align="center" sx={{width:"20px"}}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check20}
                         value={value23}
                         onChange={(newValue) => setValue23(newValue)}
@@ -381,12 +381,12 @@ const ConfigAgenda = ({doctorDetail}) => {
                 <Typography>Miércoles</Typography>
               </TableCell>
               <TableCell align="center">
-                <Checkbox checked={check30} id="3" onChange={handleChange}/>
+                <Checkbox checked={check30} color="secondary" id="3" onChange={handleChange}/>
               </TableCell>
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check30}
                         value={value31}
                         onChange={(newValue) => setValue31(newValue)}
@@ -398,7 +398,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check30}
                         value={value32}
                         onChange={(newValue) => setValue32(newValue)}
@@ -410,7 +410,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <TableCell align="center" sx={{width:"20px"}}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check30}
                         value={value33}
                         onChange={(newValue) => setValue33(newValue)}
@@ -429,12 +429,12 @@ const ConfigAgenda = ({doctorDetail}) => {
                 <Typography>Jueves</Typography>
               </TableCell>
               <TableCell align="center">
-                <Checkbox checked={check40} id="4" onChange={handleChange}/>
+                <Checkbox checked={check40} color="secondary" id="4" onChange={handleChange}/>
               </TableCell>
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check40}
                         value={value41}
                         onChange={(newValue) => setValue41(newValue)}
@@ -446,7 +446,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check40}
                         value={value42}
                         onChange={(newValue) => setValue42(newValue)}
@@ -458,7 +458,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <TableCell align="center" sx={{width:"20px"}}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check40}
                         value={value43}
                         onChange={(newValue) => setValue43(newValue)}
@@ -477,12 +477,12 @@ const ConfigAgenda = ({doctorDetail}) => {
                 <Typography>Viernes</Typography>
               </TableCell>
               <TableCell align="center">
-                <Checkbox checked={check50} id="5" onChange={handleChange}/>
+                <Checkbox checked={check50} color="secondary" id="5" onChange={handleChange}/>
               </TableCell>
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check50}
                         value={value51}
                         onChange={(newValue) => setValue51(newValue)}
@@ -494,7 +494,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField color="secondary"
                         disabled={!check50}
                         value={value52}
                         onChange={(newValue) => setValue52(newValue)}
@@ -506,7 +506,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <TableCell align="center" sx={{width:"20px"}}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField  color="secondary"
                         disabled={!check50}
                         value={value53}
                         onChange={(newValue) => setValue53(newValue)}
@@ -525,12 +525,13 @@ const ConfigAgenda = ({doctorDetail}) => {
                 <Typography>Sábado</Typography>
               </TableCell>
               <TableCell align="center">
-                <Checkbox checked={check60} id="6" onChange={handleChange}/>
+                <Checkbox checked={check60} color="secondary" id="6" onChange={handleChange}/>
               </TableCell>
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
                         <TimeField
+                         color="secondary"
                         disabled={!check60}
                         value={value61}
                         onChange={(newValue) => setValue61(newValue)}
@@ -543,6 +544,7 @@ const ConfigAgenda = ({doctorDetail}) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
                         <TimeField
+                        color="secondary"
                         disabled={!check60}
                         value={value62}
                         onChange={(newValue) => setValue62(newValue)}
@@ -555,6 +557,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
                         <TimeField
+                         color="secondary"
                         disabled={!check60}
                         value={value63}
                         onChange={(newValue) => setValue63(newValue)}
@@ -573,12 +576,13 @@ const ConfigAgenda = ({doctorDetail}) => {
                 <Typography>Domingo</Typography>
               </TableCell>
               <TableCell align="center">
-                <Checkbox checked={check70} id="7" onChange={handleChange}/>
+                <Checkbox checked={check70} color="secondary" id="7" onChange={handleChange}/>
               </TableCell>
               <TableCell align="center" sx={{width:"20px"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
-                        <TimeField
+                        <TimeField  
+                        color="secondary"
                         disabled={!check70}
                         value={value71}
                         onChange={(newValue) => setValue71(newValue)}
@@ -591,6 +595,7 @@ const ConfigAgenda = ({doctorDetail}) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
                         <TimeField
+                         color="secondary"
                         disabled={!check70}
                         value={value72}
                         onChange={(newValue) => setValue72(newValue)}
@@ -603,6 +608,7 @@ const ConfigAgenda = ({doctorDetail}) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['TimeField', 'TimeField', 'TimeField']}>
                         <TimeField
+                         color="secondary"
                         disabled={!check70}
                         value={value73}
                         onChange={(newValue) => setValue73(newValue)}
@@ -614,7 +620,8 @@ const ConfigAgenda = ({doctorDetail}) => {
             </TableRow>
         </TableBody>
       </Table>
-      <Button variant="contained" onClick={handleSubmit}>Agregar Agenda</Button>
+      <Box style={{display: 'flex', justifyContent: 'center', margin:'12px'}} >
+        <Button variant="contained" color="secondary"  onClick={handleSubmit}>Agregar agenda</Button></Box>
     </TableContainer>
     </>
   );
