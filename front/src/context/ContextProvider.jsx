@@ -169,27 +169,28 @@ const ContextProvider = ({ children }) => {
           token: loginData.token,
           isDoctor: true,
         });
-        axios
-          .get(`${URL_DOCTORS}?email=${loginData.email}`)
-          .then((result) => {
-            console.log(result);
-          })
-          .catch((error) => {
-            if (error.response && error.response.status === 400) {
-              doctorsData
-                .createDoctor({
-                  loggedFromGoogle: loginData.loggedFromGoogle,
-                  email: loginData.email,
-                  nombre: loginData.nombre,
-                  apellido: loginData.apellido,
-                })
-                .then((newPatient) => {
-                  return newPatient;
-                })
-                .catch((error) => {});
-            } else {
+
+        try {
+          const result = await axios.get(`${URL_DOCTORS}?email=${loginData.email}`);
+          console.log(result);
+          return result;
+        } catch (error) {
+          if (error.response && error.response.status === 400) {
+            try {
+              const newPatient = await doctorsData.createDoctor({
+                loggedFromGoogle: loginData.loggedFromGoogle,
+                email: loginData.email,
+                nombre: loginData.nombre,
+                apellido: loginData.apellido,
+              });
+              return newPatient;
+            } catch (error) {
+              throw error;
             }
-          });
+          } else {
+            throw error;
+          }
+        }
       } else {
         try {
           const sessionData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)).data;
@@ -213,6 +214,7 @@ const ContextProvider = ({ children }) => {
             snackFail: true,
             snackFailMensaje: 'No se encuentra usuario con ese email y/o contraseña',
           }));
+          throw error;
         }
       }
     },

@@ -12,6 +12,7 @@ module.exports = (sequelize) => {
       },
       dni: {
         type: DataTypes.STRING,
+        allowNull:true,
       },
       NumMatricula: {
         type: DataTypes.INTEGER,

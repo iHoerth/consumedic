@@ -7,6 +7,7 @@ const { modifyProfileDoctor } = require('../controllers/doctors/modifyProfileDoc
 const { deleteDoctor } = require('../controllers/doctors/deleteDoctor');
 const { restoreDoctor } = require('../controllers/doctors/restoreDoctor');
 const { getSoftDeletedDoctor } = require('../controllers/doctors/getSoftDeletedDoctor');
+const { generateRandomPassword } = require('../utils/generateRandomPw');
 
 const bcrypt = require('bcrypt');
 const cloudinary = require('../utils/cloudinary');
@@ -50,46 +51,51 @@ const postDoctor = async (req, res) => {
     precio,
     idEspecialidad,
     idObraSocial,
+    status,
   } = req.body;
 
   try {
+    let imagenCloudinary = ''
     if (loggedFromGoogle) {
       password = generateRandomPassword();
-      console.log(password);
+      console.log('** && **', password);
       dni = null;
       telefono = null;
       idObraSocial = null;
+      idEspecialidad = null;
       //! capaz que aca hay que poner mas cosas, ver eso
       status = 'incomplete';
-    } else if (
-      !dni ||
-      !NumMatricula ||
-      !nombre ||
-      !apellido ||
-      !email ||
-      !telefono ||
-      !direccion ||
-      !imagen ||
-      !password ||
-      !titulo ||
-      !Descripcion ||
-      !precio ||
-      !idEspecialidad ||
-      !idObraSocial
-    ) {
-      throw new Error('Faltan datos para crear Doctor');
+    } else {
+      if (
+        !dni ||
+        !NumMatricula ||
+        !nombre ||
+        !apellido ||
+        !email ||
+        !telefono ||
+        !direccion ||
+        !imagen ||
+        !password ||
+        !titulo ||
+        !Descripcion ||
+        !precio ||
+        !idEspecialidad ||
+        !idObraSocial
+      ) {
+        throw new Error('Faltan datos para crear Doctor');
+      }
+
+      const cloudinaryResult = await cloudinary.uploader.upload(imagen, {
+        folder: 'Doctors',
+        width: 300,
+        crop: 'scale',
+      });
+      if (!cloudinaryResult) throw new Error('Error en la carga del archivo a Cloudinary');
+      imagenCloudinary = cloudinaryResult.secure_url;
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     if (!hashedPassword) throw new Error('No se ha podido hashear la contraseña');
-
-    const cloudinaryResult = await cloudinary.uploader.upload(imagen, {
-      folder: 'Doctors',
-      width: 300,
-      crop: 'scale',
-    });
-    if (!cloudinaryResult) throw new Error('Error en la carga del archivo a Cloudinary');
-    const imagenCloudinary = cloudinaryResult.secure_url;
 
     const result = await createDoctor(
       dni,
@@ -105,7 +111,8 @@ const postDoctor = async (req, res) => {
       Descripcion,
       precio,
       idEspecialidad,
-      idObraSocial
+      idObraSocial,
+      status,
     );
 
     res.status(200).json(result);
