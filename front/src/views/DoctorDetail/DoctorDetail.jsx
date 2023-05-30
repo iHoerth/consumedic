@@ -481,7 +481,7 @@ const DoctorDetail = () => {
           </CardContent>
         </Card>
       </Box>
-      <Footer />
+      <Footer sx={{width:'100%'}} />
     </Container>
   );
 };
