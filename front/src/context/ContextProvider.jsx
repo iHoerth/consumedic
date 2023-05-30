@@ -195,8 +195,6 @@ const ContextProvider = ({ children }) => {
           const sessionData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)).data;
           const doctorData = await doctorsData.fetchDoctorByEmail(
             loginData.email,
-            loginData.nombre,
-            loginData.apellido
           );
           console.log(doctorData);
           setSession({
@@ -394,7 +392,7 @@ const ContextProvider = ({ children }) => {
         await axios.post(`${URL_APPOINTMENTS}`, datosTurno);
       } catch (error) {
         console.log(error);
-      }
+      } 
     },
     loginPatient: async (loginData) => {
       if (loginData.token) {
@@ -426,8 +424,8 @@ const ContextProvider = ({ children }) => {
         }
       } else {
         try {
-          const patientData = await patientsData.fetchPatientByEmail(loginData.email);
           const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData)).data;
+          const patientData = await patientsData.fetchPatientByEmail(loginData.email);
           setSession({
             ...sessionData,
             email: loginData.email,
@@ -442,6 +440,7 @@ const ContextProvider = ({ children }) => {
             snackFail: true,
             snackFailMensaje: 'No se encuentra usuario con ese email y/o contraseña',
           }));
+          throw error;
         }
       }
     },
