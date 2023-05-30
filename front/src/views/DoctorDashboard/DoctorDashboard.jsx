@@ -89,7 +89,7 @@ const DoctorDashboard = () => {
               sx={{
                 height: "88vh",
                 width: "150px",
-                backgroundColor: theme.palette.primary.main,
+                backgroundColor: theme.palette.secondary.main,
                 borderRadius:"10px 0px 0px 10px"
               }}
             >
@@ -97,7 +97,7 @@ const DoctorDashboard = () => {
                 sx={{
                   width: "100%",
                   maxWidth: 360,
-                  backgroundColor: theme.palette.primary.main,
+                  backgroundColor: theme.palette.secondary.main,
                   borderRadius:"10px 0px 0px 0px"
                 }}
                 component="nav"

@@ -63,11 +63,16 @@ const NavBar = ({ component, variant,text, type }) => {
 
 
   const homePage = location.pathname !== '/';
-
+  const doctorDashboard = location.pathname === '/perfilMedico';
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar
-        color={homePage ? 'primary' : scrolled ? 'primary' : 'transparent'}
+         color={
+          doctorDashboard ? 'secondary' :
+          homePage ? 'primary' :
+          scrolled ? 'primary' :
+          'transparent'
+        }
         elevation={scrolled ? 4 : 0}
         position={variant === 'block' ? 'block' : 'fixed'}
         sx={{ height: '100px', justifyContent: 'center', alignItems: 'center' }}
