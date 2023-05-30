@@ -1,19 +1,15 @@
-const { getDoctor } = require("../controllers/doctors/getDoctor");
-const { getAllDoctors } = require("../controllers/doctors/getAllDoctors");
-const { getDoctorById } = require("../controllers/doctors/getDoctorById");
-const { createDoctor } = require("../controllers/doctors/createDoctor");
-const { modifyDoctor } = require("../controllers/doctors/modifyDoctor");
-const {
-  modifyProfileDoctor,
-} = require("../controllers/doctors/modifyProfileDoctor");
-const { deleteDoctor } = require("../controllers/doctors/deleteDoctor");
-const { restoreDoctor } = require("../controllers/doctors/restoreDoctor");
-const {
-  getSoftDeletedDoctor,
-} = require("../controllers/doctors/getSoftDeletedDoctor");
+const { getDoctor } = require('../controllers/doctors/getDoctor');
+const { getAllDoctors } = require('../controllers/doctors/getAllDoctors');
+const { getDoctorById } = require('../controllers/doctors/getDoctorById');
+const { createDoctor } = require('../controllers/doctors/createDoctor');
+const { modifyDoctor } = require('../controllers/doctors/modifyDoctor');
+const { modifyProfileDoctor } = require('../controllers/doctors/modifyProfileDoctor');
+const { deleteDoctor } = require('../controllers/doctors/deleteDoctor');
+const { restoreDoctor } = require('../controllers/doctors/restoreDoctor');
+const { getSoftDeletedDoctor } = require('../controllers/doctors/getSoftDeletedDoctor');
 
-const bcrypt = require("bcrypt");
-const cloudinary = require("../utils/cloudinary");
+const bcrypt = require('bcrypt');
+const cloudinary = require('../utils/cloudinary');
 
 const getDoctors = async (req, res) => {
   try {
@@ -28,7 +24,7 @@ const getDoctors = async (req, res) => {
 const getDoctorsById = async (req, res) => {
   try {
     const { id } = req.params;
-    if (!id) throw new Error("Falta ID del Doctor para proceder a la busqueda");
+    if (!id) throw new Error('Falta ID del Doctor para proceder a la busqueda');
 
     const result = await getDoctorById(id);
     res.status(200).json(result);
@@ -38,7 +34,8 @@ const getDoctorsById = async (req, res) => {
 };
 
 const postDoctor = async (req, res) => {
-  const {
+  let {
+    loggedFromGoogle,
     dni,
     NumMatricula,
     nombre,
@@ -56,7 +53,15 @@ const postDoctor = async (req, res) => {
   } = req.body;
 
   try {
-    if (
+    if (loggedFromGoogle) {
+      password = generateRandomPassword();
+      console.log(password);
+      dni = null;
+      telefono = null;
+      idObraSocial = null;
+      //! capaz que aca hay que poner mas cosas, ver eso
+      status = 'incomplete';
+    } else if (
       !dni ||
       !NumMatricula ||
       !nombre ||
@@ -71,20 +76,19 @@ const postDoctor = async (req, res) => {
       !precio ||
       !idEspecialidad ||
       !idObraSocial
-    )
-      throw new Error("Faltan datos para crear Doctor");
+    ) {
+      throw new Error('Faltan datos para crear Doctor');
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    if (!hashedPassword)
-      throw new Error("No se ha podido hashear la contraseña");
+    if (!hashedPassword) throw new Error('No se ha podido hashear la contraseña');
 
     const cloudinaryResult = await cloudinary.uploader.upload(imagen, {
-      folder: "Doctors",
+      folder: 'Doctors',
       width: 300,
-      crop: "scale",
+      crop: 'scale',
     });
-    if (!cloudinaryResult)
-      throw new Error("Error en la carga del archivo a Cloudinary");
+    if (!cloudinaryResult) throw new Error('Error en la carga del archivo a Cloudinary');
     const imagenCloudinary = cloudinaryResult.secure_url;
 
     const result = await createDoctor(
@@ -122,8 +126,7 @@ const deleteDoctors = async (req, res) => {
 const putDoctor = async (req, res) => {
   try {
     const { id, status } = req.body;
-    if (!id || !status)
-      throw new Error("Faltan datos; Debe proporcionar ID y Status");
+    if (!id || !status) throw new Error('Faltan datos; Debe proporcionar ID y Status');
 
     const result = await modifyDoctor(id, status);
     res.status(200).json(result);
@@ -135,19 +138,15 @@ const putDoctor = async (req, res) => {
 const putDoctorEdit = async (req, res) => {
   try {
     const doctorNewDetails = req.body;
-    if (!doctorNewDetails) throw new Error("No se han recibido Datos");
+    if (!doctorNewDetails) throw new Error('No se han recibido Datos');
 
     if (doctorNewDetails.imagen != doctorNewDetails.oldImagen) {
-      const cloudinaryResult = await cloudinary.uploader.upload(
-        doctorNewDetails.imagen,
-        {
-          folder: "Doctors",
-          width: 300,
-          crop: "scale",
-        }
-      );
-      if (!cloudinaryResult)
-        throw new Error("Error en la carga del archivo a Cloudinary");
+      const cloudinaryResult = await cloudinary.uploader.upload(doctorNewDetails.imagen, {
+        folder: 'Doctors',
+        width: 300,
+        crop: 'scale',
+      });
+      if (!cloudinaryResult) throw new Error('Error en la carga del archivo a Cloudinary');
       const imagenCloudinary = cloudinaryResult.secure_url;
       doctorNewDetails.imagen = imagenCloudinary;
     }
@@ -177,7 +176,7 @@ const getSoftDeletedDoctors = async (req, res) => {
     res.status(200).json(deletedDoctor);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 

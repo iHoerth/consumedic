@@ -90,11 +90,11 @@ const LoginDoctor = () => {
   function handleLocalSubmit(event) {
     event.preventDefault();
     loginDoctor({ email: localEmail, password: localPassword })
-      .then((res) => {
-        setSnackOk(true);
-        setSnackOkMensaje('Logueado con exito');
-        navigate('/perfilMedico')
-      })
+        // .then((res) => {
+        //   setSnackOk(true);
+        //   setSnackOkMensaje('Logueado con exito');
+        //   navigate('/perfilMedico')
+        // })
       .catch((err) => {
         setSnackFail(true);
         setSnackFailMensaje(err.response.data.message);
