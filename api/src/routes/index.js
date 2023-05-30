@@ -16,12 +16,23 @@ const panelAdmin = require("./panelAdmin")
 
 //!fake data
 const { createFakeData } = require("../fakeData/fakeData");
+const { dataFalsaDoctores } = require("../fakeData/fake2");
+
 
 const router = Router();
 
 router.post("/fake", async (req, res) => {
   try {
     await createFakeData();
+    return res.status(200).send("data created");
+  } catch (error) {
+    return res.status(404).send(error.message);
+  }
+});
+
+router.post("/fake2", async (req, res) => {
+  try {
+    await dataFalsaDoctores();
     return res.status(200).send("data created");
   } catch (error) {
     return res.status(404).send(error.message);
