@@ -166,9 +166,22 @@ const CreateDoctor = () => {
     if (!form.precioConsulta) {
       errors.precioConsulta = "El precio de la consulta es requerido";
     }
+
+
     if (!form.numeroMatricula) {
       errors.numeroMatricula = "El numero de matricula es requerido";
+    } else if (!/^\d{5}$/.test(form.numeroMatricula)) {
+      errors.numeroMatricula = "El numero de matricula tiene que ser un numero de 5 digitos";
     }
+
+    // if (typeof form.numeroMatricula !== 'number') {
+    //   errors.numeroMatricula = "El numero de matricula tiene que ser un numero";
+    // }
+    // if (!form.numeroMatricula) {
+    //   errors.numeroMatricula = "El numero de matricula es requerido";
+
+    // }
+    
     setError(errors);
     return Object.keys(errors).length === 0;
   }

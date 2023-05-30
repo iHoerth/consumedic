@@ -19,17 +19,11 @@ import { NavLink } from 'react-router-dom';
 import { Box, Grid, useTheme } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { useState, useEffect } from 'react';
+import Calendar from '../Calendar/Calendar';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import { Context } from '../../context/ContextProvider';
+import { useContext } from 'react';
+
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -47,13 +41,15 @@ const Card = ({
   location,
   price,
   agenda,
+  calendar,
   specialty,
 }) => {
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
   const theme = useTheme();
   const { values } = theme.breakpoints;
-
+  const [doctorsData] = useContext(Context);
+  const { doctorDetail, fetchDoctorById } = doctorsData;
   let averageRating = stars && stars.reduce((acc, cur) => acc + cur.puntaje, 0) / stars.length;
 
   const handleExpandClick = () => {
@@ -62,10 +58,13 @@ const Card = ({
 
   useEffect(() => {
     setLoading(true);
+    fetchDoctorById(id);
     if (id) {
       setLoading(false);
     }
   }, [loading]);
+
+
 
   return (
     <CardMUI
@@ -95,88 +94,72 @@ const Card = ({
         </>
       ) : (
         <>
-          <Box component="div" sx={{ display: 'flex' }}>
-            <Tooltip title="Ver Perfil">
-              <IconButton sx={{ p: 1 }}>
-                <NavLink to={`/detail/${id}`}>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={profileImage}
-                    sx={{
-                      width: 120,
-                      height: 120,
-                    }}
-                  />
-                </NavLink>
-              </IconButton>
-            </Tooltip>
-            <CardHeader
-              title={
-                <NavLink
-                  to={`/detail/${id}`}
-                  sx={{ color: theme.palette.primary.main, textDecoration: 'none' }}
-                >
-                  {name}
-                </NavLink>
-              }
-              subheader={
-                specialty.length &&
-                specialty.map((item, index) => <span key={index}>{item.name}</span>)
-              }
-            />
-          </Box>
-          <CardContent>
-            <Stack spacing={1}>
-              <StyledRating name="controlled-rating" value={averageRating} readOnly  />
-            </Stack>
-
-            <Typography variant="body2" color="text.secondary" sx={{ pb: 3 }}>
-              {opinions.length ? (
-                opinions.map((item, index) => <span key={index}>{item.mensaje}</span>)
-              ) : (
-                <span>No hay opiniones disponibles</span>
-              )}
-            </Typography>
-
-            <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-              {infoStudies}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-              <LocationOnSharpIcon color="primary" />
-              Direccion: {location}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
-              <VideocamIcon color="primary" />
-              Consulta ${price}
-            </Typography>
-          </CardContent>
-          <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon color="primary" />
-            </IconButton>
-            <IconButton aria-label="share">
-              <ShareIcon color="primary" />
-            </IconButton>
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <Tooltip title="Ver Agenda">
-                <ExpandMoreIcon color="primary" />
+          <Box component="div" sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <CardContent sx={{ width:'45%'}}>
+              <Tooltip title="Ver Perfil">
+                <IconButton sx={{ p: 1 }}>
+                  <NavLink to={`/detail/${id}`}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={profileImage}
+                      sx={{
+                        width: 120,
+                        height: 120,
+                      }}
+                    />
+                  </NavLink>
+                </IconButton>
               </Tooltip>
-            </ExpandMore>
-          </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Agenda Disponible:</Typography>
-              <Typography paragraph></Typography>
+              <CardHeader
+                title={
+                  <NavLink
+                    to={`/detail/${id}`}
+                    sx={{ color: theme.palette.primary.main, textDecoration: 'none' }}
+                  >
+                    {name}
+                  </NavLink>
+                }
+                subheader={
+                  specialty.length &&
+                  specialty.map((item, index) => <span key={index}>{item.name}</span>)
+                }
+              />
+              <Stack spacing={1}>
+                <StyledRating name="controlled-rating" value={averageRating} readOnly />
+              </Stack>
+
+              <Typography variant="body2" color="text.secondary" sx={{ pb: 3 }}>
+                {opinions.length ? (
+                  opinions.map((item, index) => <span key={index}>{item.mensaje}</span>)
+                ) : (
+                  <span>No hay opiniones disponibles</span>
+                )}
+              </Typography>
+
+              <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+                {infoStudies}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+                <LocationOnSharpIcon color="primary" />
+                Direccion: {location}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ pb: 1 }}>
+                <VideocamIcon color="primary" />
+                Consulta ${price}
+              </Typography>
             </CardContent>
-          </Collapse>
-        </>
-      )}
-    </CardMUI>
+
+            {/* {console.log( agenda)} */}
+            <CardContent sx={{ width:'45%'}}>
+            <Typography>Agenda disponible:</Typography>
+            
+            <Calendar id={id} calendar={calendar} />
+          </CardContent>
+        </Box>
+    </>
+  )
+}
+    </CardMUI >
   );
 };
 

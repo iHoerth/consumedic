@@ -1,7 +1,18 @@
 import { useEffect, useState, useContext } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
-import { Container, Paper, TextField, Box, Button, Typography, useTheme, Snackbar, Alert, AlertTitle } from '@mui/material';
+import {
+  Container,
+  Paper,
+  TextField,
+  Box,
+  Button,
+  Typography,
+  useTheme,
+  Snackbar,
+  Alert,
+  AlertTitle,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import NavBar from '../../components/NavBar/NavBar';
@@ -12,8 +23,8 @@ import login21 from '../../assets/Img/login21.jpg';
 
 const Userlogin = () => {
   const { patientDetail, loginPatient } = useContext(Context)[1];
-  const {snackOk, snackOkMensaje,setSnackOk,setSnackOkMensaje} = useContext(Context)[1];
-  const {snackFail, snackFailMensaje,setSnackFail,setSnackFailMensaje} = useContext(Context)[1];
+  const { snackOk, snackOkMensaje, setSnackOk, setSnackOkMensaje } = useContext(Context)[1];
+  const { snackFail, snackFailMensaje, setSnackFail, setSnackFailMensaje } = useContext(Context)[1];
   const [user, setUser] = useState({});
   const clientID = '508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com';
   const theme = useTheme();
@@ -74,8 +85,8 @@ const Userlogin = () => {
   function handleLocalSubmit(event) {
     event.preventDefault();
     loginPatient({ email: localEmail, password: localPassword }).catch((err) => {
-      setSnackFail(true)
-      setSnackFailMensaje(err.response.data.message)
+      setSnackFail(true);
+      setSnackFailMensaje(err.response.data.message);
     });
   }
 
@@ -236,7 +247,13 @@ const Userlogin = () => {
               color="primary"
               sx={{ margin: '10px', width: '100%' }}
               onClick={handleLocalSubmit}
-              disabled={localEmail===""&&localPassword===""?true:(emailError||passwordError?true:false)}
+              disabled={
+                localEmail === '' && localPassword === ''
+                  ? true
+                  : emailError || passwordError
+                  ? true
+                  : false
+              }
             >
               Ingresar
             </Button>

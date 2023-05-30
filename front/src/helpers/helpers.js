@@ -75,12 +75,13 @@ export const members = [
   },
   {
     id: 4,
+    phrase:'❝ Siempre parece imposible hasta que esté hecho ❞',
     name: 'Matias Bustamante',
     role: 'Frontend',
     img: 'https://static.vecteezy.com/system/resources/thumbnails/001/613/072/small/handsome-male-doctor-with-medical-icons-vector.jpg',
     description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
-    linkedin: 'https://www.linkedin.com',
-    github: 'https://github.com/',
+    linkedin: 'https://www.linkedin.com/in/matias-bustamante-90ba9b274/',
+    github: 'https://github.com/matibustamante7',
   },
   {
     id: 5,
@@ -101,14 +102,4 @@ export const members = [
     linkedin: 'https://www.linkedin.com',
     github: 'https://github.com/',
   },
-  {
-    id: 7,
-    name: 'Bruno Gonzales',
-    role: 'Frontend',
-    img: 'https://png.pngtree.com/png-vector/20201223/ourlarge/pngtree-minimalistic-flat-cartoon-doctor-character-vector-elements-png-image_2592814.jpg',
-    description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
-    linkedin: 'https://www.linkedin.com',
-    github: 'https://github.com/',
-  },
-  ,
 ];

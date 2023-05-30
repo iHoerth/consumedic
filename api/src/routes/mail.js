@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { postMail, postMailToPaciente, postMailDocumento, postMailRespuesta } = require("../handlers/mail");
+const { postMail, postMailToPaciente, postMailDocumento, postMailRespuesta, postMailCita } = require("../handlers/mail");
 
 const mailsRouter = Router();
 
@@ -8,6 +8,6 @@ mailsRouter.post("/", postMail);
 mailsRouter.post("/paciente", postMailToPaciente);
 mailsRouter.post("/respuesta", postMailRespuesta);
 mailsRouter.post("/documento", postMailDocumento);
-
+mailsRouter.post("/cita", postMailCita);
 
 module.exports = mailsRouter;

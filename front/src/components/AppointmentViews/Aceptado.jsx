@@ -3,6 +3,7 @@ import { Context } from '../../context/ContextProvider';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { TextField, Button, Box, Typography, Container, Paper} from '@mui/material';
+import { sendMailCita } from "../Mail/helper";
 
 import axios from 'axios';
 
@@ -66,6 +67,7 @@ const Aceptado = () => {
       await fetchPatientByEmail(session.email)
       await fetchDoctorById(id)
       await postAppointment(datos)
+      await sendMailCita(datos)
       return datos
 
     }
