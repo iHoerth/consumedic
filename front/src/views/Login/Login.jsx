@@ -81,14 +81,6 @@ const Userlogin = () => {
     }
   };
 
-  //submit
-  // function handleLocalSubmit(event) {
-  //   event.preventDefault();
-  //   loginPatient({ email: localEmail, password: localPassword, isDoctor:false, }).catch((err) => {
-  //     setSnackFail(true);
-  //     setSnackFailMensaje(err.response.data.message);
-  //   });
-  // }
 
   function handleLocalSubmit(event) {
     event.preventDefault();
