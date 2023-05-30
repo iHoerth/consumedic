@@ -82,12 +82,27 @@ const Userlogin = () => {
   };
 
   //submit
+  // function handleLocalSubmit(event) {
+  //   event.preventDefault();
+  //   loginPatient({ email: localEmail, password: localPassword, isDoctor:false, }).catch((err) => {
+  //     setSnackFail(true);
+  //     setSnackFailMensaje(err.response.data.message);
+  //   });
+  // }
+
   function handleLocalSubmit(event) {
     event.preventDefault();
-    loginPatient({ email: localEmail, password: localPassword }).catch((err) => {
-      setSnackFail(true);
-      setSnackFailMensaje(err.response.data.message);
-    });
+    loginPatient({ email: localEmail, password: localPassword, isDoctor: false })
+      .then((res) => {
+        console.log(res);
+        setSnackOk(true);
+        setSnackOkMensaje('Logueado con exito');
+        navigate('/perfilMedico');
+      })
+      .catch((err) => {
+        setSnackFail(true);
+        setSnackFailMensaje(err.response.data.message);
+      });
   }
 
   useEffect(() => {

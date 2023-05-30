@@ -147,7 +147,6 @@ const ContextProvider = ({ children }) => {
           snackOk: true,
           snackOkMensaje: 'Perfil de Doctor Creado con Exito, por favor Ingrese a su cuenta creada',
         }));
-        // navigate(`/loginDoctor/`);
       } catch (error) {
         setDoctorsData((prevState) => ({
           ...prevState,
@@ -177,13 +176,13 @@ const ContextProvider = ({ children }) => {
         } catch (error) {
           if (error.response && error.response.status === 400) {
             try {
-              const newPatient = await doctorsData.createDoctor({
+              const newDoctor = await doctorsData.createDoctor({
                 loggedFromGoogle: loginData.loggedFromGoogle,
                 email: loginData.email,
                 nombre: loginData.nombre,
                 apellido: loginData.apellido,
               });
-              return newPatient;
+              return newDoctor;
             } catch (error) {
               throw error;
             }
@@ -405,42 +404,35 @@ const ContextProvider = ({ children }) => {
           isDoctor: false,
         });
 
-        axios
-          .get(`${URL_PATIENTS}?email=${loginData.email}`)
-          .then((result) => {
-            console.log(result);
-          })
-          .catch((error) => {
-            if (error.response && error.response.status === 400) {
-              patientsData
-                .createPatient({
-                  loggedFromGoogle: loginData.loggedFromGoogle,
-                  email: loginData.email,
-                  nombre: loginData.nombre,
-                  apellido: loginData.apellido,
-                })
-                .then((newPatient) => {
-                  return newPatient;
-                })
-                .catch((error) => {});
-            } else {
+        try {
+          const result = await axios.get(`${URL_PATIENTS}?email=${loginData.email}`);
+          return result;
+        } catch (error) {
+          if (error.response && error.response.status === 400) {
+            try {
+              const newPatient = await patientsData.createPatient({
+                loggedFromGoogle: loginData.loggedFromGoogle,
+                email: loginData.email,
+                nombre: loginData.nombre,
+                apellido: loginData.apellido,
+              });
+              return newPatient;
+            } catch (error) {
+              throw error;
             }
-          });
+          } else {
+            throw error;
+          }
+        }
       } else {
         try {
-          console.log(loginData);
+          const patientData = await patientsData.fetchPatientByEmail(loginData.email);
           const sessionData = (await axios.post(`${URL_PATIENTS}/login`, loginData)).data;
-          const patientData = await patientsData.fetchPatientByEmail(
-            loginData.email,
-            loginData.nombre,
-            loginData.apellido
-          );
           setSession({
             ...sessionData,
             email: loginData.email,
             nombre: loginData.nombre,
             apellido: loginData.apellido,
-            token: loginData.tokenId,
           });
           console.log({ sessionData, patientData });
           return { sessionData, patientData };
