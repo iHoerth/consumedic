@@ -355,8 +355,8 @@ const dataFalsaDoctores = async () => {
             admin: true,
             idObraSocial: Math.ceil(Math.random() * obrasSociales.length)
         };
-        const {dni, email, hashedPassword, telefono, nombre, apellido, idObraSocial,admin,status}= paciente
-        await createPatient(dni, email, hashedPassword, telefono, nombre, apellido, idObraSocial,admin,status)
+        const {dni, email, hashedPassword, telefono, nombre, apellido, idObraSocial,status,admin}= paciente
+        await createPatient(dni, email, hashedPassword, telefono, nombre, apellido, idObraSocial,status,admin)
 
     }
 
