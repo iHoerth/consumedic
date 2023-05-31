@@ -73,7 +73,7 @@ const Turnos = ({id}) => {
                                     <TableCell align="center">{turno.hora}</TableCell>
                                     <TableCell align="center">{`${turno.paciente.nombre} ${turno.paciente.apellido}`}</TableCell>
                                     <TableCell align="center">{turno.descripcion}</TableCell>
-                                    <TableCell align="center"><Button id={turno.id} onClick={async()=>{await fetchPatientByEmail(turno.paciente.email);setModal(true); setMailPaciente(turno.paciente.email); setMailDoctor(session.email) }}  color="secondary" variant="outlined" size="small">Mensaje al Paciente</Button></TableCell>
+                                    <TableCell align="center"><Button id={turno.id} onClick={async()=>{await fetchPatientByEmail(turno.paciente.email);setModal(true); console.log(turno.paciente.email); setMailPaciente(turno.paciente.email); setMailDoctor(session.email) }}  color="secondary" variant="outlined" size="small">Mensaje al Paciente</Button></TableCell>
                                 </TableRow>
                             )):"No hay turnos para mostrar") : (turnos.viejosTurnos&&turnos.viejosTurnos.length ? turnos.viejosTurnos.map(turno => (
                                 <TableRow>

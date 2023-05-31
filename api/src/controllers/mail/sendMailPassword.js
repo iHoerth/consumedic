@@ -74,7 +74,7 @@ const sendMailPassword = async (email, password) => {
         <p>El motivo de este correo es acercarle los datos de su nueva cuenta:</p>
         <div class="datos">
             <p class="message">Usuario: ${email}</p>
-            <p class="message">Usuario: ${password}</p>
+            <p class="message">Contraseña: ${password}</p>
 
         </div>
         

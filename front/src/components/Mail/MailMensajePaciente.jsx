@@ -18,7 +18,7 @@ const MailMensajePaciente = () => {
 const [values, setValues] = useState({
   nombreDoctor: doctorDetail.nombre,
   apellidoDoctor: doctorDetail.apellido,
-  emailRecibe: mailPaciente,
+  emailRecibe: patientDetail.email,
   emailEscribe: mailDoctor,
   message: `  Estimado ${patientDetail.nombre} ${patientDetail.apellido}:
   Lo contacto para ...
