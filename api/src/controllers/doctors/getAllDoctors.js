@@ -22,8 +22,8 @@ const getAllDoctors = async () => {
 
     //   return doctor;
     // });
-    console.log("id",doctors[0].dataValues.id)
-    console.log("calendario", doctors[0].dataValues.calendar);
+    // console.log("id",doctors[0].dataValues.id)
+    // console.log("calendario", doctors[0].dataValues.calendar);
     return doctors;
   // const doctorPromises = doctors.map(async (doctor) => {
   //   const id = doctor.id;
