@@ -82,7 +82,7 @@ const Card = ({
         borderRadius: 1,
         // width: isScreenSmall ? '80%' : '100%',
         width: {
-          mobile: '80%',
+          mobile: '75%',
           tablet: '80%',
           laptop: '80%',
           desktop: '100%',

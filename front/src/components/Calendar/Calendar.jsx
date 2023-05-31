@@ -19,6 +19,7 @@ import { Button } from '@mui/base';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from '@mui/material';
 
 const Calendar = ({ id, calendar }) => {
   const navigate = useNavigate();
@@ -41,15 +42,20 @@ const Calendar = ({ id, calendar }) => {
     'nov',
     'dic',
   ];
-  const cantMostrados = 4;
+  let cantMostrados;
   let cantHojas;
   let mostrados;
 
+  const isScreenBig = useMediaQuery(theme.breakpoints.down('1200'));
+  const isScreenMedium = useMediaQuery(theme.breakpoints.down('750'));
+  const isScreenSmall = useMediaQuery(theme.breakpoints.down('620'));
+  const isScreenSmall2 = useMediaQuery(theme.breakpoints.down('430'));
   const [pagina, setPagina] = useState(1);
   const [button, setButton] = useState('Mostrar mas horas');
 
   if (calendar) {
-    mostrados = calendar.slice((pagina - 1) * 4, cantMostrados * pagina);
+    cantMostrados = (isScreenSmall2 ? 1 : isScreenSmall ? 2 : isScreenMedium ? 3 : isScreenBig ? 4 : 5) ;
+    mostrados = calendar.slice((pagina - 1) * cantMostrados, cantMostrados * pagina);
     cantHojas = Math.ceil(calendar.length / cantMostrados);
   }
 
@@ -67,12 +73,12 @@ const Calendar = ({ id, calendar }) => {
     if (event.target.name === 'mas') {
       if (pagina < cantHojas) {
         setPagina(pagina + 1);
-        mostrados = calendar.slice((pagina - 1) * 4, cantMostrados * pagina);
+        mostrados = calendar.slice((pagina - 1) * cantMostrados, cantMostrados * pagina);
       }
     } else if (event.target.name === 'menos') {
       if (pagina > 1) {
         setPagina(pagina - 1);
-        mostrados = calendar.slice((pagina - 1) * 4, cantMostrados * pagina);
+        mostrados = calendar.slice((pagina - 1) * cantMostrados, cantMostrados * pagina);
       }
     }
   };
@@ -109,17 +115,23 @@ const Calendar = ({ id, calendar }) => {
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: '5px',
-            border: 'solid 1px',
-            borderColor: '#aeaeae',
-            width: '100%',
+            border: 'solid 1px #aeaeae',
+            // borderColor: '#aeaeae',
+            margin: 'auto',
+            width: {
+              mobile: '100%',
+              tablet: '100%',
+              laptop: '100%',
+              desktop: '100%',
+            },
           }}
         >
           <Box
             sx={{
               bgcolor: 'background.paper',
               justifyContent: 'center',
-              m: 0,
-              borderBottom: '1px solid',
+              m: '10px',
+              // borderBottom: '1px solid',
               borderRadius: '5px 5px 0 0',
               borderColor: '#aeaeae',
               overflow: 'hidden',
@@ -155,7 +167,9 @@ const Calendar = ({ id, calendar }) => {
                   style={{
                     backgroundColor: theme.palette.primary.main,
                     border: 'none',
+                    borderRadius: '5px',
                     color: 'white',
+                    cursor: 'pointer'
                   }}
                 >
                   {' '}
@@ -169,7 +183,8 @@ const Calendar = ({ id, calendar }) => {
                 return (
                   <List
                     sx={{
-                      width: '85px',
+                      marginRight:'5px',
+                      width: isScreenSmall ? '60px' : '85px',
                     }}
                   >
                     <ListItem
@@ -221,7 +236,7 @@ const Calendar = ({ id, calendar }) => {
                                     textDecoration: 'none',
                                     color: '#0752df',
                                   }}
-                                  // to={`/turno/${id}/${id}/${dia.fecha}/${turno.hora}/reserva/0`}
+                                // to={`/turno/${id}/${id}/${dia.fecha}/${turno.hora}/reserva/0`}
                                 >{`${hh}:${mm}`}</Link>
                                 {/* <Typography>{`${hh}:${mm}`}</Typography> */}
                               </ListItemButton>
@@ -282,7 +297,9 @@ const Calendar = ({ id, calendar }) => {
                   style={{
                     backgroundColor: theme.palette.primary.main,
                     border: 'none',
+                    borderRadius: '5px',
                     color: 'white',
+                    cursor: 'pointer'
                   }}
                 >
                   {' '}
@@ -303,6 +320,10 @@ const Calendar = ({ id, calendar }) => {
                 border: 'none',
                 color: 'white',
                 borderRadius: '5px',
+                "&:hover": {
+                  cursor: 'pointer',
+                  backgroundColor: theme.palette.primary.dark,
+                },
               }}
               onClick={handleHeight}
             >
