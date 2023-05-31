@@ -94,7 +94,7 @@ const LoginDoctor = () => {
         console.log(res);
         setSnackOk(true);
         setSnackOkMensaje('Logueado con exito');
-        navigate('/perfilMedico')
+        navigate('/perfilMedico');
       })
       .catch((err) => {
         setSnackFail(true);
@@ -111,15 +111,15 @@ const LoginDoctor = () => {
       token: response.tokenId,
       nombre: response.profileObj.givenName,
       apellido: response.profileObj.familyName,
-    }).catch((err) => {
-      // if (err?.response?.data?.message == 'Doctor not found') {
-      //   navigate('/createDoctor', {
-      //     state: response.profileObj,
-      //     replace: true,
-      //   });
-      // }
-      alert(err.message);
-    });
+    })
+      .then((res) => {
+        setSnackOk(true);
+        setSnackOkMensaje('Logueado con exito');
+      })
+      .catch((err) => {
+        setSnackFail(true);
+        setSnackFailMensaje(err.response.data.message);
+      });
   };
 
   const onFailure = (error) => {

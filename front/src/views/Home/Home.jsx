@@ -53,6 +53,7 @@ const Home = () => {
     <Box
       component="div"
       sx={{
+        backgroundColor: theme.palette.background.main,
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
@@ -64,7 +65,7 @@ const Home = () => {
           <Loading />
         </>
       </Modal>
-      <NavBar />
+      <NavBar variant='scorlleable'/>
       <Box
         component="div"
         sx={{

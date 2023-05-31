@@ -9,10 +9,10 @@ const getAllDoctors = async () => {
   });
 
 
-    for(let i=0; i<doctors.length;i++){
-      const calendar = await getDoctorCalendar(doctors[i].id)
-      doctors[i].dataValues.calendar = calendar
-    }
+    // for(let i=0; i<doctors.length;i++){
+    //   const calendar = await getDoctorCalendar(doctors[i].id)
+    //   doctors[i].dataValues.calendar = calendar
+    // }
 
     // doctors.map(async (doctor) => {
     //   const calendar = await getDoctorCalendar(doctor.id);
@@ -22,8 +22,8 @@ const getAllDoctors = async () => {
 
     //   return doctor;
     // });
-    console.log("id",doctors[0].dataValues.id)
-    console.log("calendario", doctors[0].dataValues.calendar);
+    // console.log("id",doctors[0].dataValues.id)
+    // console.log("calendario", doctors[0].dataValues.calendar);
     return doctors;
   // const doctorPromises = doctors.map(async (doctor) => {
   //   const id = doctor.id;

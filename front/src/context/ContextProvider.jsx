@@ -81,8 +81,9 @@ const ContextProvider = ({ children }) => {
           ...prevState,
           doctorDetail: data,
         }));
+        return data;
       } catch (error) {
-        console.log(error);
+        throw error
       }
     },
 
@@ -133,25 +134,26 @@ const ContextProvider = ({ children }) => {
         doctorDetail: {},
       }));
     },
+
     createDoctor: async (newDoctor) => {
       try {
         const data = (await axios.post(`${URL_DOCTORS}`, newDoctor)).data;
-        const idMedico = data.id;
-        const response = (await axios(`${URL_DOCTORS}/${idMedico}`)).data
-
-
+        const response = (await axios(`${URL_DOCTORS}/${data.id}`)).data;
+    
         setDoctorsData((prevState) => ({
           ...prevState,
-          doctorDetail: { ...response},
+          doctorDetail: { ...response },
           snackOk: true,
           snackOkMensaje: 'Perfil de Doctor Creado con Exito',
         }));
+
       } catch (error) {
         setDoctorsData((prevState) => ({
           ...prevState,
           snackFail: true,
           snackFailMensaje: error.response.data.message,
         }));
+        throw error;
       }
     },
     filterDoctors: async (newFilter) => {
@@ -161,6 +163,7 @@ const ContextProvider = ({ children }) => {
       }));
     },
     loginDoctor: async (loginData) => {
+      if(session.email) return;
       if (loginData.token) {
         setSession({
           email: loginData.email,
@@ -191,10 +194,10 @@ const ContextProvider = ({ children }) => {
         }
       } else {
         try {
+          console.log(loginData);
           const sessionData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, loginData)).data;
-          const doctorData = await doctorsData.fetchDoctorByEmail(
-            loginData.email,
-          );
+          console.log(sessionData);
+          const doctorData = await doctorsData.fetchDoctorByEmail(loginData.email);
           console.log(doctorData);
           setSession({
             ...sessionData,
@@ -347,6 +350,7 @@ const ContextProvider = ({ children }) => {
     createPatient: async (newPatient) => {
       try {
         const data = (await axios.post(`${URL_PATIENTS}`, newPatient)).data;
+
         setPatientsData((prevState) => ({
           ...prevState,
           patientDetail: { ...data },
@@ -358,6 +362,7 @@ const ContextProvider = ({ children }) => {
           snackFail: true,
           snackFailMensaje: error.response.data.message,
         }));
+        throw error
       }
     },
 
@@ -391,7 +396,7 @@ const ContextProvider = ({ children }) => {
         await axios.post(`${URL_APPOINTMENTS}`, datosTurno);
       } catch (error) {
         console.log(error);
-      } 
+      }
     },
     loginPatient: async (loginData) => {
       if (loginData.token) {

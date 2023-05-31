@@ -1,93 +1,102 @@
-import { useContext, useState, useEffect } from "react";
-import { styled } from "@mui/material/styles";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Grid from "@mui/material/Grid";
-import InputAdornment from "@mui/material/InputAdornment";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import TextField from "@mui/material/TextField";
-import imagen8 from "../../assets/Img/8.jpg";
-import NavBar from "../../components/NavBar/NavBar";
-import { Container, Paper, Typography, Autocomplete, Snackbar, Alert, AlertTitle  } from "@mui/material";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Context, UtilitiesContext } from "../../context/ContextProvider";
-import Footer from "../../components/Footer/Footer";
+import { useContext, useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import TextField from '@mui/material/TextField';
+import imagen8 from '../../assets/Img/8.jpg';
+import NavBar from '../../components/NavBar/NavBar';
+import {
+  Container,
+  Paper,
+  Typography,
+  Autocomplete,
+  Snackbar,
+  Alert,
+  AlertTitle,
+} from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Context, UtilitiesContext } from '../../context/ContextProvider';
+import Footer from '../../components/Footer/Footer';
 
 const typrographyError = styled(Typography)({
-  fontSize: "8px",
-  color: "red",
-  width: "40%",
+  fontSize: '8px',
+  color: 'red',
+  width: '40%',
 });
 
 const CrearDoctor = styled(Button)({
-  margin: "auto",
+  margin: 'auto',
 });
 const Title = styled(Typography)({
-  textAlign: "center",
-  fontSize: "30px",
-  margin: "20px",
+  textAlign: 'center',
+  fontSize: '30px',
+  margin: '20px',
 });
 
 const StyleForm = styled(Container)({
-  display: "flex",
-  justifyContent: "space-between",
-  flexDirection: "column",
-  width: "600px",
-  height: "10  00px",
-  margin: "100px auto",
-  padding: "20px",
+  display: 'flex',
+  justifyContent: 'space-between',
+  flexDirection: 'column',
+  width: '600px',
+  height: '10  00px',
+  margin: '100px auto',
+  padding: '20px',
 });
 
 const CreateDoctor = () => {
   const navigate = useNavigate();
-  const doctor = useContext(Context)[0];
-  const {snackFail, snackFailMensaje,setSnackFail,setSnackFailMensaje} = useContext(Context)[0];
+  const { createDoctor, doctorDetail, loginDoctor } = useContext(Context)[0];
+  const { snackOk, snackOkMensaje, setSnackOk, setSnackOkMensaje } = useContext(Context)[0];
+  const { snackFail, snackFailMensaje, setSnackFail, setSnackFailMensaje } = useContext(Context)[0];
+  
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
-  const { createDoctor, doctorDetail } = doctor;
-  const { loginDoctor } = useContext(Context);
   const location = useLocation();
-  const [fileName, setFileName] = useState("") 
-  const [open, setOpen] = useState()
-  const [fileSize, setFileSize] = useState()
+  const [fileName, setFileName] = useState('');
+  const [open, setOpen] = useState();
+  const [fileSize, setFileSize] = useState();
+  const { session, setSession } = useContext(Context)[2];
   const [form, setForm] = useState({
-    dni: "",
-    numeroMatricula: "",
-    nombre: "",
-    apellido: "",
-    email: "",
-    telefono: "",
-    direccion: "",
+    dni: '',
+    numeroMatricula: '',
+    nombre: '',
+    apellido: '',
+    email: '',
+    telefono: '',
+    direccion: '',
     fotoMatricula: null,
-    contrasena: "",
-    confirmarContrasena: "",
-    tituloUniversitario: "",
-    descripcion: "",
-    status: "",
-    precioConsulta: "",
+    contrasena: '',
+    confirmarContrasena: '',
+    tituloUniversitario: '',
+    descripcion: '',
+    status: '',
+    precioConsulta: '',
     esDoctor: false,
-    idEspecialidad: "",
-    idObraSocial: "",
+    idEspecialidad: '',
+    idObraSocial: '',
   });
 
   const [error, setError] = useState({
-    dni: "",
-    numeroMatricula: "",
-    nombre: "",
-    apellido: "",
-    email: "",
-    telefono: "",
-    direccion: "",
+    dni: '',
+    numeroMatricula: '',
+    nombre: '',
+    apellido: '',
+    email: '',
+    telefono: '',
+    direccion: '',
     fotoMatricula: null,
-    contrasena: "",
-    confirmarContrasena: "",
-    tituloUniversitario: "",
-    descripcion: "",
-    status: "",
-    precioConsulta: "",
+    contrasena: '',
+    confirmarContrasena: '',
+    tituloUniversitario: '',
+    descripcion: '',
+    status: '',
+    precioConsulta: '',
     esDoctor: false,
-    idEspecialidad: "",
-    idObraSocial: "",
+    idEspecialidad: '',
+    idObraSocial: '',
   });
   const handleChange = (event) => {
     const property = event.target.name;
@@ -104,23 +113,23 @@ const CreateDoctor = () => {
     const errors = {};
 
     if (!form.nombre) {
-      errors.nombre = "El campo nombre es requerido";
+      errors.nombre = 'El campo nombre es requerido';
     }
 
     if (!form.apellido) {
-      errors.apellido = "El campo apellido es requerido";
+      errors.apellido = 'El campo apellido es requerido';
     }
 
     if (!form.email) {
-      errors.email = "El campo email es requerido";
+      errors.email = 'El campo email es requerido';
     } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-      errors.email = "El email ingresado no es válido";
+      errors.email = 'El email ingresado no es válido';
     }
 
     if (!form.telefono) {
-      errors.telefono = "El campo teléfono es requerido";
+      errors.telefono = 'El campo teléfono es requerido';
     } else if (!/^\d{10,15}$/.test(form.telefono)) {
-      errors.telefono = "El número de teléfono debe contener entre 10 y 15 dígitos";
+      errors.telefono = 'El número de teléfono debe contener entre 10 y 15 dígitos';
     }
 
     // if (!form.idObraSocial) {
@@ -128,50 +137,49 @@ const CreateDoctor = () => {
     // }
 
     if (!form.dni) {
-      errors.dni = "El campo número de documento es requerido";
+      errors.dni = 'El campo número de documento es requerido';
     } else if (!/^\d{7,8}$/.test(form.dni)) {
-      errors.dni = "El número de documento debe contener entre 7 y 8 dígitos";
+      errors.dni = 'El número de documento debe contener entre 7 y 8 dígitos';
     }
 
     if (!form.contrasena) {
-      errors.contrasena = "El campo contraseña es requerido";
+      errors.contrasena = 'El campo contraseña es requerido';
     } else if (form.contrasena.length < 8) {
-      errors.contrasena = "La contraseña debe contener al menos 8 caracteres";
+      errors.contrasena = 'La contraseña debe contener al menos 8 caracteres';
     }
 
     if (!form.confirmarContrasena) {
-      errors.confirmarContrasena = "El campo confirmar contraseña es requerido";
+      errors.confirmarContrasena = 'El campo confirmar contraseña es requerido';
     } else if (form.contrasena !== form.confirmarContrasena) {
-      errors.confirmarContrasena = "Las contraseñas no coinciden";
+      errors.confirmarContrasena = 'Las contraseñas no coinciden';
     }
 
     if (!form.tituloUniversitario) {
-      errors.tituloUniversitario = "El titulo universitario es requerido";
+      errors.tituloUniversitario = 'El titulo universitario es requerido';
     }
     if (!form.direccion) {
-      errors.direccion = "La direccion donde atiente es requerido";
+      errors.direccion = 'La direccion donde atiente es requerido';
     }
     if (!form.fotoMatricula) {
-      errors.fotoMatricula = "La foto de perfil es requerida";
+      errors.fotoMatricula = 'La foto de perfil es requerida';
     }
-    if (fileSize>1) {
-      errors.fotoMatricula = "La foto debe tener menos de 1mb";
+    if (fileSize > 1) {
+      errors.fotoMatricula = 'La foto debe tener menos de 1mb';
     }
     if (!form.idEspecialidad) {
-      errors.idEspecialidad = "El campo especialidad es requerido";
+      errors.idEspecialidad = 'El campo especialidad es requerido';
     }
     if (!form.idObraSocial) {
-      errors.idObraSocial = "El campo obra social es requerido";
+      errors.idObraSocial = 'El campo obra social es requerido';
     }
     if (!form.precioConsulta) {
-      errors.precioConsulta = "El precio de la consulta es requerido";
+      errors.precioConsulta = 'El precio de la consulta es requerido';
     }
 
-
     if (!form.numeroMatricula) {
-      errors.numeroMatricula = "El numero de matricula es requerido";
+      errors.numeroMatricula = 'El numero de matricula es requerido';
     } else if (!/^\d{5}$/.test(form.numeroMatricula)) {
-      errors.numeroMatricula = "El numero de matricula tiene que ser un numero de 5 digitos";
+      errors.numeroMatricula = 'El numero de matricula tiene que ser un numero de 5 digitos';
     }
 
     // if (typeof form.numeroMatricula !== 'number') {
@@ -181,16 +189,16 @@ const CreateDoctor = () => {
     //   errors.numeroMatricula = "El numero de matricula es requerido";
 
     // }
-    
+
     setError(errors);
     return Object.keys(errors).length === 0;
   }
   ///fn para contrasenas
   const handleCheckedPassword = () => {
     if (form.password !== form.confirmPassword) {
-      setError({ ...error, confirmPassword: "Las contraseñas no coinciden" });
+      setError({ ...error, confirmPassword: 'Las contraseñas no coinciden' });
     } else {
-      setError({ ...error, confirmPassword: "" });
+      setError({ ...error, confirmPassword: '' });
     }
   };
 
@@ -211,15 +219,26 @@ const CreateDoctor = () => {
       titulo: form.tituloUniversitario,
       Descripcion: form.descripcion,
       isDoctor: true,
-      status: "active",
+      status: 'active',
       precio: form.precioConsulta,
       idEspecialidad: form.idEspecialidad,
       idObraSocial: form.idObraSocial,
     };
     console.log(newDoctor);
     handleCheckedPassword();
-    createDoctor(newDoctor);
-};
+    createDoctor(newDoctor)
+      .then(() => {
+        loginDoctor(newDoctor).then(() => {
+          navigate('/perfilMedico');
+        });
+        setSnackOk(true);
+        setSnackOkMensaje('Creado con exito');
+      })
+      .catch((err) => {
+        setSnackFail(true);
+        setSnackFailMensaje(err.response.data.message);
+      });
+  };
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -239,8 +258,8 @@ const CreateDoctor = () => {
       reader.readAsDataURL(file);
       reader.onload = () => {
         let fileSize = reader.result.length;
-        fileSize = (fileSize/1024/1024).toFixed(2);
-        setFileSize(fileSize)
+        fileSize = (fileSize / 1024 / 1024).toFixed(2);
+        setFileSize(fileSize);
         console.log(`File size: ${fileSize} kb`);
       };
       reader.onloadend = () => {
@@ -248,7 +267,7 @@ const CreateDoctor = () => {
           ...form,
           fotoMatricula: reader.result,
         });
-        setFileName(file.name)
+        setFileName(file.name);
         validarForm({ ...form, fotoMatricula: reader.result });
       };
     } catch (error) {
@@ -257,7 +276,7 @@ const CreateDoctor = () => {
   };
 
   const handleEspecialidad = (selectedOptionsE) => {
-    const property = "idEspecialidad";
+    const property = 'idEspecialidad';
     const values = selectedOptionsE.map((option) => Number(option.id));
     console.log(property);
     console.log(values);
@@ -270,7 +289,7 @@ const CreateDoctor = () => {
   };
 
   const handleObraSocial = (selectedOptions) => {
-    const property = "idObraSocial";
+    const property = 'idObraSocial';
     const values = selectedOptions.map((option) => Number(option.id));
     console.log(property);
     console.log(values);
@@ -291,17 +310,29 @@ const CreateDoctor = () => {
         email: location.state.email,
       });
     }
-
   }, [location?.state]);
   return (
     <>
       <NavBar></NavBar>
       <Snackbar
+        open={snackOk}
+        autoHideDuration={2500}
+        onClose={() => {
+          setSnackOk(false);
+          setSnackOkMensaje('');
+        }}
+      >
+        <Alert severity="success" variant="filled">
+          <AlertTitle>Mensaje Exitoso</AlertTitle>
+          {snackOkMensaje}
+        </Alert>
+      </Snackbar>
+      <Snackbar
         open={snackFail}
         autoHideDuration={2500}
         onClose={() => {
           setSnackFail(false);
-          setSnackFailMensaje("")
+          setSnackFailMensaje('');
         }}
       >
         <Alert severity="error" variant="filled">
@@ -312,22 +343,22 @@ const CreateDoctor = () => {
       <Container
         sx={{
           backgroundImage: `url('${imagen8}')`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-          position: "relative",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          "@media (max-width: 600px)": {
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed',
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          '@media (max-width: 600px)': {
             height: {
-              xs: "50vh",
-              sm: "60vh",
-              md: "70vh",
-              lg: "80vh",
+              xs: '50vh',
+              sm: '60vh',
+              md: '70vh',
+              lg: '80vh',
             },
           },
         }}
@@ -336,7 +367,7 @@ const CreateDoctor = () => {
           component={Paper}
           elevation={5}
           onSubmit={handleSubmit}
-          style={{ backgroundColor: "rgba(255, 255, 255)" }}
+          style={{ backgroundColor: 'rgba(255, 255, 255)' }}
         >
           <Grid container spacing={2}>
             <Title>Crear Usuario Profesional</Title>
@@ -352,19 +383,15 @@ const CreateDoctor = () => {
                 onChange={handleChange}
                 helperText={
                   error.nombre ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.nombre}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "90px",
-                  width: "250px",
+                  height: '90px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -379,19 +406,15 @@ const CreateDoctor = () => {
                 onChange={handleChange}
                 helperText={
                   error.apellido ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.apellido}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "90px",
-                  width: "250px",
+                  height: '90px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -406,45 +429,37 @@ const CreateDoctor = () => {
                 onChange={handleChange}
                 helperText={
                   error.dni ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.dni}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "90px",
-                  width: "250px",
+                  height: '90px',
+                  width: '250px',
                 }}
               />
             </Grid>
             <Grid item xs={12}>
               <input
                 accept="image/*"
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
                 id="fotoMatricula"
                 name="fotoMatricula"
                 type="file"
                 onChange={handleImage}
                 helperText={
                   error.fotoMatricula ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.fotoMatricula}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "90px",
-                  width: "250px",
+                  height: '90px',
+                  width: '250px',
                 }}
               />
               <label htmlFor="fotoMatricula">
@@ -453,8 +468,8 @@ const CreateDoctor = () => {
                   component="span"
                   startIcon={<PhotoCamera />}
                   sx={{
-                    height: "55px",
-                    width: "250px",
+                    height: '55px',
+                    width: '250px',
                   }}
                 >
                   Foto de Perfil
@@ -464,7 +479,7 @@ const CreateDoctor = () => {
               {fileName ? (
                 <Typography
                   variant="inherit"
-                  style={{ maxWidth: "180px", fontSize: "12px", margin: "6px" }}
+                  style={{ maxWidth: '180px', fontSize: '12px', margin: '6px' }}
                 >
                   {fileName}
                 </Typography>
@@ -473,7 +488,7 @@ const CreateDoctor = () => {
                 <Typography
                   variant="inherit"
                   color="error"
-                  style={{ maxWidth: "180px", fontSize: "12px", margin: "6px" }}
+                  style={{ maxWidth: '180px', fontSize: '12px', margin: '6px' }}
                 >
                   {error.fotoMatricula}
                 </Typography>
@@ -491,19 +506,15 @@ const CreateDoctor = () => {
                 onChange={handleChange}
                 helperText={
                   error.email ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.email}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "90px",
-                  width: "250px",
+                  height: '90px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -519,19 +530,15 @@ const CreateDoctor = () => {
                 onChange={handleChange}
                 helperText={
                   error.telefono ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.telefono}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "90px",
-                  width: "250px",
+                  height: '90px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -546,19 +553,15 @@ const CreateDoctor = () => {
                 onChange={handleChange}
                 helperText={
                   error.direccion ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.direccion}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "90px",
-                  width: "250px",
+                  height: '90px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -573,19 +576,15 @@ const CreateDoctor = () => {
                 onChange={handleChange}
                 helperText={
                   error.numeroMatricula ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.numeroMatricula}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "100px",
-                  width: "250px",
+                  height: '100px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -601,19 +600,15 @@ const CreateDoctor = () => {
                 onChange={handleChange}
                 helperText={
                   error.tituloUniversitario ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.tituloUniversitario}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "90px",
-                  width: "250px",
+                  height: '90px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -629,8 +624,8 @@ const CreateDoctor = () => {
                 value={form.descripcion}
                 onChange={handleChange}
                 sx={{
-                  height: "20px",
-                  width: "250px",
+                  height: '20px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -652,26 +647,22 @@ const CreateDoctor = () => {
                 id="contrasena"
                 name="contrasena"
                 label="Contraseña"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 fullWidth
                 autoComplete="new-password"
                 value={form.contrasena}
                 onChange={handleChange}
                 helperText={
                   error.contrasena ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.contrasena}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "100px",
-                  width: "250px",
+                  height: '100px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -681,25 +672,21 @@ const CreateDoctor = () => {
                 id="confirmarContrasena"
                 name="confirmarContrasena"
                 label="Confirmar contraseña"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 fullWidth
                 value={form.confirmarContrasena}
                 onChange={handleChange}
                 helperText={
                   error.confirmarContrasena ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.confirmarContrasena}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "90px",
-                  width: "250px",
+                  height: '90px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -719,16 +706,12 @@ const CreateDoctor = () => {
                 }}
                 renderInput={(params) => (
                   <TextField
-                    sx={{ bgcolor: "white", borderRadius: "4px" }}
+                    sx={{ bgcolor: 'white', borderRadius: '4px' }}
                     {...params}
                     label="Especialidad"
                     helperText={
                       error.idEspecialidad ? (
-                        <Typography
-                          variant="inherit"
-                          color="error"
-                          style={{ maxWidth: "200px" }}
-                        >
+                        <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                           {error.idEspecialidad}
                         </Typography>
                       ) : null
@@ -737,7 +720,7 @@ const CreateDoctor = () => {
                 )}
                 renderOption={(props, option) => (
                   <li
-                    style={{ fontSize: "14px" }}
+                    style={{ fontSize: '14px' }}
                     {...props}
                     key={option.id}
                     id={option.id}
@@ -746,9 +729,7 @@ const CreateDoctor = () => {
                     {option.name}
                   </li>
                 )}
-                onChange={(selectedOptionsE, value) =>
-                  handleEspecialidad(value)
-                }
+                onChange={(selectedOptionsE, value) => handleEspecialidad(value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -766,16 +747,12 @@ const CreateDoctor = () => {
                 }}
                 renderInput={(params) => (
                   <TextField
-                    sx={{ bgcolor: "white", borderRadius: "4px" }}
+                    sx={{ bgcolor: 'white', borderRadius: '4px' }}
                     {...params}
                     label="Obra Social"
                     helperText={
                       error.idObraSocial ? (
-                        <Typography
-                          variant="inherit"
-                          color="error"
-                          style={{ maxWidth: "200px" }}
-                        >
+                        <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                           {error.idObraSocial}
                         </Typography>
                       ) : null
@@ -784,7 +761,7 @@ const CreateDoctor = () => {
                 )}
                 renderOption={(props, option) => (
                   <li
-                    style={{ fontSize: "14px" }}
+                    style={{ fontSize: '14px' }}
                     {...props}
                     key={option.id}
                     id={option.id}
@@ -805,27 +782,21 @@ const CreateDoctor = () => {
                 type="number"
                 fullWidth
                 InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">$</InputAdornment>
-                  ),
+                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
                 }}
                 value={form.precioConsulta}
                 onChange={handleChange}
                 helperText={
                   error.precioConsulta ? (
-                    <Typography
-                      variant="inherit"
-                      color="error"
-                      style={{ maxWidth: "200px" }}
-                    >
+                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
                       {error.precioConsulta}
                     </Typography>
                   ) : null
                 }
-                FormHelperTextProps={{ style: { maxWidth: "200px" } }}
+                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 sx={{
-                  height: "90px",
-                  width: "250px",
+                  height: '90px',
+                  width: '250px',
                 }}
               />
             </Grid>
@@ -848,7 +819,21 @@ const CreateDoctor = () => {
                 variant="contained"
                 color="primary"
                 onClick={handleSubmit}
-                disabled={error.apellido||error.confirmarContrasena||error.contrasena||error.direccion||error.dni||error.email||error.fotoMatricula||error.idEspecialidad||error.idObraSocial||error.numeroMatricula||error.precioConsulta||error.telefono||error.tituloUniversitario}
+                disabled={
+                  error.apellido ||
+                  error.confirmarContrasena ||
+                  error.contrasena ||
+                  error.direccion ||
+                  error.dni ||
+                  error.email ||
+                  error.fotoMatricula ||
+                  error.idEspecialidad ||
+                  error.idObraSocial ||
+                  error.numeroMatricula ||
+                  error.precioConsulta ||
+                  error.telefono ||
+                  error.tituloUniversitario
+                }
               >
                 Crear usuario
               </CrearDoctor>

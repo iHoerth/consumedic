@@ -33,7 +33,7 @@ const ConfigAgenda = ({doctorDetail}) => {
 
     //Lunes
     dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Lunes")
-    if(dia.atiende==="si"){
+    if(dia?.atiende==="si"){
       check=true
       horario_inicio=dia.horario_inicio.slice(0,-2)
       horario_fin=dia.horario_fin.slice(0,-2)
@@ -51,7 +51,7 @@ const ConfigAgenda = ({doctorDetail}) => {
 
     //Martes
     dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Martes")
-    if(dia.atiende==="si"){
+    if(dia?.atiende==="si"){
       check=true
       horario_inicio=dia.horario_inicio.slice(0,-2)
       horario_fin=dia.horario_fin.slice(0,-2)
@@ -69,7 +69,7 @@ const ConfigAgenda = ({doctorDetail}) => {
     
     //Miercoles
     dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Miércoles")
-    if(dia.atiende==="si"){
+    if(dia?.atiende==="si"){
       check=true
       horario_inicio=dia.horario_inicio.slice(0,-2)
       horario_fin=dia.horario_fin.slice(0,-2)
@@ -87,7 +87,7 @@ const ConfigAgenda = ({doctorDetail}) => {
 
     //Jueves
     dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Jueves")
-    if(dia.atiende==="si"){
+    if(dia?.atiende==="si"){
       check=true
       horario_inicio=dia.horario_inicio.slice(0,-2)
       horario_fin=dia.horario_fin.slice(0,-2)
@@ -105,7 +105,7 @@ const ConfigAgenda = ({doctorDetail}) => {
 
     //Viernes
     dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Viernes")
-    if(dia.atiende==="si"){
+    if(dia?.atiende==="si"){
       check=true
       horario_inicio=dia.horario_inicio.slice(0,-2)
       horario_fin=dia.horario_fin.slice(0,-2)
@@ -123,7 +123,7 @@ const ConfigAgenda = ({doctorDetail}) => {
 
     //Sabado
     dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Sábado")
-    if(dia.atiende==="si"){
+    if(dia?.atiende==="si"){
       check=true
       horario_inicio=dia.horario_inicio.slice(0,-2)
       horario_fin=dia.horario_fin.slice(0,-2)
@@ -141,7 +141,7 @@ const ConfigAgenda = ({doctorDetail}) => {
     
     //Domingo
     dia = doctorDetail.agenda.find(dia=>dia.dia_semana==="Domingo")
-    if(dia.atiende==="si"){
+    if(dia?.atiende==="si"){
       check=true
       horario_inicio=dia.horario_inicio.slice(0,-2)
       horario_fin=dia.horario_fin.slice(0,-2)

@@ -27,7 +27,7 @@ const Profile = ({ doctorDetail }) => {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('tablet'));
 
   const { id, nombre, apellido, direccion, Especialidads, imagen, Descripcion, CardMedia, precio, Opinions } = doctorDetail;
-  console.log(doctorDetail);
+  // console.log(doctorDetail);
   const especialidades = [];
   Especialidads?.map(espe => especialidades.push(espe.name))
   especialidades.join(", ")
@@ -58,8 +58,8 @@ const Profile = ({ doctorDetail }) => {
     fetchTurnos(id);
     fetchOpinions(id);
   }, [])
-  console.log(doctorOpinions);
-  console.log(maxSteps);
+  // console.log(doctorOpinions);
+  // console.log(maxSteps);
 
 
 

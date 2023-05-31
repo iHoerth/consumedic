@@ -20,10 +20,10 @@ import { Box, Grid, useTheme } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Calendar from '../Calendar/Calendar';
-
+import { useMediaQuery } from '@mui/material';
 import { Context } from '../../context/ContextProvider';
 import { useContext } from 'react';
-
+import axios from 'axios';
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -44,34 +44,50 @@ const Card = ({
   calendar,
   specialty,
 }) => {
+  //?
+  const [doctorData, setDoctorData] = useState({});
+  //?
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
   const theme = useTheme();
+
+  // const isScreenSmall = useMediaQuery(theme.breakpoints.down('1050'));
   const { values } = theme.breakpoints;
-  const [doctorsData] = useContext(Context);
-  const { doctorDetail, fetchDoctorById } = doctorsData;
   let averageRating = stars && stars.reduce((acc, cur) => acc + cur.puntaje, 0) / stars.length;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const URL_DOCTORS = process.env.REACT_APP_URL_DOCTORS;
+
   useEffect(() => {
     setLoading(true);
-    // fetchDoctorById(id);
-    if (id) {
+
+    const getDoctorData = async () => {
+      const result = (await axios(`${URL_DOCTORS}/${id}`)).data;
+      setDoctorData({ ...result });
+    };
+    getDoctorData(id);
+
+    if (doctorData.id) {
       setLoading(false);
     }
-  }, [loading]);
-
-
+  }, [doctorData.id]);
 
   return (
     <CardMUI
       sx={{
         transition: '0.05s',
         borderRadius: 1,
-        width: '100% ',
+        // width: isScreenSmall ? '80%' : '100%',
+        width: {
+          mobile: '80%',
+          tablet: '80%',
+          laptop: '80%',
+          desktop: '100%',
+        },
+        margin: 'auto',
         height: 'auto',
         typography: theme.typography,
         display: 'flex',
@@ -82,7 +98,7 @@ const Card = ({
       {loading ? (
         <>
           <Stack spacing={4}>
-            <Box display='flex'>
+            <Box display="flex">
               <Skeleton variant="circular" sx={{ margin: 'auto auto' }} width={100} height={100} />
               <Skeleton variant="text" sx={{ fontSize: '1.4rem' }} />
             </Box>
@@ -94,8 +110,24 @@ const Card = ({
         </>
       ) : (
         <>
-          <Box component="div" sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <CardContent sx={{ width:'45%'}}>
+          <Box
+            component="div"
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              // flexDirection: isScreenSmall ? 'column' : 'row',
+              flexDirection: {
+                mobile: 'column',
+                tablet: 'column',
+                laptop: 'row',
+                desktop: 'row',
+              },
+              // Cambia a columna en pantallas menores a 1050px
+              // width: isScreenSmall ? '60%' : '100%',
+            }}
+          >
+            <CardContent sx={{ flex: 1, width: '100%' }}>
               <Tooltip title="Ver Perfil">
                 <IconButton sx={{ p: 1 }}>
                   <NavLink to={`/detail/${id}`}>
@@ -150,16 +182,15 @@ const Card = ({
             </CardContent>
 
             {/* {console.log( agenda)} */}
-            <CardContent sx={{ width:'45%'}}>
-            <Typography>Agenda disponible:</Typography>
-            
-            <Calendar id={id} calendar={calendar} />
-          </CardContent>
-        </Box>
-    </>
-  )
-}
-    </CardMUI >
+            <CardContent sx={{ flex: 1, width: '100%' }}>
+              <Typography>Agenda disponible:</Typography>
+
+              <Calendar id={id} calendar={doctorData.calendar} />
+            </CardContent>
+          </Box>
+        </>
+      )}
+    </CardMUI>
   );
 };
 
