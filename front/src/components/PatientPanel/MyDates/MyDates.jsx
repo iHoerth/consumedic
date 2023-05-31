@@ -1,5 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../../../context/ContextProvider";
+import { useTheme } from "@mui/material";
 import {
   Table,
   TableBody,
@@ -9,13 +10,21 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Button,
+  Box,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const MyDates = () => {
   const { informacion, fetchPatientData } = useContext(Context)[5];
   const { patientDetail } = useContext(Context)[1];
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
+  const navigate = useNavigate();
 
+  function searchCita() {
+    navigate('/search')
+  }
   useEffect(() => {
     setLoading(true);
     fetchPatientData(patientDetail.id).then(() => {
@@ -26,6 +35,8 @@ const MyDates = () => {
       setLoading(false);
     }
   }, [patientDetail.id]);
+
+  
 
   const informacionData = informacion.map((item) => {
     const citas = item.Cita.map((cita) => ({
@@ -51,6 +62,8 @@ const MyDates = () => {
     const especialidadName = especialidades.map(
       (especialidad) => especialidad.especialidad
     );
+
+   
     return {
       id: item.id,
       apellido: item.apellido,
@@ -79,9 +92,27 @@ const MyDates = () => {
 
           <TableContainer component={Paper} style={{ maxHeight: 400 }}>
             {!informacion.length ? (
-              <Typography variant="body1" align="center">
-                No hay citas para mostrar
-              </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  justifyContent:'space-beetwen',
+                  margin:'10px'
+                }}>
+                <Typography variant="body1" align="center">
+                  No hay citas para mostrar
+                </Typography>
+                <Button
+                style={{
+                  backgroundColor: theme.palette.primary.main,
+                  border: 'none',
+                  color: 'white',
+                  borderRadius: '5px',
+                  marginTop:'10px',
+                }} onClick={(event)=>searchCita(event)}>Nuevo turno</Button>
+              </Box>
+
             ) : (
               <Table stickyHeader>
                 <TableHead>

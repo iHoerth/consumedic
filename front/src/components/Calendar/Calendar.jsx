@@ -49,7 +49,7 @@ const Calendar = ({ id, calendar }) => {
   const isScreenBig = useMediaQuery(theme.breakpoints.down('1200'));
   const isScreenMedium = useMediaQuery(theme.breakpoints.down('750'));
   const isScreenSmall = useMediaQuery(theme.breakpoints.down('620'));
-  // const isScreenSmall2 = useMediaQuery(theme.breakpoints.down('430'));
+  const isScreenSmall2 = useMediaQuery(theme.breakpoints.down('430'));
   const [pagina, setPagina] = useState(1);
   const [button, setButton] = useState('Mostrar mas horas');
 
