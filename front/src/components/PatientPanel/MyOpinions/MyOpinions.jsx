@@ -10,11 +10,11 @@ import {
   Box,
   Typography,
   Rating,
-  Skeleton,
 } from "@mui/material";
 import { Context } from "../../../context/ContextProvider";
 import { useEffect, useContext, useState } from "react";
 import { useTheme } from "@mui/material";
+import Loading from "../../Loading/Loading";
 
 const MyOpinions = () => {
   const {
@@ -40,7 +40,7 @@ const MyOpinions = () => {
   return (
     <>
       {loading ? (
-        <div>Cargando</div>
+        <Loading />
       ) : (
         <Box sx={{ height: 400, width: "100%" }}>
           <Box
@@ -57,7 +57,7 @@ const MyOpinions = () => {
 
           {!opinions.length ? (
             <Typography variant="body1" align="center">
-              No hay opiniones para mostrar
+              No hay opiniones disponibles en este momento para mostrar.
             </Typography>
           ) : (
             <>
@@ -73,28 +73,26 @@ const MyOpinions = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {opinions
-                      .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
-                      .map((row) => (
-                        <TableRow key={row.id}>
-                          <TableCell>
-                            {row.DoctorType.nombre +
-                              " " +
-                              row.DoctorType.apellido}
-                          </TableCell>
-                          <TableCell>{row.ubicacion}</TableCell>
-                          <TableCell>{row.fecha}</TableCell>
-                          <TableCell>{row.mensaje}</TableCell>
-                          <TableCell>
-                            <Rating
-                              name="stars"
-                              sx={{ color: theme.palette.primary.main }}
-                              value={row.puntaje}
-                              readOnly
-                            />
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                    {opinions.reverse().map((row) => (
+                      <TableRow key={row.id}>
+                        <TableCell>
+                          {row.DoctorType.nombre +
+                            " " +
+                            row.DoctorType.apellido}
+                        </TableCell>
+                        <TableCell>{row.ubicacion}</TableCell>
+                        <TableCell>{row.fecha}</TableCell>
+                        <TableCell>{row.mensaje}</TableCell>
+                        <TableCell>
+                          <Rating
+                            name="stars"
+                            sx={{ color: theme.palette.primary.main }}
+                            value={row.puntaje}
+                            readOnly
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>

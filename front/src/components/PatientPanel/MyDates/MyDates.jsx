@@ -1,5 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../../../context/ContextProvider";
+import Loading from "../../Loading/Loading";
 import { useTheme } from "@mui/material";
 import {
   Table,
@@ -10,8 +11,6 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Button,
-  Box,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +22,7 @@ const MyDates = () => {
   const navigate = useNavigate();
 
   function searchCita() {
-    navigate('/search')
+    navigate("/search");
   }
   useEffect(() => {
     setLoading(true);
@@ -35,8 +34,6 @@ const MyDates = () => {
       setLoading(false);
     }
   }, [patientDetail.id]);
-
-  
 
   const informacionData = informacion.map((item) => {
     const citas = item.Cita.map((cita) => ({
@@ -63,7 +60,6 @@ const MyDates = () => {
       (especialidad) => especialidad.especialidad
     );
 
-   
     return {
       id: item.id,
       apellido: item.apellido,
@@ -79,7 +75,7 @@ const MyDates = () => {
   return (
     <>
       {loading ? (
-        <div>Cargando</div>
+        <Loading />
       ) : (
         <>
           <Typography
@@ -90,58 +86,48 @@ const MyDates = () => {
             Historial de Citas
           </Typography>
 
-          <TableContainer component={Paper} style={{ maxHeight: 400 }}>
-            {!informacion.length ? (
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                  justifyContent:'space-beetwen',
-                  margin:'10px'
-                }}>
-                <Typography variant="body1" align="center">
-                  No hay citas para mostrar
-                </Typography>
-                <Button
-                style={{
-                  backgroundColor: theme.palette.primary.main,
-                  border: 'none',
-                  color: 'white',
-                  borderRadius: '5px',
-                  marginTop:'10px',
-                }} onClick={(event)=>searchCita(event)}>Nuevo turno</Button>
-              </Box>
-
-            ) : (
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Fecha</TableCell>
-                    <TableCell>Hora</TableCell>
-                    <TableCell>Nombre del Medico</TableCell>
-                    <TableCell>Especialidad</TableCell>
-                    <TableCell>Descripción</TableCell>
-                    <TableCell>Informe médico</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {informacionData
-                    .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
-                    .map((row) => (
-                      <TableRow key={row.id}>
-                        <TableCell>{row.fecha}</TableCell>
-                        <TableCell>{row.hora}</TableCell>
-                        <TableCell>{row.nombre + " " + row.apellido}</TableCell>
-                        <TableCell>{row.especialidad}</TableCell>
-                        <TableCell>{row.descripcion}</TableCell>
-                        <TableCell>{row.respuestaMedico}</TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            )}
-          </TableContainer>
+          {!informacion.length ? (
+            <Typography variant="body1" align="center">
+              No hay citas para mostrar en este momento.
+            </Typography>
+          ) : (
+            <>
+              <TableContainer component={Paper} style={{ maxHeight: 400 }}>
+                <Table stickyHeader>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Fecha</TableCell>
+                      <TableCell>Hora</TableCell>
+                      <TableCell>Nombre del Medico</TableCell>
+                      <TableCell>Especialidad</TableCell>
+                      <TableCell>Descripción</TableCell>
+                      <TableCell>Informe médico</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {informacionData
+                      .sort(function (a, b) {
+                        var dateA = new Date(a.fecha[0] + " " + a.hora[0]);
+                        var dateB = new Date(b.fecha[0] + " " + b.hora[0]);
+                        return dateA - dateB;
+                      })
+                      .map((row) => (
+                        <TableRow key={row.id}>
+                          <TableCell>{row.fecha}</TableCell>
+                          <TableCell>{row.hora}</TableCell>
+                          <TableCell>
+                            {row.nombre + " " + row.apellido}
+                          </TableCell>
+                          <TableCell>{row.especialidad}</TableCell>
+                          <TableCell>{row.descripcion}</TableCell>
+                          <TableCell>{row.respuestaMedico}</TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </>
+          )}
         </>
       )}
     </>

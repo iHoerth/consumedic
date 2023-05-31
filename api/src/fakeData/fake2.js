@@ -1,9 +1,13 @@
 const faker = require("faker");
 const db = require("../db");
 const { createDoctor } = require("../controllers/doctors/createDoctor");
+const { createPatient } = require("../controllers/patients/createPatient");
+const bcrypt = require('bcrypt');
 
 const dataFalsaDoctores = async () => {
+
     const cantDoctores = 100;
+    const cantPacientes = 100;
     const especialidades = [
         "Especialista En Toxicología",
         "Óptico",
@@ -409,6 +413,43 @@ const dataFalsaDoctores = async () => {
     });
     }
     
+    //! Cuentas del proyecto
+    //? Medico Consumedic
+    const doctor = await db.DoctorType.create({
+        dni: 9999999,
+        NumMatricula: 4534,
+        nombre: "Doctor",
+        apellido: "PF Henry",
+        email: "consumedicgeneral@gmail.com",
+        telefono: "99999999",
+        direccion: "Henry 2023",
+        imagen: `https://res.cloudinary.com/dnykabhqk/image/upload/v1685560208/Fotos%20Hombres/cec5bc7e-16dc-43ed-a931-5cc826675378_rwc_0x0x1916x1080x1916_qmt0gf.png`,
+        titulo: "Desarrollador Web",
+        Descripcion: "Cuenta maestra del Equipo del Proyecto",
+        precio: 5000,
+        password: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
+        isDoctor: true,
+        status: "deleted",
+        idEspecialidad: Math.floor(Math.random() *especialidades.length),
+        idObraSocial: Math.ceil(Math.random() * obrasSociales.length)
+    });
+
+    //? Paciente Consumedic
+    const paciente = await db.PacienteType.create({
+        dni: 9999999,
+        email: "consumedicgeneral@gmail.com",
+        password: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
+        telefono: "99999999",
+        nombre: "Paciente",
+        apellido: "PF Henry",
+        isDoctor: false,
+        status: "deleted",
+        admin: true,
+        idObraSocial: Math.ceil(Math.random() * obrasSociales.length)
+    });
+
+
+    //! doctores Random
     for (let i=0; i<cantDoctores; i++)
     {   
         const HoM  =  Math.floor(Math.random() * 2) + 1;
@@ -422,13 +463,14 @@ const dataFalsaDoctores = async () => {
             const direccion=direcciones[Math.floor(Math.random()*(direcciones.length))];
             const imagenCloudinary= fotosMujeres[Math.floor(Math.random()*(fotosMujeres.length))];
             const password= "12345678"
+            const hashedPassword = await bcrypt.hash(password, 10);
             const titulo = titulosMedicina[Math.floor(Math.random()*(titulosMedicina.length))];
             const Descripcion=descripciones[Math.floor(Math.random()*(descripciones.length))];
             const precio=Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000
             const idEspecialidad= Math.floor(Math.random() *especialidades.length);
             const idObraSocial= Math.ceil(Math.random() * obrasSociales.length);
             
-            await createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagenCloudinary, password, titulo, Descripcion, precio, idEspecialidad, idObraSocial )
+            await createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagenCloudinary, hashedPassword, titulo, Descripcion, precio, idEspecialidad, idObraSocial )
                 
         } else {
             const dni = Math.floor(Math.random() * (35000000 - 15000000 + 1)) + 15000000;
@@ -439,18 +481,34 @@ const dataFalsaDoctores = async () => {
             const telefono = Math.floor(Math.random() * (4909000 - 4801000 + 1)) + 4801000;
             const direccion=direcciones[Math.floor(Math.random()*(direcciones.length))];
             const imagenCloudinary= fotosHombres[Math.floor(Math.random()*(fotosHombres.length))];
-            const password= "12345678"
+            const password= "12345678";
+            const hashedPassword = await bcrypt.hash(password, 10);
             const titulo = titulosMedicina[Math.floor(Math.random()*(titulosMedicina.length))];
             const Descripcion=descripciones[Math.floor(Math.random()*(descripciones.length))];
             const precio=Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000
             const idEspecialidad= Math.floor(Math.random() *especialidades.length);
             const idObraSocial= Math.ceil(Math.random() * obrasSociales.length);
             
-            await createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagenCloudinary, password, titulo, Descripcion, precio, idEspecialidad, idObraSocial )
+            await createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagenCloudinary, hashedPassword, titulo, Descripcion, precio, idEspecialidad, idObraSocial )
         }
-    
     }
+    
+    //! pacientes random
+    for (let i = 0; i < cantPacientes; i++){    
+        const dni= faker.datatype.number();
+        const email= faker.internet.email();
+        const password= faker.internet.password();
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const telefono= faker.datatype.number();
+        const nombre= faker.name.firstName();
+        const apellido= faker.name.lastName();
+        const status= "active";
+        const idObraSocial= Math.ceil(Math.random() * obrasSociales.length);
+       
+        await createPatient(dni, email, hashedPassword, telefono, nombre, apellido, idObraSocial,status)       
+    }
+
 }
 module.exports = {
     dataFalsaDoctores,
-};
+}
