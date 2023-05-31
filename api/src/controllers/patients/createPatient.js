@@ -8,7 +8,8 @@ const createPatient = async (
   nombre,
   apellido,
   idObraSocial,
-  status
+  status,
+  admin
 ) => {
   const newObraSocial = await ObraSocial.findByPk(idObraSocial);
 
@@ -29,6 +30,7 @@ const createPatient = async (
     apellido,
     ObraSocialId: newObraSocial?.id,
     status,
+    admin
   });
   newPatient.password = '';
   return newPatient;
