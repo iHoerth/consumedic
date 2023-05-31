@@ -20,7 +20,7 @@ import { Box, Grid, useTheme } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Calendar from '../Calendar/Calendar';
-import {useMediaQuery} from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import { Context } from '../../context/ContextProvider';
 import { useContext } from 'react';
 import axios from 'axios';
@@ -50,8 +50,8 @@ const Card = ({
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
   const theme = useTheme();
-  
-  const isScreenSmall = useMediaQuery(theme.breakpoints.down('1050'));
+
+  // const isScreenSmall = useMediaQuery(theme.breakpoints.down('1050'));
   const { values } = theme.breakpoints;
   let averageRating = stars && stars.reduce((acc, cur) => acc + cur.puntaje, 0) / stars.length;
 
@@ -80,7 +80,13 @@ const Card = ({
       sx={{
         transition: '0.05s',
         borderRadius: 1,
-        width: isScreenSmall ? '80%' : '100%',
+        // width: isScreenSmall ? '80%' : '100%',
+        width: {
+          mobile: '80%',
+          tablet: '80%',
+          laptop: '80%',
+          desktop: '100%',
+        },
         margin: 'auto',
         height: 'auto',
         typography: theme.typography,
@@ -104,17 +110,24 @@ const Card = ({
         </>
       ) : (
         <>
-          <Box component="div"
+          <Box
+            component="div"
             sx={{
               display: 'flex',
               justifyContent: 'space-around',
               alignItems: 'center',
-              flexDirection: isScreenSmall ? 'column' : 'row',
+              // flexDirection: isScreenSmall ? 'column' : 'row',
+              flexDirection: {
+                mobile: 'column',
+                tablet: 'column',
+                laptop: 'row',
+                desktop: 'row',
+              },
               // Cambia a columna en pantallas menores a 1050px
               // width: isScreenSmall ? '60%' : '100%',
-            }}>
-            <CardContent
-              sx={{ width: isScreenSmall ? '100%' : '45%', }}>
+            }}
+          >
+            <CardContent sx={{ flex: 1, width: '100%' }}>
               <Tooltip title="Ver Perfil">
                 <IconButton sx={{ p: 1 }}>
                   <NavLink to={`/detail/${id}`}>
@@ -169,16 +182,15 @@ const Card = ({
             </CardContent>
 
             {/* {console.log( agenda)} */}
-            <CardContent>
+            <CardContent sx={{ flex: 1, width: '100%' }}>
               <Typography>Agenda disponible:</Typography>
 
               <Calendar id={id} calendar={doctorData.calendar} />
             </CardContent>
           </Box>
         </>
-      )
-      }
-    </CardMUI >
+      )}
+    </CardMUI>
   );
 };
 

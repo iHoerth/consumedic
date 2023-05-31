@@ -111,7 +111,7 @@ const Calendar = ({ id, calendar }) => {
             borderRadius: '5px',
             border: 'solid 1px',
             borderColor: '#aeaeae',
-            width: '410px',
+            width: '100%',
           }}
         >
           <Box
