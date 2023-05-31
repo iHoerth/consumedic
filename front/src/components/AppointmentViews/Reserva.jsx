@@ -115,14 +115,14 @@ const Reserva = () => {
           flexDirection: {
             mobile: 'column',
             tablet: 'column',
-            laptop: 'column',
+            laptop: 'row',
             desktop: 'row',
           },
           width: {
-            mobile: '50%',
-            tablet: '50%',
-            laptop: '80%',
-            desktop: '80%',
+            mobile: '90%',
+            tablet: '90%',
+            laptop: '70%',
+            desktop: '90%',
           },
           padding: '10px',
           margin: {
