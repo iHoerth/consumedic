@@ -50,6 +50,7 @@ const CreateDoctor = () => {
   const [fileName, setFileName] = useState("") 
   const [open, setOpen] = useState()
   const [fileSize, setFileSize] = useState()
+  const { session, setSession } = useContext(Context)[2];
   const [form, setForm] = useState({
     dni: "",
     numeroMatricula: "",
@@ -218,7 +219,9 @@ const CreateDoctor = () => {
     };
     console.log(newDoctor);
     handleCheckedPassword();
-    createDoctor(newDoctor);
+    createDoctor(newDoctor).then(()=>navigate("/perfilMedico")
+    
+  )
 };
 
   const [showPassword, setShowPassword] = useState(false);
