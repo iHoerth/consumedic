@@ -24,7 +24,6 @@ import Calendar from '../Calendar/Calendar';
 import { Context } from '../../context/ContextProvider';
 import { useContext } from 'react';
 
-
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
     color: '#0fb1bc',
@@ -64,8 +63,6 @@ const Card = ({
     }
   }, [loading]);
 
-
-
   return (
     <CardMUI
       sx={{
@@ -82,7 +79,7 @@ const Card = ({
       {loading ? (
         <>
           <Stack spacing={4}>
-            <Box display='flex'>
+            <Box display="flex">
               <Skeleton variant="circular" sx={{ margin: 'auto auto' }} width={100} height={100} />
               <Skeleton variant="text" sx={{ fontSize: '1.4rem' }} />
             </Box>
@@ -95,7 +92,7 @@ const Card = ({
       ) : (
         <>
           <Box component="div" sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <CardContent sx={{ width:'45%'}}>
+            <CardContent sx={{ width: '45%' }}>
               <Tooltip title="Ver Perfil">
                 <IconButton sx={{ p: 1 }}>
                   <NavLink to={`/detail/${id}`}>
@@ -150,16 +147,15 @@ const Card = ({
             </CardContent>
 
             {/* {console.log( agenda)} */}
-            <CardContent sx={{ width:'45%'}}>
-            <Typography>Agenda disponible:</Typography>
-            
-            <Calendar id={id} calendar={calendar} />
-          </CardContent>
-        </Box>
-    </>
-  )
-}
-    </CardMUI >
+            <CardContent sx={{ width: '45%' }}>
+              <Typography>Agenda disponible:</Typography>
+
+              <Calendar id={id} calendar={calendar} />
+            </CardContent>
+          </Box>
+        </>
+      )}
+    </CardMUI>
   );
 };
 
