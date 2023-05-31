@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import { Context } from "../../../context/ContextProvider";
-import PatientData from "../PatientData/PatientData";
 import {
   Box,
   Card,
@@ -11,7 +10,7 @@ import {
   Divider,
 } from "@mui/material";
 
-const Panel = () => {
+const Header = () => {
   const theme = useTheme();
   const { patientDetail } = useContext(Context)[1];
 
@@ -21,12 +20,10 @@ const Panel = () => {
     <>
       <Box
         sx={{
-          padding: "10px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "normal",
           alignItems: "stretch",
-          height: "47rem",
           borderRadius: "10px",
           width: "100%",
         }}
@@ -120,14 +117,10 @@ const Panel = () => {
             justifyContent: "flex-start",
             alignItems: "flex-start",
           }}
-        >
-          <Box sx={{ width: "100%" }}>
-            <PatientData />
-          </Box>
-        </Box>
+        ></Box>
       </Box>
     </>
   );
 };
 
-export default Panel;
+export default Header;
