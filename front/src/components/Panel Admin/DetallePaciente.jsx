@@ -27,7 +27,7 @@ const DetallePaciente = () => {
     fetchSoftDeletedPatient,
   } = useContext(Context)[1];
   const { setVista, email, setAdmin } = useContext(Context)[6];
-
+  const { session } = useContext(Context)[2];
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const DetallePaciente = () => {
   };
 
   const handleClickAdmin = async (id) => {
-    await setAdmin(id)
+    await setAdmin(id);
     await fetchPatientByEmail(patientDetail.email);
   };
 
@@ -174,10 +174,16 @@ const DetallePaciente = () => {
           onClick={() => {
             handleClickAdmin(patientDetail.id);
           }}
+          style={{
+            display:
+              session.email === "consumedicgeneral@gmail.com" &&
+              patientDetail.email !== "consumedicgeneral@gmail.com"
+                ? "block"
+                : "none",
+          }}
         >
           {patientDetail.admin ? "Sacar Admin" : "Hacer Admin"}
         </Button>
-
       </Box>
     </>
   );
