@@ -53,7 +53,7 @@ const EditProfile = () => {
     dni: dni,
     email: email,
     telefono: telefono,
-    ObraSocial: ObraSocial,
+    ObraSocial: ObraSocial || "",
   });
 
   const handleChange = (event) => {

@@ -439,7 +439,7 @@ const EditarPerfil = ({doctorDetail1}) => {
                                     ) : null
                                   }
                             ></TextField>
-                            <Button onClick={handleClick} name="especialidades" variant="contained" sx={{ml:"10px"}} size="small" startIcon={<EditIcon/>}>Editar</Button>
+                            <Button onClick={handleClick} name="especialidades" color="secondary" variant="contained" sx={{ml:"10px"}} size="small" startIcon={<EditIcon/>}>Editar</Button>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}>Obras Sociales:</Typography>
@@ -456,12 +456,12 @@ const EditarPerfil = ({doctorDetail1}) => {
                                     ) : null
                                   }
                             ></TextField>
-                            <Button onClick={handleClick} name="obrasSociales" variant="contained" sx={{ml:"10px"}} size="small" startIcon={<EditIcon/>}>Editar</Button>
+                            <Button onClick={handleClick} name="obrasSociales" color="secondary" variant="contained" sx={{ml:"10px"}} size="small" startIcon={<EditIcon/>}>Editar</Button>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}}>Imagen:</Typography>
                             <Avatar alt={`${datos.nombre} ${datos.apellido}`} src={datos.imagen} sx={{width:80, height:80}}/>
-                            <Button onClick={handleClick} name="foto" variant="contained" sx={{ml:"10px"}} size="small" startIcon={<AddAPhotoIcon/>}>Editar Foto</Button>
+                            <Button onClick={handleClick} name="foto" color="secondary" variant="contained" sx={{ml:"10px"}} size="small" startIcon={<AddAPhotoIcon/>}>Editar Foto</Button>
                         </Box>
                         <Box sx={{display:"flex", alignItems:"center", mt:"10px"}}>
                             <Typography sx={{mr:"10px", width:"150px"}} >Descripción:</Typography>
@@ -481,7 +481,7 @@ const EditarPerfil = ({doctorDetail1}) => {
                         </Box>
                     </Stack>
                 </Stack>
-                <Button variant="contained" sx={{width:"200px", mt:"30px", mr:"80px"}} onClick={handleSubmit}
+                <Button variant="contained" color="secondary" sx={{width:"200px", mt:"30px", mr:"80px"}} onClick={handleSubmit}
                     disabled={
                         (error.nombre||error.apellido||error.dni||error.direccion||error.telefono||error.titulo||error.precio||error.especialidades||error.obrasSociales||error.imagen||error.Descripcion)&&true
                     }

@@ -46,60 +46,73 @@ export const homeCards = [
 
 export const members = [
   {
-    id: 1,
-    name: 'Ignacio Hoerth',
-    role: 'Frontend',
-    img: 'https://previews.123rf.com/images/poemsuk/poemsuk1703/poemsuk170300004/73091078-profesional-m%C3%A9dico-en-traje-de-escribir-registros-m%C3%A9dicos-al-portapapeles-ilustraci%C3%B3n-de-vector-de.jpg',
-    description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
-    linkedin: 'https://www.linkedin.com/in/ignaciohoerth/',
-    github: 'https://github.com/iHoerth/',
+    id: 2,
+    phrase:'❝ Liberate del peso del pasado y rompe las cadenas de las etiquetas. Forja tu propio futuro con tu verdadera identidad ❞',
+    name: 'Facundo Aragon',
+    role: 'Backend',
+    img: 'https://i.ibb.co/HFQrF87/facu.jpg',
+    //description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
+    linkedin: 'https://www.linkedin.com',
+    github: 'https://github.com/',
   },
+
+
+
+
+  //////////////////////////////////
   {
     id: 3,
     phrase: '❝ Pon el corazón, mente y el alma incluso en los actos más pequeños.Ese es el secreto del éxito ❞',
     name: 'Noelia Paz',
     role: 'Frontend',
     img: 'https://i.ibb.co/98H5xkg/noe.jpg',
-    description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
+    //description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
     linkedin: 'https://www.linkedin.com',
     github: 'https://github.com/',
   },
+  //////////////////////////////
+  
   {
-    id: 2,
-    name: 'Facundo Aragon',
+    id: 6,
+    name: 'Mauro Gatica',
+    phrase: '❝ Fallar en planear es planear fallar ❞',
     role: 'Backend',
-    img: 'https://st2.depositphotos.com/1036149/6135/i/600/depositphotos_61353241-stock-photo-fun-cartoon-doctor.jpg',
-    description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
-    linkedin: 'https://www.linkedin.com',
-    github: 'https://github.com/',
+    img: 'https://i.ibb.co/WDc8Wkp/yo.jpg',
+    //description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
+    linkedin: 'https://www.linkedin.com/in/mauro-gatica-a5aba3163/',
+    github: 'https://github.com/Maurog5',
   },
+
+  ////////////////////////////////////////////////
   {
     id: 4,
-    phrase:'❝ Siempre parece imposible hasta que esté hecho ❞',
+    phrase:'❝ Siempre parece imposible hasta que esté hecho. ❞',
     name: 'Matias Bustamante',
     role: 'Frontend',
-    img: 'https://static.vecteezy.com/system/resources/thumbnails/001/613/072/small/handsome-male-doctor-with-medical-icons-vector.jpg',
-    description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
+    img: 'https://i.ibb.co/PZ3S8Gg/matiii.jpg',
+    //description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
     linkedin: 'https://www.linkedin.com/in/matias-bustamante-90ba9b274/',
     github: 'https://github.com/matibustamante7',
   },
+  ///////////////////////////////////////
   {
     id: 5,
-    name: 'Rolando Egusquiza',
+    phrase:'❝ La simplicidad es la clave de la brillantez ❞',
+    name: 'Rolando Egusquiza', 
     role: 'Backend',
-    img: 'https://previews.123rf.com/images/poemsuk/poemsuk1703/poemsuk170300004/73091078-profesional-m%C3%A9dico-en-traje-de-escribir-registros-m%C3%A9dicos-al-portapapeles-ilustraci%C3%B3n-de-vector-de.jpg',
-    description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
+    img: 'https://i.ibb.co/myr3XMG/roli.jpg',
+    //description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
     linkedin: 'https://www.linkedin.com',
     github: 'https://github.com/',
   },
+  ///////////////////////////////////////
   {
-    id: 6,
-    phrase: '❝Fallar en planear es planear fallar ❞',
-    name: 'Mauro Gatica',
-    role: 'Backend',
-    img: 'https://i.ibb.co/WDc8Wkp/yo.jpg',
-    description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
-    linkedin: 'https://www.linkedin.com',
-    github: 'https://github.com/',
+    id: 1,
+    name: 'Ignacio Hoerth',
+    role: 'Frontend',
+    img: 'https://i.ibb.co/Br1ZVfb/igna.jpg',
+    //description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
+    linkedin: 'https://www.linkedin.com/in/ignaciohoerth/',
+    github: 'https://github.com/iHoerth/',
   },
 ];
