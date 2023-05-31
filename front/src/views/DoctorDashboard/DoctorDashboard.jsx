@@ -37,15 +37,15 @@ const DoctorDashboard = () => {
         await fetchDoctorByEmail(session.email);
       };
       search();
-      console.log(doctorDetail);
+      // console.log(doctorDetail);
     } else {
       setLoading(false);
       fetchTurnos(doctorDetail.id);
       fetchPacientes(doctorDetail.id)
     }
-    console.log(loading);
+    // console.log(loading);
   }, [loading,doctorDetail]);
-  console.log(doctorDetail);
+  // console.log(doctorDetail);
   const views = [
     "Mi Perfil",
     "Editar Perfil",
@@ -58,8 +58,8 @@ const DoctorDashboard = () => {
   ];
   const handleClick = (event) => {
     const index = views.findIndex((el) => el === event.target.innerHTML);
-    // console.log(event.target.innerHTML);
-    console.log(index);
+    console.log(event.target.innerHTML);
+    // console.log(index);
     setVista(index);
   };
 
