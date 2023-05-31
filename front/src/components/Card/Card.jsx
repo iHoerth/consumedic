@@ -23,6 +23,7 @@ import Calendar from '../Calendar/Calendar';
 
 import { Context } from '../../context/ContextProvider';
 import { useContext } from 'react';
+import axios from 'axios';
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -43,25 +44,34 @@ const Card = ({
   calendar,
   specialty,
 }) => {
+  //?
+  const [doctorData, setDoctorData] = useState({});
+  //?
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
   const theme = useTheme();
   const { values } = theme.breakpoints;
-  const [doctorsData] = useContext(Context);
-  const { doctorDetail, fetchDoctorById } = doctorsData;
   let averageRating = stars && stars.reduce((acc, cur) => acc + cur.puntaje, 0) / stars.length;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const URL_DOCTORS = process.env.REACT_APP_URL_DOCTORS;
+
   useEffect(() => {
     setLoading(true);
-    // fetchDoctorById(id);
-    if (id) {
+
+    const getDoctorData = async () => {
+      const result = (await axios(`${URL_DOCTORS}/${id}`)).data;
+      setDoctorData({ ...result });
+    };
+    getDoctorData(id);
+
+    if (doctorData.id) {
       setLoading(false);
     }
-  }, [loading]);
+  }, [doctorData.id]);
 
   return (
     <CardMUI
@@ -155,11 +165,10 @@ const Card = ({
               </Typography>
             </CardContent>
 
-            {/* {console.log( agenda)} */}
             <CardContent sx={{ width: '45%' }}>
               <Typography>Agenda disponible:</Typography>
 
-              <Calendar id={id} calendar={calendar} />
+              <Calendar id={id} calendar={doctorData.calendar} />
             </CardContent>
           </Box>
         </>
