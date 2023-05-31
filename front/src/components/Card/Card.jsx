@@ -20,10 +20,9 @@ import { Box, Grid, useTheme } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Calendar from '../Calendar/Calendar';
-import {useMediaQuery} from '@mui/material';
+
 import { Context } from '../../context/ContextProvider';
 import { useContext } from 'react';
-
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -51,8 +50,7 @@ const Card = ({
   const [doctorsData] = useContext(Context);
   const { doctorDetail, fetchDoctorById } = doctorsData;
   let averageRating = stars && stars.reduce((acc, cur) => acc + cur.puntaje, 0) / stars.length;
-  
-  const isScreenSmall = useMediaQuery(theme.breakpoints.down('1050'));
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -65,15 +63,12 @@ const Card = ({
     }
   }, [loading]);
 
-
-
   return (
     <CardMUI
       sx={{
         transition: '0.05s',
         borderRadius: 1,
-        width: isScreenSmall ? '80%' : '100%',
-        margin:'auto',
+        width: '100% ',
         height: 'auto',
         typography: theme.typography,
         display: 'flex',
@@ -84,7 +79,7 @@ const Card = ({
       {loading ? (
         <>
           <Stack spacing={4}>
-            <Box display='flex'>
+            <Box display="flex">
               <Skeleton variant="circular" sx={{ margin: 'auto auto' }} width={100} height={100} />
               <Skeleton variant="text" sx={{ fontSize: '1.4rem' }} />
             </Box>
@@ -161,6 +156,15 @@ const Card = ({
             </CardContent>
 
             {/* {console.log( agenda)} */}
+            <CardContent sx={{ width: '45%' }}>
+              <Typography>Agenda disponible:</Typography>
+
+              <Calendar id={id} calendar={calendar} />
+            </CardContent>
+          </Box>
+        </>
+      )}
+    </CardMUI>
             <CardContent>
             <Typography>Agenda disponible:</Typography>
             
