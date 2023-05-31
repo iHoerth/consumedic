@@ -12,7 +12,7 @@ import DrawerComponent from "./DrawerComponent";
 import { Context } from "../../context/ContextProvider";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const NavBar = ({ component, variant, text, type }) => {
+const NavBar = ({ component, variant = 'block', text, type }) => {
   const { session, setSession } = useContext(Context)[2];
   const { patientDetail, modifyPatientProfiler, fetchPatientByEmail } =
     useContext(Context)[1];

@@ -49,8 +49,10 @@ const StyleForm = styled(Container)({
 
 const CreateDoctor = () => {
   const navigate = useNavigate();
-  const { createDoctor, doctorDetail, loginDoctor  } = useContext(Context)[0];
+  const { createDoctor, doctorDetail, loginDoctor } = useContext(Context)[0];
+  const { snackOk, snackOkMensaje, setSnackOk, setSnackOkMensaje } = useContext(Context)[0];
   const { snackFail, snackFailMensaje, setSnackFail, setSnackFailMensaje } = useContext(Context)[0];
+  
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const location = useLocation();
   const [fileName, setFileName] = useState('');
@@ -224,11 +226,18 @@ const CreateDoctor = () => {
     };
     console.log(newDoctor);
     handleCheckedPassword();
-    createDoctor(newDoctor).then(() => {
-      loginDoctor(newDoctor).then(() => {
-        navigate('/perfilMedico');
+    createDoctor(newDoctor)
+      .then(() => {
+        loginDoctor(newDoctor).then(() => {
+          navigate('/perfilMedico');
+        });
+        setSnackOk(true);
+        setSnackOkMensaje('Creado con exito');
       })
-    });
+      .catch((err) => {
+        setSnackFail(true);
+        setSnackFailMensaje(err.response.data.message);
+      });
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -305,6 +314,19 @@ const CreateDoctor = () => {
   return (
     <>
       <NavBar></NavBar>
+      <Snackbar
+        open={snackOk}
+        autoHideDuration={2500}
+        onClose={() => {
+          setSnackOk(false);
+          setSnackOkMensaje('');
+        }}
+      >
+        <Alert severity="success" variant="filled">
+          <AlertTitle>Mensaje Exitoso</AlertTitle>
+          {snackOkMensaje}
+        </Alert>
+      </Snackbar>
       <Snackbar
         open={snackFail}
         autoHideDuration={2500}
