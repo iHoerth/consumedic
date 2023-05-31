@@ -57,12 +57,12 @@ const Admin = () => {
   return (
     <>
       <NavBar />
-      <Container maxWidth="sm" sx={{ mt: "140px", mb: "40px" }}>
+      <Container maxWidth="sm" sx={{ mt: "140px", mb: "40px", borderRadius:'5px' }}>
         <Box sx={{ height: "107vh" }}>
           <Header />
           <Stack
             direction="row"
-            sx={{ border: "1px solid", borderColor: "#bababa" }}
+            sx={{ border: "1px solid", borderColor: "#bababa", borderRadius:'5px', backgroundColor: theme.palette.background.main }}
             divider={<Divider orientation="vertical" flexItem />}
           >
             <Box

@@ -24,6 +24,9 @@ const theme = createTheme({
       light: teal['A100'],
       dark: teal[500],
     },
+    background:{
+      main: '#F8F9F9'
+    }
   },
   typography: {
     fontFamily: `'Poppins', "Roboto", "Helvetica", "Arial", 'sans-serif'`,

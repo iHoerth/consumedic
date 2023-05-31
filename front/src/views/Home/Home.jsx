@@ -53,6 +53,7 @@ const Home = () => {
     <Box
       component="div"
       sx={{
+        backgroundColor: theme.palette.background.main,
         display: 'flex',
         flexDirection: 'column',
         width: '100%',

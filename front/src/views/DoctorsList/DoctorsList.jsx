@@ -43,7 +43,7 @@ const DoctorsList = () => {
       <NavBar />
       <Box
         sx={{
-        
+          backgroundColor: theme.palette.background.main,
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
