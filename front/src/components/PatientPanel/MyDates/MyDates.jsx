@@ -11,12 +11,18 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const MyDates = () => {
   const { informacion, fetchPatientData } = useContext(Context)[5];
   const { patientDetail } = useContext(Context)[1];
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
+  const navigate = useNavigate();
 
+  function searchCita() {
+    navigate("/search");
+  }
   useEffect(() => {
     setLoading(true);
     fetchPatientData(patientDetail.id).then(() => {
@@ -52,6 +58,7 @@ const MyDates = () => {
     const especialidadName = especialidades.map(
       (especialidad) => especialidad.especialidad
     );
+
     return {
       id: item.id,
       apellido: item.apellido,
