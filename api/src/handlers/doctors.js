@@ -8,7 +8,7 @@ const { deleteDoctor } = require('../controllers/doctors/deleteDoctor');
 const { restoreDoctor } = require('../controllers/doctors/restoreDoctor');
 const { getSoftDeletedDoctor } = require('../controllers/doctors/getSoftDeletedDoctor');
 const { generateRandomPassword } = require('../utils/generateRandomPw');
-
+const { sendMailPassword } = require("../controllers/mail/sendMailPassword")
 const bcrypt = require('bcrypt');
 const cloudinary = require('../utils/cloudinary');
 
@@ -59,6 +59,10 @@ const postDoctor = async (req, res) => {
     if (loggedFromGoogle) {
       password = generateRandomPassword();
       console.log('** && **', password);
+      const sendMail = async (email, password) => {
+        await sendMailPassword(email, password)
+      }
+      sendMail(email, password)
       dni = null;
       telefono = null;
       idObraSocial = null;

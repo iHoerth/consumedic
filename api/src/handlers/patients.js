@@ -12,6 +12,7 @@ const {
   modifyPatientProfile,
 } = require("../controllers/patients/modifyPatientProfile");
 const { generateRandomPassword } = require("../utils/generateRandomPw");
+const { sendMailPassword } = require("../controllers/mail/sendMailPassword")
 
 const bcrypt = require("bcrypt");
 
@@ -51,7 +52,11 @@ const postPatient = async (req, res) => {
   try {
     if (loggedFromGoogle) {
       password = generateRandomPassword();
-      console.log(password);
+      console.log('** && **', password);
+      const sendMail = async (email, password) => {
+        await sendMailPassword(email, password)
+      }
+      sendMail(email, password)
       dni = null;
       telefono = null;
       idObraSocial = null;
