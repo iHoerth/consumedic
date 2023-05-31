@@ -74,8 +74,8 @@ const NavBar = ({ component, variant, text, type }) => {
           scrolled ? 'primary' :
           'transparent'
         }
-        elevation={scrolled ? 4 : 0}
-        position={variant === "block" ? "block" : "fixed"}
+        elevation={scrolled || variant ==='block' ? 4 : 0}
+        position={"fixed"}
         sx={{ height: "100px", justifyContent: "center", alignItems: "center" }}
       >
         <Toolbar
@@ -93,12 +93,12 @@ const NavBar = ({ component, variant, text, type }) => {
             display="flex"
             alignItems="center"
             gap="10px"
-            color={!scrolled ? "black" : "white"}
+            color={!scrolled && variant !== 'block' ? "black" : "white"}
             sx={{ flexGrow: 1 }}
           >
             <Link
               href="/"
-              color={!scrolled ? "inherit" : "white"}
+              color={!scrolled && variant !== 'block' ? "inherit" : "white"}
               sx={{ display: "flex", alignItems: "center" }}
               underline="none"
             >
@@ -107,22 +107,20 @@ const NavBar = ({ component, variant, text, type }) => {
             <Typography
               variant="h5"
               component="div"
-              color={!scrolled ? "black" : "white"}
+              color={!scrolled && variant !== 'block' ? "black" : "white"}
               sx={{
                 fontSize: "2rem", // increase the font size to 2rem
               }}
             >
               <Link
                 href="/"
-                color={!scrolled ? "inherit" : "white"}
+                color={!scrolled && variant !== 'block' ? "inherit" : "white"}
                 underline="none"
               >
                 <Box
                   sx={{
                     textShadow: `${
-                      !scrolled
-                        ? "3px 3px 3px rgba(0,0,0,0.5)"
-                        : "2px 2px 2px rgba(255,255,255,0.5)"
+                       "3px 3px 3px rgba(0,0,0,0.5)"
                     }`,
                   }}
                 >
@@ -146,7 +144,7 @@ const NavBar = ({ component, variant, text, type }) => {
               scrolled={scrolled}
             />
           ) : (
-            <nav style={{ color: `${!scrolled ? "black" : "white"}` }}>
+            <nav style={{ color: `${!scrolled && variant !== 'block' ? "black" : "white"}` }}>
               <Button
                 color="inherit"
                 href={navLinksArray[0].path}

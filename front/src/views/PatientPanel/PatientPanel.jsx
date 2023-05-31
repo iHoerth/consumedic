@@ -56,7 +56,7 @@ const Admin = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar variant='block' />
       <Container maxWidth="sm" sx={{ mt: "140px", mb: "40px", borderRadius:'5px' }}>
         <Box sx={{ height: "107vh" }}>
           <Header />
