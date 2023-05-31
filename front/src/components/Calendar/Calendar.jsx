@@ -21,7 +21,7 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 
 const Calendar = ({ id, calendar }) => {
   const theme = useTheme();
-  const { patientDetail } = useContext(Context)[1];
+  // const { patientDetail } = useContext(Context)[1];
   const meses = [
     "ene",
     "feb",
@@ -39,6 +39,7 @@ const Calendar = ({ id, calendar }) => {
   const cantMostrados = 4;
   let cantHojas;
   let mostrados;
+
   const [pagina, setPagina] = useState(1);
   const [button, setButton] = useState("Mostrar mas horas");
 
@@ -68,6 +69,7 @@ const Calendar = ({ id, calendar }) => {
       setButton("Mostrar mas horas");
     }
   };
+
   if (calendar) {
     return (
       <Box
@@ -189,7 +191,7 @@ const Calendar = ({ id, calendar }) => {
                                   textDecoration: "none",
                                   color: "#0752df",
                                 }}
-                                to={`/turno/${id}/${patientDetail.id}/${dia.fecha}/${turno.hora}/reserva/0`}
+                                to={`/turno/${id}/${id}/${dia.fecha}/${turno.hora}/reserva/0`}
                               >{`${hh}:${mm}`}</Link>
                               {/* <Typography>{`${hh}:${mm}`}</Typography> */}
                             </ListItemButton>
