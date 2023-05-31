@@ -9,10 +9,10 @@ const getAllDoctors = async () => {
   });
 
 
-    for(let i=0; i<doctors.length;i++){
-      const calendar = await getDoctorCalendar(doctors[i].id)
-      doctors[i].dataValues.calendar = calendar
-    }
+    // for(let i=0; i<doctors.length;i++){
+    //   const calendar = await getDoctorCalendar(doctors[i].id)
+    //   doctors[i].dataValues.calendar = calendar
+    // }
 
     // doctors.map(async (doctor) => {
     //   const calendar = await getDoctorCalendar(doctor.id);
