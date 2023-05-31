@@ -80,11 +80,12 @@ const DoctorDashboard = () => {
           {snackOkMensaje}
         </Alert>
       </Snackbar>
-      <Container maxWidth="sm" sx={{ mt: "100px", mb: "40px"}}>
+      <Container maxWidth="sm" sx={{ mt: "110px", mb: "40px"}}>
         <Box sx={{ height: "85vh" }}>
           <Stack
             direction="row"
-            sx={{ border: "1px solid", borderColor: "#bababa", borderRadius:"10px" }}
+            sx={{ border: "1px solid", borderColor: "#bababa", borderRadius:"10px", 
+            backgroundColor: theme.palette.background.main, }}
             divider={<Divider orientation="vertical" flexItem />}
           >
             <Box
