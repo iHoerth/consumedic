@@ -314,6 +314,7 @@ const createFakeData = async () => {
     apellido: "Paciente PF Henry",
     isDoctor: false,
     status: "active",
+    admin: true,
     ObraSocialId: newObraSocial.dataValues.id,
   });
   const paciente2 = await db.PacienteType.create({

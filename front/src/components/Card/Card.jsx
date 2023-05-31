@@ -58,7 +58,7 @@ const Card = ({
 
   useEffect(() => {
     setLoading(true);
-    fetchDoctorById(id);
+    // fetchDoctorById(id);
     if (id) {
       setLoading(false);
     }

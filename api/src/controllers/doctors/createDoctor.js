@@ -1,4 +1,5 @@
-const { DoctorType, Especialidad, ObraSocial } = require("../../db");
+const { DoctorType, Especialidad, ObraSocial, Horario } = require("../../db");
+const {createFirstHorarios} = require("../horarios/createFirstHorarios")
 
 const createDoctor = async (
   dni,
@@ -23,7 +24,7 @@ const createDoctor = async (
   // if (!idObraSocial) {
   //   throw new Error("Se debe proporcionar al menos una obra social");
   // }
-  console.log(password);
+
   const newDoctor = await DoctorType.create({
     dni,
     NumMatricula,
@@ -59,7 +60,7 @@ const createDoctor = async (
         if(!newEspecialidad) throw new Error("No se encuentra Especialidad con el ID enviado")
         newDoctor.addEspecialidads(newEspecialidad);
   }
- 
+
   if (Array.isArray(idObraSocial) && idObraSocial.length > 0) {
     for (let name of idObraSocial) {
       let idObra = name;
@@ -76,6 +77,8 @@ const createDoctor = async (
       if(!newObraSocial) throw new Error("No se encuentra Obra Social con el ID enviado")
       newDoctor.addObraSocials(newObraSocial);
   }
+  await createFirstHorarios (newDoctor.id)
+
   return newDoctor;
 };
 
