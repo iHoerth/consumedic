@@ -14,8 +14,6 @@ const CardsContainer = ({ doctorsInPage }) => {
       component="div"
       sx={{
         display: 'flex',
-        // gridTemplateColumns: 'repeat(2, 1fr)',
-        // gridGap: '8rem',
         flexDirection: 'column',
         gap: '14px',
         height: 'auto',

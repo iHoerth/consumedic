@@ -7,7 +7,8 @@ const getAllDoctors = async () => {
     where: { status: 'active' },
     include: { all: true },
   });
-
+  
+  return doctors;
   //   doctors.map(async (doctor) => {
   //     const calendar = await getDoctorCalendar(id);
   //     doctor.dataValues.calendar = calendar;

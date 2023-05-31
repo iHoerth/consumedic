@@ -12,7 +12,7 @@ import DrawerComponent from './DrawerComponent';
 import { Context } from '../../context/ContextProvider';
 import { useNavigate } from 'react-router-dom';
 
-const NavBar = ({ component, variant,text, type }) => {
+const NavBar = ({ component, variant, text, type }) => {
   const { session, setSession } = useContext(Context)[2];
   const navigate = useNavigate();
   const theme = useTheme();
@@ -111,15 +111,21 @@ const NavBar = ({ component, variant,text, type }) => {
                     }`,
                   }}
                 >
-                  { text === "Mi Cuenta:"  ? (<> Mi cuenta: {type.nombre}<br/> <span style={{fontSize: '50%'}}>{type.email}</span> </>) : 'CONSUMEDIC' }
-
-                 
+                  {text === 'Mi Cuenta:' ? (
+                    <>
+                      {' '}
+                      Mi cuenta: {type.nombre}
+                      <br /> <span style={{ fontSize: '50%' }}>{type.email}</span>{' '}
+                    </>
+                  ) : (
+                    'CONSUMEDIC'
+                  )}
                 </Box>
               </Link>
             </Typography>
           </Box>
           {screenSizeSmall ? (
-            <DrawerComponent navLinksArray={navLinksArray} scrolled={scrolled}/>
+            <DrawerComponent navLinksArray={navLinksArray} scrolled={scrolled} />
           ) : (
             <nav style={{ color: `${!scrolled ? 'black' : 'white'}` }}>
               <Button color="inherit" href={navLinksArray[0].path} sx={{ padding: 2 }}>
@@ -137,10 +143,11 @@ const NavBar = ({ component, variant,text, type }) => {
                   <Button
                     color="inherit"
                     href={session.isDoctor ? '/perfilMedico' : '/patientpanel'}
+                    sx={{ padding: 2 }}
                   >
                     MI CUENTA
                   </Button>
-                  <Button color="inherit" href="/" onClick={handleSessionClose}>
+                  <Button color="inherit" href="/" onClick={handleSessionClose} sx={{ padding: 2 }}>
                     CERRAR SESION
                   </Button>
                 </>
