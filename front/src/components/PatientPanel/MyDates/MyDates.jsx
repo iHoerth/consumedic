@@ -1,5 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../../../context/ContextProvider";
+import Loading from "../../Loading/Loading";
 import {
   Table,
   TableBody,
@@ -66,7 +67,7 @@ const MyDates = () => {
   return (
     <>
       {loading ? (
-        <div>Cargando</div>
+        <Loading />
       ) : (
         <>
           <Typography
@@ -77,40 +78,48 @@ const MyDates = () => {
             Historial de Citas
           </Typography>
 
-          <TableContainer component={Paper} style={{ maxHeight: 400 }}>
-            {!informacion.length ? (
-              <Typography variant="body1" align="center">
-                No hay citas para mostrar
-              </Typography>
-            ) : (
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Fecha</TableCell>
-                    <TableCell>Hora</TableCell>
-                    <TableCell>Nombre del Medico</TableCell>
-                    <TableCell>Especialidad</TableCell>
-                    <TableCell>Descripción</TableCell>
-                    <TableCell>Informe médico</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {informacionData
-                    .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
-                    .map((row) => (
-                      <TableRow key={row.id}>
-                        <TableCell>{row.fecha}</TableCell>
-                        <TableCell>{row.hora}</TableCell>
-                        <TableCell>{row.nombre + " " + row.apellido}</TableCell>
-                        <TableCell>{row.especialidad}</TableCell>
-                        <TableCell>{row.descripcion}</TableCell>
-                        <TableCell>{row.respuestaMedico}</TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            )}
-          </TableContainer>
+          {!informacion.length ? (
+            <Typography variant="body1" align="center">
+              No hay citas para mostrar en este momento.
+            </Typography>
+          ) : (
+            <>
+              <TableContainer component={Paper} style={{ maxHeight: 400 }}>
+                <Table stickyHeader>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Fecha</TableCell>
+                      <TableCell>Hora</TableCell>
+                      <TableCell>Nombre del Medico</TableCell>
+                      <TableCell>Especialidad</TableCell>
+                      <TableCell>Descripción</TableCell>
+                      <TableCell>Informe médico</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {informacionData
+                      .sort(function (a, b) {
+                        var dateA = new Date(a.fecha[0] + " " + a.hora[0]);
+                        var dateB = new Date(b.fecha[0] + " " + b.hora[0]);
+                        return dateA - dateB;
+                      })
+                      .map((row) => (
+                        <TableRow key={row.id}>
+                          <TableCell>{row.fecha}</TableCell>
+                          <TableCell>{row.hora}</TableCell>
+                          <TableCell>
+                            {row.nombre + " " + row.apellido}
+                          </TableCell>
+                          <TableCell>{row.especialidad}</TableCell>
+                          <TableCell>{row.descripcion}</TableCell>
+                          <TableCell>{row.respuestaMedico}</TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </>
+          )}
         </>
       )}
     </>

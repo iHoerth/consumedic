@@ -1,13 +1,12 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../../context/ContextProvider";
-import { Icon } from "@mui/material";
 import { Edit as EditIcon } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CheckCircle } from "@mui/icons-material";
+import Loading from "../../Loading/Loading";
 import {
   Box,
-  Skeleton,
   Modal,
   Button,
   TextField,
@@ -24,10 +23,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
 } from "@mui/material";
 
 const MyDoctors = () => {
@@ -194,7 +189,7 @@ const MyDoctors = () => {
   return (
     <>
       {loading ? (
-        <div>Cargando</div>
+        <Loading />
       ) : (
         <>
           <Typography
@@ -205,225 +200,227 @@ const MyDoctors = () => {
             Historial de Medicos Consultados
           </Typography>
 
-          <TableContainer component={Paper} style={{ maxHeight: 400 }}>
-            {!informacionData.length ? (
-              <Typography variant="body1" align="center">
-                No hay medicos para mostrar
-              </Typography>
-            ) : (
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Médico</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Telefono</TableCell>
-                    <TableCell>Ubicación</TableCell>
-                    <TableCell>Precio</TableCell>
-                    <TableCell align="center">Agregar opinion</TableCell>
-                    <TableCell align="center">Eliminar Doctor</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {informacionData.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell>
-                        <Box display="flex" alignItems="center">
-                          <Avatar src={item.imagen} alt="img" />
-                          <Typography variant="subtitle1" marginLeft={"10px"}>
-                            {item.nombre + " " + item.apellido}
-                          </Typography>
-                        </Box>
-                      </TableCell>
-                      <TableCell>{item.email}</TableCell>
-                      <TableCell>{item.telefono}</TableCell>
-                      <TableCell>{item.direccion}</TableCell>
-                      <TableCell>$ {item.precio}</TableCell>
-                      <TableCell align="center">
-                        {opinionsSent[item.id] ? (
-                          <CheckCircle
-                            sx={{
-                              color: theme.palette.primary.main,
-                            }}
-                            onClick={() => {
-                              setSnackInfoMensaje(
-                                "Ya has enviado una opinión a este médico."
-                              );
-                              setSnackInfo(true);
-                            }}
-                          />
-                        ) : (
-                          <EditIcon
-                            sx={{
-                              color: theme.palette.primary.main,
-                            }}
-                            variant="contained"
-                            onClick={() => handleOpenModal(item.id)}
-                          />
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Button
-                          startIcon={
-                            <DeleteIcon
+          {!informacionData.length ? (
+            <Typography variant="body1" align="center">
+              No hay medicos consultados para mostrar en este momento.
+            </Typography>
+          ) : (
+            <>
+              <TableContainer component={Paper} style={{ maxHeight: 400 }}>
+                <Table stickyHeader>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Médico</TableCell>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Telefono</TableCell>
+                      <TableCell>Ubicación</TableCell>
+                      <TableCell>Precio</TableCell>
+                      <TableCell align="center">Agregar opinion</TableCell>
+                      <TableCell align="center">Eliminar Doctor</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {informacionData.map((item) => (
+                      <TableRow key={item.id}>
+                        <TableCell>
+                          <Box display="flex" alignItems="center">
+                            <Avatar src={item.imagen} alt="img" />
+                            <Typography variant="subtitle1" marginLeft={"10px"}>
+                              {item.nombre + " " + item.apellido}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>{item.email}</TableCell>
+                        <TableCell>{item.telefono}</TableCell>
+                        <TableCell>{item.direccion}</TableCell>
+                        <TableCell>$ {item.precio}</TableCell>
+                        <TableCell align="center">
+                          {opinionsSent[item.id] ? (
+                            <CheckCircle
                               sx={{
                                 color: theme.palette.primary.main,
                               }}
+                              onClick={() => {
+                                setSnackInfoMensaje(
+                                  "Ya has enviado una opinión a este médico."
+                                );
+                                setSnackInfo(true);
+                              }}
                             />
-                          }
-                          onClick={() => {
-                            handleDelete(item.idCita);
-                            setAppointments(
-                              appointments.filter(
-                                (item) => item.Cita[0].id !== item.idCita
-                              )
-                            );
-                          }}
-                        ></Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
+                          ) : (
+                            <EditIcon
+                              sx={{
+                                color: theme.palette.primary.main,
+                              }}
+                              variant="contained"
+                              onClick={() => handleOpenModal(item.id)}
+                            />
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Button
+                            startIcon={
+                              <DeleteIcon
+                                sx={{
+                                  color: theme.palette.primary.main,
+                                }}
+                              />
+                            }
+                            onClick={() => {
+                              handleDelete(item.idCita);
+                              setAppointments(
+                                appointments.filter(
+                                  (item) => item.Cita[0].id !== item.idCita
+                                )
+                              );
+                            }}
+                          ></Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
 
-            <Modal open={openModal} onClose={handleCloseModal}>
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  width: 400,
-                  bgcolor: "background.paper",
-                  border: "2px solid #000",
-                  boxShadow: 24,
-                  p: 4,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <Paper
-                  elevation={0}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    height: 30,
-                    pl: 2,
-                    bgcolor: theme.palette.primary.main,
-                    borderRadius: "10px",
-                    p: "25px",
-                    width: "100%",
-                  }}
-                >
-                  {informacion.map((item) => {
-                    if (item.id === selectedId) {
-                      return <Avatar src={item.imagen}></Avatar>;
-                    }
-                  })}
-                  {informacion.map((item) => {
-                    if (item.id === selectedId) {
-                      return (
-                        <Typography
-                          sx={{
-                            color: "white",
-                            pl: "30px",
-                          }}
-                        >
-                          {item.nombre + " " + item.apellido}
-                        </Typography>
-                      );
-                    }
-                  })}
-                </Paper>
-                <Rating
-                  sx={{
-                    color: theme.palette.primary.main,
-                    mt: "20px",
-                    mb: "20px",
-                  }}
-                  name="rating"
-                  value={opinionText.rating}
-                  onChange={(event, newValue) =>
-                    setOpinionText((prevOpinionText) => ({
-                      ...prevOpinionText,
-                      rating: newValue,
-                    }))
-                  }
-                />
+                <Modal open={openModal} onClose={handleCloseModal}>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: 400,
+                      bgcolor: "background.paper",
+                      border: "2px solid #000",
+                      boxShadow: 24,
+                      p: 4,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        height: 30,
+                        pl: 2,
+                        bgcolor: theme.palette.primary.main,
+                        borderRadius: "10px",
+                        p: "25px",
+                        width: "100%",
+                      }}
+                    >
+                      {informacion.map((item) => {
+                        if (item.id === selectedId) {
+                          return <Avatar src={item.imagen}></Avatar>;
+                        }
+                      })}
+                      {informacion.map((item) => {
+                        if (item.id === selectedId) {
+                          return (
+                            <Typography
+                              sx={{
+                                color: "white",
+                                pl: "30px",
+                              }}
+                            >
+                              {item.nombre + " " + item.apellido}
+                            </Typography>
+                          );
+                        }
+                      })}
+                    </Paper>
+                    <Rating
+                      sx={{
+                        color: theme.palette.primary.main,
+                        mt: "20px",
+                        mb: "20px",
+                      }}
+                      name="rating"
+                      value={opinionText.rating}
+                      onChange={(event, newValue) =>
+                        setOpinionText((prevOpinionText) => ({
+                          ...prevOpinionText,
+                          rating: newValue,
+                        }))
+                      }
+                    />
 
-                <TextField
-                  label="Opinión"
-                  multiline
-                  rows={4}
-                  value={opinionText.opinion}
-                  onChange={(e) =>
-                    setOpinionText((prevOpinionText) => ({
-                      ...prevOpinionText,
-                      opinion: e.target.value,
-                    }))
-                  }
-                  fullWidth
-                />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  onClick={handleAddOpinion}
-                  style={{
-                    padding: "8px",
-                    margin: "20px",
-                    color: "white",
-                    backgroundColor: theme.palette.primary.main,
-                    borderRadius: "10px",
+                    <TextField
+                      label="Opinión"
+                      multiline
+                      rows={4}
+                      value={opinionText.opinion}
+                      onChange={(e) =>
+                        setOpinionText((prevOpinionText) => ({
+                          ...prevOpinionText,
+                          opinion: e.target.value,
+                        }))
+                      }
+                      fullWidth
+                    />
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      onClick={handleAddOpinion}
+                      style={{
+                        padding: "8px",
+                        margin: "20px",
+                        color: "white",
+                        backgroundColor: theme.palette.primary.main,
+                        borderRadius: "10px",
+                      }}
+                    >
+                      Agregar opinion
+                    </Button>
+                  </Box>
+                </Modal>
+                <Snackbar
+                  open={snackOk}
+                  autoHideDuration={2500}
+                  onClose={() => {
+                    setSnackOk(false);
+                    setSnackOkMensaje("");
                   }}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
                 >
-                  Agregar opinion
-                </Button>
-              </Box>
-            </Modal>
-            <Snackbar
-              open={snackOk}
-              autoHideDuration={2500}
-              onClose={() => {
-                setSnackOk(false);
-                setSnackOkMensaje("");
-              }}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert severity="success" variant="filled">
-                <AlertTitle>Mensaje Exitoso</AlertTitle>
-                {snackOkMensaje}
-              </Alert>
-            </Snackbar>
-            <Snackbar
-              open={snackFail}
-              autoHideDuration={2500}
-              onClose={() => {
-                setSnackFail(false);
-                setSnackFailMensaje("");
-              }}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert severity="error" variant="filled">
-                <AlertTitle>Mensaje de Error</AlertTitle>
-                {snackFailMensaje}
-              </Alert>
-            </Snackbar>
-            <Snackbar
-              open={snackInfo}
-              autoHideDuration={2500}
-              onClose={() => {
-                setSnackInfo(false);
-                setSnackInfoMensaje("");
-              }}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert severity="info" variant="filled">
-                <AlertTitle>Mensaje de Informacion</AlertTitle>
-                {snackInfoMensaje}
-              </Alert>
-            </Snackbar>
-          </TableContainer>
+                  <Alert severity="success" variant="filled">
+                    <AlertTitle>Mensaje Exitoso</AlertTitle>
+                    {snackOkMensaje}
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={snackFail}
+                  autoHideDuration={2500}
+                  onClose={() => {
+                    setSnackFail(false);
+                    setSnackFailMensaje("");
+                  }}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Alert severity="error" variant="filled">
+                    <AlertTitle>Mensaje de Error</AlertTitle>
+                    {snackFailMensaje}
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={snackInfo}
+                  autoHideDuration={2500}
+                  onClose={() => {
+                    setSnackInfo(false);
+                    setSnackInfoMensaje("");
+                  }}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Alert severity="info" variant="filled">
+                    <AlertTitle>Mensaje de Informacion</AlertTitle>
+                    {snackInfoMensaje}
+                  </Alert>
+                </Snackbar>
+              </TableContainer>
+            </>
+          )}
         </>
       )}
     </>
