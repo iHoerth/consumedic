@@ -81,8 +81,9 @@ const ContextProvider = ({ children }) => {
           ...prevState,
           doctorDetail: data,
         }));
+        return data;
       } catch (error) {
-        console.log(error);
+        throw error
       }
     },
 
