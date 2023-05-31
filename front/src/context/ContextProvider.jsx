@@ -139,26 +139,7 @@ const ContextProvider = ({ children }) => {
       try {
         const data = (await axios.post(`${URL_DOCTORS}`, newDoctor)).data;
         const response = (await axios(`${URL_DOCTORS}/${data.id}`)).data;
-        console.log(' DATOS SESION ',session);
-
-        // if (!session.email) {
-        //   const sessionData = await doctorsData.loginDoctor(newDoctor);
-        // }
-
-        //?
-        // const sessionData = (await axios.post(`${URL_DOCTORS}/loginDoctor`, newDoctor)).data;
-        // console.log(sessionData);
-        // const doctorData = await doctorsData.fetchDoctorByEmail(newDoctor.email);
-        // console.log(doctorData);
-        // setSession({
-        //   ...sessionData,
-        //   email: newDoctor.email,
-        //   nombre: newDoctor.nombre,
-        //   apellido: newDoctor.apellido,
-        // });
-        // console.log({ sessionData, doctorData });
-        //?
-
+    
         setDoctorsData((prevState) => ({
           ...prevState,
           doctorDetail: { ...response },
@@ -369,6 +350,7 @@ const ContextProvider = ({ children }) => {
     createPatient: async (newPatient) => {
       try {
         const data = (await axios.post(`${URL_PATIENTS}`, newPatient)).data;
+
         setPatientsData((prevState) => ({
           ...prevState,
           patientDetail: { ...data },
@@ -380,6 +362,7 @@ const ContextProvider = ({ children }) => {
           snackFail: true,
           snackFailMensaje: error.response.data.message,
         }));
+        throw error
       }
     },
 

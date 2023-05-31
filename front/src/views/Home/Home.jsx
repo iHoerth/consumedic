@@ -65,7 +65,7 @@ const Home = () => {
           <Loading />
         </>
       </Modal>
-      <NavBar />
+      <NavBar variant='scorlleable'/>
       <Box
         component="div"
         sx={{

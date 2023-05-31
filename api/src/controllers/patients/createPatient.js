@@ -12,6 +12,14 @@ const createPatient = async (
 ) => {
   const newObraSocial = await ObraSocial.findByPk(idObraSocial);
 
+  const patientExists = await PacienteType.findOne({
+    where: {
+      email: email,
+    },
+  });
+
+  if(patientExists) throw new Error (`Ya existe un paciente registrado con ese email.`)
+
   const newPatient = await PacienteType.create({
     dni,
     email,
