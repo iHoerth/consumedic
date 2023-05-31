@@ -95,16 +95,18 @@ const MyDates = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {informacionData.map((row) => (
-                    <TableRow key={row.id}>
-                      <TableCell>{row.fecha}</TableCell>
-                      <TableCell>{row.hora}</TableCell>
-                      <TableCell>{row.nombre + " " + row.apellido}</TableCell>
-                      <TableCell>{row.especialidad}</TableCell>
-                      <TableCell>{row.descripcion}</TableCell>
-                      <TableCell>{row.respuestaMedico}</TableCell>
-                    </TableRow>
-                  ))}
+                  {informacionData
+                    .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+                    .map((row) => (
+                      <TableRow key={row.id}>
+                        <TableCell>{row.fecha}</TableCell>
+                        <TableCell>{row.hora}</TableCell>
+                        <TableCell>{row.nombre + " " + row.apellido}</TableCell>
+                        <TableCell>{row.especialidad}</TableCell>
+                        <TableCell>{row.descripcion}</TableCell>
+                        <TableCell>{row.respuestaMedico}</TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             )}

@@ -56,9 +56,9 @@ const MyOpinions = () => {
           </Box>
 
           {!opinions.length ? (
-            <>
-              <Skeleton>No hay registros para mostrar</Skeleton>
-            </>
+            <Typography variant="body1" align="center">
+              No hay opiniones para mostrar
+            </Typography>
           ) : (
             <>
               <TableContainer component={Paper} style={{ maxHeight: 400 }}>
@@ -73,26 +73,28 @@ const MyOpinions = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {opinions.reverse().map((row) => (
-                      <TableRow key={row.id}>
-                        <TableCell>
-                          {row.DoctorType.nombre +
-                            " " +
-                            row.DoctorType.apellido}
-                        </TableCell>
-                        <TableCell>{row.ubicacion}</TableCell>
-                        <TableCell>{row.fecha}</TableCell>
-                        <TableCell>{row.mensaje}</TableCell>
-                        <TableCell>
-                          <Rating
-                            name="stars"
-                            sx={{ color: theme.palette.primary.main }}
-                            value={row.puntaje}
-                            readOnly
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    {opinions
+                      .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+                      .map((row) => (
+                        <TableRow key={row.id}>
+                          <TableCell>
+                            {row.DoctorType.nombre +
+                              " " +
+                              row.DoctorType.apellido}
+                          </TableCell>
+                          <TableCell>{row.ubicacion}</TableCell>
+                          <TableCell>{row.fecha}</TableCell>
+                          <TableCell>{row.mensaje}</TableCell>
+                          <TableCell>
+                            <Rating
+                              name="stars"
+                              sx={{ color: theme.palette.primary.main }}
+                              value={row.puntaje}
+                              readOnly
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
                   </TableBody>
                 </Table>
               </TableContainer>

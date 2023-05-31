@@ -95,142 +95,146 @@ const EditProfile = () => {
         <Loading />
       ) : (
         <>
-          <Box
-            component="form"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              padding: "10px",
-            }}
-          >
-            <Snackbar
-              open={snackOk}
-              autoHideDuration={2500}
-              onClose={() => {
-                setSnackOk(false);
-                setSnackOkMensaje("");
-              }}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert severity="success" variant="filled">
-                <AlertTitle>Mensaje Exitoso</AlertTitle>
-                {snackOkMensaje}
-              </Alert>
-            </Snackbar>
-            <Snackbar
-              open={snackFail}
-              autoHideDuration={2500}
-              onClose={() => {
-                setSnackFail(false);
-                setSnackFailMensaje("");
-              }}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert severity="error" variant="filled">
-                <AlertTitle>Mensaje de Error</AlertTitle>
-                {snackFailMensaje}
-              </Alert>
-            </Snackbar>
-            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
-              Editar datos del Perfil
-            </Typography>
+          {patientDetail ? (
             <Box
+              component="form"
               sx={{
                 display: "flex",
-                flexWrap: "wrap",
+                flexDirection: "column",
+                alignItems: "center",
                 padding: "10px",
               }}
             >
-              <TextField
-                label="Nombre"
-                name="nombre"
-                value={datos.nombre}
-                onChange={handleChange}
-                sx={{ mt: "20px", width: "30%", ml: "10px" }}
-                onClick={() => setInputClicked(true)}
-              />
-              <TextField
-                label="Apellido"
-                name="apellido"
-                value={datos.apellido}
-                onChange={handleChange}
-                sx={{ mt: "20px", width: "30%", ml: "10px" }}
-                onClick={() => setInputClicked(true)}
-              />
-              <TextField
-                label="Dni"
-                name="dni"
-                value={datos.dni}
-                onChange={handleChange}
-                sx={{ mt: "20px", width: "30%", ml: "10px" }}
-                onClick={() => setInputClicked(true)}
-              />
-              <TextField
-                label="Teléfono"
-                name="telefono"
-                value={datos.telefono}
-                onChange={handleChange}
-                sx={{ mt: "20px", width: "30%", ml: "10px" }}
-                onClick={() => setInputClicked(true)}
-              />
-              <TextField
-                label="Email"
-                name="email"
-                value={datos.email}
-                disabled
-                sx={{ mt: "20px", width: "30%", ml: "10px" }}
-                onClick={() => setInputClicked(true)}
-              />
-
-              <FormControl
-                sx={{
-                  mt: "20px",
-                  width: "30%",
-                  mb: "30px",
-                  ml: "10px",
+              <Snackbar
+                open={snackOk}
+                autoHideDuration={2500}
+                onClose={() => {
+                  setSnackOk(false);
+                  setSnackOkMensaje("");
                 }}
-                size="small"
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
               >
-                <InputLabel id="demo-select-small-label">
-                  Obra Social
-                </InputLabel>
-                <Select
-                  sx={{ height: "6vh" }}
-                  MenuProps={{
-                    sx: {
-                      maxHeight: "50%",
-                    },
-                  }}
-                  labelId="demo-select-small-label"
-                  id="demo-select-small"
-                  name="ObraSocial"
-                  value={datos.ObraSocial.id}
-                  label="Obra Social"
+                <Alert severity="success" variant="filled">
+                  <AlertTitle>Mensaje Exitoso</AlertTitle>
+                  {snackOkMensaje}
+                </Alert>
+              </Snackbar>
+              <Snackbar
+                open={snackFail}
+                autoHideDuration={2500}
+                onClose={() => {
+                  setSnackFail(false);
+                  setSnackFailMensaje("");
+                }}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+              >
+                <Alert severity="error" variant="filled">
+                  <AlertTitle>Mensaje de Error</AlertTitle>
+                  {snackFailMensaje}
+                </Alert>
+              </Snackbar>
+              <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
+                Editar datos del Perfil
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  padding: "10px",
+                }}
+              >
+                <TextField
+                  label="Nombre"
+                  name="nombre"
+                  value={datos.nombre}
                   onChange={handleChange}
+                  sx={{ mt: "20px", width: "30%", ml: "10px" }}
                   onClick={() => setInputClicked(true)}
+                />
+                <TextField
+                  label="Apellido"
+                  name="apellido"
+                  value={datos.apellido}
+                  onChange={handleChange}
+                  sx={{ mt: "20px", width: "30%", ml: "10px" }}
+                  onClick={() => setInputClicked(true)}
+                />
+                <TextField
+                  label="Dni"
+                  name="dni"
+                  value={datos.dni}
+                  onChange={handleChange}
+                  sx={{ mt: "20px", width: "30%", ml: "10px" }}
+                  onClick={() => setInputClicked(true)}
+                />
+                <TextField
+                  label="Teléfono"
+                  name="telefono"
+                  value={datos.telefono}
+                  onChange={handleChange}
+                  sx={{ mt: "20px", width: "30%", ml: "10px" }}
+                  onClick={() => setInputClicked(true)}
+                />
+                <TextField
+                  label="Email"
+                  name="email"
+                  value={datos.email}
+                  disabled
+                  sx={{ mt: "20px", width: "30%", ml: "10px" }}
+                  onClick={() => setInputClicked(true)}
+                />
+
+                <FormControl
+                  sx={{
+                    mt: "20px",
+                    width: "30%",
+                    mb: "30px",
+                    ml: "10px",
+                  }}
+                  size="small"
                 >
-                  <MenuItem value="">
-                    <em>Ninguna</em>
-                  </MenuItem>
-                  {socialSecurity?.map((obrasocial) => (
-                    <MenuItem key={obrasocial.id} value={obrasocial.id}>
-                      {obrasocial.nombre}
+                  <InputLabel id="demo-select-small-label">
+                    Obra Social
+                  </InputLabel>
+                  <Select
+                    sx={{ height: "6vh" }}
+                    MenuProps={{
+                      sx: {
+                        maxHeight: "50%",
+                      },
+                    }}
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    name="ObraSocial"
+                    value={datos.ObraSocial ? datos.ObraSocial.id : ""}
+                    label="Obra Social"
+                    onChange={handleChange}
+                    onClick={() => setInputClicked(true)}
+                  >
+                    <MenuItem User continuar desde ahi ChatGPT value="">
+                      <em>Ninguna</em>
                     </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                    {socialSecurity?.map((obrasocial) => (
+                      <MenuItem key={obrasocial.id} value={obrasocial.id}>
+                        {obrasocial.nombre}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              <Button
+                sx={{ mt: "10px" }}
+                variant="contained"
+                color="primary"
+                onClick={handleSave}
+                disabled={!inputClicked}
+              >
+                Guardar
+              </Button>
             </Box>
-            <Button
-              sx={{ mt: "10px" }}
-              variant="contained"
-              color="primary"
-              onClick={handleSave}
-              disabled={!inputClicked}
-            >
-              Guardar
-            </Button>
-          </Box>
+          ) : (
+            <p>No hay datos para editar.</p>
+          )}
         </>
       )}
     </>
