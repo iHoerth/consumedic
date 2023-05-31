@@ -68,12 +68,12 @@ import Loading from "../../components/Loading/Loading";
 
 const PatientPanel = () => {
   const { session } = useContext(Context)[2];
-  const { fetchPatientByEmail, patientDetail } = useContext(Context)[1];
+  const { fetchPatientByEmail, patientDetail, getOpinionsByPaciente } =
+    useContext(Context)[1];
   const [loading, setLoading] = useState(true);
   const [dataLoaded, setDataLoaded] = useState(false); // Variable de estado adicional
 
   const { fetchPatientData } = useContext(Context)[5];
-  const { getOpinionsByPaciente } = useContext(Context)[1];
 
   useEffect(() => {
     setLoading(true);
@@ -91,8 +91,9 @@ const PatientPanel = () => {
     }
   }, [patientDetail.id]);
 
-  console.log(patientDetail, "paciente ");
-  console.log(patientDetail.id, "paciente.id ");
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>

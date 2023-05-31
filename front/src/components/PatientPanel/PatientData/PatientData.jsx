@@ -30,6 +30,17 @@ const PatientData = () => {
     setVista(index);
   };
 
+  useEffect(() => {
+    //
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <Stack
       direction="row"

@@ -28,10 +28,13 @@ const MyOpinions = () => {
   const theme = useTheme();
 
   useEffect(() => {
-    setLoading(true);
-    fetchPatientByEmail(session.email);
-    getOpinionsByPaciente(patientDetail.id);
-    setLoading(false);
+    const fetchData = async () => {
+      await fetchPatientByEmail(session.email);
+      await getOpinionsByPaciente(patientDetail.id);
+      setLoading(false);
+    };
+
+    fetchData();
   }, [patientDetail.id, session.email]);
 
   return (
