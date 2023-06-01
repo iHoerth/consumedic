@@ -226,23 +226,29 @@ const CreatePatient = () => {
           sx={{
             display: 'flex',
             justifycontent: 'space-between',
-            alignItems: 'center',
+            flexWrap: 'wrap',
             flexDirection: 'column',
-            minWidth: '300px',
-            width: '500px',
+            // minWidth: '300px',
+            width: {
+              mobile: '80%',
+              tablet: '80%',
+              laptop: '80%',
+              desktop: '80%',
+            },
             padding: '10px',
-            marginTop: '10%',
-            marginBottom: '3%',
+            marginTop: '200px',
+            // marginBottom: '3%',
           }}
         >
           <form onSubmit={handleSubmit}>
             <FormControl
               variant="outlined"
-              sx={{
-                minWidth: '300px',
-                marginBottom: '10%',
-              }}
+              fullWidth
               required
+              sx={{
+                // backgroundColor:'#000',
+                // position: 'relative'
+              }}
             >
               <Typography
                 variant="h6"
@@ -261,7 +267,16 @@ const CreatePatient = () => {
                 value={form.nombre}
                 name="nombre"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: '110px', width: '400px' }}
+                sx={{
+                  margin:'auto',
+                  height: '110px',
+                  width: {
+                    mobile: '90%',
+                    tablet: '80%',
+                    laptop: '80%',
+                    desktop: '80%',
+                  },
+                }}
                 helperText={
                   error.nombre ? <Typography color="error">{error.nombre}</Typography> : ''
                 }
@@ -277,7 +292,16 @@ const CreatePatient = () => {
                 value={form.apellido}
                 name="apellido"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: '110px', width: '400px' }}
+                sx={{
+                  margin:'auto',
+                  height: '110px',
+                  width: {
+                    mobile: '90%',
+                    tablet: '80%',
+                    laptop: '80%',
+                    desktop: '80%',
+                  },
+                }}
                 helperText={
                   error.apellido ? <Typography color="error">{error.apellido}</Typography> : ''
                 }
@@ -293,7 +317,16 @@ const CreatePatient = () => {
                 value={form.email}
                 name="email"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: '110px', width: '400px' }}
+                sx={{
+                  margin:'auto',
+                  height: '110px',
+                  width: {
+                    mobile: '90%',
+                    tablet: '80%',
+                    laptop: '80%',
+                    desktop: '80%',
+                  },
+                }}
                 helperText={
                   error.email ? (
                     <Typography color="error">{error.email}</Typography>
@@ -315,7 +348,16 @@ const CreatePatient = () => {
                 value={form.telefono}
                 name="telefono"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: '110px', width: '400px' }}
+                sx={{
+                  margin:'auto',
+                  height: '110px',
+                  width: {
+                    mobile: '90%',
+                    tablet: '80%',
+                    laptop: '80%',
+                    desktop: '80%',
+                  },
+                }}
                 helperText={
                   error.telefono ? <Typography color="error">{error.telefono}</Typography> : ''
                 }
@@ -324,7 +366,16 @@ const CreatePatient = () => {
 
               {/* Obra Social */}
 
-              <FormControl sx={{ minWidth: 200, height: '100px' }}>
+              <FormControl  sx={{
+                  margin:'auto',
+                  height: '110px',
+                  width: {
+                    mobile: '90%',
+                    tablet: '80%',
+                    laptop: '80%',
+                    desktop: '80%',
+                  },
+                }}>
                 <InputLabel id="obra-social-label" color="secondary">
                   Obra Social
                 </InputLabel>
@@ -365,7 +416,16 @@ const CreatePatient = () => {
                 value={form.dni}
                 name="dni"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: '110px', width: '400px' }}
+                sx={{
+                  margin:'auto',
+                  height: '110px',
+                  width: {
+                    mobile: '90%',
+                    tablet: '80%',
+                    laptop: '80%',
+                    desktop: '80%',
+                  },
+                }}
                 helperText={error.dni ? <Typography color="error">{error.dni}</Typography> : ''}
                 required
               />
@@ -380,7 +440,16 @@ const CreatePatient = () => {
                 value={form.password}
                 name="password"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: '110px', width: '400px' }}
+                sx={{
+                  margin:'auto',
+                  height: '110px',
+                  width: {
+                    mobile: '90%',
+                    tablet: '80%',
+                    laptop: '80%',
+                    desktop: '80%',
+                  },
+                }}
                 helperText={
                   error.password ? <Typography color="error">{error.password}</Typography> : ''
                 }
@@ -397,7 +466,16 @@ const CreatePatient = () => {
                 value={form.confirmPassword}
                 name="confirmPassword"
                 onChange={(event) => handleFormChange(event)}
-                sx={{ height: '110px', width: '400px' }}
+                sx={{
+                  margin:'auto',
+                  height: '110px',
+                  width: {
+                    mobile: '90%',
+                    tablet: '80%',
+                    laptop: '80%',
+                    desktop: '80%',
+                  },
+                }}
                 helperText={
                   error.confirmPassword ? (
                     <Typography color="error">{error.confirmPassword}</Typography>
@@ -408,7 +486,16 @@ const CreatePatient = () => {
                 required
               />
 
-              <Typography>
+              <Typography  sx={{
+                  margin:'auto',
+                  height: '110px',
+                  width: {
+                    mobile: '70%',
+                    tablet: '80%',
+                    laptop: '80%',
+                    desktop: '80%',
+                  },
+                }}>
                 Mostrar contraseñas
                 <Checkbox
                   checked={showPassword}
@@ -421,7 +508,18 @@ const CreatePatient = () => {
               <br />
               <br />
               <Button
-                sx={{ marginBottom: '10px' }}
+                 sx={{
+                  marginTop:'-70px',
+                  marginRight:'auto',
+                  marginLeft:'auto',
+                  // height: '110px',
+                  width: {
+                    mobile: '60%',
+                    tablet: '80%',
+                    laptop: '80%',
+                    desktop: '80%',
+                  },
+                }}
                 variant="contained"
                 color="primary"
                 type="submit"
@@ -431,8 +529,8 @@ const CreatePatient = () => {
             </FormControl>
           </form>
         </Container>
-        <Footer />
       </Box>
+      <Footer></Footer>
     </>
   );
 };
