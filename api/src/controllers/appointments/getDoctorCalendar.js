@@ -24,7 +24,7 @@ const getDoctorCalendar = async (idDoctor) => {
       let mm = today.getMonth() + 1;
       if (mm < 10) mm = `0${mm}`;
       let dd = today.getDate();
-      if (dd<10) dd = `0${dd}`;
+      
       let dayOfWeek = daysOfWeek[today.getDay()];
       if (agenda[i].atiende === 'si') {
         let horaInicio = agenda[i].horario_inicio;
