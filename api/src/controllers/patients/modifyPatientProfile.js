@@ -8,6 +8,7 @@ const modifyPatientProfile = async ({
   nombre,
   apellido,
   ObraSocialId,
+  status,
 }) => {
   let patient = await PacienteType.findByPk(id);
 
@@ -19,6 +20,7 @@ const modifyPatientProfile = async ({
       nombre,
       apellido,
       ObraSocialId,
+      status,
     });
     return newPatient;
   } else {

@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from '../../components/NavBar/NavBar';
 import Footer from '../../components/Footer/Footer';
 import Loading from '../../components/Loading/Loading';
-import { useTheme } from '@mui/material';
+import { Card, Modal, useTheme } from '@mui/material';
 import { useState, useContext, useEffect } from 'react';
 import { Context } from '../../context/ContextProvider';
 import Container from '@mui/material/Container';
@@ -21,33 +21,58 @@ const Admin = () => {
   const theme = useTheme();
   const { vista, setVista } = useContext(Context)[6];
   const { session } = useContext(Context)[2];
-  const { fetchPatientByEmail, patientDetail, getOpinionsByPaciente } = useContext(Context)[1];
+  const { fetchPatientByEmail, patientDetail, getOpinionsByPaciente, modifyPatientProfiler } =
+    useContext(Context)[1];
   const [dataLoaded, setDataLoaded] = useState(false); // Variable de estado adicional
   const { fetchPatientData } = useContext(Context)[5];
   const [loading, setLoading] = useState(true);
-  const [values, setValues] = useState([  ]);
+  const [values, setValues] = useState([]);
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    console.log(' USE EFFECT ');
-
-    if (patientDetail.status === 'incomplete') {
-      setVista(2);
-      //openModal !
+    if (patientDetail?.status === 'incomplete') {
+      setModalOpen(true);
+    } else {
+      setModalOpen(false);
     }
 
-    const newValues = Object.values(patientDetail);
+    const fields = {
+      id: patientDetail.id,
+      nombre: patientDetail.nombre,
+      apellido: patientDetail.apellido,
+      dni: patientDetail.dni,
+      email: patientDetail.email,
+      telefono: patientDetail.telefono,
+      ObraSocial: patientDetail.ObraSocial?.nombre || '',
+    };
+
+    const newValues = Object.values(fields);
     setValues(newValues);
-    console.log(values);
     const allFieldsCompleted = values && values.every((value) => Boolean(value));
-    allFieldsCompleted
-      ? console.log('put paciente status active')
-      : console.log('warning Debes completar todos los campos');
-  }, [patientDetail]);
+    if (allFieldsCompleted) {
+      fields.status = 'active';
+      console.log(fields);
+      modifyPatientProfiler(fields)
+        .then((res) => {
+          console.log('MODIFICADO CRACK')
+          setModalOpen(false)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+    }
+  }, [loading, patientDetail?.status]);
 
   useEffect(() => {
     setLoading(true);
     session.email && fetchPatientByEmail(session.email).then(() => setLoading(false));
   }, [session.email]);
+
+  useEffect(() => {
+    fetchPatientByEmail(session.email)
+  }, [vista])
 
   useEffect(() => {
     if (patientDetail.id) {
@@ -70,8 +95,27 @@ const Admin = () => {
     return <Loading />;
   }
 
+  const handleClose = () => setModalOpen(false);
+
   return (
     <>
+      <Modal open={modalOpen}>
+        <Box
+          sx={{
+            position: 'absolute',
+            width: '60%',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            outline: 'none',
+          }}
+        >
+          <EditProfile status={'incomplete'} modal={modalOpen} handleClose={handleClose} />
+        </Box>
+      </Modal>
       <NavBar variant="block" />
       <Container maxWidth="sm" sx={{ mt: '140px', mb: '40px', borderRadius: '5px' }}>
         <Box sx={{ height: '107vh' }}>
