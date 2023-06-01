@@ -121,7 +121,7 @@ const DetalleDoctor = () => {
               <KeyIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText secondary="password" primary="****************" />
+          <ListItemText secondary="Contraseña" primary="****************" />
         </ListItem>
 
         <ListItem>
@@ -130,7 +130,14 @@ const DetalleDoctor = () => {
               <QuestionMarkIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText secondary="admin?" primary={`${doctorDetail.admin}`} />
+          <ListItemText
+            secondary="Estado"
+            primary={
+              doctorDetail.deletedAt === null
+                ? "Activo"
+                : `Desactivado ${doctorDetail.deletedAt}`
+            }
+          />
         </ListItem>
 
         <ListItem>
@@ -179,6 +186,8 @@ const DetalleDoctor = () => {
         <Button
           id={doctorDetail.id}
           variant="outlined"
+          color="warning"
+          size="small"
           onClick={() => {
             handleClickDelete(doctorDetail.id);
             setVista(doctorDetail.deletedAt === null ? 2 : 4);
