@@ -26,6 +26,7 @@ const MyOpinions = () => {
   const { session } = useContext(Context)[2];
   const [loading, setLoading] = useState(true);
   const theme = useTheme();
+  const { values } = theme.breakpoints;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +62,21 @@ const MyOpinions = () => {
             </Typography>
           ) : (
             <>
-              <TableContainer component={Paper} style={{ maxHeight: 400 }}>
+              <TableContainer component={Paper}
+                sx={{
+                  width: {
+                    desktop: '100%',
+                    laptop: '99.5%',
+                    tablet: '99.5%',
+                    mobile: '99.5%',
+                  },
+                  height: {
+                    desktop: '80%',
+                    laptop: '100%',
+                    tablet: '100%',
+                    mobile: '130%',
+                  }
+                }}>
                 <Table stickyHeader>
                   <TableHead>
                     <TableRow>

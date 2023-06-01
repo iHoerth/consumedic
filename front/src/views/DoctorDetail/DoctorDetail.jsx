@@ -70,6 +70,8 @@ const DoctorDetail = () => {
   const [open, setOpen] = useState(false);
   const { id } = useParams();
 
+  const { values } = theme.breakpoints;
+
   useEffect(() => {
     setLoading(true);
     fetchDoctorById(id).then(() => {
@@ -122,10 +124,23 @@ const DoctorDetail = () => {
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
           position: "relative",
-          width: "100%",
+          width: {
+            mobile: 'column',
+            tablet: 'column',
+            laptop: 'column',
+            desktop: '99.5%',
+          },
           height: "100%",
           display: "flex",
-          flexDirection: "column",
+          margin: 'auto',
+          alignContent: 'center',
+          justifyContent: 'center',
+          flexDirection: {
+            mobile: 'column',
+            tablet: 'column',
+            laptop: 'column',
+            desktop: 'column',
+          },
           alignItems: "center",
           "@media (max-width: 600px)": {
             height: {
@@ -173,11 +188,13 @@ const DoctorDetail = () => {
             marginTop: "150px",
             padding: "20px",
             borderRadius: "15px",
+            border: '2px solid red'
           }}
         >
           <Box
             sx={{
               display: "flex",
+              border: '2px solid',
               flexDirection: "column",
               marginRight: "20px",
             }}
@@ -189,7 +206,12 @@ const DoctorDetail = () => {
                 alignItems: "center",
                 borderRadius: "5px",
                 backgroundColor: "white",
-                padding: "20px",
+                padding: "20px", width: {
+                  mobile: '99.5%',
+                  tablet: '99.5%',
+                  laptop: '99.5%',
+                  desktop: values.desktop,
+                },
               }}
             >
               <IconButton sx={{ p: 2 }}>
@@ -197,19 +219,37 @@ const DoctorDetail = () => {
                   alt="img"
                   src={doctorDetail.imagen}
                   sx={{
-                    width: 200,
-                    height: 200,
+                    width: {
+                      mobile: 80,
+                      tablet: 150,
+                      laptop: 200,
+                      desktop: 200,
+                    },
+                    height: {
+                      mobile: 80,
+                      tablet: 150,
+                      laptop: 200,
+                      desktop: 200,
+                    }
                   }}
                 />
               </IconButton>
 
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  backgroundColor: "white",
-                  pl: "20px",
+                 
+                  // height: {
+                  //   mobile: '90%',
+                  //   tablet: '60%',
+                  //   laptop: '60%',
+                  //   desktop: '50%',
+                  // },
+                  // margin: {
+                  //   mobile: 'auto',
+                  //   tablet: 'auto 2px',
+                  //   laptop: 'auto ',
+                  //   desktop: 'auto 5px',
+                  // }
                 }}
               >
                 <CardHeader
@@ -234,7 +274,7 @@ const DoctorDetail = () => {
                   {doctorDetail.Descripcion}
                 </Typography>
                 <Stack
-                  direction="row"
+                  direction="column"
                   alignItems="center"
                   sx={{ paddingBottom: "20px", paddingTop: "10px" }}
                   spacing={1}
@@ -252,19 +292,20 @@ const DoctorDetail = () => {
                       doctorDetail.Opinions?.length}{" "}
                     Opiniones
                   </Typography>
+
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    size="md"
+                    //onClick={() => setModal(true)}   //open={modal}
+                    onClick={handleOpen}
+                  >
+                    <SmsIcon color="primary" />
+                    <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
+                      Enviar mensaje
+                    </Typography>
+                  </Button>
                 </Stack>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  size="md"
-                  //onClick={() => setModal(true)}   //open={modal}
-                  onClick={handleOpen}
-                >
-                  <SmsIcon color="primary" />
-                  <Typography variant="body2" color="primary" sx={{ pl: 1 }}>
-                    Enviar mensaje
-                  </Typography>
-                </Button>
                 <Modal onClose={handleClose} open={open}>
                   <Box
                     sx={{
@@ -285,81 +326,142 @@ const DoctorDetail = () => {
               </Box>
             </Box>
 
-            <CardContent
-              sx={{ backgroundColor: "white", borderRadius: "5px", mt: "10px" }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "flex-end",
-                  justifyContent: "space-around",
-                  backgroundColor: "white",
-                  pb: "20px",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "block",
-                    mt: "30px",
-                    mr: "15px",
-                    ml: "5px",
-                  }}
-                >
-                  <Card sx={{ minWidth: 275 }}>
-                    <CardContent>
-                      <Typography
-                        style={{
-                          fontSize: "15px",
-                          fontWeight: "600",
-                          backgroundColor: theme.palette.primary.main,
-                          padding: "4px",
-                          borderRadius: "4px",
-                        }}
-                        component="div"
-                        color="white"
-                      >
-                        Contactos
-                      </Typography>
+            <Container
+              sx={{
+                display: 'flex',
+                flexDirection: {
+                  mobile: 'column',
+                  tablet: 'column',
+                  laptop: 'row',
+                  desktop: values.desktop,
+                },
+                justifyContent: 'space-between'
+              }}>
+              <Box sx={{ minWidth: 275, margin: 'auto' }}>
+                <CardContent>
+                  <Typography
+                    sx={{
+                      fontSize: "15px",
+                      fontWeight: "600",
+                      backgroundColor: theme.palette.primary.main,
+                      padding: "4px",
+                      borderRadius: "5px",
+                    }}
+                    component="div"
+                    color="white"
+                  >
+                    Pedir Turno
+                  </Typography>
+                  <Calendar id={id} calendar={doctorDetail.calendar} />
+                </CardContent>
+              </Box>
+              <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-beetwen',
+                alignItems:'center',
+                width: {
+                  mobile: '99.5%',
+                  tablet: '99.5%',
+                  laptop: '50%',
+                  desktop: '45%',
+                },
+                flexDirection: {
+                  mobile: 'column',
+                  tablet: 'column',
+                  laptop: 'row',
+                  desktop: values.desktop,
+                },
+              }}>
+                <Card sx={{
+                  width: {
+                    mobile: '50%',
+                    tablet: '45%',
+                    laptop: '40%',
+                    desktop: '80%',
+                  },
+                  height: {
+                    mobile: '90%',
+                    tablet: '60%',
+                    laptop: '60%',
+                    desktop: '50%',
+                  },
+                  margin: {
+                    mobile: 'auto 12px',
+                    tablet: 'auto 12px',
+                    laptop: 'auto ',
+                    desktop: 'auto 5px',
+                  }
+                }}>
+                  <CardContent>
+                    <Typography
+                      style={{
+                        fontSize: "15px",
+                        fontWeight: "600",
+                        backgroundColor: theme.palette.primary.main,
+                        padding: "4px",
+                        borderRadius: "4px",
+                      }}
+                      component="div"
+                      color="white"
+                    >
+                      Contactos
+                    </Typography>
 
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ p: 1 }}
-                      >
-                        <LocationOnSharpIcon
-                          sx={{ marginRight: "0.5rem" }}
-                          color="primary"
-                        />
-                        {doctorDetail.direccion}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ p: 1 }}
-                      >
-                        <LocalPhoneIcon
-                          sx={{ marginRight: "0.5rem" }}
-                          color="primary"
-                        />
-                        {doctorDetail.telefono}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ p: 1 }}
-                      >
-                        <EmailIcon
-                          sx={{ marginRight: "0.5rem" }}
-                          color="primary"
-                        />
-                        {doctorDetail.email}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Box>
-
-                <Card sx={{ minWidth: 275 }}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ p: 1 }}
+                    >
+                      <LocationOnSharpIcon
+                        sx={{ marginRight: "0.5rem" }}
+                        color="primary"
+                      />
+                      {doctorDetail.direccion}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ p: 1 }}
+                    >
+                      <LocalPhoneIcon
+                        sx={{ marginRight: "0.5rem" }}
+                        color="primary"
+                      />
+                      {doctorDetail.telefono}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ p: 1 }}
+                    >
+                      <EmailIcon
+                        sx={{ marginRight: "0.5rem" }}
+                        color="primary"
+                      />
+                      {doctorDetail.email}
+                    </Typography>
+                  </CardContent>
+                </Card>
+                <Card sx={{
+                  width: {
+                    mobile: '50%',
+                    tablet: '45%',
+                    laptop: '40%',
+                    desktop: '80%',
+                  },
+                  height: {
+                    mobile: '90%',
+                    tablet: '60%',
+                    laptop: '60%',
+                    desktop: '50%',
+                  },
+                  margin: {
+                    mobile: 'auto',
+                    tablet: 'auto 2px',
+                    laptop: 'auto ',
+                    desktop: 'auto 5px',
+                  }
+                }}>
                   <CardContent>
                     <Typography
                       sx={{
@@ -412,9 +514,39 @@ const DoctorDetail = () => {
                     </Typography>
                   </CardContent>
                 </Card>
+              </Box>
+            </Container>
+
+
+
+
+            {/* <CardContent >
+              <Box
+                sx={{
+                  display: "flex",
+                  // flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-around",
+                  pb: "20px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    alignContent: 'center'
+                  }}
+                >
+
+
+                  
+                </Box>
+
+                
                 <Divider orientation="horizontal" flexItem />
               </Box>
-            </CardContent>
+            </CardContent> */}
             <Accordion
               expanded={expanded === "panel2"}
               onChange={handleChange("panel2")}
@@ -463,24 +595,7 @@ const DoctorDetail = () => {
             </Box>
           </Box>
 
-          <Card sx={{ minWidth: 275 }}>
-            <CardContent>
-              <Typography
-                sx={{
-                  fontSize: "15px",
-                  fontWeight: "600",
-                  backgroundColor: theme.palette.primary.main,
-                  padding: "4px",
-                  borderRadius: "5px",
-                }}
-                component="div"
-                color="white"
-              >
-                Pedir Turno
-              </Typography>
-              <Calendar id={id} calendar={doctorDetail.calendar} />
-            </CardContent>
-          </Card>
+
         </Box>
       </Container>
       <Footer />

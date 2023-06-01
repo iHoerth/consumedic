@@ -12,6 +12,8 @@ import {
 
 const Header = () => {
   const theme = useTheme();
+  
+  const { values } = theme.breakpoints;
   const { patientDetail } = useContext(Context)[1];
 
   const { nombre, apellido, email, dni, telefono, ObraSocial } = patientDetail;
@@ -20,12 +22,18 @@ const Header = () => {
     <>
       <Box
         sx={{
+          margin:'auto',
           display: "flex",
           flexDirection: "column",
           justifyContent: "normal",
           alignItems: "stretch",
           borderRadius: "10px",
-          width: "100%",
+          width: {
+            desktop: values.desktop,
+            laptop: '99.5%',
+            tablet: '99.5%',
+            mobile: '99.5%',
+          },
         }}
       >
         <Card
@@ -42,7 +50,7 @@ const Header = () => {
             alignItems:'center',
             justifyContent: "space-between",
             padding: "10px",
-            mb: "10px",
+            marginTop: "20px",
           }}
         >
           <CardHeader
@@ -50,25 +58,33 @@ const Header = () => {
             subheader={email}
             sx={{
               color: "white",
+              // width: {
+              //   desktop: values.desktop,
+              //   laptop: '99.5%',
+              //   tablet: '99.5%',
+              //   mobile: '99.5%',
+              // }, 
+              margin:'auto',
             }}
           />
           <Card
             sx={{
-              width: "40%",
+              // width: "40%",
               // height: "18vh",
-              marginRight: "10px",
+              // marginRight: "10px",
+              // backgroundColor:'red',
               borderRadius: "10px",
               height: {
-                mobile: '90%',
+                mobile: '20%',
                 tablet: '90%',
                 laptop: '70%',
                 desktop: '90%',
               },
               width: {
-                mobile: '90%',
+                mobile: '48%',
                 tablet: '50%',
                 laptop: '37%',
-                desktop: '35%',
+                desktop: '50%',
               },
             }}
           >

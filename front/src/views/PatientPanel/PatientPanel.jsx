@@ -107,7 +107,6 @@ const Admin = () => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            bgcolor: 'background.paper',
             boxShadow: 24,
             p: 4,
             outline: 'none',
@@ -117,50 +116,130 @@ const Admin = () => {
         </Box>
       </Modal>
       <NavBar variant="block" />
-      <Container maxWidth="sm" sx={{ mt: '140px', mb: '40px', borderRadius: '5px' }}>
-        <Box sx={{ height: '107vh' }}>
-          <Header />
+      <Container maxWidth="sm" sx={{ borderRadius: '5px', display:'flex',
+      flexDirection:'column', alignItems:'center', alignContent:'center', backgroundColor: theme.palette.background.main,}}>
+        <Box sx={{
+          display:'flex',
+          flexDirection:'column',
+          alignItems:'center'
+        }}>
+          <Header sx={{margin:'20px'}}/>
           <Stack
-            direction="row"
+            
             sx={{
-              border: '1px solid',
+              display: "flex",
+              flexDirection: {
+                mobile: 'column',
+                tablet: 'column',
+                laptop: 'column',
+                desktop: 'row',
+              },
+              width: {
+                mobile: '90%',
+                tablet: '99.5%',
+                laptop: '99.5%',
+                desktop: '93.5%',
+              },
               borderColor: '#bababa',
               borderRadius: '5px',
-              backgroundColor: theme.palette.background.main,
+              
             }}
-            divider={<Divider orientation="vertical" flexItem />}
+            // divider={<Divider orientation="vertical" flexItem />}
           >
             <Box
               sx={{
-                height: '88vh',
-                width: '150px',
-                backgroundColor: theme.palette.primary.main,
+                borderRadius:'5px ',
+                display: "flex",
+              width: {
+                mobile: '90%',
+                tablet: '99.5%',
+                laptop: '99.5%',
+                desktop: '40%',
+              },
+                // marginTop:'60px',
+                margin:'auto',
+                  // alignContent:'center',
+                  alignItems:'center',
+                  justifyContent:'center',
+                  
               }}
             >
               <List
                 sx={{
-                  width: '100%',
-                  maxWidth: 360,
-                  backgroundColor: theme.palette.primary.main,
+                  // width: '100%',
+                  // maxWidth: 360,
+                  display:'flex',
+                  // alignContent:'center',
+                  flexWrap:{
+                    mobile:"wrap"
+                  },
+                  alignItems:{
+                    mobile:'center',
+                  },
+                  // justifyContent:'space-beetwen',
+                  // margin:'20px',
+                  flexDirection: {
+                    mobile: 'row',
+                    tablet: 'row',
+                    laptop: 'row',
+                    desktop: 'column',
+                  },
+                  width: {
+                    mobile: '60%',
+                    tablet: '99.5%',
+                    laptop: '60%',
+                    desktop: '100%',
+                  },
+                  height: {
+                    mobile: '20%',
+                    tablet: '20%',
+                    laptop: '50%',
+                    desktop: '80%',
+                  },
+                  margin: {
+                    mobile: '1px',
+                    tablet: '10px',
+                    laptop: '50px',
+                    desktop: '2px',
+                  },
+                  borderRadius:'5px',
+                  // border:'2px solid red',
+                  
+                  // height:'300px'
                 }}
-                component="nav"
-                aria-labelledby="list-subheader"
-                subheader={
-                  <ListItemButton>
-                    <ListItemText
-                      primaryTypographyProps={{
-                        fontSize: '20px',
-                        fontWeight: '500',
-                      }}
-                      sx={{ m: '0px', color: 'white' }}
-                      primary=""
-                      onClick={handleClick}
-                    />
-                  </ListItemButton>
-                }
+                // component="nav"
+                // aria-labelledby="list-subheader"
+                // subheader={
+                //   <ListItemButton >
+                //     <ListItemText
+                //       primaryTypographyProps={{
+                //         fontSize: '20px',
+                //         fontWeight: '500',
+                //       }}
+                //       sx={{ m: '10px', color: 'white' }}
+                //       primary="gasdas"
+                //       onClick={handleClick}
+                //     />
+                //   </ListItemButton>
+                // }
               >
-                <Divider />
-                <ListItemButton>
+                {/* <Divider /> */}
+                <ListItemButton sx={{margin:'10px',
+                textAlign:'center',
+                borderRadius:'5px',
+                width: {
+                  mobile: '30%',
+                  tablet: '60%',
+                  laptop: '60%',
+                  desktop: values.desktop,
+                },
+                height: {
+                  mobile: '90%',
+                  tablet: '99.5%',
+                  laptop: '30%',
+                  desktop: values.desktop,
+                },
+                  backgroundColor: theme.palette.primary.main}}>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: '15px' }}
                     sx={{ m: '0px', color: 'white' }}
@@ -168,8 +247,22 @@ const Admin = () => {
                     onClick={handleClick}
                   />
                 </ListItemButton>
-                <Divider />
-                <ListItemButton>
+                <ListItemButton sx={{margin:'10px',
+                textAlign:'center',
+                borderRadius:'5px',
+                width: {
+                  mobile: '30%',
+                  tablet: '60%',
+                  laptop: '60%',
+                  desktop: values.desktop,
+                },
+                height: {
+                  mobile: '90%',
+                  tablet: '99.5%',
+                  laptop: '30%',
+                  desktop: values.desktop,
+                },
+                  backgroundColor: theme.palette.primary.main}}>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: '15px' }}
                     sx={{ m: '0px', color: 'white' }}
@@ -177,8 +270,22 @@ const Admin = () => {
                     onClick={handleClick}
                   />
                 </ListItemButton>
-                <Divider />
-                <ListItemButton>
+                <ListItemButton sx={{margin:'10px',
+                textAlign:'center',
+                borderRadius:'5px',
+                width: {
+                  mobile: '30%',
+                  tablet: '60%',
+                  laptop: '60%',
+                  desktop: values.desktop,
+                },
+                height: {
+                  mobile: '90%',
+                  tablet: '99.5%',
+                  laptop: '30%',
+                  desktop: values.desktop,
+                },
+                  backgroundColor: theme.palette.primary.main}}>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: '15px' }}
                     sx={{ m: '0px', color: 'white' }}
@@ -186,8 +293,22 @@ const Admin = () => {
                     onClick={handleClick}
                   />
                 </ListItemButton>
-                <Divider />
-                <ListItemButton>
+                <ListItemButton sx={{margin:'10px',
+                textAlign:'center',
+                borderRadius:'5px',
+                width: {
+                  mobile: '30%',
+                  tablet: '60%',
+                  laptop: '60%',
+                  desktop: values.desktop,
+                },
+                height: {
+                  mobile: '90%',
+                  tablet: '99.5%',
+                  laptop: '30%',
+                  desktop: values.desktop,
+                },
+                  backgroundColor: theme.palette.primary.main,}}>
                   <ListItemText
                     primaryTypographyProps={{ fontSize: '15px' }}
                     sx={{ m: '0px', color: 'white' }}
@@ -196,18 +317,16 @@ const Admin = () => {
                   />
                 </ListItemButton>
 
-                <Divider />
               </List>
             </Box>
             <Box
               sx={{
-                height: '85vh',
-                width: '90vw',
+                height: '100%',
                 m: '10px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'top',
-                alignItems: 'left',
+                // alignItems: 'left',
               }}
             >
               {loading ? (

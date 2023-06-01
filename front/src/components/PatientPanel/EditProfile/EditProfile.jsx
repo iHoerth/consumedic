@@ -14,6 +14,7 @@ import {
   Alert,
   AlertTitle,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 const EditProfile = ({ status, modalOpen, handleClose }) => {
   const { session } = useContext(Context)[2];
@@ -21,6 +22,10 @@ const EditProfile = ({ status, modalOpen, handleClose }) => {
   const { socialSecurity, fetchUtilities } = useContext(UtilitiesContext);
   const [loading, setLoading] = useState(true);
   const [inputClicked, setInputClicked] = useState(false);
+
+  
+  const theme = useTheme();
+  const { values } = theme.breakpoints;
 
   //Alerts
   const [snackOk, setSnackOk] = useState(false);
@@ -164,8 +169,8 @@ const EditProfile = ({ status, modalOpen, handleClose }) => {
                   value={datos.nombre}
                   onChange={handleChange}
                   sx={{
-                    mt: '20px',
-                    ml: '10px',
+                    // mt: '20px',
+                    // ml: '10px',
                     width: {
                       mobile: '90%',
                       tablet: '90%',
@@ -181,8 +186,9 @@ const EditProfile = ({ status, modalOpen, handleClose }) => {
                   value={datos.apellido}
                   onChange={handleChange}
                   sx={{
-                    mt: '20px',
-                    ml: '10px',
+                    // mt: '20px',
+                    // ml: '10px',
+                    margin:'10px',
                     width: {
                       mobile: '90%',
                       tablet: '90%',
@@ -198,8 +204,9 @@ const EditProfile = ({ status, modalOpen, handleClose }) => {
                   value={datos.dni}
                   onChange={handleChange}
                   sx={{
-                    mt: '20px',
-                    ml: '10px',
+                    // mt: '20px',
+                    // ml: '10px',
+                    margin:'10px',
                     width: {
                       mobile: '90%',
                       tablet: '90%',
@@ -215,8 +222,9 @@ const EditProfile = ({ status, modalOpen, handleClose }) => {
                   value={datos.telefono}
                   onChange={handleChange}
                   sx={{
-                    mt: '20px',
-                    ml: '10px',
+                    // mt: '20px',
+                    // ml: '10px',
+                    margin:'10px',
                     width: {
                       mobile: '90%',
                       tablet: '90%',
@@ -232,8 +240,9 @@ const EditProfile = ({ status, modalOpen, handleClose }) => {
                   value={datos.email}
                   disabled
                   sx={{
-                    mt: '20px',
-                    ml: '10px',
+                    // mt: '20px',
+                    // ml: '10px',
+                    margin:'10px',
                     width: {
                       mobile: '90%',
                       tablet: '90%',
@@ -246,8 +255,9 @@ const EditProfile = ({ status, modalOpen, handleClose }) => {
 
                 <FormControl
                   sx={{
-                    mt: '20px',
-                    ml: '10px',
+                    // mt: '20px',
+                    // ml: '10px',
+                    margin:'10px',
                     width: {
                       mobile: '90%',
                       tablet: '90%',

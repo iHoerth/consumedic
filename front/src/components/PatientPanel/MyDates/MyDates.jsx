@@ -1,4 +1,5 @@
-import { useEffect, useContext, useState } from "react";
+
+import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../../context/ContextProvider";
 import Loading from "../../Loading/Loading";
 import { useTheme } from "@mui/material";
@@ -11,17 +12,26 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Button
+  Button,
+  styled
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+import { IconButton, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 const MyDates = () => {
+
   const { informacion, fetchPatientData } = useContext(Context)[5];
   const { patientDetail } = useContext(Context)[1];
   const [loading, setLoading] = useState(true);
+ 
   const theme = useTheme();
+  const { values } = theme.breakpoints;
   const navigate = useNavigate();
-
+  const StyledTableContainer = styled(TableContainer)`
+  overflow-x: auto;
+  max-width: 100%;
+`;
   function nuevoTurno() {
     navigate("/search");
   }
@@ -73,6 +83,31 @@ const MyDates = () => {
     };
   });
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const rowsPerPage = 5; // Cantidad de filas por página
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+
+  const totalPages = Math.ceil(informacionData.length / rowsPerPage);
+
+  const renderTableRows = () => {
+    const startIndex = currentPage * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return informacionData.slice(startIndex, endIndex).map((row) => (
+      <TableRow key={row.id}>
+        <TableCell>{row.fecha}</TableCell>
+        <TableCell>{row.hora}</TableCell>
+        <TableCell>{row.nombre + ' ' + row.apellido}</TableCell>
+        <TableCell>{row.especialidad}</TableCell>
+        <TableCell>{row.descripcion}</TableCell>
+        <TableCell>{row.respuestaMedico}</TableCell>
+      </TableRow>
+    ));
+  };
+
   return (
     <>
       {loading ? (
@@ -102,40 +137,48 @@ const MyDates = () => {
             </>
           ) : (
             <>
-              <TableContainer component={Paper} style={{ maxHeight: 400 }}>
-                <Table stickyHeader>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Fecha</TableCell>
-                      <TableCell>Hora</TableCell>
-                      <TableCell>Nombre del Medico</TableCell>
-                      <TableCell>Especialidad</TableCell>
-                      <TableCell>Descripción</TableCell>
-                      <TableCell>Informe médico</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {informacionData
-                      .sort(function (a, b) {
-                        var dateA = new Date(a.fecha[0] + " " + a.hora[0]);
-                        var dateB = new Date(b.fecha[0] + " " + b.hora[0]);
-                        return dateA - dateB;
-                      })
-                      .map((row) => (
-                        <TableRow key={row.id}>
-                          <TableCell>{row.fecha}</TableCell>
-                          <TableCell>{row.hora}</TableCell>
-                          <TableCell>
-                            {row.nombre + " " + row.apellido}
-                          </TableCell>
-                          <TableCell>{row.especialidad}</TableCell>
-                          <TableCell>{row.descripcion}</TableCell>
-                          <TableCell>{row.respuestaMedico}</TableCell>
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+              <TableContainer component={Paper}>
+      <Table stickyHeader>
+        <TableHead>
+          <TableRow>
+            <TableCell>Fecha</TableCell>
+            <TableCell>Hora</TableCell>
+            <TableCell>Nombre del Medico</TableCell>
+            <TableCell>Especialidad</TableCell>
+            <TableCell>Descripción</TableCell>
+            <TableCell>Informe médico</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {informacionData.length > 0 && (
+            <React.Fragment>
+              {renderTableRows()}
+              {informacionData.length > rowsPerPage && (
+                <TableRow>
+                  <TableCell colSpan={6} align="center">
+                    <IconButton
+                      disabled={currentPage === 0}
+                      onClick={() => handlePageChange(currentPage - 1)}
+                    >
+                      <ChevronLeft />
+                    </IconButton>
+                    <Typography variant="body2" component="span">
+                      {currentPage + 1} / {totalPages}
+                    </Typography>
+                    <IconButton
+                      disabled={currentPage === totalPages - 1}
+                      onClick={() => handlePageChange(currentPage + 1)}
+                    >
+                      <ChevronRight />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              )}
+            </React.Fragment>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
             </>
           )}
         </>
