@@ -54,7 +54,7 @@ const CreateDoctor = () => {
   const { snackOk, snackOkMensaje, setSnackOk, setSnackOkMensaje } = useContext(Context)[0];
   const { snackFail, snackFailMensaje, setSnackFail, setSnackFailMensaje } = useContext(Context)[0];
   const theme = useTheme();
-  const isScreenMedium = useMediaQuery(theme.breakpoints.down('580'));
+  const isScreenMedium = useMediaQuery(theme.breakpoints.down('716'));
   const isScreenSmall = useMediaQuery(theme.breakpoints.down('1030'));
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const location = useLocation();
@@ -372,7 +372,7 @@ const CreateDoctor = () => {
           onSubmit={handleSubmit}
           style={{
             backgroundColor: 'rgba(255, 255, 255)',
-            marginTop: '150px',
+            marginTop:   isScreenMedium ? '250px': isScreenSmall ? '250px' : '350px' ,
           }}
           sx={{
             width: {
