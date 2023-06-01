@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { Context } from '../../context/ContextProvider';
 import {
   Drawer,
   IconButton,
@@ -10,7 +11,9 @@ import {
 
 import MenuIcon from '@mui/icons-material/Menu';
 
-const DrawerComponent = ({ navLinksArray, scrolled }) => {
+const DrawerComponent = ({ navLinksArray, scrolled, handleSessionClose }) => {
+  
+  const { session, setSession } = useContext(Context)[2];
   const [openDrawer, setOpenDrawer] = useState(false);
   const DRAWER_ANCHOR = 'right';
 
@@ -29,7 +32,10 @@ const DrawerComponent = ({ navLinksArray, scrolled }) => {
                 <ListItemText>{link.title}</ListItemText>
               </ListItemIcon>
             </ListItemButton>
-          ))}
+          ))},
+          {session.token? (
+              <ListItemButton onClick={handleSessionClose}>Cerrar Sesion</ListItemButton>
+            ):(<></>)}
         </List>
       </Drawer>
 

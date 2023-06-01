@@ -183,9 +183,10 @@ const LoginDoctor = () => {
             },
             padding: '15px',
             marginTop: '145px',
-            marginBottom: '50px',
+            marginBottom: '133px',
             height: 'auto',
             minWidth: '200px',
+            // backgroundColor:'#000'
           }}
         >
           <Typography variant="h6" align="center" sx={{ marginTop: '50px', marginBottom: '40px' }}>

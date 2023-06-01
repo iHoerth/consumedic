@@ -143,10 +143,11 @@ const Userlogin = () => {
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
           position: 'relative',
-          width: '1920p',
-          height: '1080p',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -161,13 +162,14 @@ const Userlogin = () => {
               desktop: 400,
               laptop: 400,
               tablet: 400,
-              mobile: '100%',
+              mobile: '90%',
             },
             padding: '15px',
             marginTop: '145px',
-            marginBottom: '50px',
+            marginBottom: '122px',
             minWidth: '200px',
             height: '613px',
+            // backgroundColor:'#000'
           }}
         >
           <Typography variant="h6" align="center" sx={{ marginTop: '50px', marginBottom: '20px' }}>
@@ -184,6 +186,7 @@ const Userlogin = () => {
               flexDirection: 'column',
               height: '450px',
               p: 2,
+              // backgroundColor:'#000'
             }}
           >
             <TextField
@@ -284,7 +287,7 @@ const Userlogin = () => {
           </Box>
         </Container>
       </Box>
-      <Footer />
+      <Footer></Footer>
     </>
   );
 };
