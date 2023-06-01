@@ -25,6 +25,8 @@ import DetalleDoctor from "../../components/Panel Admin/DetalleDoctor";
 import EditarPacientes from "../../components/Panel Admin/EditarPacientes";
 import PacientesEliminados from "../../components/Panel Admin/PacientesEliminados";
 import DoctoresEliminados from "../../components/Panel Admin/DoctoresEliminados";
+import PerfilAdmin from "../../components/Panel Admin/PerfilAdmin";
+
 
 const Admin = () => {
   const theme = useTheme();
@@ -150,7 +152,7 @@ const Admin = () => {
                 <>
                   {/* ACA VAN LOS  COMPONENTES QUE SE RENDERIZAN A LA IZQ DE LA LISTA */}
                   {vista === 0 ? (
-                    "Admin General"
+                    <PerfilAdmin />
                   ) : vista === 1 ? (
                     <EditarPacientes />
                   ) : vista === 2 ? (
