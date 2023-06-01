@@ -21,6 +21,7 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Context, UtilitiesContext } from '../../context/ContextProvider';
 import Footer from '../../components/Footer/Footer';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 const typrographyError = styled(Typography)({
   fontSize: '8px',
@@ -52,7 +53,9 @@ const CreateDoctor = () => {
   const { createDoctor, doctorDetail, loginDoctor } = useContext(Context)[0];
   const { snackOk, snackOkMensaje, setSnackOk, setSnackOkMensaje } = useContext(Context)[0];
   const { snackFail, snackFailMensaje, setSnackFail, setSnackFailMensaje } = useContext(Context)[0];
-  
+  const theme = useTheme();
+  const isScreenMedium = useMediaQuery(theme.breakpoints.down('716'));
+  const isScreenSmall = useMediaQuery(theme.breakpoints.down('1030'));
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const location = useLocation();
   const [fileName, setFileName] = useState('');
@@ -367,11 +370,30 @@ const CreateDoctor = () => {
           component={Paper}
           elevation={5}
           onSubmit={handleSubmit}
-          style={{ backgroundColor: 'rgba(255, 255, 255)' }}
+          style={{ backgroundColor: 'rgba(255, 255, 255)',
+          marginTop:'150px',
+          }}
+          sx={{
+            width:{
+              mobile: '80%',
+              tablet: '80%',
+              laptop: '80%',
+              desktop: '80%',
+            } 
+          }}
         >
-          <Grid container spacing={2}>
+          <Grid container spacing={3}
+            sx={{
+              display:'flex',
+              flexDirection:'column',
+              // justifyContent:'space-around'
+            }}>
             <Title>Crear Usuario Profesional</Title>
-
+            <Container sx={{
+              display:'flex',
+              flexWrap:'wrap',
+              justifyContent:'space-around'
+            }}>
             <Grid item xs={12} sm={6}>
               <TextField
                 required
@@ -441,7 +463,7 @@ const CreateDoctor = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} marginBottom={2}>
               <input
                 accept="image/*"
                 style={{ display: 'none' }}
@@ -612,7 +634,7 @@ const CreateDoctor = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} marginBottom={12}>
               <TextField
                 required
                 id="descripcion"
@@ -639,7 +661,7 @@ const CreateDoctor = () => {
               value={form.status}
               onChange={handleChange}
             />
-          </Grid> */}
+            </Grid> */}
 
             <Grid item xs={12} sm={6}>
               <TextField
@@ -695,7 +717,7 @@ const CreateDoctor = () => {
               <Autocomplete
                 multiple
                 sx={{
-                  width: 240,
+                  width: 250,
                 }}
                 disablePortal
                 id="especialidad"
@@ -736,7 +758,8 @@ const CreateDoctor = () => {
               <Autocomplete
                 multiple
                 sx={{
-                  width: 240,
+                  marginTop: isScreenMedium ? '40px' : '',
+                  width:'250px'
                 }}
                 disablePortal
                 id="obraSocial"
@@ -781,6 +804,10 @@ const CreateDoctor = () => {
                 label="Precio de consulta"
                 type="number"
                 fullWidth
+                sx={{
+                  margin: isScreenSmall ? '40px' : '',
+                  width:'250px'
+                }}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">$</InputAdornment>,
                 }}
@@ -794,12 +821,21 @@ const CreateDoctor = () => {
                   ) : null
                 }
                 FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '90px',
-                  width: '250px',
-                }}
+                // sx={{
+                //   height: '90px',
+                //   width: '250px',
+                // }}
               />
             </Grid>
+            </Container>
+            <Container
+            sx={{
+              display:'flex',
+              alignItems:'center',
+              justifyContent:'space-around',
+              width: '400px',
+              // border:'2px solid'
+            }}>
             <Grid item xs={12}>
               <FormControlLabel
                 control={
@@ -813,6 +849,7 @@ const CreateDoctor = () => {
                 label="Ver contrasenas"
               />
             </Grid>
+
             <Grid item xs={12}>
               <CrearDoctor
                 type="submit"
@@ -838,6 +875,7 @@ const CreateDoctor = () => {
                 Crear usuario
               </CrearDoctor>
             </Grid>
+            </Container>
           </Grid>
         </StyleForm>
       </Container>
