@@ -3,12 +3,14 @@ const {getDoctorCalendar}=require("../appointments/getDoctorCalendar")
 const {getHorariosById}=require("../horarios/getHorariosById")
 
 const getDoctor = async (email) => {
+    console.log(email)
     const doctor = await DoctorType.findOne({
         where: {
             email: email
         },
         include: {all: true},
     });
+
     if(!doctor){
         throw new Error(`No se encontró el doctor con el email: ${email}`);
     }

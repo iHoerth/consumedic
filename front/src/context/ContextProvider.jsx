@@ -146,7 +146,8 @@ const ContextProvider = ({ children }) => {
           snackOk: true,
           snackOkMensaje: 'Perfil de Doctor Creado con Exito',
         }));
-
+        return response;
+        
       } catch (error) {
         setDoctorsData((prevState) => ({
           ...prevState,
@@ -225,7 +226,9 @@ const ContextProvider = ({ children }) => {
           doctorDetail: { ...data },
         }));
         return data;
-      } catch (error) {}
+      } catch (error) {
+        throw error
+      }
     },
     fetchOpinions: async (id) => {
       try {

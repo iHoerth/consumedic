@@ -29,6 +29,7 @@ const createDoctor = async (
       email: email,
     },
   });
+
   if(doctorExists) throw new Error (`Ya existe un medico con ese email`);
   
   const newDoctor = await DoctorType.create({
