@@ -1,4 +1,4 @@
-import { color } from "@mui/system";
+import { color } from '@mui/system';
 
 export const calculateMaxPages = (allDoctors, doctorsPerPage, pages) => {
   for (let i = 1; i <= Math.ceil(allDoctors.length / doctorsPerPage); i++) {
@@ -28,7 +28,7 @@ export const homeCards = [
   {
     title: `Encontrá tu especialista`,
     body: `Las opiniones reales de miles de pacientes te ayudarán a tomar siempre la mejor decisión.`,
-    backgroundColor: "#black",
+    backgroundColor: '#black',
   },
   {
     title: `Pedí turno de forma fácil`,
@@ -47,7 +47,8 @@ export const homeCards = [
 export const members = [
   {
     id: 2,
-    phrase:'❝ Liberate del peso del pasado y rompe las cadenas de las etiquetas. Forja tu propio futuro con tu verdadera identidad ❞',
+    phrase:
+      '❝ Liberate del peso del pasado y rompe las cadenas de las etiquetas. Forja tu propio futuro con tu verdadera identidad ❞',
     name: 'Facundo Aragon',
     role: 'Backend',
     img: 'https://i.ibb.co/HFQrF87/facu.jpg',
@@ -56,13 +57,11 @@ export const members = [
     github: 'https://github.com/facuaragon',
   },
 
-
-
-
   //////////////////////////////////
   {
     id: 3,
-    phrase: '❝ Pon el corazón, mente y el alma incluso en los actos más pequeños.Ese es el secreto del éxito ❞',
+    phrase:
+      '❝ Pon el corazón, mente y el alma incluso en los actos más pequeños.Ese es el secreto del éxito ❞',
     name: 'Noelia Paz',
     role: 'Frontend',
     img: 'https://i.ibb.co/98H5xkg/noe.jpg',
@@ -71,7 +70,7 @@ export const members = [
     github: 'https://github.com/Noelia-Paz',
   },
   //////////////////////////////
-  
+
   {
     id: 6,
     name: 'Mauro Gatica',
@@ -86,7 +85,7 @@ export const members = [
   ////////////////////////////////////////////////
   {
     id: 4,
-    phrase:'❝ Siempre parece imposible hasta que esté hecho. ❞',
+    phrase: '❝ Siempre parece imposible hasta que esté hecho. ❞',
     name: 'Matias Bustamante',
     role: 'Frontend',
     img: 'https://i.ibb.co/PZ3S8Gg/matiii.jpg',
@@ -97,8 +96,8 @@ export const members = [
   ///////////////////////////////////////
   {
     id: 5,
-    phrase:'❝ La simplicidad es la clave de la brillantez ❞',
-    name: 'Rolando Egusquiza', 
+    phrase: '❝ La simplicidad es la clave de la brillantez ❞',
+    name: 'Rolando Egusquiza',
     role: 'Backend',
     img: 'https://i.ibb.co/myr3XMG/roli.jpg',
     //description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
@@ -108,7 +107,7 @@ export const members = [
   ///////////////////////////////////////
   {
     id: 1,
-  phrase:'❝ Aprender es un proceso constante de descubrimiento que nunca concluye ❞',
+    phrase: '❝ El talento no es más que el fruto de las horas dedicadas. ❞',
     name: 'Ignacio Hoerth',
     role: 'Frontend',
     img: 'https://i.ibb.co/Br1ZVfb/igna.jpg',

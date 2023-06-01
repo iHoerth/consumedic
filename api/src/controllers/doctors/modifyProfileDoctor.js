@@ -2,10 +2,12 @@ const {DoctorType, Especialidad, ObraSocial }= require("../../db")
 const {getDoctor} = require("./getDoctor")
 
 const modifyProfileDoctor = async (doctorNewDetails) => {
-    const {id, Descripcion, apellido, direccion, dni, email, especialidades, imagen, nombre, obrasSociales, precio, telefono, titulo, oldEspecialidades, oldObrasSociales} = doctorNewDetails
+    const {id, Descripcion, apellido, direccion, dni, email, especialidades, imagen, nombre, obrasSociales, precio, telefono, titulo, oldEspecialidades, oldObrasSociales, status} = doctorNewDetails
     if(!id || !Descripcion || !apellido || !direccion || !dni || !email || !especialidades || !imagen || !nombre || !obrasSociales || !precio || !telefono || !titulo || !oldEspecialidades || !oldObrasSociales){
         throw new Error("Faltan datos para actualizar el perfil")
     }
+    if(!status) status = 'incomplete'
+    
     let doctor= await DoctorType.findByPk(id);
     
     doctor.set({
@@ -19,6 +21,7 @@ const modifyProfileDoctor = async (doctorNewDetails) => {
         precio: precio,
         telefono: telefono,
         titulo: titulo,
+        status: status
     })
     await doctor.save();
 
