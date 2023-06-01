@@ -188,13 +188,11 @@ const DoctorDetail = () => {
             marginTop: "150px",
             padding: "20px",
             borderRadius: "15px",
-            border: '2px solid red'
           }}
         >
           <Box
             sx={{
               display: "flex",
-              border: '2px solid',
               flexDirection: "column",
               marginRight: "20px",
             }}
