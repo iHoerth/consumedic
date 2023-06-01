@@ -149,7 +149,7 @@ const putDoctor = async (req, res) => {
 const putDoctorEdit = async (req, res) => {
   try {
     const doctorNewDetails = req.body;
-    if (!doctorNewDetails) throw new Error('No se han recibido Datos');
+    if (!Object.keys(doctorNewDetails).length) throw new Error('No se han recibido Datos');
 
     if (doctorNewDetails.imagen != doctorNewDetails.oldImagen) {
       const cloudinaryResult = await cloudinary.uploader.upload(doctorNewDetails.imagen, {
