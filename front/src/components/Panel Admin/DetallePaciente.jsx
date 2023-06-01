@@ -160,6 +160,8 @@ const DetallePaciente = () => {
         <Button
           id={patientDetail.id}
           variant="outlined"
+          color="warning"
+          size="small"
           onClick={() => {
             handleClickDelete(patientDetail.id);
             setVista(patientDetail.deletedAt === null ? 1 : 3);
