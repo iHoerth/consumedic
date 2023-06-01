@@ -11,6 +11,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Button
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +22,7 @@ const MyDates = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  function searchCita() {
+  function nuevoTurno() {
     navigate("/search");
   }
   useEffect(() => {
@@ -87,9 +88,18 @@ const MyDates = () => {
           </Typography>
 
           {!informacion.length ? (
-            <Typography variant="body1" align="center">
-              No hay citas para mostrar en este momento.
-            </Typography>
+            <>
+              <Typography variant="body1" align="center">
+                No hay citas para mostrar en este momento.
+              </Typography>
+              <Button
+                onClick={(event)=>nuevoTurno(event)}
+                variant="contained"
+                sx={{
+                  margin: '10px auto',
+                  width: '200px'
+                }}>Nuevo turno</Button>
+            </>
           ) : (
             <>
               <TableContainer component={Paper} style={{ maxHeight: 400 }}>
