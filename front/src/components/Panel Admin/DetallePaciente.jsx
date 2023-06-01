@@ -122,7 +122,7 @@ const DetallePaciente = () => {
               <KeyIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText secondary="password" primary="****************" />
+          <ListItemText secondary="Contraseña" primary="****************" />
         </ListItem>
 
         <ListItem>
