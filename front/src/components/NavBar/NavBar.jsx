@@ -12,7 +12,7 @@ import DrawerComponent from "./DrawerComponent";
 import { Context } from "../../context/ContextProvider";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const NavBar = ({ component, variant = 'block', text, type }) => {
+const NavBar = ({ component, variant, text, type }) => {
   const { session, setSession } = useContext(Context)[2];
   const { patientDetail, modifyPatientProfiler, fetchPatientByEmail } =
     useContext(Context)[1];
@@ -71,8 +71,8 @@ const NavBar = ({ component, variant = 'block', text, type }) => {
           scrolled ? 'primary' :
           'transparent'
         }
-        elevation={scrolled || variant ==='block' ? 4 : 0}
-        position={"fixed"}
+        elevation={scrolled ? 4 : 0}
+        position={variant === "block" ? "block" : "fixed"}
         sx={{ height: "100px", justifyContent: "center", alignItems: "center" }}
       >
         <Toolbar
@@ -90,12 +90,12 @@ const NavBar = ({ component, variant = 'block', text, type }) => {
             display="flex"
             alignItems="center"
             gap="10px"
-            color={!scrolled && variant !== 'block' ? "black" : "white"}
+            color={!scrolled ? "black" : "white"}
             sx={{ flexGrow: 1 }}
           >
             <Link
               href="/"
-              color={!scrolled && variant !== 'block' ? "inherit" : "white"}
+              color={!scrolled ? "inherit" : "white"}
               sx={{ display: "flex", alignItems: "center" }}
               underline="none"
             >
@@ -104,20 +104,22 @@ const NavBar = ({ component, variant = 'block', text, type }) => {
             <Typography
               variant="h5"
               component="div"
-              color={!scrolled && variant !== 'block' ? "black" : "white"}
+              color={!scrolled ? "black" : "white"}
               sx={{
                 fontSize: "2rem", // increase the font size to 2rem
               }}
             >
               <Link
                 href="/"
-                color={!scrolled && variant !== 'block' ? "inherit" : "white"}
+                color={!scrolled ? "inherit" : "white"}
                 underline="none"
               >
                 <Box
                   sx={{
                     textShadow: `${
-                       "3px 3px 3px rgba(0,0,0,0.5)"
+                      !scrolled
+                        ? "3px 3px 3px rgba(0,0,0,0.5)"
+                        : "2px 2px 2px rgba(255,255,255,0.5)"
                     }`,
                   }}
                 >
@@ -137,11 +139,12 @@ const NavBar = ({ component, variant = 'block', text, type }) => {
           </Box>
           {screenSizeSmall ? (
             <DrawerComponent
+            handleSessionClose={handleSessionClose}
               navLinksArray={navLinksArray}
               scrolled={scrolled}
             />
           ) : (
-            <nav style={{ color: `${!scrolled && variant !== 'block' ? "black" : "white"}` }}>
+            <nav style={{ color: `${!scrolled ? "black" : "white"}` }}>
               <Button
                 color="inherit"
                 href={navLinksArray[0].path}
