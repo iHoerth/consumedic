@@ -54,7 +54,7 @@ const CreateDoctor = () => {
   const { snackOk, snackOkMensaje, setSnackOk, setSnackOkMensaje } = useContext(Context)[0];
   const { snackFail, snackFailMensaje, setSnackFail, setSnackFailMensaje } = useContext(Context)[0];
   const theme = useTheme();
-  const isScreenMedium = useMediaQuery(theme.breakpoints.down('716'));
+  const isScreenMedium = useMediaQuery(theme.breakpoints.down('580'));
   const isScreenSmall = useMediaQuery(theme.breakpoints.down('1030'));
   const { socialSecurity, specialties } = useContext(UtilitiesContext);
   const location = useLocation();
@@ -370,288 +370,289 @@ const CreateDoctor = () => {
           component={Paper}
           elevation={5}
           onSubmit={handleSubmit}
-          style={{ backgroundColor: 'rgba(255, 255, 255)',
-          marginTop:'150px',
+          style={{
+            backgroundColor: 'rgba(255, 255, 255)',
+            marginTop: '150px',
           }}
           sx={{
-            width:{
-              mobile: '80%',
+            width: {
+              mobile: '100%',
               tablet: '80%',
               laptop: '80%',
               desktop: '80%',
-            } 
+            }
           }}
         >
           <Grid container spacing={3}
             sx={{
-              display:'flex',
-              flexDirection:'column',
+              display: 'flex',
+              flexDirection: 'column',
               // justifyContent:'space-around'
             }}>
             <Title>Crear Usuario Profesional</Title>
             <Container sx={{
-              display:'flex',
-              flexWrap:'wrap',
-              justifyContent:'space-around'
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-around'
             }}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="nombre"
-                name="nombre"
-                label="Nombre"
-                fullWidth
-                value={form.nombre}
-                onChange={handleChange}
-                helperText={
-                  error.nombre ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.nombre}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '90px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="apellido"
-                name="apellido"
-                label="Apellido"
-                fullWidth
-                value={form.apellido}
-                onChange={handleChange}
-                helperText={
-                  error.apellido ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.apellido}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '90px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="dni"
-                name="dni"
-                label="Documento"
-                fullWidth
-                value={form.dni}
-                onChange={handleChange}
-                helperText={
-                  error.dni ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.dni}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '90px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} marginBottom={2}>
-              <input
-                accept="image/*"
-                style={{ display: 'none' }}
-                id="fotoMatricula"
-                name="fotoMatricula"
-                type="file"
-                onChange={handleImage}
-                helperText={
-                  error.fotoMatricula ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.fotoMatricula}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '90px',
-                  width: '250px',
-                }}
-              />
-              <label htmlFor="fotoMatricula">
-                <Button
-                  variant="contained"
-                  component="span"
-                  startIcon={<PhotoCamera />}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="nombre"
+                  name="nombre"
+                  label="Nombre"
+                  fullWidth
+                  value={form.nombre}
+                  onChange={handleChange}
+                  helperText={
+                    error.nombre ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.nombre}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                   sx={{
-                    height: '55px',
+                    height: '90px',
                     width: '250px',
                   }}
-                >
-                  Foto de Perfil
-                </Button>
-              </label>
-              {form.fotoMatricula && <span>{form.fotoMatricula.name}</span>}
-              {fileName ? (
-                <Typography
-                  variant="inherit"
-                  style={{ maxWidth: '180px', fontSize: '12px', margin: '6px' }}
-                >
-                  {fileName}
-                </Typography>
-              ) : null}
-              {error.fotoMatricula ? (
-                <Typography
-                  variant="inherit"
-                  color="error"
-                  style={{ maxWidth: '180px', fontSize: '12px', margin: '6px' }}
-                >
-                  {error.fotoMatricula}
-                </Typography>
-              ) : null}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="email"
-                name="email"
-                label="Correo electrónico"
-                fullWidth
-                autoComplete="email"
-                value={form.email}
-                onChange={handleChange}
-                helperText={
-                  error.email ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.email}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '90px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="telefono"
-                name="telefono"
-                label="Teléfono"
-                type="number"
-                fullWidth
-                value={form.telefono}
-                onChange={handleChange}
-                helperText={
-                  error.telefono ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.telefono}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '90px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="direccion"
-                name="direccion"
-                label="Dirección donde atiende"
-                fullWidth
-                value={form.direccion}
-                onChange={handleChange}
-                helperText={
-                  error.direccion ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.direccion}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '90px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="numeroMatricula"
-                name="numeroMatricula"
-                label="Número de matrícula"
-                fullWidth
-                value={form.numeroMatricula}
-                onChange={handleChange}
-                helperText={
-                  error.numeroMatricula ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.numeroMatricula}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '100px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="apellido"
+                  name="apellido"
+                  label="Apellido"
+                  fullWidth
+                  value={form.apellido}
+                  onChange={handleChange}
+                  helperText={
+                    error.apellido ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.apellido}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+                  sx={{
+                    height: '90px',
+                    width: '250px',
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="dni"
+                  name="dni"
+                  label="Documento"
+                  fullWidth
+                  value={form.dni}
+                  onChange={handleChange}
+                  helperText={
+                    error.dni ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.dni}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+                  sx={{
+                    height: '90px',
+                    width: '250px',
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} marginBottom={2}>
+                <input
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  id="fotoMatricula"
+                  name="fotoMatricula"
+                  type="file"
+                  onChange={handleImage}
+                  helperText={
+                    error.fotoMatricula ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.fotoMatricula}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+                  sx={{
+                    height: '90px',
+                    width: '250px',
+                  }}
+                />
+                <label htmlFor="fotoMatricula">
+                  <Button
+                    variant="contained"
+                    component="span"
+                    startIcon={<PhotoCamera />}
+                    sx={{
+                      height: '55px',
+                      width: '250px',
+                    }}
+                  >
+                    Foto de Perfil
+                  </Button>
+                </label>
+                {form.fotoMatricula && <span>{form.fotoMatricula.name}</span>}
+                {fileName ? (
+                  <Typography
+                    variant="inherit"
+                    style={{ maxWidth: '180px', fontSize: '12px', margin: '6px' }}
+                  >
+                    {fileName}
+                  </Typography>
+                ) : null}
+                {error.fotoMatricula ? (
+                  <Typography
+                    variant="inherit"
+                    color="error"
+                    style={{ maxWidth: '180px', fontSize: '12px', margin: '6px' }}
+                  >
+                    {error.fotoMatricula}
+                  </Typography>
+                ) : null}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="email"
+                  name="email"
+                  label="Correo electrónico"
+                  fullWidth
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  helperText={
+                    error.email ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.email}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+                  sx={{
+                    height: '90px',
+                    width: '250px',
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="telefono"
+                  name="telefono"
+                  label="Teléfono"
+                  type="number"
+                  fullWidth
+                  value={form.telefono}
+                  onChange={handleChange}
+                  helperText={
+                    error.telefono ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.telefono}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+                  sx={{
+                    height: '90px',
+                    width: '250px',
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="direccion"
+                  name="direccion"
+                  label="Dirección donde atiende"
+                  fullWidth
+                  value={form.direccion}
+                  onChange={handleChange}
+                  helperText={
+                    error.direccion ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.direccion}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+                  sx={{
+                    height: '90px',
+                    width: '250px',
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="numeroMatricula"
+                  name="numeroMatricula"
+                  label="Número de matrícula"
+                  fullWidth
+                  value={form.numeroMatricula}
+                  onChange={handleChange}
+                  helperText={
+                    error.numeroMatricula ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.numeroMatricula}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+                  sx={{
+                    height: '100px',
+                    width: '250px',
+                  }}
+                />
+              </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="tituloUniversitario"
-                name="tituloUniversitario"
-                label="Título universitario"
-                fullWidth
-                value={form.tituloUniversitario}
-                onChange={handleChange}
-                helperText={
-                  error.tituloUniversitario ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.tituloUniversitario}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '90px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} marginBottom={12}>
-              <TextField
-                required
-                id="descripcion"
-                name="descripcion"
-                label="Descripción"
-                fullWidth
-                multiline
-                rows={3}
-                value={form.descripcion}
-                onChange={handleChange}
-                sx={{
-                  height: '20px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
-            {/* <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="tituloUniversitario"
+                  name="tituloUniversitario"
+                  label="Título universitario"
+                  fullWidth
+                  value={form.tituloUniversitario}
+                  onChange={handleChange}
+                  helperText={
+                    error.tituloUniversitario ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.tituloUniversitario}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+                  sx={{
+                    height: '90px',
+                    width: '250px',
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} marginBottom={12}>
+                <TextField
+                  required
+                  id="descripcion"
+                  name="descripcion"
+                  label="Descripción"
+                  fullWidth
+                  multiline
+                  rows={3}
+                  value={form.descripcion}
+                  onChange={handleChange}
+                  sx={{
+                    height: '20px',
+                    width: '250px',
+                  }}
+                />
+              </Grid>
+              {/* <Grid item xs={12} sm={6}>
             <TextField
               required
               id="status"
@@ -663,218 +664,224 @@ const CreateDoctor = () => {
             />
             </Grid> */}
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="contrasena"
-                name="contrasena"
-                label="Contraseña"
-                type={showPassword ? 'text' : 'password'}
-                fullWidth
-                autoComplete="new-password"
-                value={form.contrasena}
-                onChange={handleChange}
-                helperText={
-                  error.contrasena ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.contrasena}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '100px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="confirmarContrasena"
-                name="confirmarContrasena"
-                label="Confirmar contraseña"
-                type={showPassword ? 'text' : 'password'}
-                fullWidth
-                value={form.confirmarContrasena}
-                onChange={handleChange}
-                helperText={
-                  error.confirmarContrasena ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.confirmarContrasena}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
-                sx={{
-                  height: '90px',
-                  width: '250px',
-                }}
-              />
-            </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="contrasena"
+                  name="contrasena"
+                  label="Contraseña"
+                  type={showPassword ? 'text' : 'password'}
+                  fullWidth
+                  autoComplete="new-password"
+                  value={form.contrasena}
+                  onChange={handleChange}
+                  helperText={
+                    error.contrasena ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.contrasena}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+                  sx={{
+                    height: '100px',
+                    width: '250px',
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="confirmarContrasena"
+                  name="confirmarContrasena"
+                  label="Confirmar contraseña"
+                  type={showPassword ? 'text' : 'password'}
+                  fullWidth
+                  value={form.confirmarContrasena}
+                  onChange={handleChange}
+                  helperText={
+                    error.confirmarContrasena ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.confirmarContrasena}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+                  sx={{
+                    height: '90px',
+                    width: '250px',
+                  }}
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <Autocomplete
-                multiple
-                sx={{
-                  width: 250,
-                }}
-                disablePortal
-                id="especialidad"
-                name="especialidad"
-                options={specialties}
-                getOptionLabel={(option) => {
-                  return option.name;
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    sx={{ bgcolor: 'white', borderRadius: '4px' }}
-                    {...params}
-                    label="Especialidad"
-                    helperText={
-                      error.idEspecialidad ? (
-                        <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                          {error.idEspecialidad}
-                        </Typography>
-                      ) : null
-                    }
-                  />
-                )}
-                renderOption={(props, option) => (
-                  <li
-                    style={{ fontSize: '14px' }}
-                    {...props}
-                    key={option.id}
-                    id={option.id}
-                    value={option.name}
-                  >
-                    {option.name}
-                  </li>
-                )}
-                onChange={(selectedOptionsE, value) => handleEspecialidad(value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Autocomplete
-                multiple
-                sx={{
-                  marginTop: isScreenMedium ? '40px' : '',
-                  width:'250px'
-                }}
-                disablePortal
-                id="obraSocial"
-                name="obraSocial"
-                options={socialSecurity}
-                getOptionLabel={(option) => {
-                  return option.nombre;
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    sx={{ bgcolor: 'white', borderRadius: '4px' }}
-                    {...params}
-                    label="Obra Social"
-                    helperText={
-                      error.idObraSocial ? (
-                        <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                          {error.idObraSocial}
-                        </Typography>
-                      ) : null
-                    }
-                  />
-                )}
-                renderOption={(props, option) => (
-                  <li
-                    style={{ fontSize: '14px' }}
-                    {...props}
-                    key={option.id}
-                    id={option.id}
-                    value={option.name}
-                  >
-                    {option.nombre}
-                  </li>
-                )}
-                onChange={(selectedOptions, value) => handleObraSocial(value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="precioConsulta"
-                name="precioConsulta"
-                label="Precio de consulta"
-                type="number"
-                fullWidth
-                sx={{
-                  margin: isScreenSmall ? '40px' : '',
-                  width:'250px'
-                }}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                }}
-                value={form.precioConsulta}
-                onChange={handleChange}
-                helperText={
-                  error.precioConsulta ? (
-                    <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
-                      {error.precioConsulta}
-                    </Typography>
-                  ) : null
-                }
-                FormHelperTextProps={{ style: { maxWidth: '200px' } }}
+              <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  multiple
+                  sx={{
+                    width: 250,
+                  }}
+                  disablePortal
+                  id="especialidad"
+                  name="especialidad"
+                  options={specialties}
+                  getOptionLabel={(option) => {
+                    return option.name;
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      sx={{ bgcolor: 'white', borderRadius: '4px' }}
+                      {...params}
+                      label="Especialidad"
+                      helperText={
+                        error.idEspecialidad ? (
+                          <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                            {error.idEspecialidad}
+                          </Typography>
+                        ) : null
+                      }
+                    />
+                  )}
+                  renderOption={(props, option) => (
+                    <li
+                      style={{ fontSize: '14px' }}
+                      {...props}
+                      key={option.id}
+                      id={option.id}
+                      value={option.name}
+                    >
+                      {option.name}
+                    </li>
+                  )}
+                  onChange={(selectedOptionsE, value) => handleEspecialidad(value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  multiple
+                  sx={{
+                    marginTop: isScreenMedium ? '40px' : '',
+                    width: '250px'
+                  }}
+                  disablePortal
+                  id="obraSocial"
+                  name="obraSocial"
+                  options={socialSecurity}
+                  getOptionLabel={(option) => {
+                    return option.nombre;
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      sx={{ bgcolor: 'white', borderRadius: '4px' }}
+                      {...params}
+                      label="Obra Social"
+                      helperText={
+                        error.idObraSocial ? (
+                          <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                            {error.idObraSocial}
+                          </Typography>
+                        ) : null
+                      }
+                    />
+                  )}
+                  renderOption={(props, option) => (
+                    <li
+                      style={{ fontSize: '14px' }}
+                      {...props}
+                      key={option.id}
+                      id={option.id}
+                      value={option.name}
+                    >
+                      {option.nombre}
+                    </li>
+                  )}
+                  onChange={(selectedOptions, value) => handleObraSocial(value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="precioConsulta"
+                  name="precioConsulta"
+                  label="Precio de consulta"
+                  type="number"
+                  fullWidth
+                  sx={{
+                    margin: isScreenSmall ? '40px' : '',
+                    width: '250px'
+                  }}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  }}
+                  value={form.precioConsulta}
+                  onChange={handleChange}
+                  helperText={
+                    error.precioConsulta ? (
+                      <Typography variant="inherit" color="error" style={{ maxWidth: '200px' }}>
+                        {error.precioConsulta}
+                      </Typography>
+                    ) : null
+                  }
+                  FormHelperTextProps={{ style: { maxWidth: '200px' } }}
                 // sx={{
                 //   height: '90px',
                 //   width: '250px',
                 // }}
-              />
-            </Grid>
+                />
+              </Grid>
             </Container>
             <Container
-            sx={{
-              display:'flex',
-              alignItems:'center',
-              justifyContent:'space-around',
-              width: '400px',
-              // border:'2px solid'
-            }}>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={showPassword}
-                    onChange={handleShowPassword}
-                    color="primary"
-                    label="Show Password"
-                  />
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+                width: '400px',
+                marginTop:'10px',
+                flexDirection: {
+                  mobile: 'column',
+                  tablet: 'row',
+                  laptop: 'row',
+                  desktop: 'row',
                 }
-                label="Ver contrasenas"
-              />
-            </Grid>
+              }}>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={showPassword}
+                      onChange={handleShowPassword}
+                      color="primary"
+                      label="Show Password"
+                    />
+                  }
+                  label="Ver contrasenas"
+                />
+              </Grid>
 
-            <Grid item xs={12}>
-              <CrearDoctor
-                type="submit"
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit}
-                disabled={
-                  error.apellido ||
-                  error.confirmarContrasena ||
-                  error.contrasena ||
-                  error.direccion ||
-                  error.dni ||
-                  error.email ||
-                  error.fotoMatricula ||
-                  error.idEspecialidad ||
-                  error.idObraSocial ||
-                  error.numeroMatricula ||
-                  error.precioConsulta ||
-                  error.telefono ||
-                  error.tituloUniversitario
-                }
-              >
-                Crear usuario
-              </CrearDoctor>
-            </Grid>
+              <Grid item xs={12}>
+                <CrearDoctor
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                  disabled={
+                    error.apellido ||
+                    error.confirmarContrasena ||
+                    error.contrasena ||
+                    error.direccion ||
+                    error.dni ||
+                    error.email ||
+                    error.fotoMatricula ||
+                    error.idEspecialidad ||
+                    error.idObraSocial ||
+                    error.numeroMatricula ||
+                    error.precioConsulta ||
+                    error.telefono ||
+                    error.tituloUniversitario
+                  }
+                >
+                  Crear usuario
+                </CrearDoctor>
+              </Grid>
             </Container>
           </Grid>
         </StyleForm>
