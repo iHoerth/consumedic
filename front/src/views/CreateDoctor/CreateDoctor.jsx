@@ -372,14 +372,14 @@ const CreateDoctor = () => {
           onSubmit={handleSubmit}
           style={{
             backgroundColor: 'rgba(255, 255, 255)',
-            marginTop:   isScreenMedium ? '250px': isScreenSmall ? '250px' : '350px' ,
+            marginTop:   isScreenMedium ? '230px': isScreenSmall ? '250px' : '256.4px' ,
           }}
           sx={{
             width: {
               mobile: '100%',
               tablet: '80%',
               laptop: '80%',
-              desktop: '80%',
+              desktop: '50%',
             }
           }}
         >
@@ -394,7 +394,7 @@ const CreateDoctor = () => {
               display: 'flex',
               flexWrap: 'wrap',
               justifyContent: 'space-around'
-            }}>
+              }}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
@@ -653,16 +653,16 @@ const CreateDoctor = () => {
                 />
               </Grid>
               {/* <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="status"
-              name="status"
-              label="Estado"
-              fullWidth
-              value={form.status}
-              onChange={handleChange}
-            />
-            </Grid> */}
+              <TextField
+                required
+                id="status"
+                name="status"
+                label="Estado"
+                fullWidth
+                value={form.status}
+                onChange={handleChange}
+              />
+              </Grid> */}
 
               <Grid item xs={12} sm={6}>
                 <TextField
