@@ -39,25 +39,43 @@ const Footer = () => {
 
   return (
     <footer
-    style={{
-      backgroundColor: theme.palette.primary.main,
-      paddingTop: '35px',
-      marginTop: 'auto',
-      textAlign: 'center',
-      padding: '10px',
-      scrollBehavior: 'smooth', // Hace que el scrolling sea más suave y lento
-    }}
+      style={{
+        backgroundColor: theme.palette.primary.main,
+        // paddingTop: '35px',
+        // marginTop: 'auto',
+        textAlign: 'center',
+        padding: '10px',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        scrollBehavior: 'smooth', // Hace que el scrolling sea más suave y lento
+      }}
     >
-      <Box display="flex" justifyContent="center" mt={2}>
+      <Box 
+      display="flex" 
+      justifyContent="space-beetwen" 
+      mt={2}
+      sx={{
+        width: {
+          desktop: '40%',
+          laptop: '50%',
+          tablet: '60%',
+          mobile: '80%',
+        }
+      }}
+      // backgroundColor='red'
+      >
         <Link
           value={currentPage}
           onChange={handleNavigation}
-         
+
           color="inherit"
           variant="body2"
           sx={{
-            pl: '40px',
-            pr: '40px',
+            cursor: 'pointer',
+            // pl: '40px',
+            // pr: '40px',
+            margin: 'auto',
             fontWeight: 700,
             textDecoration: 'none',
             color: 'white',
@@ -71,8 +89,10 @@ const Footer = () => {
           color="inherit"
           variant="body2"
           sx={{
-            pl: '40px',
-            pr: '40px',
+            cursor: 'pointer',
+            // pl: '40px',
+            // pr: '40px',
+            margin: 'auto',
             fontWeight: 700,
             textDecoration: 'none',
             color: 'white',
@@ -86,8 +106,10 @@ const Footer = () => {
           color="inherit"
           variant="body2"
           sx={{
-            pl: '40px',
-            pr: '40px',
+            cursor: 'pointer',
+            // pl: '40px',
+            // pr: '40px',
+            margin: 'auto',
             fontWeight: 700,
             textDecoration: 'none',
             color: 'white',
@@ -100,8 +122,10 @@ const Footer = () => {
           value="team"
           variant="body2"
           sx={{
-            pl: '40px',
-            pr: '40px',
+            cursor: 'pointer',
+            // pl: '40px',
+            // pr: '40px',
+            margin: 'auto',
             fontWeight: 700,
             textDecoration: 'none',
             color: 'white',
@@ -112,14 +136,27 @@ const Footer = () => {
         </Link>
       </Box>
       <Box display="flex" width="100%" justifyContent="center" mt={2}>
-      <Divider style={{ width: '25%', marginTop: '10px' }} />
+        <Divider style={{ width: '25%', marginTop: '10px' }} />
       </Box>
 
-      <Box display="flex" width="100%" justifyContent="center" mt={2}>
+      <Box 
+      // display="flex"
+        // justifyContent="center"
+        margin='auto'
+        padding='10px'
+        mt={2}
+        sx={{
+          width: {
+            desktop: '40%',
+            laptop: '50%',
+            tablet: '60%',
+            mobile: '80%',
+          }
+        }} >
         <Typography
           variant="body2"
-          align="center"
-          style={{ width: '25%', color: 'white' }}
+          textAlign="center"
+          style={{ color: 'white' }}
         >
           Nuestro objetivo es brindar un servicio eficiente y conveniente para agendar turnos médicos en línea. En nuestra plataforma, puedes encontrar y reservar citas con profesionales de la salud en diversos campos, ofreciéndote comodidad y flexibilidad en la gestión de tu atención médica.
         </Typography>
