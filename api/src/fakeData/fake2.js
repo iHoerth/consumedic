@@ -12,32 +12,23 @@ const dataFalsaDoctores = async () => {
         "Especialista En Toxicología",
         "Óptico",
         "Farmacólogo",
-        "Oncólogo Pediátrico",
-        "Urólogo Pediátrico",
         "Psicomotricista",
         "Protetista - Ortesista",
         "Optometría",
         "Radioterapeuta",
-        "Reumatólogo Pediátrico",
-        "Neumonólogo Pediátrico",
         "Enfermero",
-        "Dematólogo Pediátrico",
-        "Gastroenterólogo Pediátrico",
         "Médico Naturista",
         "Especialista En Medicina Nuclear",
         "Quiropráctico",
         "Bioquímico",
         "Endocrinólogo Pediátrico",
-        "Especialista En Terapia Intensiva",
         "Anestesista",
         "Podólogo",
-        "Terapista Ocupacional",
         "Diabetólogo",
         "Mastólogo",
         "Cirujano de Cabeza y Cuello",
         "Médico Rehabilitador",
         "Médico Estético",
-        "Cardiólogo Pediátrico",
         "Terapeuta Complementario",
         "Hepatólogo",
         "Genetista",
@@ -45,45 +36,28 @@ const dataFalsaDoctores = async () => {
         "Cirujano Torácico",
         "Médico Laboral",
         "Flebólogo",
-        "Cirujano Pediátrico",
         "Osteópata",
         "Geriatra",
         "Psicopedagogo",
-        "Cirujano Digestivo",
-        "Homeópata",
-        "Sexólogo",
         "Cirujano Cardiovascular",
         "Médico Deportólogo",
-        "Neurofisiólogo",
-        "Cirujano Vascular",
         "Analista Clínico",
         "Patólogo",
         "Nefrólogo",
         "Radiólogo",
         "Infectólogo",
-        "Oncólogo Pediátrico",
         "Cirujano Oral y Maxilofacial",
         "Obstetra",
         "Hematólogo",
-        "Reumatólogo Pediátrico",
-        "Médico General Y Familiar",
         "Neurocirujano",
-        "Psicoanalista",
         "Cirujano Plástico",
-        "Fonoaudiólogo",
-        "Alergista",
         "Kinesiólogo",
         "Nutricionista",
-        "Neumonólogo Pediátrico",
         "Neurólogo",
-        "Urólogo Pediátrico",
-        "Endocrinólogo Pediátrico",
         "Psiquiatra",
         "Cirujano General",
         "Pediatra",
-        "Gastroenterólogo Pediátrico",
         "Otorrino",
-        "Cardiólogo Pediátrico",
         "Oftalmólogo",
         "Dermatólogo",
         "Médico Clínico",
@@ -130,77 +104,6 @@ const dataFalsaDoctores = async () => {
         "OSCONARA",
         "OSCRAIA",
         "OSDE",
-        "OSDEL",
-        "OSDEM",
-        "OSDEPYM",
-        "OSDIC",
-        "OSDIPP",
-        "OSDOP",
-        "OSFYB",
-        "OSFYHC",
-        "OSIAD",
-        "OSIM",
-        "OSIPA",
-        "OSITAC",
-        "OSJERA",
-        "OSJOMN",
-        "OSJONR",
-        "OSJPVYF",
-        "OSLERA",
-        "OSLPASTEUR",
-        "OSLYF",
-        "OSLYF PATAGONIA",
-        "OSMA",
-        "OSMAD",
-        "OSMATA",
-        "OSME",
-        "OSMEDICA",
-        "OSMISS",
-        "OSMITA",
-        "OSMMEDT",
-        "OSOC",
-        "OSOETSYLARA",
-        "OSOFPP DE ROSARIO",
-        "OSOSS",
-        "OSPA",
-        "OSPACA",
-        "OSPACP",
-        "OSPAD",
-        "OSPADEP",
-        "OSPAF",
-        "OSPAGA",
-        "OSPAIL",
-        "OSPAÑA",
-        "OSPAP",
-        "OSPAT",
-        "OSPATCA",
-        "OSPAV",
-        "OSPA-VIAL",
-        "OSPCN",
-        "OSPCRA",
-        "OSPCSPMYA",
-        "OSPCYD",
-        "OSPDESBA",
-        "OSPE",
-        "OSPEA",
-        "OSPEC",
-        "OSPM",
-        "OSPOCE",
-        "OSTEP",
-        "OSTES",
-        "OSTIG",
-        "OSTP",
-        "OSTPBA",
-        "OSTPCHPYARA",
-        "OSTRAC",
-        "OSTVENDRA",
-        "OSTVLA",
-        "OSUCI",
-        "OSUOMRA",
-        "OSUTI",
-        "OSVARA",
-        "OSYPF",
-        "SERVESALUD",
       ];
     const fotosMujeres = [
         "https://res.cloudinary.com/dnykabhqk/image/upload/v1685482335/Fotos%20Mujeres/10-22_1603395416_uhyjkn.jpg",
@@ -415,38 +318,47 @@ const dataFalsaDoctores = async () => {
     
     //! Cuentas del proyecto
     //? Medico Consumedic
-    const doctor = await db.DoctorType.create({
-        dni: 9999999,
-        NumMatricula: 4534,
-        nombre: "Doctor",
-        apellido: "PF Henry",
-        email: "consumedicgeneral@gmail.com",
-        telefono: "99999999",
-        direccion: "Henry 2023",
-        imagen: `https://res.cloudinary.com/dnykabhqk/image/upload/v1685560208/Fotos%20Hombres/cec5bc7e-16dc-43ed-a931-5cc826675378_rwc_0x0x1916x1080x1916_qmt0gf.png`,
-        titulo: "Desarrollador Web",
-        Descripcion: "Cuenta maestra del Equipo del Proyecto",
-        precio: 5000,
-        password: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
-        isDoctor: true,
-        status: "deleted",
-        idEspecialidad: Math.floor(Math.random() *especialidades.length),
-        idObraSocial: Math.ceil(Math.random() * obrasSociales.length)
-    });
-
+    for (let i=0; i<1;i++){
+        const doctor = {
+            dni: 9999999,
+            NumMatricula: 4534,
+            nombre: "Doctor",
+            apellido: "PF Henry",
+            email: "consumedicgeneral@gmail.com",
+            telefono: "99999999",
+            direccion: "Henry 2023",
+            imagenCloudinary: `https://res.cloudinary.com/dnykabhqk/image/upload/v1685560208/Fotos%20Hombres/cec5bc7e-16dc-43ed-a931-5cc826675378_rwc_0x0x1916x1080x1916_qmt0gf.png`,
+            titulo: "Desarrollador Web",
+            Descripcion: "Cuenta maestra del Equipo del Proyecto",
+            precio: 5000,
+            hashedPassword: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
+            isDoctor: true,
+            status: "active",
+            idEspecialidad: Math.floor(Math.random() *especialidades.length),
+            idObraSocial: Math.ceil(Math.random() * obrasSociales.length)
+        };
+        const {dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagenCloudinary, hashedPassword, titulo, Descripcion, precio, idEspecialidad, idObraSocial} = doctor
+        await createDoctor(dni, NumMatricula, nombre, apellido, email, telefono, direccion, imagenCloudinary, hashedPassword, titulo, Descripcion, precio, idEspecialidad, idObraSocial )
+    }
+    
     //? Paciente Consumedic
-    const paciente = await db.PacienteType.create({
-        dni: 9999999,
-        email: "consumedicgeneral@gmail.com",
-        password: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
-        telefono: "99999999",
-        nombre: "Paciente",
-        apellido: "PF Henry",
-        isDoctor: false,
-        status: "deleted",
-        admin: true,
-        idObraSocial: Math.ceil(Math.random() * obrasSociales.length)
-    });
+    for(let i=0; i<1;i++){
+        const paciente ={
+            dni: 9999999,
+            email: "consumedicgeneral@gmail.com",
+            hashedPassword: "$2b$10$YI1irth0iZQ8R/dpFHv1G.VmvEQ/asKTJSYxlTkhWwpFwMTRzt0ze",
+            telefono: "99999999",
+            nombre: "Paciente",
+            apellido: "PF Henry",
+            isDoctor: false,
+            status: "deleted",
+            admin: true,
+            idObraSocial: Math.ceil(Math.random() * obrasSociales.length)
+        };
+        const {dni, email, hashedPassword, telefono, nombre, apellido, idObraSocial,status,admin}= paciente
+        await createPatient(dni, email, hashedPassword, telefono, nombre, apellido, idObraSocial,status,admin)
+
+    }
 
 
     //! doctores Random
@@ -507,6 +419,95 @@ const dataFalsaDoctores = async () => {
        
         await createPatient(dni, email, hashedPassword, telefono, nombre, apellido, idObraSocial,status)       
     }
+
+    //! citas random para los primeros 30 docs
+    const docs=30
+    for (let i = 0; i < docs*6; i++) {
+        function generarValorHorario() {
+          var horas = Math.floor(Math.random() * 3) + 9; // generar una hora aleatoria entre las 9 y las 12
+          var minutos = Math.random() < 0.5 ? "00" : "30"; // generar aleatoriamente "00" o "30" para los minutos
+          var segundos = "00"; // fijar los segundos en "00"
+          var valorHorario =
+            horas.toString().padStart(2, "0") + ":" + minutos + ":" + segundos; // formatear el valor horario en una cadena con formato HH-MM-SS
+          return valorHorario;
+        }
+        function generarFecha() {
+          var fechaInicio = new Date(); // fecha de inicio a partir de hoy
+          var fechaFin = new Date("2023-06-06"); // fecha de fin
+          var diasSemana = [1, 2, 3, 4, 5]; // lunes a viernes
+          var diaAleatorio =
+            diasSemana[Math.floor(Math.random() * diasSemana.length)]; // elegir un día aleatorio de la semana
+          fechaInicio.setDate(
+            fechaInicio.getDate() + ((diaAleatorio - fechaInicio.getDay() + 7) % 7)
+          ); // establecer la fecha de inicio en el próximo día aleatorio de la semana
+          var fechaAleatoria = new Date(
+            fechaInicio.getTime() +
+              Math.random() * (fechaFin.getTime() - fechaInicio.getTime())
+          ); // generar una fecha aleatoria entre la fecha de inicio y la fecha de fin
+          var fecha = fechaAleatoria.toISOString().slice(0, 10); // formatear la fecha en una cadena con formato YYYY-MM-DD
+          var diaSemana = [
+            "Domingo",
+            "Lunes",
+            "Martes",
+            "Miércoles",
+            "Jueves",
+            "Viernes",
+            "Sábado",
+          ][fechaAleatoria.getDay()]; // obtener el día de la semana correspondiente a la fecha aleatoria
+          return { fecha, diaSemana };
+        }
+        const fechas = generarFecha();
+        const horas = generarValorHorario();
+        const cita = await db.Cita.create({
+          fecha: fechas.fecha,
+          hora: horas,
+          descripcion: faker.lorem.word(),
+          status: "active",
+          DoctorTypeId: Math.ceil(Math.random() * docs),
+          PacienteTypeId: Math.ceil(Math.random() * docs),
+        });
+    }
+
+    //! opiniones para los primeros 30 docs
+    const opiniones = [
+        "Excelente atención y trato amable por parte del personal médico.",
+        "El doctor fue muy profesional y me explicó detalladamente mi diagnóstico.",
+        "Me sentí cómodo durante la consulta y el tratamiento fue efectivo.",
+        "El servicio en general fue rápido y eficiente, sin largas esperas.",
+        "Recomendaría este centro médico a mis amigos y familiares sin dudarlo.",
+        "Las instalaciones están limpias y bien equipadas, me transmitieron confianza.",
+        "El personal administrativo fue amigable y me ayudaron con todas mis dudas.",
+        "La enfermera fue muy gentil y cuidadosa al momento de aplicar el tratamiento.",
+        "El médico escuchó atentamente mis síntomas y me dio un tratamiento adecuado.",
+        "El servicio de atención al cliente fue excepcional, me sentí bien atendido.",
+        "El costo de la consulta fue razonable en comparación con otros lugares.",
+        "El ambiente en la sala de espera era tranquilo y confortable.",
+        "El médico me proporcionó opciones de tratamiento y me explicó los pros y contras.",
+        "Recibí resultados de mis análisis en poco tiempo, el laboratorio fue eficiente.",
+        "Me sentí bien informado sobre los pasos a seguir después de la consulta.",
+        "El personal de recepción fue amable y organizado, el proceso fue ágil.",
+        "El centro médico cuenta con un amplio horario de atención, muy conveniente.",
+        "La terapia que recibí me ayudó a mejorar mi condición notablemente.",
+        "La atención médica fue integral, abordaron todos los aspectos de mi salud.",
+        "La ubicación del centro médico es conveniente y de fácil acceso.",
+      ]
+    for (let i = 0; i < docs*2; i++) {
+        const idMedico = Math.ceil(Math.random() * docs);
+        const idPaciente = Math.ceil(Math.random() * docs);
+        const newPacient = await db.PacienteType.findByPk(idPaciente);
+        const newDoctor = await db.DoctorType.findByPk(idMedico);
+        const coment = Math.floor(Math.random() *opiniones.length)
+    
+        const opinion = await db.Opinion.create({
+          ubicacion: faker.address.city(),
+          puntaje: faker.datatype.number({ min: 2, max: 5 }),
+          mensaje: opiniones[coment],
+          DoctorTypeId: newDoctor.dataValues.id,
+          PacienteTypeId: newPacient.dataValues.id,
+
+        });
+      }
+
 
 }
 module.exports = {

@@ -90,7 +90,6 @@ const Pacientes = ({id}) => {
                             <TableCell key="nombre" align="left">Nombre y Apellido</TableCell>
                             {/* <TableCell key="apellido" align="center">Apellido</TableCell> */}
                             <TableCell align="center">DNI</TableCell>
-                            <TableCell align="center">Obra Social</TableCell>
                             <TableCell align="center">Telefono</TableCell>
                             <TableCell align="center">Correo</TableCell>
                             <TableCell align="center">Historial</TableCell>
@@ -103,7 +102,6 @@ const Pacientes = ({id}) => {
                                     <TableCell align="left">{paciente.nombre} {paciente.apellido}</TableCell>
                                     {/* <TableCell align="center">{paciente.apellido}</TableCell> */}
                                     <TableCell align="center">{paciente.dni}</TableCell>
-                                    <TableCell align="center">{paciente.ObraSocialId.nombre}</TableCell>
                                     <TableCell align="center">{paciente.telefono}</TableCell>
                                     <TableCell align="center">{paciente.email}</TableCell>
                                     <TableCell align="center"><Button id={paciente.id} onClick={handleClick}  color="secondary" variant="outlined" size="small" >Ver Historial</Button></TableCell>

@@ -78,7 +78,7 @@ const HistorialPaciente = () => {
     const [values, setValues] = useState({
         nombreDoctor: doctorDetail.nombre,
         apellidoDoctor: doctorDetail.apellido,
-        emailRecibe: "consumedicgeneral@gmail.com", //! modificar a "mailPaciente"
+        emailRecibe: patientDetail.email,
         emailEscribe: mailDoctor,
         subjectDocumento: `El Doctor ${doctorDetail.nombre} ${doctorDetail.apellido} ha registrado un documento`,
         messageDocumento: `Estimado ${patientDetail.nombre} ${patientDetail.apellido}:

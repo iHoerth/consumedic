@@ -52,8 +52,8 @@ export const members = [
     role: 'Backend',
     img: 'https://i.ibb.co/HFQrF87/facu.jpg',
     //description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
-    linkedin: 'https://www.linkedin.com',
-    github: 'https://github.com/',
+    linkedin: 'https://www.linkedin.com/in/facundo-aragon-00919459/',
+    github: 'https://github.com/facuaragon',
   },
 
 
@@ -67,8 +67,8 @@ export const members = [
     role: 'Frontend',
     img: 'https://i.ibb.co/98H5xkg/noe.jpg',
     //description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
-    linkedin: 'https://www.linkedin.com',
-    github: 'https://github.com/',
+    linkedin: 'https://www.linkedin.com/in/noelia-paz-055a67238',
+    github: 'https://github.com/Noelia-Paz',
   },
   //////////////////////////////
   
@@ -102,12 +102,13 @@ export const members = [
     role: 'Backend',
     img: 'https://i.ibb.co/myr3XMG/roli.jpg',
     //description: 'Texto descriptivo texto descriptivo. Texto descriptivo texto descriptivo',
-    linkedin: 'https://www.linkedin.com',
-    github: 'https://github.com/',
+    linkedin: 'https://www.linkedin.com/in/roloegus',
+    github: 'https://github.com/roloegus',
   },
   ///////////////////////////////////////
   {
     id: 1,
+  phrase:'❝ Aprender es un proceso constante de descubrimiento que nunca concluye ❞',
     name: 'Ignacio Hoerth',
     role: 'Frontend',
     img: 'https://i.ibb.co/Br1ZVfb/igna.jpg',
