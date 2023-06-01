@@ -459,7 +459,7 @@ const ContextProvider = ({ children }) => {
           patientDetail: { ...data },
         }));
       } catch (error) {
-        console.log(error);
+        throw error
       }
     },
 
