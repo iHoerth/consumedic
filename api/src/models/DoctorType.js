@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-
+const bcrypt = require("bcrypt");
 module.exports = (sequelize) => {
   sequelize.define(
     "DoctorType",
@@ -12,11 +12,10 @@ module.exports = (sequelize) => {
       },
       dni: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull:true,
       },
       NumMatricula: {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
       nombre: {
         type: DataTypes.STRING,
@@ -33,15 +32,12 @@ module.exports = (sequelize) => {
       },
       telefono: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       direccion: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       imagen: {
         type: DataTypes.STRING,
-        allowNull: false,
         // public_id: {
         //   type: DataTypes.STRING,
         //   allowNull: false
@@ -50,22 +46,17 @@ module.exports = (sequelize) => {
         //   type: DataTypes.STRING,
         //   allowNull: false
         // }
+        
       },
-      password: {
+      password: { 
         type: DataTypes.STRING,
         allowNull: false,
-        set(value) {
-          const hashedPassword = bcrypt.hashSync(value, 10);
-          this.setDataValue('password', hashedPassword);
-        },
       },
       titulo: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       Descripcion: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       isDoctor: {
         type: DataTypes.BOOLEAN,
@@ -74,12 +65,11 @@ module.exports = (sequelize) => {
       },
       status: {
         type: DataTypes.ENUM,
-        values: ["active", "deleted"],
+        values: ["active", "deleted", "incomplete"],
         defaultValue: "active",
       },
       precio: {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
       deletedAt: {
         type: DataTypes.DATE,

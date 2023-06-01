@@ -8,7 +8,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, Box, Typography, Divider } from '@mui/material';
+import SearchIcon from "@mui/icons-material/Search";
+import { Button, Box, Typography, Divider, TextField } from '@mui/material';
 
 
 
@@ -17,6 +18,9 @@ const Pacientes = ({id}) => {
     const {fetchPatientById } = useContext(Context)[1];
     const {fetchDoctorById} = useContext(Context)[0];
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredPatients, setFilteredPatients] = useState([]);
+    const [fetched, setfetched] = useState(false);
 
     useEffect(() => {
           const search = async () => {
@@ -24,6 +28,21 @@ const Pacientes = ({id}) => {
           }
           search()
     }, []);
+    useEffect(() => {
+        if (pacientes.length === 0 && !fetched) {
+          fetchPacientes();
+          setfetched(true);
+        } else {
+          setLoading(false);
+        }
+      }, [pacientes]);
+    useEffect(() => {
+    const filtered = pacientes.filter((paciente) =>
+        (paciente.nombre+" "+paciente.apellido).toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredPatients(filtered);
+    }, [searchQuery, pacientes]);
+    
 
 
     const handleClick = async (event) =>{
@@ -37,8 +56,31 @@ const Pacientes = ({id}) => {
     
     return ( 
         <>
-            <Box style={{display:"flex", flexDirection:"row", justifyContent:"center", padding:"0px 0 10px 0"}}>
+            <Box style={{display:"flex", flexDirection:"row", justifyContent:"space-around", padding:"0px 0 10px 0"}}>
                 <Typography style={{fontSize:"larger", fontWeight:"600"}}>Listado de Pacientes</Typography>
+                <Box
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        marginTop: "0px",
+                    }}
+                    >
+                    <TextField
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Buscar por nombre"
+                        size="small"
+                        sx={{
+                        border: "2px solid white",
+                        borderRadius: "3px",
+                        color: "white",
+                        }}
+                        InputProps={{
+                        endAdornment: <SearchIcon sx={{ color: "gray" }} />,
+                        }}
+                    />
+                    </Box>
             </Box>
             <Divider />
             <TableContainer component={Paper}>
@@ -48,23 +90,21 @@ const Pacientes = ({id}) => {
                             <TableCell key="nombre" align="left">Nombre y Apellido</TableCell>
                             {/* <TableCell key="apellido" align="center">Apellido</TableCell> */}
                             <TableCell align="center">DNI</TableCell>
-                            <TableCell align="center">Obra Social</TableCell>
                             <TableCell align="center">Telefono</TableCell>
                             <TableCell align="center">Correo</TableCell>
                             <TableCell align="center">Historial</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                            { !pacientes?.length ? "No hay turnos para mostrar"
-                             : pacientes.map(paciente => (
+                            { !filteredPatients?.length ? "No hay pacientes para mostrar"
+                             : filteredPatients.map(paciente => (
                                 <TableRow>
                                     <TableCell align="left">{paciente.nombre} {paciente.apellido}</TableCell>
                                     {/* <TableCell align="center">{paciente.apellido}</TableCell> */}
                                     <TableCell align="center">{paciente.dni}</TableCell>
-                                    <TableCell align="center">{paciente.ObraSocialId.nombre}</TableCell>
                                     <TableCell align="center">{paciente.telefono}</TableCell>
                                     <TableCell align="center">{paciente.email}</TableCell>
-                                    <TableCell align="center"><Button id={paciente.id} onClick={handleClick} variant="outlined" size="small" >Ver Historial</Button></TableCell>
+                                    <TableCell align="center"><Button id={paciente.id} onClick={handleClick}  color="secondary" variant="outlined" size="small" >Ver Historial</Button></TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>

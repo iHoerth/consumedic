@@ -21,16 +21,9 @@ const getAllPatientsByDoctor = async (id) => {
         const paciente = await PacienteType.findOne({ 
             where: { 
                 id: patients[i],
-                status: "active"
             },
             attributes: {exclude: ['password', "status", "isDoctor"]},
          });
-         const obraSocial = await ObraSocial.findOne({
-            where: {
-              id: paciente.ObraSocialId
-            }
-         })
-         paciente.ObraSocialId=obraSocial
         patientsDetails.push(paciente)
     }
     return patientsDetails;

@@ -17,13 +17,16 @@ const theme = createTheme({
     primary: {
       main: blue[500],
       light: lightBlue['400'],
-      dark: blue[800],
+      dark: blue[600],
     },
     secondary: {
       main: cyan[200],
       light: teal['A100'],
       dark: teal[500],
     },
+    background:{
+      main: '#F8F9F9'
+    }
   },
   typography: {
     fontFamily: `'Poppins', "Roboto", "Helvetica", "Arial", 'sans-serif'`,

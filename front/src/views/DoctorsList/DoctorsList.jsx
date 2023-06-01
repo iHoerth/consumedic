@@ -43,7 +43,7 @@ const DoctorsList = () => {
       <NavBar />
       <Box
         sx={{
-        
+          backgroundColor: theme.palette.background.main,
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
@@ -80,10 +80,14 @@ const DoctorsList = () => {
           <Box
             sx={{
               width: '100%',
+              display:"flex",
+              alignItems:"center",
+              flexDirection:'column'
             }}
           >
             <CardsContainer doctorsInPage={doctorsInPage} />
             <Pagination
+              sx={{margin:'100px'}}
               maxPages={maxPages}
               page={currentPage}
               handlePageChange={handlePageChange}

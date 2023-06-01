@@ -1,14 +1,12 @@
-import { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../../context/ContextProvider";
-import { DataGrid } from "@material-ui/data-grid";
-import { Icon } from "@mui/material";
 import { Edit as EditIcon } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
-import { CheckCircle } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { CheckCircle } from "@mui/icons-material";
+import Loading from "../../Loading/Loading";
 import {
   Box,
-  Skeleton,
   Modal,
   Button,
   TextField,
@@ -16,29 +14,47 @@ import {
   Paper,
   Avatar,
   Typography,
+  Snackbar,
+  Alert,
+  AlertTitle,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 
 const MyDoctors = () => {
   const theme = useTheme();
   const { informacion, fetchPatientData } = useContext(Context)[5];
-  const { opinions, getOpinionsByPaciente, postOpinions, patientDetail } =
+  const { deleteAppointmentById } = useContext(Context)[4];
+  const { opinions, postOpinions, patientDetail, getOpinionsByPaciente } =
     useContext(Context)[1];
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [infoData, setInfoData] = useState([]);
   const [opinionsSent, setOpinionsSent] = useState({});
+  const [appointments, setAppointments] = useState([]);
   const [opinionText, setOpinionText] = useState({
     opinion: "",
     rating: 0,
   });
+
+  //alerts
+  const [snackOk, setSnackOk] = useState(false);
+  const [snackFail, setSnackFail] = useState(false);
+  const [snackInfo, setSnackInfo] = useState(false);
+  const [snackOkMensaje, setSnackOkMensaje] = useState("");
+  const [snackFailMensaje, setSnackFailMensaje] = useState("");
+  const [snackInfoMensaje, setSnackInfoMensaje] = useState("");
 
   useEffect(() => {
     setLoading(true);
     fetchPatientData(patientDetail.id).then(() => {
       setLoading(false);
     });
-    getOpinionsByPaciente(patientDetail.id);
 
     if (!!informacion.length) {
       setLoading(false);
@@ -46,8 +62,15 @@ const MyDoctors = () => {
   }, [patientDetail.id]);
 
   useEffect(() => {
+    if (!!informacion.length) {
+      setAppointments(informacion);
+      setLoading(false);
+    }
+  }, [informacion]);
+
+  useEffect(() => {
     const opinionsSent = opinions.reduce((acc, opinion) => {
-      const doctorId = opinion.DoctorType.id; // Obtener el valor de doctorId desde DoctorType.id
+      const doctorId = opinion.DoctorType.id;
       acc[doctorId] = true;
       return acc;
     }, {});
@@ -70,85 +93,7 @@ const MyDoctors = () => {
     }
   });
 
-  const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    {
-      field: "nombre",
-      headerName: "Nombre",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "apellido",
-      headerName: "Apellido",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "especialidad",
-      headerName: "Especialidad",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "telefono",
-      headerName: "Telefono",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      width: 220,
-      editable: true,
-    },
-    {
-      field: "opinion",
-      headerName: "Agregar Opinión",
-      width: 180,
-      editable: true,
-      renderCell: (params) => (
-        <Icon>
-          {opinionsSent[params.row.id] ? (
-            <CheckCircle
-              sx={{
-                color: theme.palette.primary.main,
-              }}
-            />
-          ) : (
-            <EditIcon
-              sx={{
-                color: theme.palette.primary.main,
-              }}
-              variant="contained"
-              onClick={() => handleOpenModal(params.row.id)}
-            />
-          )}
-        </Icon>
-      ),
-    },
-    {
-      field: "eliminar",
-      headerName: "Eliminar",
-      width: 150,
-      editable: false,
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          startIcon={
-            <DeleteIcon
-              sx={{
-                color: theme.palette.primary.main,
-              }}
-            />
-          }
-        ></Button>
-      ),
-    },
-  ];
-  //onClick={() => handleDelete(params.row.id)}
-
-  const informacionData = informacion.map((item) => {
+  const informacionData = appointments.map((item) => {
     const especialidades = item.Especialidads.map((especialidad) => ({
       especialidad: especialidad.name,
     }));
@@ -157,18 +102,22 @@ const MyDoctors = () => {
       (especialidad) => especialidad.especialidad
     );
     return {
+      idCita: item.Cita[0].id,
       id: item.id,
+      imagen: item.imagen,
+      precio: item.precio,
       apellido: item.apellido,
       especialidad: especialidadName,
       nombre: item.nombre,
       telefono: item.telefono,
       email: item.email,
-      opinion: "", // Agregar una propiedad para almacenar la opinión del médico
+      direccion: item.direccion,
+      opinion: "",
     };
   });
 
   const handleOpenModal = (doctorId) => {
-    setSelectedId(doctorId); // Guarda el ID del doctor seleccionado en el estado local
+    setSelectedId(doctorId);
     setOpenModal(true);
   };
 
@@ -184,10 +133,8 @@ const MyDoctors = () => {
       return item;
     });
 
-    // Actualiza el estado con la nueva información
     setInfoData(updatedInformacionData);
 
-    // Cierra el modal y reinicia el estado de la opinión
     handleCloseModal();
     setOpinionText({});
 
@@ -201,149 +148,283 @@ const MyDoctors = () => {
       !opinionText.opinion ||
       opinionText.opinion.trim() === ""
     ) {
-      alert("Por favor, complete todos los campos");
+      setSnackInfoMensaje("Por favor, complete todos los campos");
+      setSnackInfo(true);
       return;
     } else if (opinionsSent[selectedId]) {
-      alert("Ya has enviado una opinión a este médico.");
+      setSnackInfoMensaje("Ya has enviado una opinión a este médico.");
+      setSnackInfo(true);
       return;
     } else {
       postOpinions({ ubicacion, puntaje, mensaje, idMedico, idPaciente })
         .then((data) => {
-          alert(data.message);
+          setSnackOkMensaje("Opinion Registrada! Ver en Opiniones");
+          setSnackOk(true);
           setOpinionsSent((prevOpinionsSent) => ({
             ...prevOpinionsSent,
             [selectedId]: true,
           }));
+          getOpinionsByPaciente(patientDetail.id);
         })
         .catch((error) => {
-          alert(error.message);
+          setSnackFailMensaje("No se ha podido registrar la opinion");
+          setSnackFail(true);
         });
     }
   };
 
+  const handleDelete = (citaId) => {
+    deleteAppointmentById(citaId)
+      .then((data) => {
+        setSnackOkMensaje("Eliminado con exito!");
+        setSnackOk(true);
+        fetchPatientData(patientDetail.id);
+      })
+      .catch((error) => {
+        setSnackFailMensaje("No se ha podido eliminar el doctor");
+        setSnackFail(true);
+      });
+  };
+
   return (
     <>
-      <Box>Estos son los doctores consultados</Box>
       {loading ? (
-        <div>Cargando</div>
+        <Loading />
       ) : (
-        <Box sx={{ height: 400, width: "100%" }}>
-          {!informacion.length ? (
-            <>
-              <Skeleton>No datos para mostrar</Skeleton>
-            </>
+        <>
+          <Typography
+            sx={{ mb: 1.5, p: 1 }}
+            color="text.secondary"
+            align="center"
+          >
+            Historial de Medicos Consultados
+          </Typography>
+
+          {!informacionData.length ? (
+            <Typography variant="body1" align="center">
+              No hay medicos consultados para mostrar en este momento.
+            </Typography>
           ) : (
             <>
-              <Modal open={openModal} onClose={handleCloseModal}>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: 400,
-                    bgcolor: "background.paper",
-                    border: "2px solid #000",
-                    boxShadow: 24,
-                    p: 4,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      height: 30,
-                      pl: 2,
-                      bgcolor: theme.palette.primary.main,
-                      borderRadius: "10px",
-                      p: "25px",
-                      width: "100%",
-                    }}
-                  >
-                    {informacion.map((item) => {
-                      if (item.id === selectedId) {
-                        return <Avatar src={item.imagen}></Avatar>;
-                      }
-                    })}
-
-                    {informacion.map((item) => {
-                      if (item.id === selectedId) {
-                        return (
-                          <Typography
-                            sx={{
-                              color: "white",
-                              pl: "30px",
+              <TableContainer component={Paper} style={{ maxHeight: 400 }}>
+                <Table stickyHeader>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Médico</TableCell>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Telefono</TableCell>
+                      <TableCell>Ubicación</TableCell>
+                      <TableCell>Precio</TableCell>
+                      <TableCell align="center">Agregar opinion</TableCell>
+                      <TableCell align="center">Eliminar Doctor</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {informacionData.map((item) => (
+                      <TableRow key={item.id}>
+                        <TableCell>
+                          <Box display="flex" alignItems="center">
+                            <Avatar src={item.imagen} alt="img" />
+                            <Typography variant="subtitle1" marginLeft={"10px"}>
+                              {item.nombre + " " + item.apellido}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>{item.email}</TableCell>
+                        <TableCell>{item.telefono}</TableCell>
+                        <TableCell>{item.direccion}</TableCell>
+                        <TableCell>$ {item.precio}</TableCell>
+                        <TableCell align="center">
+                          {opinionsSent[item.id] ? (
+                            <CheckCircle
+                              sx={{
+                                color: theme.palette.primary.main,
+                              }}
+                              onClick={() => {
+                                setSnackInfoMensaje(
+                                  "Ya has enviado una opinión a este médico."
+                                );
+                                setSnackInfo(true);
+                              }}
+                            />
+                          ) : (
+                            <EditIcon
+                              sx={{
+                                color: theme.palette.primary.main,
+                              }}
+                              variant="contained"
+                              onClick={() => handleOpenModal(item.id)}
+                            />
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Button
+                            startIcon={
+                              <DeleteIcon
+                                sx={{
+                                  color: theme.palette.primary.main,
+                                }}
+                              />
+                            }
+                            onClick={() => {
+                              handleDelete(item.idCita);
+                              setAppointments(
+                                appointments.filter(
+                                  (item) => item.Cita[0].id !== item.idCita
+                                )
+                              );
                             }}
-                          >
-                            {item.nombre + " " + item.apellido}
-                          </Typography>
-                        );
-                      }
-                    })}
-                  </Paper>
-                  <Rating
-                    sx={{
-                      color: theme.palette.primary.main,
-                      mt: "20px",
-                      mb: "20px",
-                    }}
-                    name="rating"
-                    value={opinionText.rating} // Asignar el valor de rating desde el estado opinionText
-                    onChange={(event, newValue) =>
-                      setOpinionText((prevOpinionText) => ({
-                        ...prevOpinionText,
-                        rating: newValue,
-                      }))
-                    }
-                  />
+                          ></Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
 
-                  <TextField
-                    label="Opinión"
-                    multiline
-                    rows={4}
-                    value={opinionText.opinion} // Asignar el valor de opinion desde el estado opinionText
-                    onChange={(e) =>
-                      setOpinionText((prevOpinionText) => ({
-                        ...prevOpinionText,
-                        opinion: e.target.value,
-                      }))
-                    }
-                    fullWidth
-                  />
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    onClick={handleAddOpinion}
-                    style={{
-                      padding: "8px",
-                      margin: "20px",
-                      color: "white",
-                      backgroundColor: theme.palette.primary.main,
-                      borderRadius: "10px",
+                <Modal open={openModal} onClose={handleCloseModal}>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: 400,
+                      bgcolor: "background.paper",
+                      border: "2px solid #000",
+                      boxShadow: 24,
+                      p: 4,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
                     }}
                   >
-                    Agregar opinion
-                  </Button>
-                </Box>
-              </Modal>
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        height: 30,
+                        pl: 2,
+                        bgcolor: theme.palette.primary.main,
+                        borderRadius: "10px",
+                        p: "25px",
+                        width: "100%",
+                      }}
+                    >
+                      {informacion.map((item) => {
+                        if (item.id === selectedId) {
+                          return <Avatar src={item.imagen}></Avatar>;
+                        }
+                      })}
+                      {informacion.map((item) => {
+                        if (item.id === selectedId) {
+                          return (
+                            <Typography
+                              sx={{
+                                color: "white",
+                                pl: "30px",
+                              }}
+                            >
+                              {item.nombre + " " + item.apellido}
+                            </Typography>
+                          );
+                        }
+                      })}
+                    </Paper>
+                    <Rating
+                      sx={{
+                        color: theme.palette.primary.main,
+                        mt: "20px",
+                        mb: "20px",
+                      }}
+                      name="rating"
+                      value={opinionText.rating}
+                      onChange={(event, newValue) =>
+                        setOpinionText((prevOpinionText) => ({
+                          ...prevOpinionText,
+                          rating: newValue,
+                        }))
+                      }
+                    />
 
-              <DataGrid
-                disableSelectionOnClick
-                rows={informacionData}
-                columns={columns}
-                pageSize={5}
-                checkboxSelection
-                rowsPerPageOptions={[5, 10, 20]}
-              />
+                    <TextField
+                      label="Opinión"
+                      multiline
+                      rows={4}
+                      value={opinionText.opinion}
+                      onChange={(e) =>
+                        setOpinionText((prevOpinionText) => ({
+                          ...prevOpinionText,
+                          opinion: e.target.value,
+                        }))
+                      }
+                      fullWidth
+                    />
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      onClick={handleAddOpinion}
+                      style={{
+                        padding: "8px",
+                        margin: "20px",
+                        color: "white",
+                        backgroundColor: theme.palette.primary.main,
+                        borderRadius: "10px",
+                      }}
+                    >
+                      Agregar opinion
+                    </Button>
+                  </Box>
+                </Modal>
+                <Snackbar
+                  open={snackOk}
+                  autoHideDuration={2500}
+                  onClose={() => {
+                    setSnackOk(false);
+                    setSnackOkMensaje("");
+                  }}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Alert severity="success" variant="filled">
+                    <AlertTitle>Mensaje Exitoso</AlertTitle>
+                    {snackOkMensaje}
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={snackFail}
+                  autoHideDuration={2500}
+                  onClose={() => {
+                    setSnackFail(false);
+                    setSnackFailMensaje("");
+                  }}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Alert severity="error" variant="filled">
+                    <AlertTitle>Mensaje de Error</AlertTitle>
+                    {snackFailMensaje}
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={snackInfo}
+                  autoHideDuration={2500}
+                  onClose={() => {
+                    setSnackInfo(false);
+                    setSnackInfoMensaje("");
+                  }}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Alert severity="info" variant="filled">
+                    <AlertTitle>Mensaje de Informacion</AlertTitle>
+                    {snackInfoMensaje}
+                  </Alert>
+                </Snackbar>
+              </TableContainer>
             </>
           )}
-        </Box>
+        </>
       )}
     </>
   );
 };
+
 export default MyDoctors;

@@ -8,7 +8,11 @@ const { restorePatient } = require("../controllers/patients/restorePatient");
 const {
   getSoftDeletedPatient,
 } = require("../controllers/patients/getSoftDeletedPatient");
+const {
+  modifyPatientProfile,
+} = require("../controllers/patients/modifyPatientProfile");
 const { generateRandomPassword } = require("../utils/generateRandomPw");
+const { sendMailPassword } = require("../controllers/mail/sendMailPassword")
 
 const bcrypt = require("bcrypt");
 
@@ -34,22 +38,25 @@ const getPatientsById = async (req, res) => {
 };
 
 const postPatient = async (req, res) => {
+  let {
+    loggedFromGoogle,
+    dni,
+    email,
+    password,
+    telefono,
+    nombre,
+    apellido,
+    idObraSocial,
+    status,
+  } = req.body;
   try {
-    let {
-      loggedFromGoogle,
-      dni,
-      email,
-      password,
-      telefono,
-      nombre,
-      apellido,
-      idObraSocial,
-      status,
-    } = req.body;
-
     if (loggedFromGoogle) {
       password = generateRandomPassword();
-      console.log(password);
+      console.log('** && **', password);
+      const sendMail = async (email, password) => {
+        await sendMailPassword(email, password)
+      }
+      sendMail(email, password)
       dni = null;
       telefono = null;
       idObraSocial = null;
@@ -132,6 +139,28 @@ const getSoftDeletedPatients = async (req, res) => {
   }
 };
 
+const editPatientProfile = async (req, res) => {
+  try {
+    const { id, dni, email, telefono, nombre, apellido, status } = req.body;
+
+    let ObraSocialId = req.body.ObraSocial.id;
+
+    const result = await modifyPatientProfile({
+      id,
+      dni,
+      email,
+      telefono,
+      nombre,
+      apellido,
+      ObraSocialId,
+      status,
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getPatients,
   getPatientsById,
@@ -140,4 +169,5 @@ module.exports = {
   deletePatients,
   getSoftDeletedPatients,
   restorePatients,
+  editPatientProfile,
 };

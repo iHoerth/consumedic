@@ -50,9 +50,13 @@ const AboutUs = () => {
               }
               title={
                 <>
+                <Typography variant="h9" sx={{ display: 'flex', flexWrap: 'wrap', fontWeight: 'bold' }}>
+  {member.phrase}
+</Typography>
                   <Typography sx={{ display: 'flex', width: '20px' }} variant="h6">
                     {member.name}
                   </Typography>
+                  
                   <Typography variant="h7">{member.role}</Typography>
                 </>
               }

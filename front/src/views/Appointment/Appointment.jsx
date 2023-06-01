@@ -48,7 +48,7 @@ const Appointment = () => {
     } else {
       setLoading(false);
     }
-  }, [loading, patientDetail]);
+  }, [loading,]);
 
   return (
     <>
@@ -75,7 +75,7 @@ const Appointment = () => {
         ) : vista === 'Reserva' ? (
           <Reserva />
         ) : vista === 'Aprobado' ? (
-          <Aceptado idPaciente={patientDetail.id} />
+          <Aceptado />
         ) : vista === 'Rechazado' ? (
           <Rechazado />
         ) : null}

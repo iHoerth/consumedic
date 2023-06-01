@@ -16,19 +16,33 @@ import {
   Divider,
   Typography,
   Pagination,
+  Snackbar,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const EditarPacientes = () => {
-  const { patients, fetchPatients, fetchPatientByEmail, deletePatient } =
-    useContext(Context)[1];
+  const {
+    patients,
+    fetchPatients,
+    fetchPatientByEmail,
+    deletePatient,
+    fetchSoftDeletedPatient,
+  } = useContext(Context)[1];
   const { setVista, setEmail } = useContext(Context)[6];
 
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
+
+  //Alerts
+  const [snackOk, setSnackOk] = useState(false);
+  const [snackFail, setSnackFail] = useState(false);
+  const [snackOkMensaje, setSnackOkMensaje] = useState("");
+  const [snackFailMensaje, setSnackFailMensaje] = useState("");
 
   const [fetched, setfetched] = useState(false);
   useEffect(() => {
@@ -51,7 +65,7 @@ const EditarPacientes = () => {
     const email = event.target.id;
     fetchPatientByEmail(email);
     setEmail(email);
-    setVista(3);
+    setVista(5);
   };
 
   const handleClickDelete = (id) => {
@@ -59,11 +73,15 @@ const EditarPacientes = () => {
       .then(() => {
         // Eliminación exitosa, actualizar la lista de pacientes
         fetchPatients();
-        alert("El paciente ha sido eliminado exitosamente.");
+        fetchSoftDeletedPatient();
+        setSnackOkMensaje("El paciente ha sido eliminado exitosamente.");
+        setSnackOk(true);
       })
       .catch((error) => {
         console.log("Error al eliminar el paciente:", error);
         // Manejar el error de eliminación del paciente
+        setSnackFailMensaje("No se ha podido eliminar el paciente!");
+        setSnackFail(true);
       });
   };
 
@@ -79,30 +97,61 @@ const EditarPacientes = () => {
     setCurrentPage(value);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  
 
   return (
     <>
+      <Snackbar
+        open={snackOk}
+        autoHideDuration={2500}
+        onClose={() => {
+          setSnackOk(false);
+          setSnackOkMensaje("");
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="success" variant="filled">
+          <AlertTitle>Mensaje Exitoso</AlertTitle>
+          {snackOkMensaje}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={snackFail}
+        autoHideDuration={2500}
+        onClose={() => {
+          setSnackFail(false);
+          setSnackFailMensaje("");
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="error" variant="filled">
+          <AlertTitle>Mensaje de Error</AlertTitle>
+          {snackFailMensaje}
+        </Alert>
+      </Snackbar>
       <Box
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center",
-          padding: "1px 0 0px 0",
+          justifyContent: "space-around",
+          aligenItems: "center",
+          padding: "20px",
+          backgroundColor: "#009BFF",
+          borderRadius: "3px",
+          marginRight: "16px",
+          marginLeft: "16px",
+          marginBottom: "30px",
         }}
       >
         <Typography
           style={{
             fontSize: "larger",
             fontWeight: "600",
-            backgroundColor: "#009BFF",
+            color: "white",
+            marginTop: "10px",
           }}
         >
           Listado de Pacientes
         </Typography>
-      </Box>
-      <Divider />
-      <Container>
         <Box
           style={{
             display: "flex",
@@ -115,14 +164,19 @@ const EditarPacientes = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Buscar por nombre"
-            variant="outlined"
             size="small"
-            sx={{ backgroundColor: "#009BFF" }}
+            sx={{
+              border: "2px solid white",
+              borderRadius: "3px",
+              color: "white",
+            }}
             InputProps={{
-              endAdornment: <SearchIcon />,
+              endAdornment: <SearchIcon sx={{ color: "white" }} />,
             }}
           />
         </Box>
+      </Box>
+      <Container>
         <TableContainer component={Paper}>
           <Table>
             <TableHead
@@ -156,6 +210,9 @@ const EditarPacientes = () => {
                       onClick={handleClick}
                       variant="outlined"
                       size="small"
+                      style={{
+                        marginRight: "40px",
+                      }}
                     >
                       Acceder
                     </Button>
@@ -186,6 +243,7 @@ const EditarPacientes = () => {
             page={currentPage}
             onChange={handlePageChange}
             size="small"
+            color="primary"
           />
         </Box>
       </Container>

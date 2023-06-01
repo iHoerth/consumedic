@@ -9,6 +9,7 @@ const {
   getSoftDeletedPatients,
   restorePatients,
   deletePatients,
+  editPatientProfile,
 } = require("../handlers/patients");
 
 const patientsRouter = Router();
@@ -25,6 +26,7 @@ patientsRouter.post("/login", loginPatient);
 patientsRouter.put("/", putPatient);
 
 patientsRouter.put("/restore/:id", restorePatients);
+patientsRouter.put("/profile", editPatientProfile);
 
 //DELETE
 patientsRouter.delete("/:id", deletePatients);

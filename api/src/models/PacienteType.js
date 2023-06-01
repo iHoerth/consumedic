@@ -22,10 +22,6 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-        set(value) {
-          const hashedPassword = bcrypt.hashSync(value, 10);
-          this.setDataValue("password", hashedPassword);
-        },
       },
       telefono: {
         type: DataTypes.STRING,

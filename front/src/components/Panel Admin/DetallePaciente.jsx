@@ -18,54 +18,58 @@ import KeyIcon from "@mui/icons-material/Key";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import Grid3x3Icon from "@mui/icons-material/Grid3x3";
 const DetallePaciente = () => {
-  const { fetchPatients, patientDetail, fetchPatientByEmail, deletePatient } =
-    useContext(Context)[1];
-  const { setVista, email } = useContext(Context)[6];
-
+  const {
+    restorePatient,
+    fetchPatients,
+    patientDetail,
+    fetchPatientByEmail,
+    deletePatient,
+    fetchSoftDeletedPatient,
+  } = useContext(Context)[1];
+  const { setVista, email, setAdmin } = useContext(Context)[6];
+  const { session } = useContext(Context)[2];
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!patientDetail) {
-      fetchPatientByEmail(email);
+      fetchPatientByEmail(patientDetail.email);
     } else {
       setLoading(false);
     }
   }, [patientDetail]);
 
   const handleClickDelete = (id) => {
-    deletePatient(id)
-      .then(() => {
-        // Eliminación exitosa, actualizar la lista de pacientes
-        fetchPatients();
-        alert("El paciente ha sido eliminado exitosamente.");
-      })
-      .catch((error) => {
-        console.log("Error al eliminar el paciente:", error);
-        // Manejar el error de eliminación del paciente
-      });
+    if (patientDetail.deletedAt) {
+      restorePatient(id)
+        .then(() => {
+          // Eliminación exitosa, actualizar la lista de pacientes
+          fetchSoftDeletedPatient();
+          fetchPatients();
+          alert("El paciente ha sido restaurado exitosamente.");
+        })
+        .catch((error) => {
+          console.log("Error al restaurar el paciente:", error);
+          // Manejar el error de eliminación del paciente
+        });
+    } else {
+      deletePatient(id)
+        .then(() => {
+          // Eliminación exitosa, actualizar la lista de pacientes
+          fetchPatients();
+          fetchSoftDeletedPatient();
+          alert("El paciente ha sido eliminado exitosamente.");
+        })
+        .catch((error) => {
+          console.log("Error al eliminar el paciente:", error);
+          // Manejar el error de eliminación del paciente
+        });
+    }
   };
-  // const deletePatient = async (patientId) => {
-  //   try {
-  //     // Llamada para eliminar el paciente
-  //     await axios.delete(`/detail/${patientId}`);
-  //   } catch (error) {
-  //     // Manejo de errores en caso de fallo en la eliminación
-  //     console.error( error);
-  //     throw new Error("Fallo en eliminar paciente");
-  //   }
-  // };
 
-  // const handleDelete = async () => {
-  //   try {
-  //     await deletePatient(patientDetail.id);
-  //     alert("La cuenta se eliminó correctamente");
-  //     await fetchPatients(); // Llama a la función para obtener la lista actualizada de pacientes
-  //     setVista(1);
-  //   } catch (error) {
-  //     console.log("Error al eliminar el paciente:", error);
-  //     // Manejar el error al eliminar el paciente
-  //   }
-  // };
+  const handleClickAdmin = async (id) => {
+    await setAdmin(id);
+    await fetchPatientByEmail(patientDetail.email);
+  };
 
   return (
     <>
@@ -113,13 +117,13 @@ const DetallePaciente = () => {
         </ListItem>
 
         <ListItem>
-  <ListItemAvatar>
-    <Avatar>
-      <KeyIcon />
-    </Avatar>
-  </ListItemAvatar>
-  <ListItemText secondary="password" primary="****************" />
-</ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <KeyIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText secondary="Contraseña" primary="****************" />
+        </ListItem>
 
         <ListItem>
           <ListItemAvatar>
@@ -147,7 +151,7 @@ const DetallePaciente = () => {
       >
         <Button
           variant="outlined"
-          onClick={() => setVista(1)}
+          onClick={() => setVista(patientDetail.deletedAt === null ? 1 : 3)}
           style={{ marginRight: "10px" }}
         >
           Volver
@@ -156,12 +160,31 @@ const DetallePaciente = () => {
         <Button
           id={patientDetail.id}
           variant="outlined"
+          color="warning"
+          size="small"
           onClick={() => {
             handleClickDelete(patientDetail.id);
-            setVista(1);
+            setVista(patientDetail.deletedAt === null ? 1 : 3);
           }}
         >
-          Eliminar
+          {patientDetail.deletedAt ? "Restaurar" : "Eliminar"}
+        </Button>
+
+        <Button
+          id={patientDetail.id}
+          variant="outlined"
+          onClick={() => {
+            handleClickAdmin(patientDetail.id);
+          }}
+          style={{
+            display:
+              session.email === "consumedicgeneral@gmail.com" &&
+              patientDetail.email !== "consumedicgeneral@gmail.com"
+                ? "block"
+                : "none",
+          }}
+        >
+          {patientDetail.admin ? "Sacar Admin" : "Hacer Admin"}
         </Button>
       </Box>
     </>

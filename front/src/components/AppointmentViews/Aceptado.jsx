@@ -3,6 +3,7 @@ import { Context } from '../../context/ContextProvider';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { TextField, Button, Box, Typography, Container, Paper} from '@mui/material';
+import { sendMailCita } from "../Mail/helper";
 
 import axios from 'axios';
 
@@ -21,10 +22,11 @@ initMercadoPago('TEST-9e5c4674-d7f9-42bc-9f39-62fe105ad00c');
 
 
 
-const Aceptado = ({idPaciente}) => {
+const Aceptado = () => {
     const navigate = useNavigate()
-    
-  const { id, fecha, hora, comentario } = useParams(); 
+    const { id, fecha, hora, comentario,idPaciente } = useParams(); 
+        
+  
   const meses = [
     'Ene',
     'Feb',
@@ -51,31 +53,29 @@ const Aceptado = ({idPaciente}) => {
   const { session } = useContext(Context)[2];
   const [loading, setLoading] = useState(true);
   
-  const datos = {
+ let datos = {
     fecha: fecha,
     hora: hora,
     descripcion: comentario,
     idDoctor: id,
-    idPatient: patientDetail.id
+    idPatient: idPaciente
   }
 
   useEffect(() => {
-    fetchDoctorById(id);
+ 
+    const post = async ()=>{
+      await fetchPatientByEmail(session.email)
+      await fetchDoctorById(id)
+      await postAppointment(datos)
+      await sendMailCita(datos)
+      return datos
+
+    }
+    post();
+    
     
   }, []);
 
-  useEffect(() => {
-    if (session.email && !patientDetail.email) {
-      const search = async () => {
-        await fetchPatientByEmail(session.email);
-      };
-      search();
-      console.log(patientDetail);
-    } else {
-      setLoading(false);
-      postAppointment(datos);
-    }
-  }, [loading, patientDetail]);
 
   const handleClick = ()=>{
     navigate("/patientpanel/");
@@ -86,18 +86,33 @@ const Aceptado = ({idPaciente}) => {
         <Container
           component={Paper}
           elevation={5}
+          
           sx={{
             display: 'flex',
             justifycontent: 'space-between',
             alignItems: 'center',
-            flexDirection: 'row',
-            width: 'fit-content',
+            flexDirection: {
+              mobile: 'column',
+              tablet: 'column',
+              laptop: 'row',
+              desktop: 'row',
+            },
+            width: {
+              mobile: '90%',
+              tablet: '90%',
+              laptop: '70%',
+              desktop: '90%',
+            },
             padding: '10px',
-            marginTop: '12%',
-            marginBottom: '10%',
+            margin: {
+              mobile: 'auto',
+              tablet: 'auto',
+              laptop: 'auto',
+              desktop: 'auto',
+            }
           }}
         >
-          <Box>
+          <Box sx={{ flex: 1, width: '100%' }}>
             <Typography variant="h5" component="div" color="black" sx={{mb:"10px"}}>
               Pago Aceptado!
             </Typography>
@@ -119,7 +134,7 @@ const Aceptado = ({idPaciente}) => {
               Ir a Mi Cuenta
             </Button>
           </Box>
-          <Box>
+          <Box sx={{ flex: 1, width: '100%' }}>
             <List
               subheader={
                 <ListSubheader component="div" sx={{ mt: '15px' }}>

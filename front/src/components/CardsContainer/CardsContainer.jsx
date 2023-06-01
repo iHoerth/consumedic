@@ -8,13 +8,12 @@ const CardsContainer = ({ doctorsInPage }) => {
   const { values } = theme.breakpoints;
   const message = 'No hay medicos con los filtros seleccionados';
 
+
   const allMedicos = doctorsInPage.length ? (
     <Box
       component="div"
       sx={{
         display: 'flex',
-        // gridTemplateColumns: 'repeat(2, 1fr)',
-        // gridGap: '8rem',
         flexDirection: 'column',
         gap: '14px',
         height: 'auto',
@@ -39,7 +38,8 @@ const CardsContainer = ({ doctorsInPage }) => {
           opinions={doctor.Opinions}
           location={doctor.direccion}
           price={doctor.precio}
-          //agenda={doctor.agenda}
+          agenda={doctor.agenda}
+          calendar={doctor.calendar}
           stars={doctor.Opinions}
         />
       ))}

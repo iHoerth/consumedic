@@ -50,6 +50,8 @@ const Reserva = () => {
   let datosTurno = `${dd} ${mm} ${yy}, ${hh}:${min} hs`;
 
   const { doctorDetail, fetchDoctorById } = useContext(Context)[0];
+  const { patientDetail } = useContext(Context)[1];
+
 
   const dataPreferences = {
     doctorName: doctorDetail.nombre,
@@ -62,6 +64,8 @@ const Reserva = () => {
     horaCita: hora,
     idDoctor: id,
     comentario: form.motivo,
+    pacienteId: patientDetail.id
+
   };
   useEffect(() => {
     fetchDoctorById(id);
@@ -108,14 +112,29 @@ const Reserva = () => {
           display: 'flex',
           justifycontent: 'space-between',
           alignItems: 'center',
-          flexDirection: 'row',
-          width: 'fit-content',
+          flexDirection: {
+            mobile: 'column',
+            tablet: 'column',
+            laptop: 'row',
+            desktop: 'row',
+          },
+          width: {
+            mobile: '90%',
+            tablet: '90%',
+            laptop: '70%',
+            desktop: '90%',
+          },
           padding: '10px',
-          marginTop: '12%',
-          marginBottom: '10%',
+          margin: {
+            mobile: 'auto',
+            tablet: 'auto',
+            laptop: 'auto',
+            desktop: 'auto',
+          }
         }}
       >
-        <Box>
+        <Box sx={{ flex: 1, width: '100%', textAlign: 'center' }}
+        >
           <Typography variant="h5" component="div" color="black">
             Datos relativos a la cita
           </Typography>
@@ -126,11 +145,19 @@ const Reserva = () => {
             <TextField
               id="motivo"
               label="Escriba un comentario con el motivo de la consulta"
-              color="secondary"
+              color="primary"
               value={form.motivo}
               name="motivo"
               onChange={(event) => handleInputChange(event)}
-              sx={{ height: '100px', width: '500px' }}
+              sx={{
+                margin:'10px',
+                width: {
+                  mobile: '80%',
+                  tablet: '80%',
+                  laptop: '80%',
+                  desktop: '80%',
+                },
+              }}
               helperText={error.motivo ? <Typography color="error">{error.motivo}</Typography> : ''}
               required
             />
@@ -144,10 +171,10 @@ const Reserva = () => {
           </Button>
 
           <Typography sx={{ fontSize: '10px', mt: '5px' }}>
-            una vez efectuado el pago se agendará la consulta
+            Una vez efectuado el pago se agendará la consulta
           </Typography>
         </Box>
-        <Box>
+        <Box sx={{ flex: 1, width: '100%' }}>
           <List
             subheader={
               <ListSubheader component="div" sx={{ mt: '15px' }}>

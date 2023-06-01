@@ -9,8 +9,8 @@ import {
   Typography,
   imageListClasses,
   Snackbar,
-  Alert, 
-  AlertTitle
+  Alert,
+  AlertTitle,
 } from '@mui/material';
 import { Google } from '@mui/icons-material';
 import { GoogleLogin } from 'react-google-login';
@@ -27,13 +27,13 @@ import logindoc24 from '../../assets/Img/logindoc24.jpg';
 const LoginDoctor = () => {
   const navigate = useNavigate();
   const { doctorDetail, loginDoctor } = useContext(Context)[0];
-  const {snackOk, snackOkMensaje,setSnackOk,setSnackOkMensaje} = useContext(Context)[0];
-  const {snackFail, snackFailMensaje,setSnackFail,setSnackFailMensaje} = useContext(Context)[0];
+  const { snackOk, snackOkMensaje, setSnackOk, setSnackOkMensaje } = useContext(Context)[0];
+  const { snackFail, snackFailMensaje, setSnackFail, setSnackFailMensaje } = useContext(Context)[0];
 
   const clientID = '508619813355-m14kuspv71hdsu4s1u8bsl421a999cf8.apps.googleusercontent.com';
 
   const [user, setUser] = useState({});
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   //estados de email y contraseña
   const [localEmail, setLocalEmail] = useState('');
@@ -47,7 +47,7 @@ const LoginDoctor = () => {
 
   //expresion regular para mails
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  
+
   useEffect(() => {
     const start = () => {
       gapi.auth2.init({
@@ -55,7 +55,6 @@ const LoginDoctor = () => {
       });
     };
     gapi.load('client:auth2', start);
-  
   }, []);
 
   //funcion para validar email
@@ -90,28 +89,37 @@ const LoginDoctor = () => {
   //submit
   function handleLocalSubmit(event) {
     event.preventDefault();
-    loginDoctor({ email: localEmail, password: localPassword }).catch((err) => {
-      setSnackFail(true)
-      setSnackFailMensaje(err.response.data.message)
-    });
+    loginDoctor({ email: localEmail, password: localPassword })
+      .then((res) => {
+        console.log(res);
+        setSnackOk(true);
+        setSnackOkMensaje('Logueado con exito');
+        navigate('/perfilMedico');
+      })
+      .catch((err) => {
+        setSnackFail(true);
+        setSnackFailMensaje(err.response.data.message);
+      });
   }
 
   const onSuccess = (response) => {
     console.log(response);
     setUser(response.profileObj);
     loginDoctor({
+      loggedFromGoogle: true,
       email: response.profileObj.email,
-      tokenId: response.tokenId,
-    }).catch((err) => {
-      if (err?.response?.data?.message == 'Doctor not found') {
-        navigate('/createDoctor', {
-          state: response.profileObj,
-          replace: true,
-        });
-      }
-
-      console.error(err);
-    });
+      token: response.tokenId,
+      nombre: response.profileObj.givenName,
+      apellido: response.profileObj.familyName,
+    })
+      .then((res) => {
+        setSnackOk(true);
+        setSnackOkMensaje('Logueado con exito');
+      })
+      .catch((err) => {
+        setSnackFail(true);
+        setSnackFailMensaje(err.response.data.message);
+      });
   };
 
   const onFailure = (error) => {
@@ -160,7 +168,7 @@ const LoginDoctor = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          p: 3  ,
+          p: 3,
         }}
       >
         <Container
@@ -177,7 +185,7 @@ const LoginDoctor = () => {
             marginTop: '145px',
             marginBottom: '50px',
             height: 'auto',
-            minWidth:'200px',
+            minWidth: '200px',
           }}
         >
           <Typography variant="h6" align="center" sx={{ marginTop: '50px', marginBottom: '40px' }}>
@@ -193,7 +201,7 @@ const LoginDoctor = () => {
               alignItems: 'center',
               flexDirection: 'column',
               height: '450px',
-              p:2,
+              p: 2,
             }}
           >
             <TextField
@@ -263,10 +271,15 @@ const LoginDoctor = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ width: '100%',mb:1, }}
+              sx={{ width: '100%', mb: 1 }}
               onClick={handleLocalSubmit}
-              disabled={localEmail===""&&localPassword===""?true:(emailError||passwordError?true:false)}
-
+              disabled={
+                localEmail === '' && localPassword === ''
+                  ? true
+                  : emailError || passwordError
+                  ? true
+                  : false
+              }
             >
               Ingresar
             </Button>

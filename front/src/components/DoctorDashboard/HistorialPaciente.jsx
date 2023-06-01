@@ -45,6 +45,8 @@ const HistorialPaciente = () => {
     const [title, setTitle] = useState("")
     const [snackRespuesta, setSnackRespuesta]=useState(false)
     const [snackDocumento, setSnackDocumento]=useState(false)
+    const [fileSize, setFileSize]=useState()
+    const [alert, setAlert] = useState(false)
 
 
     const [files64, setFiles64]=useState("")
@@ -76,7 +78,7 @@ const HistorialPaciente = () => {
     const [values, setValues] = useState({
         nombreDoctor: doctorDetail.nombre,
         apellidoDoctor: doctorDetail.apellido,
-        emailRecibe: "consumedicgeneral@gmail.com", //! modificar a "mailPaciente"
+        emailRecibe: patientDetail.email,
         emailEscribe: mailDoctor,
         subjectDocumento: `El Doctor ${doctorDetail.nombre} ${doctorDetail.apellido} ha registrado un documento`,
         messageDocumento: `Estimado ${patientDetail.nombre} ${patientDetail.apellido}:
@@ -125,6 +127,8 @@ const HistorialPaciente = () => {
         setRespuesta("")
         fetchDoctorByEmail(doctorDetail.email)
         fetchDoctorByEmail(session.email)
+        setFileSize()
+
 
     }
 
@@ -136,10 +140,22 @@ const HistorialPaciente = () => {
         setFilesToBase(file)
     };
     const setFilesToBase = (file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            setFiles64(reader.result)
+        try {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                let fileSize = reader.result.length;
+                fileSize = (fileSize/1024/1024).toFixed(2);
+                setFileSize(fileSize)
+                if(fileSize>1)setAlert(true)
+                else setAlert(false)
+              };
+            reader.onloadend = () => {
+                setFiles64(reader.result)
+            }
+            
+        } catch (error) {
+            
         }
     };
 
@@ -167,7 +183,7 @@ const HistorialPaciente = () => {
                     <Typography style={{fontSize:"larger", fontWeight:"600"}}>Historial Médico del Paciente</Typography>
                 </Box>
                 <Box sx={{position:"absolute",  right:"10%", mb: "15px"}}>
-                    <Button onClick={handleClickBack} style={{width:"200px"}} variant="contained" size="small">Volver a Pacientes</Button>
+                    <Button onClick={handleClickBack} style={{width:"200px"}} color="secondary" variant="contained" size="small">Volver a Pacientes</Button>
                 </Box>
             </Box>
             <Divider/>
@@ -242,6 +258,7 @@ const HistorialPaciente = () => {
                                             variant="outlined" 
                                             size="small" 
                                             name="respuesta"
+                                            color="secondary"
                                         >
                                             {cita.respuestaMedico===null ? "Dar Respuesta" : "Editar Respuesta"}
                                         </Button>
@@ -252,6 +269,7 @@ const HistorialPaciente = () => {
                                             size="small" 
                                             name="documentos"
                                             sx={{ml:"10px"}}
+                                            color="secondary"
                                         >
                                             Subir Documento
                                         </Button>
@@ -270,10 +288,12 @@ const HistorialPaciente = () => {
                                                 variant="standard"
                                                 sx={{margin:"0 10px 0 10px"}}
                                                 onChange={handleText}
+                                                color="secondary"
                                             />
                                         <DialogActions>
-                                            <Button onClick={handleClose}>Cancelar</Button>
-                                            <Button id={cita.id} name="respuesta" variant="contained" onClick={handleClose} disabled={respuesta==="" ? true : false}>Registrar</Button>
+                                            <Button onClick={handleClose} 
+                                            color="secondary">Cancelar</Button>
+                                            <Button id={cita.id} name="respuesta" color="secondary" variant="contained" onClick={handleClose} disabled={respuesta==="" ? true : false} >Registrar</Button>
                                         </DialogActions>
                                         </Dialog>
                                         <Dialog open={openDocuments} onClose={handleClose}>
@@ -287,6 +307,7 @@ const HistorialPaciente = () => {
                                                         id={cita.id}
                                                         label="Escriba aqui"
                                                         variant="standard"
+                                                        color="secondary"
                                                         sx={{margin:"0 10px 0 10px"}}
                                                         onChange={handleTextTitle}
                                                     />
@@ -305,6 +326,7 @@ const HistorialPaciente = () => {
                                                     type="file" 
                                                     accept="image/*"
                                                     style={{display: "none"}}
+                                                    color="secondary"
                                                     id="archivos" name="archivos" 
                                                     onChange={handleSelectedFile} 
                                                 />
@@ -312,16 +334,20 @@ const HistorialPaciente = () => {
                                                     <Button
                                                         variant="contained"
                                                         component="span"
+                                                        color="secondary"
                                                         startIcon={<PhotoCamera />}
                                                     >
                                                         Archivo
                                                     </Button>
                                                 </label>
                                             </Box>
-                                            <Typography sx={{ml:"38%", mb:"10px"}}>{fileName}</Typography>
+                                            <Typography sx={{ml:"2%", mb:"10px"}}>{fileName}</Typography>
+                                            <Typography sx={{ml:"2%", mb:"10px"}}>{fileSize?`size: ${fileSize} mb`:null}</Typography>
+                                            <Typography sx={{ml:"2%", mb:"10px", color:"red"}}>{alert?"El archivo debe tener menos de 1mb":null}</Typography>
+
                                             <DialogActions>
-                                                <Button onClick={handleClose}>Cancelar</Button>
-                                                <Button id={cita.id} name="documentos" variant="contained" onClick={handleClose} disabled={title===""? true :(files64===""?true:false)}>Registrar</Button>
+                                                <Button onClick={handleClose} color="secondary">Cancelar</Button>
+                                                <Button id={cita.id} name="documentos" color="secondary" variant="contained" onClick={handleClose} disabled={title===""? true :(files64===""?true:(alert?true:false))}>Registrar</Button>
                                             </DialogActions>
                                         </Dialog>
                                     </TableCell>

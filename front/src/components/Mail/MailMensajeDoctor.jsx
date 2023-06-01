@@ -2,17 +2,28 @@ import React, { useState } from "react";
 import { sendMail } from "./helper";
 import { TextField, Button, Typography, Box } from "@mui/material";
 
-import {useContext} from "react";
+import { useContext } from "react";
 import { Context } from "../../context/ContextProvider";
 
-const MailMensajeDoctor = ({emailMedico}) => {
-  const {modal, setModal, snackOk, setSnackOk, snackOkMensaje, setSnackOkMensaje, snackFail, setSnackFail, snackFailMensaje, setSnackFailMensaje} = useContext(Context)[7];
+const MailMensajeDoctor = ({ emailMedico }) => {
+  const {
+    modal,
+    setModal,
+    snackOk,
+    setSnackOk,
+    snackOkMensaje,
+    setSnackOkMensaje,
+    snackFail,
+    setSnackFail,
+    snackFailMensaje,
+    setSnackFailMensaje,
+  } = useContext(Context)[7];
   const [values, setValues] = useState({
     name: "",
     emailRecibe: emailMedico,
     emailEscribe: "",
     message: "",
-    subject:"",
+    subject: "",
   });
 
   const { name, emailRecibe, message, emailEscribe, subject } = values;
@@ -20,33 +31,37 @@ const MailMensajeDoctor = ({emailMedico}) => {
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
-  
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (name === "" || emailEscribe === "" || message === "" || subject==="") {
+    if (
+      name === "" ||
+      emailEscribe === "" ||
+      message === "" ||
+      subject === ""
+    ) {
       alert("Por favor, complete todos los campos");
       return;
     } else {
       console.log(values);
       sendMail(values)
         .then((data) => {
-          setSnackOk(true)
-          setSnackOkMensaje(data.message)
+          setSnackOk(true);
+          setSnackOkMensaje(data.message);
           setValues({
             ...values,
             name: "",
             emailEscribe: "",
             message: "",
-            subject:""
+            subject: "",
           });
         })
         .catch((error) => {
-          setSnackFail(true)
-          setSnackFailMensaje(error.message)
+          setSnackFail(true);
+          setSnackFailMensaje(error.message);
         });
-        setModal(false)
+      setModal(false);
     }
   };
 
@@ -78,6 +93,7 @@ const MailMensajeDoctor = ({emailMedico}) => {
       <TextField
         id="outlined-basic"
         label="Dejanos tu email para comunicarnos"
+        type="email"
         variant="outlined"
         value={emailEscribe}
         required
@@ -105,7 +121,22 @@ const MailMensajeDoctor = ({emailMedico}) => {
         rows={3}
       />
 
-      <Button type="submit" variant="contained" color="primary" disabled={name !== "" ? (emailEscribe !== "" ? (message !== "" ? ( subject!=="" ? false : true):true):true):true}>
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={
+          name !== ""
+            ? emailEscribe !== ""
+              ? message !== ""
+                ? subject !== ""
+                  ? false
+                  : true
+                : true
+              : true
+            : true
+        }
+      >
         Enviar
       </Button>
     </Box>
