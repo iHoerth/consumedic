@@ -36,7 +36,7 @@ const PerfilAdmin = () => {
             justifyContent: "center",
           }}
         >
-          <img
+          {/* <img
             src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80"
             style={{
               width: "400px",
@@ -71,7 +71,7 @@ const PerfilAdmin = () => {
             }}
             onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
             onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-          />
+          /> */}
         </Box>
       </Box>
     </Container>
