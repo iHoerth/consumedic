@@ -30,10 +30,16 @@ const Header = () => {
       >
         <Card
           sx={{
-            bgcolor: theme.palette.primary.main,
+            bgcolor: theme.palette.primary.dark,
             color: "white",
             display: "flex",
-            flexDirection: "row",
+            flexDirection: {
+              mobile: 'column',
+              tablet: 'row',
+              laptop: 'row',
+              desktop: 'row',
+            },
+            alignItems:'center',
             justifyContent: "space-between",
             padding: "10px",
             mb: "10px",
@@ -49,9 +55,21 @@ const Header = () => {
           <Card
             sx={{
               width: "40%",
-              height: "18vh",
+              // height: "18vh",
               marginRight: "10px",
               borderRadius: "10px",
+              height: {
+                mobile: '90%',
+                tablet: '90%',
+                laptop: '70%',
+                desktop: '90%',
+              },
+              width: {
+                mobile: '90%',
+                tablet: '50%',
+                laptop: '37%',
+                desktop: '35%',
+              },
             }}
           >
             <CardContent
@@ -72,7 +90,7 @@ const Header = () => {
                   color: "white",
                 }}
               >
-                Datos Personales
+                <b>Datos Personales</b>
               </Typography>
               <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
                 {nombre + " " + apellido}
@@ -89,14 +107,14 @@ const Header = () => {
                   sx={{ paddingLeft: "10px", paddingRight: "20px" }}
                   color="text.secondary"
                 >
-                  Dni: {dni}
+                  <b>Dni:</b> {dni}
                 </Typography>
                 <Divider orientation="vertical" flexItem />
                 <Typography
                   sx={{ paddingLeft: "10px", paddingRight: "20px" }}
                   color="text.secondary"
                 >
-                  Telefono: {telefono}
+                  <b>Teléfono</b> {telefono}
                 </Typography>
                 <Divider orientation="vertical" flexItem />
 
@@ -104,7 +122,7 @@ const Header = () => {
                   sx={{ paddingLeft: "10px", paddingRight: "20px" }}
                   color="text.secondary"
                 >
-                  Obra social: {ObraSocial?.nombre}
+                  <b>Obra social:</b> {ObraSocial?.nombre}
                 </Typography>
               </Box>
             </CardContent>

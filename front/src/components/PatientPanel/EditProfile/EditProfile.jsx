@@ -100,7 +100,19 @@ const EditProfile = () => {
               component="form"
               sx={{
                 display: "flex",
-                flexDirection: "column",
+                margin:'20px auto',
+                flexDirection: {
+                  mobile: 'column',
+                  tablet: 'column',
+                  laptop: 'column',
+                  desktop: 'column',
+                },
+                width: {
+                  mobile: '90%',
+                  tablet: '90%',
+                  laptop: '90%',
+                  desktop: '90%',
+                },
                 alignItems: "center",
                 padding: "10px",
               }}
@@ -141,6 +153,8 @@ const EditProfile = () => {
                   display: "flex",
                   flexWrap: "wrap",
                   padding: "10px",
+                  alignItems:'center',
+                  justifyContent:'space-around'
                 }}
               >
                 <TextField
@@ -148,7 +162,14 @@ const EditProfile = () => {
                   name="nombre"
                   value={datos.nombre}
                   onChange={handleChange}
-                  sx={{ mt: "20px", width: "30%", ml: "10px" }}
+                  sx={{ mt: "20px", 
+                  ml: "10px",
+                  width: {
+                    mobile: '90%',
+                    tablet: '90%',
+                    laptop: '90%',
+                    desktop: '90%',
+                  }}}
                   onClick={() => setInputClicked(true)}
                 />
                 <TextField
@@ -156,7 +177,14 @@ const EditProfile = () => {
                   name="apellido"
                   value={datos.apellido}
                   onChange={handleChange}
-                  sx={{ mt: "20px", width: "30%", ml: "10px" }}
+                  sx={{ mt: "20px", 
+                  ml: "10px",
+                  width: {
+                    mobile: '90%',
+                    tablet: '90%',
+                    laptop: '90%',
+                    desktop: '90%',
+                  }}}
                   onClick={() => setInputClicked(true)}
                 />
                 <TextField
@@ -164,7 +192,14 @@ const EditProfile = () => {
                   name="dni"
                   value={datos.dni}
                   onChange={handleChange}
-                  sx={{ mt: "20px", width: "30%", ml: "10px" }}
+                  sx={{ mt: "20px", 
+                  ml: "10px",
+                  width: {
+                    mobile: '90%',
+                    tablet: '90%',
+                    laptop: '90%',
+                    desktop: '90%',
+                  }}}
                   onClick={() => setInputClicked(true)}
                 />
                 <TextField
@@ -172,7 +207,14 @@ const EditProfile = () => {
                   name="telefono"
                   value={datos.telefono}
                   onChange={handleChange}
-                  sx={{ mt: "20px", width: "30%", ml: "10px" }}
+                  sx={{ mt: "20px", 
+                  ml: "10px",
+                  width: {
+                    mobile: '90%',
+                    tablet: '90%',
+                    laptop: '90%',
+                    desktop: '90%',
+                  }}}
                   onClick={() => setInputClicked(true)}
                 />
                 <TextField
@@ -180,24 +222,33 @@ const EditProfile = () => {
                   name="email"
                   value={datos.email}
                   disabled
-                  sx={{ mt: "20px", width: "30%", ml: "10px" }}
+                  sx={{ mt: "20px", 
+                  ml: "10px",
+                  width: {
+                    mobile: '90%',
+                    tablet: '90%',
+                    laptop: '90%',
+                    desktop: 'c0%',
+                  }}}
                   onClick={() => setInputClicked(true)}
                 />
 
                 <FormControl
-                  sx={{
-                    mt: "20px",
-                    width: "30%",
-                    mb: "30px",
-                    ml: "10px",
-                  }}
+                   sx={{ mt: "20px", 
+                   ml: "10px",
+                   width: {
+                     mobile: '90%',
+                     tablet: '90%',
+                     laptop: '90%',
+                     desktop: '90%',
+                   }}}
                   size="small"
-                >
+                > 
                   <InputLabel id="demo-select-small-label">
                     Obra Social
                   </InputLabel>
                   <Select
-                    sx={{ height: "6vh" }}
+                    sx={{ height: "6.5vh"}}
                     MenuProps={{
                       sx: {
                         maxHeight: "50%",

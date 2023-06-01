@@ -86,18 +86,33 @@ const Aceptado = () => {
         <Container
           component={Paper}
           elevation={5}
+          
           sx={{
             display: 'flex',
             justifycontent: 'space-between',
             alignItems: 'center',
-            flexDirection: 'row',
-            width: 'fit-content',
+            flexDirection: {
+              mobile: 'column',
+              tablet: 'column',
+              laptop: 'row',
+              desktop: 'row',
+            },
+            width: {
+              mobile: '90%',
+              tablet: '90%',
+              laptop: '70%',
+              desktop: '90%',
+            },
             padding: '10px',
-            marginTop: '12%',
-            marginBottom: '10%',
+            margin: {
+              mobile: 'auto',
+              tablet: 'auto',
+              laptop: 'auto',
+              desktop: 'auto',
+            }
           }}
         >
-          <Box>
+          <Box sx={{ flex: 1, width: '100%' }}>
             <Typography variant="h5" component="div" color="black" sx={{mb:"10px"}}>
               Pago Aceptado!
             </Typography>
@@ -119,7 +134,7 @@ const Aceptado = () => {
               Ir a Mi Cuenta
             </Button>
           </Box>
-          <Box>
+          <Box sx={{ flex: 1, width: '100%' }}>
             <List
               subheader={
                 <ListSubheader component="div" sx={{ mt: '15px' }}>
