@@ -20,8 +20,8 @@ const { conn } = require("./src/db");
 
 const hostFront = DEPLOY || "localhost";
 const portFront = DEPLOYPORT || ":3000";
-const mp_success = MP_SUCCES;
-const mp_failure = MP_FAILURE;
+const mp_success = MP_SUCCES || "localhost:3000";
+const mp_failure = MP_FAILURE || "localhost:3000";
 const port = PORT || 3001;
 
 const server = express();

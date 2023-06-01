@@ -141,7 +141,7 @@ const getSoftDeletedPatients = async (req, res) => {
 
 const editPatientProfile = async (req, res) => {
   try {
-    const { id, dni, email, telefono, nombre, apellido } = req.body;
+    const { id, dni, email, telefono, nombre, apellido, status } = req.body;
 
     let ObraSocialId = req.body.ObraSocial.id;
 
@@ -153,6 +153,7 @@ const editPatientProfile = async (req, res) => {
       nombre,
       apellido,
       ObraSocialId,
+      status,
     });
     res.status(200).json(result);
   } catch (error) {
