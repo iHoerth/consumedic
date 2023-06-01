@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Context, UtilitiesContext } from "../../../context/ContextProvider";
-import Loading from "../../../components/Loading/Loading";
+import React, { useState, useEffect, useContext } from 'react';
+import { Context, UtilitiesContext } from '../../../context/ContextProvider';
+import Loading from '../../../components/Loading/Loading';
 import {
   TextField,
   Button,
@@ -13,12 +13,11 @@ import {
   Snackbar,
   Alert,
   AlertTitle,
-} from "@mui/material";
+} from '@mui/material';
 
-const EditProfile = () => {
+const EditProfile = ({ status, modalOpen, handleClose }) => {
   const { session } = useContext(Context)[2];
-  const { patientDetail, modifyPatientProfiler, fetchPatientByEmail } =
-    useContext(Context)[1];
+  const { patientDetail, modifyPatientProfiler, fetchPatientByEmail } = useContext(Context)[1];
   const { socialSecurity, fetchUtilities } = useContext(UtilitiesContext);
   const [loading, setLoading] = useState(true);
   const [inputClicked, setInputClicked] = useState(false);
@@ -26,13 +25,12 @@ const EditProfile = () => {
   //Alerts
   const [snackOk, setSnackOk] = useState(false);
   const [snackFail, setSnackFail] = useState(false);
-  const [snackOkMensaje, setSnackOkMensaje] = useState("");
-  const [snackFailMensaje, setSnackFailMensaje] = useState("");
+  const [snackOkMensaje, setSnackOkMensaje] = useState('');
+  const [snackFailMensaje, setSnackFailMensaje] = useState('');
 
   useEffect(() => {
     setLoading(true);
-    session.email &&
-      fetchPatientByEmail(session.email).then(() => setLoading(false));
+    session.email && fetchPatientByEmail(session.email).then(() => setLoading(false));
   }, [session.email]);
 
   useEffect(() => {
@@ -43,8 +41,7 @@ const EditProfile = () => {
     }
   }, [socialSecurity]);
 
-  const { id, dni, email, telefono, nombre, apellido, ObraSocial } =
-    patientDetail;
+  const { id, dni, email, telefono, nombre, apellido, ObraSocial } = patientDetail;
 
   const [datos, setDatos] = useState({
     id: id,
@@ -53,14 +50,14 @@ const EditProfile = () => {
     dni: dni,
     email: email,
     telefono: telefono,
-    ObraSocial: ObraSocial || "",
+    ObraSocial: ObraSocial || '',
   });
 
   const handleChange = (event) => {
     const property = event.target.name;
     let value = event.target.value;
 
-    if (property === "ObraSocial") {
+    if (property === 'ObraSocial') {
       value = {
         id: event.target.value,
         nombre: event.target.name,
@@ -76,12 +73,13 @@ const EditProfile = () => {
   const handleSave = () => {
     modifyPatientProfiler(datos)
       .then((data) => {
-        setSnackOkMensaje("Se actualiazo correctamente!");
+        setSnackOkMensaje('Se actualiazo correctamente!');
         setSnackOk(true);
         setInputClicked(false);
+        handleClose();
       })
       .catch((error) => {
-        setSnackFailMensaje("No se ha podido actualizar la informacion!");
+        setSnackFailMensaje('No se ha podido actualizar la informacion!');
         setSnackFail(true);
       });
 
@@ -99,8 +97,8 @@ const EditProfile = () => {
             <Box
               component="form"
               sx={{
-                display: "flex",
-                margin:'20px auto',
+                display: 'flex',
+                margin: '20px auto',
                 flexDirection: {
                   mobile: 'column',
                   tablet: 'column',
@@ -113,18 +111,21 @@ const EditProfile = () => {
                   laptop: '90%',
                   desktop: '90%',
                 },
-                alignItems: "center",
-                padding: "10px",
+                alignItems: 'center',
+                padding: '10px',
               }}
             >
+              {status === 'incomplete' && (
+                <Typography sx={{ fontSize: 20 }}>DEBES COMPLETAR TODOS LOS DATOS</Typography>
+              )}
               <Snackbar
                 open={snackOk}
                 autoHideDuration={2500}
                 onClose={() => {
                   setSnackOk(false);
-                  setSnackOkMensaje("");
+                  setSnackOkMensaje('');
                 }}
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
               >
                 <Alert severity="success" variant="filled">
                   <AlertTitle>Mensaje Exitoso</AlertTitle>
@@ -136,9 +137,9 @@ const EditProfile = () => {
                 autoHideDuration={2500}
                 onClose={() => {
                   setSnackFail(false);
-                  setSnackFailMensaje("");
+                  setSnackFailMensaje('');
                 }}
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
               >
                 <Alert severity="error" variant="filled">
                   <AlertTitle>Mensaje de Error</AlertTitle>
@@ -150,11 +151,11 @@ const EditProfile = () => {
               </Typography>
               <Box
                 sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  padding: "10px",
-                  alignItems:'center',
-                  justifyContent:'space-around'
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  padding: '10px',
+                  alignItems: 'center',
+                  justifyContent: 'space-around',
                 }}
               >
                 <TextField
@@ -162,14 +163,16 @@ const EditProfile = () => {
                   name="nombre"
                   value={datos.nombre}
                   onChange={handleChange}
-                  sx={{ mt: "20px", 
-                  ml: "10px",
-                  width: {
-                    mobile: '90%',
-                    tablet: '90%',
-                    laptop: '90%',
-                    desktop: '90%',
-                  }}}
+                  sx={{
+                    mt: '20px',
+                    ml: '10px',
+                    width: {
+                      mobile: '90%',
+                      tablet: '90%',
+                      laptop: '90%',
+                      desktop: '90%',
+                    },
+                  }}
                   onClick={() => setInputClicked(true)}
                 />
                 <TextField
@@ -177,14 +180,16 @@ const EditProfile = () => {
                   name="apellido"
                   value={datos.apellido}
                   onChange={handleChange}
-                  sx={{ mt: "20px", 
-                  ml: "10px",
-                  width: {
-                    mobile: '90%',
-                    tablet: '90%',
-                    laptop: '90%',
-                    desktop: '90%',
-                  }}}
+                  sx={{
+                    mt: '20px',
+                    ml: '10px',
+                    width: {
+                      mobile: '90%',
+                      tablet: '90%',
+                      laptop: '90%',
+                      desktop: '90%',
+                    },
+                  }}
                   onClick={() => setInputClicked(true)}
                 />
                 <TextField
@@ -192,14 +197,16 @@ const EditProfile = () => {
                   name="dni"
                   value={datos.dni}
                   onChange={handleChange}
-                  sx={{ mt: "20px", 
-                  ml: "10px",
-                  width: {
-                    mobile: '90%',
-                    tablet: '90%',
-                    laptop: '90%',
-                    desktop: '90%',
-                  }}}
+                  sx={{
+                    mt: '20px',
+                    ml: '10px',
+                    width: {
+                      mobile: '90%',
+                      tablet: '90%',
+                      laptop: '90%',
+                      desktop: '90%',
+                    },
+                  }}
                   onClick={() => setInputClicked(true)}
                 />
                 <TextField
@@ -207,14 +214,16 @@ const EditProfile = () => {
                   name="telefono"
                   value={datos.telefono}
                   onChange={handleChange}
-                  sx={{ mt: "20px", 
-                  ml: "10px",
-                  width: {
-                    mobile: '90%',
-                    tablet: '90%',
-                    laptop: '90%',
-                    desktop: '90%',
-                  }}}
+                  sx={{
+                    mt: '20px',
+                    ml: '10px',
+                    width: {
+                      mobile: '90%',
+                      tablet: '90%',
+                      laptop: '90%',
+                      desktop: '90%',
+                    },
+                  }}
                   onClick={() => setInputClicked(true)}
                 />
                 <TextField
@@ -222,42 +231,44 @@ const EditProfile = () => {
                   name="email"
                   value={datos.email}
                   disabled
-                  sx={{ mt: "20px", 
-                  ml: "10px",
-                  width: {
-                    mobile: '90%',
-                    tablet: '90%',
-                    laptop: '90%',
-                    desktop: 'c0%',
-                  }}}
+                  sx={{
+                    mt: '20px',
+                    ml: '10px',
+                    width: {
+                      mobile: '90%',
+                      tablet: '90%',
+                      laptop: '90%',
+                      desktop: 'c0%',
+                    },
+                  }}
                   onClick={() => setInputClicked(true)}
                 />
 
                 <FormControl
-                   sx={{ mt: "20px", 
-                   ml: "10px",
-                   width: {
-                     mobile: '90%',
-                     tablet: '90%',
-                     laptop: '90%',
-                     desktop: '90%',
-                   }}}
+                  sx={{
+                    mt: '20px',
+                    ml: '10px',
+                    width: {
+                      mobile: '90%',
+                      tablet: '90%',
+                      laptop: '90%',
+                      desktop: '90%',
+                    },
+                  }}
                   size="small"
-                > 
-                  <InputLabel id="demo-select-small-label">
-                    Obra Social
-                  </InputLabel>
+                >
+                  <InputLabel id="demo-select-small-label">Obra Social</InputLabel>
                   <Select
-                    sx={{ height: "6.5vh"}}
+                    sx={{ height: '6.5vh' }}
                     MenuProps={{
                       sx: {
-                        maxHeight: "50%",
+                        maxHeight: '50%',
                       },
                     }}
                     labelId="demo-select-small-label"
                     id="demo-select-small"
                     name="ObraSocial"
-                    value={datos.ObraSocial ? datos.ObraSocial.id : ""}
+                    value={datos.ObraSocial ? datos.ObraSocial.id : ''}
                     label="Obra Social"
                     onChange={handleChange}
                     onClick={() => setInputClicked(true)}
@@ -274,10 +285,12 @@ const EditProfile = () => {
                 </FormControl>
               </Box>
               <Button
-                sx={{ mt: "10px" }}
+                sx={{ mt: '10px' }}
                 variant="contained"
                 color="primary"
-                onClick={handleSave}
+                onClick={() => {
+                  handleSave();
+                }}
                 disabled={!inputClicked}
               >
                 Guardar
