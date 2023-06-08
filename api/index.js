@@ -32,6 +32,8 @@ server.use(
   })
 );
 
+// Esto es un comentario de prueba para enseñar GitHub.
+
 // server.use(
 //   cors({
 //     origin: 'https://apideploy-production.up.railway.app',
